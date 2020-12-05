@@ -40,11 +40,7 @@ SOFTWARE.
 
 /* Resources */
 
-#ifdef _WIN64
-typedef unsigned __int64 XID;
-#else
 typedef unsigned long XID;
-#endif
 
 typedef XID Window;
 typedef XID Drawable;
