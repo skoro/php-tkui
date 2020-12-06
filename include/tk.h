@@ -1,5 +1,5 @@
 #define FFI_SCOPE "tk"
-#define FFI_LIB "libtk8.6.so"
+#define FFI_LIB   "libtk8.6.so"
 
 typedef struct Tk_Window_ Tk_Window;
 typedef struct Tcl_Interp_ Tcl_Interp;
