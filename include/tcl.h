@@ -3,6 +3,8 @@
 
 typedef void (Tcl_FreeProc) (char *blockPtr);
 
+typedef int *ClientData;
+
 typedef struct Tcl_Interp
 {
     char *result;
@@ -48,6 +50,7 @@ Tcl_Interp* Tcl_CreateInterp(void);
 int Tcl_Init(Tcl_Interp *interp);
 
 int Tcl_GetErrorLine(Tcl_Interp *interp);
+int Tcl_GetErrno(void);
 
 int Tcl_Eval(Tcl_Interp *interp, const char *script);
 int Tcl_EvalObj(Tcl_Interp *interp, Tcl_Obj *objPtr);
@@ -92,3 +95,13 @@ const char *Tcl_SetVar2(Tcl_Interp *interp, const char *part1,
 
 void TclFreeObj(Tcl_Obj *objPtr);
 void Tcl_FreeResult(Tcl_Interp *interp);
+
+typedef struct Tcl_Command_ *Tcl_Command;
+typedef int (Tcl_ObjCmdProc) (ClientData clientData, Tcl_Interp *interp,
+	int objc, struct Tcl_Obj *const *objv);
+typedef void (Tcl_CmdDeleteProc) (ClientData clientData);
+
+Tcl_Command Tcl_CreateObjCommand(Tcl_Interp *interp,
+	    const char *cmdName,
+	    Tcl_ObjCmdProc *proc, ClientData clientData,
+	    Tcl_CmdDeleteProc *deleteProc);
