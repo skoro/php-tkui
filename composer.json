@@ -11,5 +11,10 @@
     "require": {
         "php": ">=7.4",
         "ext-ffi": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "TclTk\\": "src/"
+        }
     }
 }
