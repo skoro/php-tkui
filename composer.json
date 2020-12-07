@@ -1,0 +1,15 @@
+{
+    "name": "skoro/php-tk",
+    "description": "Provides api to Tcl/Tk and UI classes.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Skorobogatko Alexei",
+            "email": "skorobogatko.oleksii@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-ffi": "*"
+    }
+}
