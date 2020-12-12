@@ -2,6 +2,9 @@
 
 namespace TclTk;
 
+/**
+ * Tcl command options.
+ */
 class Options
 {
     private array $options = [];
@@ -21,10 +24,15 @@ class Options
         $this->options[$name] = $value;
     }
 
+    /**
+     * Converts options to a string suitable for Tcl command.
+     *
+     * @return string A string like "-option value -another {foo foo}"
+     */
     public function asTcl(): string
     {
         $map = array_map(function ($name, $value) {
-            return $value === null ? '' : "-$name {$value}";
+            return $value === null ? '' : "-$name {$this->quoteValue($value)}";
         }, array_keys($this->options), $this->options);
         return implode(' ', array_filter($map));
     }
@@ -37,5 +45,15 @@ class Options
     public function __toString()
     {
         return $this->asTcl();
+    }
+
+    public function has(string $name): bool
+    {
+        return isset($this->options[$name]);
+    }
+
+    protected function quoteValue(string $value): string
+    {
+        return strpos($value, ' ') !== false ? '{' . $value . '}' : $value;
     }
 }
