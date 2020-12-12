@@ -24,5 +24,5 @@ interface TkWidget
      * @param string|string[] $args
      * @param Options         $options
      */
-    public function exec(string $command, $args, Options $options = []): string;
+    public function exec(string $command, $args, Options $options): string;
 }
