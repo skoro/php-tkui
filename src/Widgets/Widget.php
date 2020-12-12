@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use ArrayAccess;
+use TclTk\Layouts\Pack;
 use TclTk\Options;
 
 /**
@@ -16,6 +17,8 @@ abstract class Widget implements ArrayAccess, TkWidget
     private static array $counters = [];
     private string $name;
 
+    private Pack $pack;
+
     /**
      * Creates a new widget.
      *
@@ -28,6 +31,7 @@ abstract class Widget implements ArrayAccess, TkWidget
         $this->parent = $parent;
         $this->name = $name;
         $this->options = new Options($options);
+        $this->pack = new Pack($this);
         $this->updateCounters();
     }
 
@@ -64,8 +68,13 @@ abstract class Widget implements ArrayAccess, TkWidget
     /**
      * @inheritdoc
      */
-    public function exec(string $command, $args, Options $options = []): string
+    public function exec(string $command, $args, Options $options): string
     {
         return $this->parent->exec($command, $args, $options);
+    }
+
+    public function pack(array $options = [])
+    {
+        $this->pack->pack($options);
     }
 }
