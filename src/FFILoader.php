@@ -3,21 +3,42 @@
 namespace TclTk;
 
 use FFI;
+use RuntimeException;
 
 class FFILoader
 {
+    private string $dirHeaders;
+
+    /**
+     * @param string $dirHeader The base directory for header files.
+     */
+    public function __construct(string $dirHeaders = '')
+    {
+        if (empty($dirHeaders)) {
+            $dirHeaders = __DIR__ . '/headers';
+        }
+        $this->dirHeaders = rtrim($dirHeaders, '/') . '/';
+    }
+
+    /**
+     * @throws RuntimeException When the header file cannot be read.
+     */
     protected function load(string $header): FFI
     {
-        return FFI::load(__DIR__ . '/headers/' . $header);
+        $file = $this->dirHeaders . $header;
+        if (!file_exists($file)) {
+            throw new RuntimeException("Couldn't read header file: " . $file);
+        }
+        return FFI::load($file);
     }
 
-    public function loadTcl(): FFI
+    public function loadTcl(string $tcl = 'tcl86.h'): FFI
     {
-        return $this->load('tcl86.h');
+        return $this->load($tcl);
     }
 
-    public function loadTk(): FFI
+    public function loadTk(string $tk = 'tk86.h'): FFI
     {
-        return $this->load('tk86.h');
+        return $this->load($tk);
     }
 }
