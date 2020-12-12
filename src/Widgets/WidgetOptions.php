@@ -11,12 +11,12 @@ trait WidgetOptions
 
     public function offsetExists($offset): bool
     {
-        return isset($this->options[$offset]);
+        return $this->options->has($offset);
     }
 
     public function offsetGet($offset)
     {
-        return $this->options[$offset] ?? null;
+        return $this->options->$offset;
     }
 
     public function offsetSet($offset, $value): void
@@ -24,11 +24,11 @@ trait WidgetOptions
         if (empty($offset)) {
             throw new InvalidArgumentException('offset parameter cannot be empty.');
         }
-        $this->options[$offset] = $value;
+        $this->options->$offset = $value;
     }
 
     public function offsetUnset($offset): void
     {
-        unset($this->options[$offset]);
+        $this->options->$offset = null;
     }
 }
