@@ -3,7 +3,8 @@
 namespace TclTk;
 
 use FFI;
-use RuntimeException;
+use TclTk\Exceptions\EvalException;
+use TclTk\Exceptions\TclException;
 
 /**
  * Low-level interface to Tcl FFI.
@@ -34,7 +35,7 @@ class Tcl
     public function init(Interp $interp)
     {
         if ($this->ffi->Tcl_Init($interp->cdata()) != self::TCL_OK) {
-            throw new RuntimeException("Couldn't initialize Tcl interpretator.");
+            throw new TclException("Couldn't initialize Tcl interpretator.");
         }
     }
 
@@ -46,8 +47,11 @@ class Tcl
      */
     public function eval(Interp $interp, string $script): int
     {
-        // TODO: check return TCL_ERROR ?
-        return $this->ffi->Tcl_Eval($interp->cdata(), $script);
+        $status = $this->ffi->Tcl_Eval($interp->cdata(), $script);
+        if ($status != self::TCL_OK) {
+            throw new EvalException($script, $this->getStringResult($interp));
+        }
+        return $status;
     }
 
     /**
