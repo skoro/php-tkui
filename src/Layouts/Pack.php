@@ -5,6 +5,9 @@ namespace TclTk\Layouts;
 use TclTk\Options;
 use TclTk\Widgets\TkWidget;
 
+/**
+ * pack geometry manager.
+ */
 class Pack
 {
     private TkWidget $widget;
