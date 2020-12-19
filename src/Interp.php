@@ -4,6 +4,9 @@ namespace TclTk;
 
 use FFI\CData;
 
+/**
+ * Tcl interpreter implementation.
+ */
 class Interp
 {
     private Tcl $tcl;
@@ -15,6 +18,9 @@ class Interp
         $this->interp = $interp;
     }
 
+    /**
+     * Initializes Tcl interpreter.
+     */
     public function init(): void
     {
         $this->tcl->init($this);
@@ -25,18 +31,41 @@ class Interp
         return $this->interp;
     }
 
+    /**
+     * Gets the string result of the last executed command.
+     */
     public function getStringResult(): string
     {
         return $this->tcl->getStringResult($this);
     }
 
+    /**
+     * Evaluates a Tcl script.
+     */
     public function eval(string $script)
     {
+        echo "[DEBUG] $script\n";
         $this->tcl->eval($this, $script);
     }
 
     public function tcl(): Tcl
     {
         return $this->tcl;
+    }
+
+    /**
+     * Creates a Tcl command.
+     */
+    public function createCommand(string $command, callable $callback)
+    {
+        $this->tcl->createCommand($this, $command, function ($data, $interp, $objc, $objv) use ($callback) {
+            $params = [];
+            if ($objc > 1) {
+                for ($i = 1; $i < $objc; $i ++) {
+                    $params[] = $this->tcl->getString($objv[$i]);
+                }
+            }
+            $callback(...$params);
+        });
     }
 }

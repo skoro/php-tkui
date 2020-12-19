@@ -55,10 +55,34 @@ class Tcl
     }
 
     /**
+     * Returns a string representation from Tcl_Obj structure.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/StringObj.htm
+     */
+    public function getString($tclObj): string
+    {
+        return $this->ffi->Tcl_GetString($tclObj);
+    }
+
+    /**
      * Converts the Tcl Obj to a string.
      */
     public function getStringResult(Interp $interp): string
     {
         return $this->ffi->Tcl_GetString($this->ffi->Tcl_GetObjResult($interp->cdata()));
+    }
+
+    /**
+     * Creates a new Tcl command for the specified interpreter.
+     *
+     * @param Interp $interp     The TCL interpreter.
+     * @param string $command    The command name.
+     * @param callable $callback The command callback.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/CrtObjCmd.htm
+     */
+    public function createCommand(Interp $interp, string $command, callable $callback)
+    {
+        $this->ffi->Tcl_CreateObjCommand($interp->cdata(), $command, $callback, NULL, NULL);
     }
 }
