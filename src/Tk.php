@@ -4,7 +4,7 @@ namespace TclTk;
 
 use FFI;
 use FFI\CData;
-use RuntimeException;
+use TclTk\Exceptions\TclException;
 
 /**
  * Low-level interface to Tk FFI.
@@ -29,7 +29,7 @@ class Tk
     public function init(): void
     {
         if ($this->ffi->Tk_Init($this->tkInterp) !== Tcl::TCL_OK) {
-            throw new RuntimeException("Couldn't init Tk library.");
+            throw new TclException("Couldn't init Tk library.");
         }
     }
 
@@ -41,5 +41,21 @@ class Tk
     public function interp(): Interp
     {
         return $this->tclInterp;
+    }
+
+    public function mainWindow()
+    {
+        $tkWin = $this->ffi->Tk_MainWindow($this->tkInterp);
+        return $tkWin;
+    }
+
+    public function destroy($win)
+    {
+        $this->ffi->Tk_DestroyWindow($win);
+    }
+
+    public function nameToWindow(string $pathName, $win)
+    {
+        $this->ffi->Tk_NameToWindow($this->tkInterp, $pathName, $win);
     }
 }
