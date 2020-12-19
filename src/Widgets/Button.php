@@ -65,4 +65,9 @@ class Button extends Widget
     {
         $this->exec('invoke');
     }
+
+    public function isEnabled(): bool
+    {
+        return $this->state !== WidgetOptions::STATE_DISABLED;
+    }
 }
