@@ -31,17 +31,23 @@ class Options
      */
     public function asTcl(): string
     {
-        $map = array_map(function ($name, $value) {
-            return $value === null ? '' : "-$name {$this->quoteValue($value)}";
-        }, array_keys($this->options), $this->options);
+        $map = array_map(
+            fn ($name, $value) => $value === null ? '' : "-$name {$this->quoteValue($value)}",
+            array_keys($this->options), $this->options);
         return implode(' ', array_filter($map));
     }
 
+    /**
+     * Returns options as an array.
+     */
     public function asArray(): array
     {
         return $this->options;
     }
 
+    /**
+     * Returns options as Tcl string.
+     */
     public function __toString()
     {
         return $this->asTcl();
@@ -52,11 +58,17 @@ class Options
         return isset($this->options[$name]);
     }
 
+    /**
+     * Quote the option's value.
+     */
     protected function quoteValue(string $value): string
     {
         return strpos($value, ' ') !== false ? '{' . $value . '}' : $value;
     }
 
+    /**
+     * Merges another options.
+     */
     public function merge(Options $options): self
     {
         $this->options = array_merge($this->options, $options);
