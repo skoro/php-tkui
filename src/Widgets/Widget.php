@@ -35,6 +35,11 @@ abstract class Widget implements ArrayAccess, TkWidget
         $this->updateCounters();
     }
 
+    public function __destruct()
+    {
+        // TODO: destroy widget.
+    }
+
     private function updateCounters()
     {
         if (!isset(static::$counters[static::class])) {
@@ -68,7 +73,7 @@ abstract class Widget implements ArrayAccess, TkWidget
     /**
      * @inheritdoc
      */
-    public function exec(string $command, $args, Options $options): string
+    public function exec(string $command, $args, ?Options $options = null): string
     {
         return $this->parent->exec($command, $args, $options);
     }
@@ -76,5 +81,13 @@ abstract class Widget implements ArrayAccess, TkWidget
     public function pack(array $options = [])
     {
         $this->pack->pack($options);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWindow(): Window
+    {
+        return $this->parent->getWindow();
     }
 }

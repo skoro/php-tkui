@@ -15,7 +15,7 @@ interface TkWidget
     public function path(): string;
 
     /**
-     * Unique widget id.
+     * Unique widget id (without hierarchy and leading dot).
      */
     public function id(): string;
 
@@ -24,5 +24,10 @@ interface TkWidget
      * @param string|string[] $args
      * @param Options         $options
      */
-    public function exec(string $command, $args, Options $options): string;
+    public function exec(string $command, $args, ?Options $options = null): string;
+
+    /**
+     * Gets the parent window to which the widget belongs.
+     */
+    public function getWindow(): Window;
 }
