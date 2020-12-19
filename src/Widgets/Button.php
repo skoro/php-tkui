@@ -14,16 +14,13 @@ class Button extends Widget
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
         parent::__construct($parent, 'b', $options);
-        $this['text'] = $title;
         $this->make('button');
+        $this->text = $title;
     }
 
     public function onClick(callable $callback): self
     {
-        $command = $this->getWindow()->registerCallback($this, $callback);
-        $this->exec($this->path(), ['configure'], new Options([
-            'command' => $command,
-        ]));
+        $this->command = $this->getWindow()->registerCallback($this, $callback);
         return $this;
     }
 

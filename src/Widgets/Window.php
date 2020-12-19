@@ -11,6 +11,7 @@ class Window implements TkWidget
 {
     private App $app;
     private Interp $interp;
+    private Options $options;
 
     /**
      * Child widgets callbacks.
@@ -31,6 +32,7 @@ class Window implements TkWidget
         $this->app = $app;
         $this->interp = $app->tk()->interp();
         $this->callbacks = [];
+        $this->options = new Options();
         $this->createCallbackHandler();
     }
 
@@ -97,5 +99,13 @@ class Window implements TkWidget
     public function getWindow(): Window
     {
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOptions(): Options
+    {
+        return $this->options;
     }
 }

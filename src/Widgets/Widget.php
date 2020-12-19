@@ -2,20 +2,18 @@
 
 namespace TclTk\Widgets;
 
-use ArrayAccess;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
 
 /**
  * A basic Tk widget implementation.
  */
-abstract class Widget implements ArrayAccess, TkWidget
+abstract class Widget implements TkWidget
 {
-    use WidgetOptions;
-
     private TkWidget $parent;
     private static array $counters = [];
     private string $name;
+    private Options $options;
 
     private Pack $pack;
 
@@ -89,5 +87,26 @@ abstract class Widget implements ArrayAccess, TkWidget
     public function getWindow(): Window
     {
         return $this->parent->getWindow();
+    }
+
+    public function __get(string $name)
+    {
+        return $this->options->$name;
+    }
+
+    public function __set(string $name, $value)
+    {
+        if ($this->options->$name != $value) {
+            $this->options->$name = $value;
+            $this->exec($this->path(), 'configure', $this->options->only($name));
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOptions(): Options
+    {
+        return $this->options;
     }
 }

@@ -30,4 +30,9 @@ interface TkWidget
      * Gets the parent window to which the widget belongs.
      */
     public function getWindow(): Window;
+
+    /**
+     * Gets the widget options.
+     */
+    public function getOptions(): Options;
 }
