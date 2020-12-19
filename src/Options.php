@@ -56,4 +56,10 @@ class Options
     {
         return strpos($value, ' ') !== false ? '{' . $value . '}' : $value;
     }
+
+    public function merge(Options $options): self
+    {
+        $this->options = array_merge($this->options, $options);
+        return $this;
+    }
 }
