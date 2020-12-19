@@ -26,6 +26,7 @@ typedef unsigned long VisualID;
 typedef unsigned long KeyCode;
 typedef int Bool;
 typedef int Status;
+typedef struct _XIC *XIC;
 
 typedef struct {
     int x, y;
@@ -74,7 +75,8 @@ typedef struct TkWindow {
     unsigned long dirtyAtts;
     unsigned int flags;
     TkEventHandler *handlerList;
-    int tagPtr;
+    XIC inputContext;
+    ClientData *tagPtr;
     int numTags;
     int optionLevel;
     struct TkSelHandler *selHandlerList;
@@ -91,6 +93,7 @@ typedef struct TkWindow {
     int internalBorderBottom;
     int minReqWidth;
     int minReqHeight;
+    int ximGeneration;
     char *geomMgrName;
     struct TkWindow *maintainerPtr;
 } *Tk_Window;
@@ -105,3 +108,5 @@ Tk_Window Tk_CreateWindowFromPath(Tcl_Interp *interp, Tk_Window tkwin,
         const char *pathName, const char *screenName);
 Tk_Window Tk_CreateWindow(Tcl_Interp *interp,
         Tk_Window parent, const char *name, const char *screenName);
+Tk_Window Tk_NameToWindow(Tcl_Interp *interp,
+	    const char *pathName, Tk_Window tkwin);
