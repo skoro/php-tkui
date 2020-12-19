@@ -58,6 +58,9 @@ abstract class Widget implements TkWidget
         $this->window()->exec($this->widget, $this->path(), $this->options);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function widget(): string
     {
         return $this->widget;

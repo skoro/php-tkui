@@ -20,6 +20,11 @@ interface TkWidget
     public function id(): string;
 
     /**
+     * Widget command name.
+     */
+    public function widget(): string;
+
+    /**
      * Gets the parent window to which the widget belongs.
      */
     public function window(): Window;

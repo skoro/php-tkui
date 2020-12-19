@@ -108,6 +108,14 @@ class Window implements TkWidget
     /**
      * @inheritdoc
      */
+    public function widget(): string
+    {
+        return 'toplevel';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function options(): Options
     {
         return $this->options;
