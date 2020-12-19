@@ -16,7 +16,7 @@ class Options
 
     public function __get($name)
     {
-        return $this->options[$name];
+        return $this->options[$name] ?? null;
     }
 
     public function __set($name, $value)
@@ -61,5 +61,15 @@ class Options
     {
         $this->options = array_merge($this->options, $options);
         return $this;
+    }
+
+    /**
+     * Constructs new options with specified names.
+     */
+    public function only(string ...$names): Options
+    {
+        return new static(
+            array_map(fn ($name) => $this->$name, array_combine($names, $names))
+        );
     }
 }
