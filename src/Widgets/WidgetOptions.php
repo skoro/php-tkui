@@ -31,4 +31,9 @@ trait WidgetOptions
     {
         $this->options->$offset = null;
     }
+
+    protected function getOptions(): Options
+    {
+        return $this->options;
+    }
 }
