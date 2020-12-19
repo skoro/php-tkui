@@ -28,7 +28,7 @@ class Button extends Widget
      */
     public function flash(): void
     {
-        // TODO 
+        $this->exec($this->path(), 'flash');
     }
 
     /**
@@ -36,6 +36,6 @@ class Button extends Widget
      */
     public function invoke(): void
     {
-        // TODO
+        $this->exec($this->path(), 'invoke');
     }
 }
