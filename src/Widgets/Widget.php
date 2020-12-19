@@ -12,6 +12,7 @@ abstract class Widget implements TkWidget
 {
     private TkWidget $parent;
     private static array $counters = [];
+    private string $widget;
     private string $name;
     private Options $options;
 
@@ -21,16 +22,19 @@ abstract class Widget implements TkWidget
      * Creates a new widget.
      *
      * @param Widget $parent  The parent widget.
+     * @param string $widget  Tk widget command.
      * @param string $name    The widget name.
      * @param array  $options The widget options.
      */
-    public function __construct(TkWidget $parent, string $name, array $options = [])
+    public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
     {
         $this->parent = $parent;
+        $this->widget = $widget;
         $this->name = $name;
         $this->options = new Options($options);
         $this->pack = new Pack($this);
         $this->updateCounters();
+        $this->make();
     }
 
     public function __destruct()
@@ -46,9 +50,17 @@ abstract class Widget implements TkWidget
         static::$counters[static::class]++;
     }
 
-    protected function make(string $cmd)
+    /**
+     * Create Tk widget.
+     */
+    protected function make()
     {
-        $this->exec($cmd, $this->path(), $this->options);
+        $this->exec($this->widget, $this->path(), $this->options);
+    }
+
+    public function widget(): string
+    {
+        return $this->widget;
     }
 
     /**

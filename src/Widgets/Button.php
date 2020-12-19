@@ -13,9 +13,8 @@ class Button extends Widget
 {
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
-        parent::__construct($parent, 'b', $options);
-        $this->make('button');
-        $this->text = $title;
+        $options['text'] = $title;
+        parent::__construct($parent, 'button', 'b', $options);
     }
 
     public function onClick(callable $callback): self
