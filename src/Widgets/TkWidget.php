@@ -20,19 +20,19 @@ interface TkWidget
     public function id(): string;
 
     /**
-     * @param string          $command
-     * @param string|string[] $args
-     * @param Options         $options
-     */
-    public function exec(string $command, $args, ?Options $options = null): string;
-
-    /**
      * Gets the parent window to which the widget belongs.
      */
-    public function getWindow(): Window;
+    public function window(): Window;
 
     /**
      * Gets the widget options.
      */
-    public function getOptions(): Options;
+    public function options(): Options;
+
+    /**
+     * Parent widget.
+     *
+     * The last widget in the chain must be Window.
+     */
+    public function parent(): TkWidget;
 }

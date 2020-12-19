@@ -65,7 +65,11 @@ class Window implements TkWidget
     }
 
     /**
-     * @inheritdoc
+     * Executes the Tcl command.
+     *
+     * @return string A command result.
+     *
+     * @throws InvalidArgumentException When args is not string or array.
      */
     public function exec(string $command, $args, ?Options $options = null): string
     {
@@ -96,7 +100,7 @@ class Window implements TkWidget
     /**
      * @inheritdoc
      */
-    public function getWindow(): Window
+    public function window(): Window
     {
         return $this;
     }
@@ -104,8 +108,16 @@ class Window implements TkWidget
     /**
      * @inheritdoc
      */
-    public function getOptions(): Options
+    public function options(): Options
     {
         return $this->options;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function parent(): TkWidget
+    {
+        return $this;
     }
 }

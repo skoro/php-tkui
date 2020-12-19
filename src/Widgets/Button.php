@@ -19,7 +19,7 @@ class Button extends Widget
 
     public function onClick(callable $callback): self
     {
-        $this->command = $this->getWindow()->registerCallback($this, $callback);
+        $this->command = $this->window()->registerCallback($this, $callback);
         return $this;
     }
 
@@ -28,7 +28,7 @@ class Button extends Widget
      */
     public function flash(): void
     {
-        $this->exec($this->path(), 'flash');
+        $this->exec('flash');
     }
 
     /**
@@ -36,6 +36,6 @@ class Button extends Widget
      */
     public function invoke(): void
     {
-        $this->exec($this->path(), 'invoke');
+        $this->exec('invoke');
     }
 }

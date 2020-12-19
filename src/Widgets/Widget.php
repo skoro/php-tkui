@@ -55,7 +55,7 @@ abstract class Widget implements TkWidget
      */
     protected function make()
     {
-        $this->exec($this->widget, $this->path(), $this->options);
+        $this->window()->exec($this->widget, $this->path(), $this->options);
     }
 
     public function widget(): string
@@ -81,11 +81,11 @@ abstract class Widget implements TkWidget
     }
 
     /**
-     * @inheritdoc
+     * Executes the widget command.
      */
-    public function exec(string $command, $args, ?Options $options = null): string
+    protected function exec($args, ?Options $options = null): string
     {
-        return $this->parent->exec($command, $args, $options);
+        return $this->window()->exec($this->path(), $args, $options);
     }
 
     public function pack(array $options = [])
@@ -96,9 +96,9 @@ abstract class Widget implements TkWidget
     /**
      * @inheritdoc
      */
-    public function getWindow(): Window
+    public function window(): Window
     {
-        return $this->parent->getWindow();
+        return $this->parent->window();
     }
 
     public function __get(string $name)
@@ -110,15 +110,23 @@ abstract class Widget implements TkWidget
     {
         if ($this->options->$name != $value) {
             $this->options->$name = $value;
-            $this->exec($this->path(), 'configure', $this->options->only($name));
+            $this->exec('configure', $this->options->only($name));
         }
     }
 
     /**
      * @inheritdoc
      */
-    public function getOptions(): Options
+    public function options(): Options
     {
         return $this->options;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function parent(): TkWidget
+    {
+        return $this->parent;
     }
 }

@@ -19,6 +19,6 @@ class Pack
 
     public function pack(array $options = [])
     {
-        $this->widget->exec('pack', $this->widget->path(), new Options($options));
+        $this->widget->window()->exec('pack', $this->widget->path(), new Options($options));
     }
 }
