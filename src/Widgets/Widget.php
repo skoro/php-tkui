@@ -14,7 +14,7 @@ abstract class Widget implements TkWidget
     private static array $counters = [];
     private string $widget;
     private string $name;
-    private Options $options;
+    private WidgetOptions $options;
 
     private Pack $pack;
 
@@ -24,14 +24,14 @@ abstract class Widget implements TkWidget
      * @param Widget $parent  The parent widget.
      * @param string $widget  Tk widget command.
      * @param string $name    The widget name.
-     * @param array  $options The widget options.
+     * @param array  $options Override widget options.
      */
     public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
     {
         $this->parent = $parent;
         $this->widget = $widget;
         $this->name = $name;
-        $this->options = new Options($options);
+        $this->options = $this->initOptions()->mergeAsArray($options);
         $this->pack = new Pack($this);
         $this->updateCounters();
         $this->make();
@@ -48,6 +48,11 @@ abstract class Widget implements TkWidget
             static::$counters[static::class] = 0;
         }
         static::$counters[static::class]++;
+    }
+
+    protected function initOptions(): Options
+    {
+        return new WidgetOptions();
     }
 
     /**
@@ -71,8 +76,11 @@ abstract class Widget implements TkWidget
      */
     public function path(): string
     {
-        $pid = $this->parent ? $this->parent->id() : '';
-        return $pid . $this->id();
+        $pid = $this->parent->path();
+        if ($pid === '.') {
+            return '.' . $this->id();
+        }
+        return $pid . '.' . $this->id();
     }
 
     /**
@@ -106,7 +114,12 @@ abstract class Widget implements TkWidget
 
     public function __get(string $name)
     {
-        return $this->options->$name;
+        $value = $this->options->$name;
+        if ($value === null) {
+            $value = $this->exec(['cget', '-' . $name]);
+            $this->options->$name = $value;
+        }
+        return $value;
     }
 
     public function __set(string $name, $value)

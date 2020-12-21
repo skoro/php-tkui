@@ -20,7 +20,7 @@ interface TkWidget
     public function id(): string;
 
     /**
-     * Widget command name.
+     * A widget command used for constructing the widget.
      */
     public function widget(): string;
 

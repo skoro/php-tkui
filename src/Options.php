@@ -32,7 +32,7 @@ class Options
     public function asTcl(): string
     {
         $map = array_map(
-            fn ($name, $value) => $value === null ? '' : "-$name {$this->quoteValue($value)}",
+            fn ($name, $value) => $value === null ? '' : "-$name {$this->quoteValue((string) $value)}",
             array_keys($this->options), $this->options);
         return implode(' ', array_filter($map));
     }
@@ -55,7 +55,7 @@ class Options
 
     public function has(string $name): bool
     {
-        return isset($this->options[$name]);
+        return array_key_exists($name, $this->options);
     }
 
     /**
@@ -71,6 +71,11 @@ class Options
      */
     public function merge(Options $options): self
     {
+        return $this->mergeAsArray($options->asArray());
+    }
+
+    public function mergeAsArray(array $options): self
+    {
         $this->options = array_merge($this->options, $options);
         return $this;
     }
@@ -83,5 +88,13 @@ class Options
         return new static(
             array_map(fn ($name) => $this->$name, array_combine($names, $names))
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function names(): array
+    {
+        return array_keys($this->options);
     }
 }
