@@ -2,6 +2,7 @@
 
 namespace TclTk\Widgets;
 
+use InvalidArgumentException;
 use TclTk\Options;
 
 /**
@@ -40,10 +41,28 @@ class Button extends Widget
         ]);
     }
 
+    /**
+     * Wrapper for 'command' property.
+     */
     public function onClick(callable $callback): self
     {
-        $this->command = $this->window()->registerCallback($this, $callback);
+        $this->command = $callback;
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __set(string $name, $value)
+    {
+        if ($name === 'command') {
+            if (is_callable($value)) {
+                $value = $this->window()->registerCallback($this, $value);
+            } else {
+                throw new InvalidArgumentException(sprintf('"%s" is not a valid button command.', $value));
+            }
+        }
+        parent::__set($name, $value);
     }
 
     /**
