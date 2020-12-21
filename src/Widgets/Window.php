@@ -71,14 +71,16 @@ class Window implements TkWidget
      *
      * @throws InvalidArgumentException When args is not string or array.
      */
-    public function exec(string $command, $args, ?Options $options = null): string
+    public function exec(string $command, $args = '', ?Options $options = null): string
     {
-        if (is_array($args)) {
-            $args = implode(' ', $args);
-        }
-
-        if (!is_string($args)) {
-            throw new InvalidArgumentException('args must be an array or string.');
+        if ($args) {
+            if (is_array($args)) {
+                $args = implode(' ', $args);
+            }
+    
+            if (!is_string($args)) {
+                throw new InvalidArgumentException('args must be an array or string.');
+            }
         }
 
         $script = $command . ' ' . $args;
@@ -86,7 +88,7 @@ class Window implements TkWidget
             $script .= ' ' . $options;
         }
 
-        $this->interp->eval($script);
+        $this->interp->eval(rtrim($script));
 
         return $this->interp->getStringResult();
     }
