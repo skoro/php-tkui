@@ -97,4 +97,12 @@ class Options
     {
         return array_keys($this->options);
     }
+
+    /**
+     * Array options to Tcl string converter.
+     */
+    public static function tclString(array $options): string
+    {
+        return (new static($options))->asTcl();
+    }
 }
