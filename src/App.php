@@ -23,9 +23,17 @@ class App
         return $app;
     }
 
-    public function tclEval(string $script)
+    /**
+     * Evaluates a Tcl command.
+     *
+     * All the arguments will be concatenated to a script.
+     */
+    public function tclEval(...$args): string
     {
+        $script = implode(' ', $args);
         $this->interp->eval($script);
+
+        return $this->interp->getStringResult();
     }
 
     public function init(): void

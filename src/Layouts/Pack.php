@@ -19,6 +19,9 @@ class Pack
 
     public function pack(array $options = [])
     {
-        $this->widget->window()->exec('pack', $this->widget->path(), new Options($options));
+        $this->widget
+             ->window()
+             ->app()
+             ->tclEval('pack', $this->widget->path(), Options::tclString($options));
     }
 }

@@ -2,11 +2,13 @@
 
 namespace TclTk\Widgets;
 
-use InvalidArgumentException;
 use TclTk\App;
 use TclTk\Options;
 use TclTk\Interp;
 
+/**
+ * Window.
+ */
 class Window implements TkWidget
 {
     private App $app;
@@ -64,35 +66,6 @@ class Window implements TkWidget
         return '.';
     }
 
-    /**
-     * Executes the Tcl command.
-     *
-     * @return string A command result.
-     *
-     * @throws InvalidArgumentException When args is not string or array.
-     */
-    public function exec(string $command, $args = '', ?Options $options = null): string
-    {
-        if ($args) {
-            if (is_array($args)) {
-                $args = implode(' ', $args);
-            }
-    
-            if (!is_string($args)) {
-                throw new InvalidArgumentException('args must be an array or string.');
-            }
-        }
-
-        $script = $command . ' ' . $args;
-        if ($options) {
-            $script .= ' ' . $options;
-        }
-
-        $this->interp->eval(rtrim($script));
-
-        return $this->interp->getStringResult();
-    }
-
     public function registerCallback(TkWidget $widget, callable $callback): string
     {
         $this->callbacks[$widget->path()] = $callback;
@@ -129,5 +102,13 @@ class Window implements TkWidget
     public function parent(): TkWidget
     {
         return $this;
+    }
+
+    /**
+     * Application instance.
+     */
+    public function app(): App
+    {
+        return $this->app;
     }
 }

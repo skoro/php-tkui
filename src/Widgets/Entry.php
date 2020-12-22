@@ -39,9 +39,9 @@ class Entry extends Widget
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M45
      */
-    public function value(): string
+    public function get(): string
     {
-        return $this->exec('get');
+        return $this->call('get');
     }
 
     /**
@@ -51,11 +51,11 @@ class Entry extends Widget
      */
     public function delete(int $first, int $last = 0): self
     {
-        $params = ['delete', $first];
         if ($last > 0) {
-            $params[] = $last;
+            $this->call('delete', $first, $last);
+        } else {
+            $this->call('delete', $first);
         }
-        $this->exec($params);
         return $this;
     }
 
@@ -66,7 +66,7 @@ class Entry extends Widget
      */
     public function insert(int $index, string $str): self
     {
-        $this->exec(['insert', $index, $str]);
+        $this->call('insert', $index, $str);
         return $this;
     }
 }

@@ -73,7 +73,7 @@ abstract class Widget implements TkWidget
      */
     protected function make()
     {
-        $this->window()->exec($this->widget, $this->path(), $this->options);
+        $this->window()->app()->tclEval($this->widget, $this->path(), $this->options);
     }
 
     /**
@@ -105,11 +105,13 @@ abstract class Widget implements TkWidget
     }
 
     /**
-     * Executes the widget command.
+     * Call the widget method.
      */
-    protected function exec($args, ?Options $options = null): string
+    protected function call(string $method, ...$args): string
     {
-        return $this->window()->exec($this->path(), $args, $options);
+        return $this->window()
+                    ->app()
+                    ->tclEval($this->path(), $method, ...$args);
     }
 
     public function pack(array $options = [])
@@ -129,7 +131,7 @@ abstract class Widget implements TkWidget
     {
         $value = $this->options->$name;
         if ($value === null) {
-            $value = $this->exec(['cget', '-' . $name]);
+            $value = $this->call('cget', '-' . $name);
             $this->options->$name = $value;
         }
         return $value;
@@ -139,7 +141,7 @@ abstract class Widget implements TkWidget
     {
         if ($this->options->$name != $value) {
             $this->options->$name = $value;
-            $this->exec('configure', $this->options->only($name));
+            $this->call('configure', $this->options->only($name)->asTcl());
         }
     }
 

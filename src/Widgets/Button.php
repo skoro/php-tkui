@@ -79,7 +79,7 @@ class Button extends Widget
      */
     public function flash(): void
     {
-        $this->exec('flash');
+        $this->call('flash');
     }
 
     /**
@@ -89,7 +89,7 @@ class Button extends Widget
      */
     public function invoke(): void
     {
-        $this->exec('invoke');
+        $this->call('invoke');
     }
 
     public function isDisabled(): bool
