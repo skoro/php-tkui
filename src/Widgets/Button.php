@@ -21,7 +21,7 @@ use TclTk\Options;
 class Button extends Widget
 {
     /**
-     * Button states for 'state' option.
+     * States for the 'state' option.
      */
     const STATE_NORMAL = 'normal';
     const STATE_ACTIVE = 'active';
