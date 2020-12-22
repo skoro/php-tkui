@@ -31,8 +31,10 @@ abstract class Widget implements TkWidget
         $this->parent = $parent;
         $this->widget = $widget;
         $this->name = $name;
-        $this->options = $this->initOptions()->mergeAsArray($options);
         $this->pack = new Pack($this);
+        $this->options = $this->initOptions()
+                              ->merge($this->initWidgetOptions())
+                              ->mergeAsArray($options);
         $this->updateCounters();
         $this->make();
     }
@@ -50,9 +52,20 @@ abstract class Widget implements TkWidget
         static::$counters[static::class]++;
     }
 
+    /**
+     * Initialize the common widget options.
+     */
     protected function initOptions(): Options
     {
         return new WidgetOptions();
+    }
+
+    /**
+     * Initialize specific widget options.
+     */
+    protected function initWidgetOptions(): Options
+    {
+        return new Options();
     }
 
     /**

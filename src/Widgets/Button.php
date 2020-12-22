@@ -20,6 +20,13 @@ use TclTk\Options;
  */
 class Button extends Widget
 {
+    /**
+     * Button states for 'state' option.
+     */
+    const STATE_NORMAL = 'normal';
+    const STATE_ACTIVE = 'active';
+    const STATE_DISABLED = 'disabled';
+
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
@@ -29,9 +36,9 @@ class Button extends Widget
     /**
      * @inheritdoc
      */
-    protected function initOptions(): Options
+    protected function initWidgetOptions(): Options
     {
-        return parent::initOptions()->mergeAsArray([
+        return new Options([
             'command' => null,
             'default' => null,
             'height' => null,
@@ -85,8 +92,18 @@ class Button extends Widget
         $this->exec('invoke');
     }
 
-    public function isEnabled(): bool
+    public function isDisabled(): bool
     {
-        return $this->state !== WidgetOptions::STATE_DISABLED;
+        return $this->state === self::STATE_DISABLED;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->state === self::STATE_ACTIVE;
+    }
+
+    public function isNormal(): bool
+    {
+        return $this->state === self::STATE_NORMAL;
     }
 }

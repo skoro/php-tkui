@@ -19,9 +19,9 @@ class Entry extends Widget
     /**
      * @inheritdoc
      */
-    protected function initOptions(): Options
+    protected function initWidgetOptions(): Options
     {
-        return parent::initOptions()->mergeAsArray([
+        return new Options([
             'disabledBackground' => null,
             'disabledForeground' => null,
             'invalidCommand' => null,
@@ -41,7 +41,7 @@ class Entry extends Widget
      */
     public function value(): string
     {
-        return $this->window()->exec('get');
+        return $this->exec('get');
     }
 
     /**
@@ -51,11 +51,11 @@ class Entry extends Widget
      */
     public function delete(int $first, int $last = 0): self
     {
-        $params = [$first];
+        $params = ['delete', $first];
         if ($last > 0) {
             $params[] = $last;
         }
-        $this->window()->exec('delete', $params);
+        $this->exec($params);
         return $this;
     }
 
@@ -66,7 +66,7 @@ class Entry extends Widget
      */
     public function insert(int $index, string $str): self
     {
-        $this->window()->exec('insert', [$index, $str]);
+        $this->exec(['insert', $index, $str]);
         return $this;
     }
 }

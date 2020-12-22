@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use TclTk\Options;
 
 /**
- * Standart Tk widget options.
+ * Common Tk widget options.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/options.htm
  */
@@ -25,10 +25,6 @@ class WidgetOptions extends Options
     const RELIEF_RIDGE = 'ridge';
     const RELIEF_SOLID = 'solid';
     const RELIEF_GROOVE = 'groove';
-
-    const STATE_NORMAL = 'normal';
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
 
     public function __construct(array $options = [])
     {

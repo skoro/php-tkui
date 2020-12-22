@@ -15,15 +15,20 @@ use TclTk\Options;
  */
 class Label extends Widget
 {
+    // TODO: states as in the Button widget.
+
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, 'label', 'lb', $options);
     }
 
-    protected function initOptions(): Options
+    /**
+     * @inheritdoc
+     */
+    protected function initWidgetOptions(): Options
     {
-        return parent::initOptions()->mergeAsArray([
+        return new Options([
             'height' => null,
             'state' => null,
             'width' => null,
