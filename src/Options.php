@@ -31,9 +31,10 @@ class Options
      */
     public function asTcl(): string
     {
+        $names = array_map('strtolower', array_keys($this->options));
         $map = array_map(
             fn ($name, $value) => $value === null ? '' : "-$name {$this->quoteValue((string) $value)}",
-            array_keys($this->options), $this->options);
+            $names, $this->options);
         return implode(' ', array_filter($map));
     }
 
