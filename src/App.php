@@ -2,6 +2,9 @@
 
 namespace TclTk;
 
+/**
+ * Main application.
+ */
 class App
 {
     private Tk $tk;
@@ -13,6 +16,11 @@ class App
         $this->interp = $tk->interp();
     }
 
+    /**
+     * Application builder.
+     *
+     * Loads and initializes Tcl and Tk libraries.
+     */
     public static function create(): self
     {
         $loader = new FFILoader();
@@ -26,7 +34,7 @@ class App
     /**
      * Evaluates a Tcl command.
      *
-     * All the arguments will be concatenated to a script.
+     * All the arguments will be concatenated as a script.
      */
     public function tclEval(...$args): string
     {
@@ -36,12 +44,20 @@ class App
         return $this->interp->getStringResult();
     }
 
+    /**
+     * Initializes Tcl and Tk libraries.
+     */
     public function init(): void
     {
         $this->interp->init();
         $this->tk->init();
     }
 
+    /**
+     * Application's the main loop.
+     *
+     * Will process all the app events.
+     */
     public function mainLoop(): void
     {
         $this->tk->mainLoop();

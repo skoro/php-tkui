@@ -7,7 +7,7 @@ use TclTk\Options;
 use TclTk\Interp;
 
 /**
- * Window.
+ * Application window.
  */
 class Window implements TkWidget
 {
