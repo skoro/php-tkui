@@ -69,4 +69,15 @@ class Entry extends Widget
         $this->call('insert', $index, $str);
         return $this;
     }
+
+    /**
+     * Arrange for the insertion cursor to be displayed just before the character given by index.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M46
+     */
+    public function insertCursor(int $index): self
+    {
+        $this->call('icursor', $index);
+        return $this;
+    }
 }
