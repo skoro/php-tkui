@@ -139,7 +139,7 @@ abstract class Widget implements TkWidget
 
     public function __set(string $name, $value)
     {
-        if ($this->options->$name != $value) {
+        if ($this->options->$name !== $value) {
             $this->options->$name = $value;
             $this->call('configure', $this->options->only($name)->asTcl());
         }
@@ -159,5 +159,11 @@ abstract class Widget implements TkWidget
     public function parent(): TkWidget
     {
         return $this->parent;
+    }
+
+    public function focus(): self
+    {
+        $this->window()->app()->tclEval('focus', $this->path());
+        return $this;
     }
 }
