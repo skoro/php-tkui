@@ -8,9 +8,23 @@ use TclTk\Interp;
 
 /**
  * Application window.
+ *
+ * @property string $title
+ * @property string $state
  */
 class Window implements TkWidget
 {
+    /**
+     * The window states.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
+     */
+    const STATE_NORMAL = 'normal';
+    const STATE_ICONIC = 'iconic';
+    const STATE_WITHDRAWN = 'withdrawn';
+    const STATE_ICON = 'icon';
+    const STATE_ZOOMED = 'zoomed';
+
     private App $app;
     private Interp $interp;
     private Options $options;
@@ -29,13 +43,22 @@ class Window implements TkWidget
      */
     private const CALLBACK_HANDLER = 'PHP_tk_ui_Handler';
 
-    public function __construct(App $app)
+    public function __construct(App $app, string $title)
     {
         $this->app = $app;
         $this->interp = $app->tk()->interp();
         $this->callbacks = [];
-        $this->options = new Options();
+        $this->options = $this->initOptions();
+        $this->title = $title;
         $this->createCallbackHandler();
+    }
+
+    protected function initOptions(): Options
+    {
+        return new Options([
+            'title' => '',
+            'state' => '',
+        ]);
     }
 
     public function __destruct()
@@ -110,5 +133,25 @@ class Window implements TkWidget
     public function app(): App
     {
         return $this->app;
+    }
+
+    public function __get($name)
+    {
+        return $this->options->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        if ($this->options->has($name) && $this->options->$name !== $value) {
+            $this->options->$name = $value;
+            // TODO: must be a proxy to "wm" command.
+            switch ($name) {
+                case 'title':
+                    $this->app->tclEval('wm', 'title', $this->path(), $value);
+                    break;
+                case 'state':
+                    $this->app->tclEval('wm', 'state', $this->path(), $value);
+            }
+        }
     }
 }
