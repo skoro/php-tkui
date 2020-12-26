@@ -2,7 +2,6 @@
 
 namespace TclTk\Widgets;
 
-use InvalidArgumentException;
 use TclTk\Options;
 
 /**
@@ -78,31 +77,5 @@ class WidgetOptions extends Options
             'xScrollCommand' => null,
             'yScrollCommand' => null,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @throws InvalidArgumentException When option name is not widget option.
-     */
-    public function __get($name)
-    {
-        if ($this->has($name)) {
-            return parent::__get($name);
-        }
-        throw new InvalidArgumentException("'$name' is not widget option.");
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @throws InvalidArgumentException When option name is not widget option.
-     */
-    public function __set($name, $value)
-    {
-        if ($this->has($name)) {
-            return parent::__set($name, $value);
-        }
-        throw new InvalidArgumentException("'$name' is not widget option.");
     }
 }

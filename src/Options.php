@@ -2,6 +2,8 @@
 
 namespace TclTk;
 
+use InvalidArgumentException;
+
 /**
  * Tcl command options.
  */
@@ -14,14 +16,27 @@ class Options
         $this->options = $options;
     }
 
+    /**
+     * @throws InvalidArgumentException When option name is not widget option.
+     */
     public function __get($name)
     {
-        return $this->options[$name] ?? null;
+        if ($this->has($name)) {
+            return $this->options[$name];
+        }
+        throw new InvalidArgumentException("'$name' is not widget option.");
     }
 
+    /**
+     * @throws InvalidArgumentException When option name is not widget option.
+     */
     public function __set($name, $value)
     {
-        $this->options[$name] = $value;
+        if ($this->has($name)) {
+            $this->options[$name] = $value;
+        } else {
+            throw new InvalidArgumentException("'$name' is not widget option.");
+        }
     }
 
     /**

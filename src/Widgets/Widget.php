@@ -130,6 +130,9 @@ abstract class Widget implements TkWidget
         return $this->parent->window();
     }
 
+    /**
+     * Get the widget option value.
+     */
     public function __get(string $name)
     {
         $value = $this->options->$name;
@@ -140,6 +143,9 @@ abstract class Widget implements TkWidget
         return $value;
     }
 
+    /**
+     * Set the widget option value.
+     */
     public function __set(string $name, $value)
     {
         if ($this->options->$name !== $value) {
