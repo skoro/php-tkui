@@ -74,7 +74,7 @@ abstract class Widget implements TkWidget
      */
     protected function make()
     {
-        $this->window()->app()->tclEval($this->widget, $this->path(), $this->options);
+        $this->window()->app()->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class Widget implements TkWidget
     {
         if ($this->options->$name !== $value) {
             $this->options->$name = $value;
-            $this->call('configure', $this->options->only($name)->asTcl());
+            $this->call('configure', ...$this->options->only($name)->asStringArray());
         }
     }
 
