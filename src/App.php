@@ -38,10 +38,27 @@ class App
      */
     public function tclEval(...$args): string
     {
-        $script = implode(' ', $args);
+        $script = implode(' ', array_map(fn ($arg) => $this->encloseArg($arg), $args));
         $this->interp->eval($script);
 
         return $this->interp->getStringResult();
+    }
+
+    /**
+     * Encloses the argument in the curly brackets.
+     *
+     * This function automatically detects when the argument
+     * should be enclosed in curly brackets.
+     *
+     * @see App::tclEval()
+     */
+    protected function encloseArg(string $arg): string
+    {
+        $chr = $arg[0];
+        if ($chr === '"' || $chr === "'" || $chr === '{' || $chr === '[') {
+            return $arg;
+        }
+        return strpos($arg, ' ') === FALSE ? $arg : '{' . $arg . '}';
     }
 
     /**
