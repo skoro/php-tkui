@@ -174,7 +174,7 @@ class Window implements TkWidget
             // TODO: must be a proxy to "wm" command.
             switch ($name) {
                 case 'title':
-                    $this->app->tclEval('wm', 'title', $this->path(), $value);
+                    $this->app->tclEval('wm', 'title', $this->path(), '{' . $value . '}');
                     break;
                 case 'state':
                     $this->app->tclEval('wm', 'state', $this->path(), $value);
