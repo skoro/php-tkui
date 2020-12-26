@@ -31,11 +31,7 @@ class Options
      */
     public function asTcl(): string
     {
-        $names = array_map('strtolower', array_keys($this->options));
-        $map = array_map(
-            fn ($name, $value) => $value === null ? '' : "-$name {$this->quoteValue((string) $value)}",
-            $names, $this->options);
-        return implode(' ', array_filter($map));
+        return implode(' ', $this->asStringArray());
     }
 
     /**
@@ -47,6 +43,31 @@ class Options
     }
 
     /**
+     * Formats options as a string array suitable for tcl eval() command.
+     *
+     * @return string[]
+     */
+    public function asStringArray(): array
+    {
+        $str = [];
+        foreach ($this->options as $option => $value) {
+            if ($value !== null) {
+                $str[] = $this->getTclOption($option);
+                $str[] = (string) $value;
+            }
+        }
+        return $str;
+    }
+
+    /**
+     * Format the option as a Tcl string.
+     */
+    protected function getTclOption(string $option): string
+    {
+        return '-' . strtolower($option);
+    }
+
+    /**
      * Returns options as Tcl string.
      */
     public function __toString()
@@ -54,27 +75,25 @@ class Options
         return $this->asTcl();
     }
 
+    /**
+     * Check whether the option exist.
+     */
     public function has(string $name): bool
     {
         return array_key_exists($name, $this->options);
     }
 
     /**
-     * Quote the option's value.
-     */
-    protected function quoteValue(string $value): string
-    {
-        return strpos($value, ' ') !== false ? '{' . $value . '}' : $value;
-    }
-
-    /**
-     * Merges another options.
+     * Merge options from another option instance.
      */
     public function merge(Options $options): self
     {
         return $this->mergeAsArray($options->asArray());
     }
 
+    /**
+     * Merge options from an array.
+     */
     public function mergeAsArray(array $options): self
     {
         $this->options = array_merge($this->options, $options);
@@ -92,6 +111,8 @@ class Options
     }
 
     /**
+     * Returns a list of option names.
+     *
      * @return string[]
      */
     public function names(): array
