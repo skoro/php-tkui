@@ -11,10 +11,11 @@ use TclTk\Options;
 abstract class Widget implements TkWidget
 {
     private TkWidget $parent;
-    private static array $counters = [];
+    private static array $idCounter = [];
     private string $widget;
     private string $name;
     private WidgetOptions $options;
+    private int $id;
 
     private Pack $pack;
 
@@ -28,14 +29,14 @@ abstract class Widget implements TkWidget
      */
     public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
     {
+        $this->generateId();
         $this->parent = $parent;
         $this->widget = $widget;
         $this->name = $name;
-        $this->pack = new Pack($this);
         $this->options = $this->initOptions()
                               ->merge($this->initWidgetOptions())
                               ->mergeAsArray($options);
-        $this->updateCounters();
+        $this->pack = new Pack($this);
         $this->make();
     }
 
@@ -44,12 +45,12 @@ abstract class Widget implements TkWidget
         // TODO: destroy widget.
     }
 
-    private function updateCounters()
+    private function generateId(): void
     {
-        if (!isset(static::$counters[static::class])) {
-            static::$counters[static::class] = 0;
+        if (!isset(static::$idCounter[static::class])) {
+            static::$idCounter[static::class] = 0;
         }
-        static::$counters[static::class]++;
+        $this->id = ++static::$idCounter[static::class];
     }
 
     /**
@@ -90,9 +91,11 @@ abstract class Widget implements TkWidget
     public function path(): string
     {
         $pid = $this->parent->path();
+        // Widget belongs to the root window.
         if ($pid === '.') {
             return '.' . $this->id();
         }
+
         return $pid . '.' . $this->id();
     }
 
@@ -101,7 +104,7 @@ abstract class Widget implements TkWidget
      */
     public function id(): string
     {
-        return $this->name . static::$counters[static::class];
+        return $this->name . $this->id;
     }
 
     /**
@@ -161,6 +164,9 @@ abstract class Widget implements TkWidget
         return $this->parent;
     }
 
+    /**
+     * Force to focus widget.
+     */
     public function focus(): self
     {
         $this->window()->app()->tclEval('focus', $this->path());

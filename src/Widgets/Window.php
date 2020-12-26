@@ -39,18 +39,28 @@ class Window implements TkWidget
     private array $callbacks;
 
     /**
+     * Window instance id.
+     */
+    private int $id;
+
+    private static int $idCounter = 0;
+
+    /**
      * @todo Create a namespace for window callbacks handler.
      */
     private const CALLBACK_HANDLER = 'PHP_tk_ui_Handler';
 
     public function __construct(App $app, string $title)
     {
+        $this->generateId();
         $this->app = $app;
         $this->interp = $app->tk()->interp();
         $this->callbacks = [];
         $this->options = $this->initOptions();
-        $this->title = $title;
         $this->createCallbackHandler();
+        $this->createWindow();
+
+        $this->title = $title;
     }
 
     protected function initOptions(): Options
@@ -66,11 +76,28 @@ class Window implements TkWidget
         // TODO: unregister callback handler.
     }
 
+    private function generateId(): void
+    {
+        $this->id = static::$idCounter++;
+    }
+
+    protected function callbackCommandName(): string
+    {
+        return self::CALLBACK_HANDLER . $this->path();
+    }
+
     protected function createCallbackHandler()
     {
-        $this->interp->createCommand(self::CALLBACK_HANDLER, function ($path) {
+        $this->interp->createCommand($this->callbackCommandName(), function ($path) {
             $this->callbacks[$path]();
         });
+    }
+
+    protected function createWindow(): void
+    {
+        if ($this->id != 0) {
+            $this->app->tclEval('toplevel', $this->path());
+        }
     }
 
     /**
@@ -78,7 +105,7 @@ class Window implements TkWidget
      */
     public function path(): string
     {
-        return '.';
+        return '.' . $this->id();
     }
 
     /**
@@ -86,13 +113,13 @@ class Window implements TkWidget
      */
     public function id(): string
     {
-        return '.';
+        return ($this->id === 0) ? '' : 'w' . $this->id;
     }
 
     public function registerCallback(TkWidget $widget, callable $callback): string
     {
         $this->callbacks[$widget->path()] = $callback;
-        return self::CALLBACK_HANDLER . ' ' . $widget->path();
+        return $this->callbackCommandName() . ' ' . $widget->path();
     }
 
     /**
