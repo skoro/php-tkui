@@ -67,7 +67,7 @@ class Options
         $str = [];
         foreach ($this->options as $option => $value) {
             if ($value !== null) {
-                $str[] = $this->getTclOption($option);
+                $str[] = static::getTclOption($option);
                 $str[] = (string) $value;
             }
         }
@@ -77,7 +77,7 @@ class Options
     /**
      * Format the option as a Tcl string.
      */
-    protected function getTclOption(string $option): string
+    public static function getTclOption(string $option): string
     {
         return '-' . strtolower($option);
     }

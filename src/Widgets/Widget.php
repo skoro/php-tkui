@@ -137,7 +137,7 @@ abstract class Widget implements TkWidget
     {
         $value = $this->options->$name;
         if ($value === null) {
-            $value = $this->call('cget', '-' . $name);
+            $value = $this->call('cget', Options::getTclOption($name));
             $this->options->$name = $value;
         }
         return $value;
