@@ -235,6 +235,7 @@ class Listbox extends Widget
                 if (!($value instanceof Scrollbar)) {
                     throw new InvalidArgumentException("$name must be an instance of " . Scrollbar::class);
                 }
+                /** @var Scrollbar $value */
                 $value = $value->path() . ' set';
                 break;
         }
@@ -250,15 +251,5 @@ class Listbox extends Widget
     protected function quoteValue(ListboxItem $item): string
     {
         return '"' . $item->value() . '"';
-    }
-
-    public function height(): int
-    {
-        return (int) $this->call('height');
-    }
-
-    public function width(): int
-    {
-        return (int) $this->call('width');
     }
 }
