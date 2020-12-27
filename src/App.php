@@ -51,14 +51,19 @@ class App
      * should be enclosed in curly brackets.
      *
      * @see App::tclEval()
+     *
+     * @param mixed $arg
      */
-    protected function encloseArg(string $arg): string
+    protected function encloseArg($arg): string
     {
-        $chr = $arg[0];
-        if ($chr === '"' || $chr === "'" || $chr === '{' || $chr === '[') {
-            return $arg;
+        if (is_string($arg)) {
+            $chr = $arg[0];
+            if ($chr === '"' || $chr === "'" || $chr === '{' || $chr === '[') {
+                return $arg;
+            }
+            return strpos($arg, ' ') === FALSE ? $arg : '{' . $arg . '}';
         }
-        return strpos($arg, ' ') === FALSE ? $arg : '{' . $arg . '}';
+        return (string) $arg;
     }
 
     /**
