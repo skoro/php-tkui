@@ -28,19 +28,22 @@ $listbox = new Listbox($main, [
     new ListboxItem('MySQL'),
     new ListboxItem('PostgreSQL'),
 ]);
-$listbox->selectMode = Listbox::SELECTMODE_MULTIPLE;
+// $listbox->selectMode = Listbox::SELECTMODE_MULTIPLE;
 $listbox->yScrollCommand = $scroll;
 for ($i = 1; $i <= 20; $i++) {
     $listbox->append(new ListboxItem("Test ($i)"));
 }
 $listbox->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
+$item = $listbox->item(10);
+$item->background = 'yellow';
+$item->foreground = 'black';
 
 $bottom = new Frame($win);
 $bottom->pack(['side' => 'bottom', 'fill' => 'x']);
 $ok = new Button($bottom, 'OK');
 $ok->pack(['side' => 'right']);
 $ok->onClick(function () use ($listbox) {
-    var_dump($listbox->curselection());
+
 });
 
 $app->mainLoop();
