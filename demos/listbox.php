@@ -2,7 +2,9 @@
 
 use TclTk\App;
 use TclTk\Widgets\Button;
+use TclTk\Widgets\Entry;
 use TclTk\Widgets\Frame;
+use TclTk\Widgets\Label;
 use TclTk\Widgets\Listbox;
 use TclTk\Widgets\ListboxItem;
 use TclTk\Widgets\Scrollbar;
@@ -10,40 +12,92 @@ use TclTk\Widgets\Window;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-$app = App::create();
+$demo = new class extends Window
+{
+    private Listbox $listBox;
 
-$win = new Window($app, 'Demo PHP & TclTk');
+    public function __construct()
+    {
+        parent::__construct(App::create(), 'Demo Listbox');
+        $this->newItemFrame()->pack(['side' => 'top', 'fill' => 'x']);
+        $this->listControlsFrame()->pack(['side' => 'right', 'fill' => 'y']);
+        $lf = new Frame($this);
+        $lf->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
+        $this->listBox = $this->createListBox($lf);
+        $this->initItems();
+    }
 
-$main = new Frame($win);
-$main->pack(['side' => 'top', 'fill' => 'both', 'expand' => 1]);
+    protected function newItemFrame(): Frame
+    {
+        $f = new Frame($this);
 
-$scroll = new Scrollbar($main);
-$scroll->pack(['side' => 'right', 'fill' => 'y']);
+        $l = new Label($f, 'New item:');
+        $l->pack(['side' => 'left']);
 
-$listbox = new Listbox($main, [
-    new ListboxItem('PHP 8.0'),
-    new ListboxItem('PHP 7.4'),
-    new ListboxItem('Apache'),
-    new ListboxItem('Nginx'),
-    new ListboxItem('MySQL'),
-    new ListboxItem('PostgreSQL'),
-]);
-// $listbox->selectMode = Listbox::SELECTMODE_MULTIPLE;
-$listbox->yScrollCommand = $scroll;
-for ($i = 1; $i <= 20; $i++) {
-    $listbox->append(new ListboxItem("Test ($i)"));
-}
-$listbox->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
-$item = $listbox->item(10);
-$item->background = 'yellow';
-$item->foreground = 'black';
+        $e = new Entry($f);
+        $e->pack(['side' => 'left', 'fill' => 'x', 'expand' => 1]);
 
-$bottom = new Frame($win);
-$bottom->pack(['side' => 'bottom', 'fill' => 'x']);
-$ok = new Button($bottom, 'OK');
-$ok->pack(['side' => 'right']);
-$ok->onClick(function () use ($listbox) {
+        $add = new Button($f, 'Add');
+        $add->pack(['side' => 'right']);
+        $add->onClick(function () use ($e) {
+            $this->addNewItem($e->get());
+            $e->clear();
+        });
 
-});
+        return $f;
+    }
 
-$app->mainLoop();
+    protected function createListBox(Frame $parent): Listbox
+    {
+        $lb = new Listbox($parent);
+        $lb->yScrollCommand = new Scrollbar($parent);
+        $lb->yScrollCommand->pack(['side' => 'right', 'fill' => 'y']);
+        $lb->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
+        return $lb;
+    }
+
+    protected function listControlsFrame(): Frame
+    {
+        $f = new Frame($this);
+
+        $btnDel = new Button($f, 'Delete');
+        $btnDel->pack(['fill' => 'x']);
+        $btnDel->onClick(fn () => $this->deleteItems());
+
+        $btnClear = new Button($f, 'Clear');
+        $btnClear->pack(['fill' => 'x']);
+        $btnClear->onClick(fn () => $this->listBox->clear());
+
+        $btnAppend = new Button($f, 'Append');
+        $btnAppend->pack(['fill' => 'x']);
+        $btnAppend->onClick(fn () => $this->initItems());
+
+        return $f;
+    }
+
+    protected function initItems(): void
+    {
+        for ($i = 0; $i < 20; $i++) {
+            // TODO: need fix using square brackets as item value.
+            // $this->listBox->append(new ListboxItem("Test [$i]"));
+            $this->listBox->append(new ListboxItem("Test ($i)"));
+        }
+    }
+
+    protected function addNewItem(string $value): void
+    {
+        if (!empty($value)) {
+            $this->listBox->append(new ListboxItem($value));
+        }
+    }
+
+    protected function deleteItems(): void
+    {
+        /** @var ListboxItem $item */
+        foreach ($this->listBox->curselection() as $index => $item) {
+            $this->listBox->delete($index);
+        }
+    }
+};
+
+$demo->app()->mainLoop();
