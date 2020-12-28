@@ -20,7 +20,7 @@ use TclTk\Options;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  */
-class Listbox extends Widget implements SplObserver
+class Listbox extends ScrollableWidget implements SplObserver
 {
     /**
      * States for the 'state' option.
@@ -51,9 +51,6 @@ class Listbox extends Widget implements SplObserver
      * @var ListboxItem[]
      */
     protected array $items;
-
-    protected Scrollbar $xScroll;
-    protected Scrollbar $yScroll;
 
     /**
      * @inheritdoc
@@ -154,7 +151,7 @@ class Listbox extends Widget implements SplObserver
      *
      * @todo Use union types.
      */
-    public function see(int $index): self
+    public function see($index): self
     {
         if ($index instanceof ListboxItem) {
             $index = $this->index($index);
@@ -229,38 +226,6 @@ class Listbox extends Widget implements SplObserver
         }
         $indexes = explode(' ', $result);
         return array_map(fn ($index) => $this->items[$index], array_combine($indexes, $indexes));
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __get($name)
-    {
-        switch ($name) {
-            case 'xScrollCommand':
-                return $this->xScroll;
-            case 'yScrollCommand':
-                return $this->yScroll;
-        }
-        return parent::__get($name);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __set($name, $value)
-    {
-        switch ($name) {
-            case 'xScrollCommand':
-            case 'yScrollCommand':
-                if (!($value instanceof Scrollbar)) {
-                    throw new InvalidArgumentException("$name must be an instance of " . Scrollbar::class);
-                }
-                /** @var Scrollbar $value */
-                $value = $value->path() . ' set';
-                break;
-        }
-        parent::__set($name, $value);
     }
 
     /**
