@@ -290,9 +290,16 @@ class Listbox extends ScrollableWidget implements SplObserver
      * Whether the item is selected ?
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/listbox.htm#M43
+     *
+     * @param int|ListboxItem $index
+     *
+     * @todo Use union types.
      */
-    public function isSelected(int $index): bool
+    public function isSelected($index): bool
     {
+        if ($index instanceof ListboxItem) {
+            $index = $this->index($index);
+        }
         return (bool) $this->call('selection', 'includes', $index);
     }
 
@@ -300,9 +307,16 @@ class Listbox extends ScrollableWidget implements SplObserver
      * Sets the selection anchor.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/listbox.htm#M41
+     *
+     * @param int|ListboxItem $index
+     *
+     * @todo Use union types.
      */
-    public function anchor(int $index): self
+    public function anchor($index): self
     {
+        if ($index instanceof ListboxItem) {
+            $index = $this->index($index);
+        }
         $this->call('selection', 'anchor', $index);
         return $this;
     }
