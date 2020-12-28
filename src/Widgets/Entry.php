@@ -11,9 +11,12 @@ use TclTk\Options;
  */
 class Entry extends Widget
 {
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(TkWidget $parent, string $value = '', array $options = [])
     {
         parent::__construct($parent, 'entry', 'e', $options);
+        if ($value !== '') {
+            $this->setValue($value);
+        }
     }
 
     /**
@@ -77,6 +80,15 @@ class Entry extends Widget
     {
         $this->call('insert', $index, $str);
         return $this;
+    }
+
+    /**
+     * Sets the new entry's string.
+     */
+    public function setValue(string $value): self
+    {
+        $this->clear();
+        return $this->insert(0, $value);
     }
 
     /**

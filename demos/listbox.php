@@ -34,9 +34,8 @@ $demo = new class extends Window
         $this->pack(new Label($f, 'New item:'), ['side' => 'left']);
 
         /** @var Entry $e */
-        $e = $this->pack(new Entry($f), ['side' => 'left', 'fill' => 'x', 'expand' => 1])
+        $e = $this->pack(new Entry($f, 'Demo'), ['side' => 'left', 'fill' => 'x', 'expand' => 1])
                   ->widget();
-        $e->setValue('New item...');
 
         $btn = $this->pack(new Button($f, 'Add'), ['side' => 'right'])
                     ->widget();
