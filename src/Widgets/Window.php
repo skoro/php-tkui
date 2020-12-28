@@ -5,6 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\App;
 use TclTk\Options;
 use TclTk\Interp;
+use TclTk\Layouts\Pack;
 
 /**
  * Application window.
@@ -180,5 +181,10 @@ class Window implements TkWidget
                     $this->app->tclEval('wm', 'state', $this->path(), $value);
             }
         }
+    }
+
+    public function pack(TkWidget $widget, array $options = []): Pack
+    {
+        return (new Pack($widget))->pack($options);
     }
 }

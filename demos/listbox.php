@@ -31,15 +31,17 @@ $demo = new class extends Window
     {
         $f = new Frame($this);
 
-        $l = new Label($f, 'New item:');
-        $l->pack(['side' => 'left']);
+        $this->pack(new Label($f, 'New item:'), ['side' => 'left']);
 
-        $e = new Entry($f);
-        $e->pack(['side' => 'left', 'fill' => 'x', 'expand' => 1]);
+        /** @var Entry $e */
+        $e = $this->pack(new Entry($f), ['side' => 'left', 'fill' => 'x', 'expand' => 1])
+                  ->widget();
+        $e->setValue('New item...');
 
-        $add = new Button($f, 'Add');
-        $add->pack(['side' => 'right']);
-        $add->onClick(function () use ($e) {
+        $btn = $this->pack(new Button($f, 'Add'), ['side' => 'right'])
+                    ->widget();
+        /** @var Button $btn */
+        $btn->onClick(function () use ($e) {
             $this->addNewItem($e->get());
             $e->clear();
         });
