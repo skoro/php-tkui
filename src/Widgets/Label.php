@@ -12,6 +12,7 @@ use TclTk\Options;
  * @property string $state
  * @property int $height
  * @property int $width
+ * @property string $text
  */
 class Label extends Widget
 {
