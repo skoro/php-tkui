@@ -8,7 +8,7 @@ use TclTk\Widgets\TkWidget;
 /**
  * pack geometry manager.
  */
-class Pack
+class Pack implements LayoutManager
 {
     private TkWidget $widget;
 
@@ -17,12 +17,21 @@ class Pack
         $this->widget = $widget;
     }
 
-    public function pack(array $options = [])
+    public function pack(array $options = []): self
     {
         $opts = new Options($options);
         $this->widget
              ->window()
              ->app()
              ->tclEval('pack', $this->widget->path(), ...$opts->asStringArray());
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function widget(): TkWidget
+    {
+        return $this->widget;
     }
 }
