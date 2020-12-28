@@ -9,7 +9,7 @@ use TclTk\Options;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/text.htm
  */
-class Text extends Widget
+class Text extends ScrollableWidget
 {
     /**
      * States for the 'state' option.
