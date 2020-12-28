@@ -78,9 +78,7 @@ $demo = new class extends Window
     protected function initItems(): void
     {
         for ($i = 0; $i < 20; $i++) {
-            // TODO: need fix using square brackets as item value.
-            // $this->listBox->append(new ListboxItem("Test [$i]"));
-            $this->listBox->append(new ListboxItem("Test ($i)"));
+            $this->listBox->append(new ListboxItem("Test [$i]"));
         }
     }
 

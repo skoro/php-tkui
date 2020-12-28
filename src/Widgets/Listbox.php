@@ -236,7 +236,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     protected function quoteValue(ListboxItem $item): string
     {
-        return '"' . $item->value() . '"';
+        return '{' . $item->value() . '}';
     }
 
     /**
