@@ -221,7 +221,7 @@ class Listbox extends ScrollableWidget implements SplObserver
     public function curselection(): array
     {
         $result = $this->call('curselection');
-        if (empty($result)) {
+        if ($result === '') {
             return [];
         }
         $indexes = explode(' ', $result);
