@@ -60,6 +60,15 @@ class Entry extends Widget
     }
 
     /**
+     * Clears the current entry string.
+     */
+    public function clear(): self
+    {
+        $this->call('delete', 0, 'end');
+        return $this;
+    }
+
+    /**
      * Insert a string just before the specified index.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M48
