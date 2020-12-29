@@ -9,6 +9,11 @@ use TclTk\Widgets\TkWidget;
  * grid geometry manager.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/grid.htm
+ *
+ * @property int $column
+ * @property int $columnSpan
+ * @property int $row
+ * @property int $rowSpan
  */
 class Grid extends Manager
 {
@@ -16,13 +21,13 @@ class Grid extends Manager
     {
         return new Options([
             'column' => null,
-            'columnspan' => null,
+            'columnSpan' => null,
             'ipadx' => null,
             'ipady' => null,
             'padx' => null,
             'pady' => null,
             'row' => null,
-            'rowspan' => null,
+            'rowSpan' => null,
             'sticky' => null,
         ]);
     }
@@ -31,5 +36,29 @@ class Grid extends Manager
     {
         $this->call('grid');
         return parent::manage();
+    }
+
+    public function column(int $col): self
+    {
+        $this->column = $col;
+        return $this;
+    }
+
+    public function columnSpan(int $span): self
+    {
+        $this->columnSpan = $span;
+        return $this;
+    }
+
+    public function row(int $row): self
+    {
+        $this->row = $row;
+        return $this;
+    }
+
+    public function rowSpan(int $span): self
+    {
+        $this->rowSpan = $span;
+        return $this;
     }
 }
