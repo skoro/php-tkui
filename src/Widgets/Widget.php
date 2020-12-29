@@ -2,6 +2,7 @@
 
 namespace TclTk\Widgets;
 
+use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
 
@@ -117,6 +118,11 @@ abstract class Widget implements TkWidget
     public function pack(array $options = []): Pack
     {
         return new Pack($this, $options);
+    }
+
+    public function grid(array $options = []): Grid
+    {
+        return new Grid($this, $options);
     }
 
     /**
