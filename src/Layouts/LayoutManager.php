@@ -7,7 +7,7 @@ use TclTk\Widgets\TkWidget;
 interface LayoutManager
 {
     /**
-     * The widget where layout manager can operate.
+     * Do widget layout.
      */
-    public function widget(): TkWidget;
+    public function manage(): TkWidget;
 }
