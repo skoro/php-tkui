@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-ffi": "*"
+        "ext-ffi": "*",
+        "ext-spl": "*"
     },
     "autoload": {
         "psr-4": {
