@@ -183,6 +183,8 @@ class Window implements TkWidget
         }
     }
 
+    // @todo consider to accept an array of widgets then we can pack
+    //       several widgets at once.
     public function pack(TkWidget $widget, array $options = []): Pack
     {
         return (new Pack($widget))->pack($options);
