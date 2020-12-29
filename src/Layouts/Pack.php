@@ -7,31 +7,120 @@ use TclTk\Widgets\TkWidget;
 
 /**
  * pack geometry manager.
+ *
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/pack.htm
+ *
+ * @property string $side
+ * @property string $fill
+ * @property bool $expand
+ * @property string $ipadx
+ * @property string $ipady
+ * @property string $anchor
  */
-class Pack implements LayoutManager
+class Pack extends Manager
 {
-    private TkWidget $widget;
+    const SIDE_LEFT = 'left';
+    const SIDE_RIGHT = 'right';
+    const SIDE_TOP = 'top';
+    const SIDE_BOTTOM = 'bottom';
 
-    public function __construct(TkWidget $widget)
+    const FILL_X = 'x';
+    const FILL_Y = 'y';
+    const FILL_BOTH = 'both';
+
+    protected function initOptions(): Options
     {
-        $this->widget = $widget;
+        return new Options([
+            'side' => null,
+            'fill' => null,
+            'expand' => null,
+            'ipadx' => null,
+            'ipady' => null,
+            'padx' => null,
+            'pady' => null,
+            'anchor' => null,
+            'after' => null,
+            'before' => null,
+        ]);
     }
 
-    public function pack(array $options = []): self
+    public function side(string $side): self
     {
-        $opts = new Options($options);
-        $this->widget
-             ->window()
-             ->app()
-             ->tclEval('pack', $this->widget->path(), ...$opts->asStringArray());
+        $this->side = $side;
+        return $this;
+    }
+
+    public function sideLeft(): self
+    {
+        return $this->side(self::SIDE_LEFT);
+    }
+
+    public function sideRight(): self
+    {
+        return $this->side(self::SIDE_RIGHT);
+    }
+
+    public function sideTop(): self
+    {
+        return $this->side(self::SIDE_TOP);
+    }
+
+    public function sideBottom(): self
+    {
+        return $this->side(self::SIDE_BOTTOM);
+    }
+
+    public function fill(string $fill): self
+    {
+        $this->fill = $fill;
+        return $this;
+    }
+
+    public function fillX(): self
+    {
+        return $this->fill(self::FILL_X);
+    }
+
+    public function fillY(): self
+    {
+        return $this->fill(self::FILL_Y);
+    }
+
+    public function fillBoth(): self
+    {
+        return $this->fill(self::FILL_BOTH);
+    }
+
+    public function expand(): self
+    {
+        $this->expand = 1;
+        return $this;
+    }
+
+    /**
+     * @param int|string $amount
+     */
+    public function ipadX($amount): self
+    {
+        $this->ipadx = $amount;
+        return $this;
+    }
+
+    /**
+     * @param int|string $amount
+     */
+    public function ipadY($amount): self
+    {
+        $this->ipady = $amount;
         return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function widget(): TkWidget
+    public function manage(): TkWidget
     {
-        return $this->widget;
+        $this->call('pack');
+        return parent::manage();
     }
 }
