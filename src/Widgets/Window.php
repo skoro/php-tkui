@@ -185,6 +185,6 @@ class Window implements TkWidget
 
     public function pack(TkWidget $widget, array $options = []): Pack
     {
-        return (new Pack($widget))->pack($options);
+        return new Pack($widget, $options);
     }
 }
