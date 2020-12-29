@@ -11,6 +11,13 @@ use TclTk\Options;
  */
 class Entry extends Widget
 {
+    /**
+     * States for the 'state' option.
+     */
+    const STATE_NORMAL = 'normal';
+    const STATE_READONLY = 'readonly';
+    const STATE_DISABLED = 'disabled';
+
     public function __construct(TkWidget $parent, string $value = '', array $options = [])
     {
         parent::__construct($parent, 'entry', 'e', $options);

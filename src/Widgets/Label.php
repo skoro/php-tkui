@@ -16,7 +16,12 @@ use TclTk\Options;
  */
 class Label extends Widget
 {
-    // TODO: states as in the Button widget.
+    /**
+     * States for the 'state' option.
+     */
+    const STATE_NORMAL = 'normal';
+    const STATE_ACTIVE = 'active';
+    const STATE_DISABLED = 'disabled';
 
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
