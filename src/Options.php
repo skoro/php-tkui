@@ -68,7 +68,13 @@ class Options
         foreach ($this->options as $option => $value) {
             if ($value !== null) {
                 $str[] = static::getTclOption($option);
-                $str[] = (string) $value;
+                if (is_bool($value)) {
+                    $str[] = $value ? '1' : '0';
+                } elseif (is_string($value)) {
+                    $str[] = $value === '' ? '{}' : $value;
+                } else {
+                    $str[] = (string) $value;
+                }
             }
         }
         return $str;
