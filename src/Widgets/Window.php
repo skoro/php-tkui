@@ -5,6 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\App;
 use TclTk\Options;
 use TclTk\Interp;
+use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 
 /**
@@ -187,6 +188,11 @@ class Window implements TkWidget
     //       several widgets at once.
     public function pack(TkWidget $widget, array $options = []): Pack
     {
-        return (new Pack($widget))->pack($options);
+        return new Pack($widget, $options);
+    }
+
+    public function grid(TkWidget $widget, array $options = []): Grid
+    {
+        return new Grid($widget, $options);
     }
 }

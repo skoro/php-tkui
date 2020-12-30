@@ -2,6 +2,7 @@
 
 namespace TclTk\Widgets;
 
+use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
 
@@ -16,8 +17,6 @@ abstract class Widget implements TkWidget
     private string $name;
     private WidgetOptions $options;
     private int $id;
-
-    private Pack $pack;
 
     /**
      * Creates a new widget.
@@ -36,7 +35,6 @@ abstract class Widget implements TkWidget
         $this->options = $this->initOptions()
                               ->merge($this->initWidgetOptions())
                               ->mergeAsArray($options);
-        $this->pack = new Pack($this);
         $this->make();
     }
 
@@ -117,9 +115,14 @@ abstract class Widget implements TkWidget
                     ->tclEval($this->path(), $method, ...$args);
     }
 
-    public function pack(array $options = [])
+    public function pack(array $options = []): Pack
     {
-        $this->pack->pack($options);
+        return new Pack($this, $options);
+    }
+
+    public function grid(array $options = []): Grid
+    {
+        return new Grid($this, $options);
     }
 
     /**

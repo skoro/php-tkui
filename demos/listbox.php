@@ -19,10 +19,10 @@ $demo = new class extends Window
     public function __construct()
     {
         parent::__construct(App::create(), 'Demo Listbox');
-        $this->newItemFrame()->pack(['side' => 'top', 'fill' => 'x']);
-        $this->listControlsFrame()->pack(['side' => 'right', 'fill' => 'y']);
+        $this->newItemFrame()->pack()->sideTop()->fillX()->manage();
+        $this->listControlsFrame()->pack()->sideRight()->fillY()->manage();
         $lf = new Frame($this);
-        $lf->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
+        $lf->pack()->sideLeft()->fillBoth()->expand()->manage();
         $this->listBox = $this->createListBox($lf);
         $this->initItems();
     }
@@ -31,14 +31,18 @@ $demo = new class extends Window
     {
         $f = new Frame($this);
 
-        $this->pack(new Label($f, 'New item:'), ['side' => 'left']);
+        $this->pack(new Label($f, 'New item:'))->sideLeft()->manage();
 
         /** @var Entry $e */
-        $e = $this->pack(new Entry($f, 'Demo'), ['side' => 'left', 'fill' => 'x', 'expand' => 1])
-                  ->widget();
+        $e = $this->pack(new Entry($f, 'Demo'))
+                  ->sideLeft()
+                  ->fillX()
+                  ->expand()
+                  ->manage();
 
-        $btn = $this->pack(new Button($f, 'Add'), ['side' => 'right'])
-                    ->widget();
+        $btn = $this->pack(new Button($f, 'Add'))
+                    ->sideRight()
+                    ->manage();
         /** @var Button $btn */
         $btn->onClick(function () use ($e) {
             $this->addNewItem($e->get());
@@ -52,8 +56,8 @@ $demo = new class extends Window
     {
         $lb = new Listbox($parent);
         $lb->yScrollCommand = new Scrollbar($parent);
-        $lb->yScrollCommand->pack(['side' => 'right', 'fill' => 'y']);
-        $lb->pack(['side' => 'left', 'fill' => 'both', 'expand' => 1]);
+        $lb->yScrollCommand->pack()->sideRight()->fillY()->manage();
+        $lb->pack()->sideLeft()->fillBoth()->expand()->manage();
         return $lb;
     }
 
@@ -61,16 +65,18 @@ $demo = new class extends Window
     {
         $f = new Frame($this);
 
+        $fillX = ['fill' => 'x'];
+
         $btnDel = new Button($f, 'Delete');
-        $btnDel->pack(['fill' => 'x']);
+        $btnDel->pack($fillX)->manage();
         $btnDel->onClick(fn () => $this->deleteItems());
 
         $btnClear = new Button($f, 'Clear');
-        $btnClear->pack(['fill' => 'x']);
+        $btnClear->pack($fillX)->manage();
         $btnClear->onClick(fn () => $this->listBox->clear());
 
         $btnAppend = new Button($f, 'Append');
-        $btnAppend->pack(['fill' => 'x']);
+        $btnAppend->pack($fillX)->manage();
         $btnAppend->onClick(fn () => $this->initItems());
 
         return $f;
