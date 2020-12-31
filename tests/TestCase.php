@@ -29,4 +29,9 @@ class TestCase extends FrameworkTestCase
         $win->method('window')->willReturnSelf();
         return $win;
     }
+
+    protected function checkWidget(string $name)
+    {
+        return $this->stringStartsWith($name);
+    }
 }

@@ -25,8 +25,8 @@ class ButtonTest extends TestCase
         $this->app->expects($this->exactly(2))
                   ->method('tclEval')
                   ->withConsecutive(
-                    ['button', $this->stringStartsWith('.b'), '-text', '{New Button}'],
-                    [$this->stringStartsWith('.b'), 'configure', '-text', '{Changed}']
+                    ['button', $this->checkWidget('.b'), '-text', '{New Button}'],
+                    [$this->checkWidget('.b'), 'configure', '-text', '{Changed}']
                   );
 
         $btn = new Button($this->createWindowStub(), 'New Button');
@@ -38,7 +38,7 @@ class ButtonTest extends TestCase
     {
         $this->app->expects($this->once())
                   ->method('tclEval')
-                  ->with('button', $this->stringStartsWith('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE);
+                  ->with('button', $this->checkWidget('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE);
         new Button($this->createWindowStub(), 'Title', ['state' => Button::STATE_ACTIVE]);
     }
 
