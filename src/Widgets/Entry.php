@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Tcl;
 
 /**
  * Implementation of Tk entry widget.
@@ -85,7 +86,7 @@ class Entry extends Widget
      */
     public function insert(int $index, string $str): self
     {
-        $this->call('insert', $index, $str);
+        $this->call('insert', $index, Tcl::quoteString($str));
         return $this;
     }
 
