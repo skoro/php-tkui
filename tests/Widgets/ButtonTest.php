@@ -12,9 +12,7 @@ class ButtonTest extends TestCase
     /** @test */
     public function widget_created()
     {
-        $this->app->expects($this->once())
-                  ->method('tclEval')
-                  ->with('button', '.b1', '-text', '{Button}');
+        $this->tclEvalTest(1, [['button', '.b1', '-text', '{Button}']]);
 
         new Button($this->createWindowStub(), 'Button');
     }
@@ -22,12 +20,10 @@ class ButtonTest extends TestCase
     /** @test */
     public function button_text_changed()
     {
-        $this->app->expects($this->exactly(2))
-                  ->method('tclEval')
-                  ->withConsecutive(
-                    ['button', $this->checkWidget('.b'), '-text', '{New Button}'],
-                    [$this->checkWidget('.b'), 'configure', '-text', '{Changed}']
-                  );
+        $this->tclEvalTest(2, [
+            ['button', $this->checkWidget('.b'), '-text', '{New Button}'],
+            [$this->checkWidget('.b'), 'configure', '-text', '{Changed}']
+        ]);
 
         $btn = new Button($this->createWindowStub(), 'New Button');
         $btn->text = 'Changed';
@@ -36,9 +32,10 @@ class ButtonTest extends TestCase
     /** @test */
     public function make_widget_with_options()
     {
-        $this->app->expects($this->once())
-                  ->method('tclEval')
-                  ->with('button', $this->checkWidget('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE);
+        $this->tclEvalTest(1, [
+            ['button', $this->checkWidget('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE],
+        ]);
+
         new Button($this->createWindowStub(), 'Title', ['state' => Button::STATE_ACTIVE]);
     }
 

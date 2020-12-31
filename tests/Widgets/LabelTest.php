@@ -10,9 +10,7 @@ class LabelTest extends TestCase
     /** @test */
     public function label_created()
     {
-        $this->app->expects($this->once())
-                  ->method('tclEval')
-                  ->with('label', $this->checkWidget('.lb'), '-text', '{Test}');
+        $this->tclEvalTest(1, [['label', $this->checkWidget('.lb'), '-text', '{Test}']]);
 
         new Label($this->createWindowStub(), 'Test');
     }
@@ -20,12 +18,10 @@ class LabelTest extends TestCase
     /** @test */
     public function text_changed()
     {
-        $this->app->expects($this->exactly(2))
-                  ->method('tclEval')
-                  ->withConsecutive(
-                      ['label', $this->checkWidget('.lb'), '-text', '{Test}'],
-                      [$this->checkWidget('.lb'), 'configure', '-text', '{New text}']
-                  );
+        $this->tclEvalTest(2, [
+            ['label', $this->checkWidget('.lb'), '-text', '{Test}'],
+            [$this->checkWidget('.lb'), 'configure', '-text', '{New text}']
+        ]);
 
         $l = new Label($this->createWindowStub(), 'Test');
         $l->text = 'New text';

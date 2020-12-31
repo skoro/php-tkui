@@ -10,9 +10,7 @@ class FrameTest extends TestCase
     /** @test */
     public function widget_created()
     {
-        $this->app->expects($this->once())
-                  ->method('tclEval')
-                  ->with('frame', $this->checkWidget('.f'));
+        $this->tclEvalTest(1, [['frame', $this->checkWidget('.f')]]);
 
         new Frame($this->createWindowStub());
     }

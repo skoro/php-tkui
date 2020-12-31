@@ -34,4 +34,12 @@ class TestCase extends FrameworkTestCase
     {
         return $this->stringStartsWith($name);
     }
+
+    protected function tclEvalTest(int $count, $args)
+    {
+        return $this->app
+            ->expects($this->exactly($count))
+            ->method('tclEval')
+            ->withConsecutive(...$args);
+    }
 }
