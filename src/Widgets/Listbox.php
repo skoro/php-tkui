@@ -61,6 +61,8 @@ class Listbox extends ScrollableWidget implements SplObserver
     public function __construct(TkWidget $parent, array $items = [], array $options = [])
     {
         parent::__construct($parent, 'listbox', 'lb', $options);
+
+        $this->items = [];
         foreach ($items as $item) {
             $this->append($item);
         }
@@ -126,7 +128,7 @@ class Listbox extends ScrollableWidget implements SplObserver
             $items = array_splice($this->items, $first, 1);
         } else {
             $this->call('delete', $first, $last);
-            $items = array_splice($this->items, $first, $last - $first);
+            $items = array_splice($this->items, $first, $last - $first + 1);
         }
 
         array_walk($items, fn (ListboxItem $item) => $item->detach($this));
@@ -140,7 +142,7 @@ class Listbox extends ScrollableWidget implements SplObserver
     public function get(int $first, int $last = 0): array
     {
         $this->validateRanges($first, $last);
-        return array_slice($this->items, $first, $last === 0 ? 1 : $last - $first);
+        return array_slice($this->items, $first, $last === 0 ? 1 : $last - $first + 1);
     }
 
     /**
