@@ -55,4 +55,18 @@ class OptionsTclStringTest extends TestCase
         $options = new Options(['color' => 'red', 'width' => 25]);
         $this->assertEquals('-color red -width 25', (string) $options);
     }
+
+    /** @test */
+    public function text_option_is_always_quotted()
+    {
+        $options = new Options(['text' => 'SomeText']);
+        $this->assertEquals('-text {SomeText}', $options->asTcl());
+    }
+
+    /** @test */
+    public function empty_text_is_also_quotted()
+    {
+        $options = new Options(['text' => '']);
+        $this->assertEquals('-text {}', $options->asTcl());
+    }
 }
