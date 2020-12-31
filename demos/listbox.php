@@ -1,7 +1,7 @@
 <?php
 
 use TclTk\App;
-use TclTk\Widgets\Button;
+use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Entry;
 use TclTk\Widgets\Frame;
 use TclTk\Widgets\Label;

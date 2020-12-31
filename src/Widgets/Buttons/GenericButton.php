@@ -1,24 +1,21 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace TclTk\Widgets\Buttons;
 
 use InvalidArgumentException;
 use TclTk\Options;
+use TclTk\Widgets\Widget;
 
 /**
- * Implementation of Tk button widget.
+ * Parent of button classes.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/button.htm
- *
- * @property string $text
- * @property string $default
  * @property string $state
  * @property string $overRelief
  * @property callable $command
  * @property int $height
  * @property int $width
  */
-class Button extends Widget
+abstract class GenericButton extends Widget
 {
     /**
      * States for the 'state' option.
@@ -27,25 +24,48 @@ class Button extends Widget
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    /** @var callable */
+    private $commandValue;
+
+    /**
+     * @inheritdoc
+     */
+    protected function initOptions(): Options
     {
-        $options['text'] = $title;
-        parent::__construct($parent, 'button', 'b', $options);
+        return parent::initOptions()->mergeAsArray([
+            'state' => null,
+            'width' => null,
+            'height' => null,
+            'command' => null,
+            'overRelief' => null,
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    public function __set(string $name, $value)
     {
-        return new Options([
-            'command' => null,
-            'default' => null,
-            'height' => null,
-            'overRelief' => null,
-            'state' => null,
-            'width' => null,
-        ]);
+        if ($name === 'command') {
+            if (is_callable($value)) {
+                $this->commandValue = $value;
+                $value = $this->window()->registerCallback($this, $value);
+            } else {
+                throw new InvalidArgumentException(sprintf('"%s" is not a valid button command.', $value));
+            }
+        }
+        parent::__set($name, $value);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __get($name)
+    {
+        if ($name === 'command') {
+            return $this->commandValue;
+        }
+        return parent::__get($name);
     }
 
     /**
@@ -58,22 +78,9 @@ class Button extends Widget
     }
 
     /**
-     * @inheritdoc
-     */
-    public function __set(string $name, $value)
-    {
-        if ($name === 'command') {
-            if (is_callable($value)) {
-                $value = $this->window()->registerCallback($this, $value);
-            } else {
-                throw new InvalidArgumentException(sprintf('"%s" is not a valid button command.', $value));
-            }
-        }
-        parent::__set($name, $value);
-    }
-
-    /**
-     * Flash the button.
+     * Flashes the button.
+     *
+     * This operation is ignored if the button's state is disabled.
      *
      * @link http://www.tcl.tk/man/tcl8.6/TkCmd/button.htm#M16
      */
