@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use SplObserver;
 use SplSubject;
 use TclTk\Options;
+use TclTk\Tcl;
 
 /**
  * Implementation of Tk listbox widget.
@@ -172,7 +173,7 @@ class Listbox extends ScrollableWidget implements SplObserver
         if (!is_array($items)) {
             $items = array($items);
         }
-        $values = array_map(fn (ListboxItem $item) => $this->quoteValue($item), $items);
+        $values = array_map(fn (ListboxItem $item) => Tcl::quoteString($item->value()), $items);
         $this->call('insert', $index, ...$values);
         array_splice($this->items, $index, 0, $items);
         array_walk($items, fn (ListboxItem $item) => $item->attach($this));
@@ -205,7 +206,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     public function append(ListboxItem $item): int
     {
-        $this->call('insert', 'end', $this->quoteValue($item));
+        $this->call('insert', 'end', Tcl::quoteString($item->value()));
         $this->items[] = $item;
         $item->attach($this);
         return $this->size() - 1;
@@ -226,17 +227,6 @@ class Listbox extends ScrollableWidget implements SplObserver
         }
         $indexes = explode(' ', $result);
         return array_map(fn ($index) => $this->items[$index], array_combine($indexes, $indexes));
-    }
-
-    /**
-     * Quote item's value.
-     *
-     * Quoting should improve performance for insert items by avoiding
-     * detection of the value in the tcl eval().
-     */
-    protected function quoteValue(ListboxItem $item): string
-    {
-        return '{' . $item->value() . '}';
     }
 
     /**
