@@ -30,7 +30,22 @@ class Button extends Widget
     public function __construct(TkWidget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
+
+        // When the command is passed as an option we must
+        // use the button's property assigning to explicitly
+        // register a callback otherwise the command won't be registered.
+        $command = null;
+        if (isset($options['command'])) {
+            $command = $options['command'];
+            unset($options['command']);
+        }
+
         parent::__construct($parent, 'button', 'b', $options);
+
+        // Register the command from the options.
+        if ($command !== null) {
+            $this->command = $command;
+        }
     }
 
     /**
@@ -62,6 +77,11 @@ class Button extends Widget
      */
     public function __set(string $name, $value)
     {
+        // A special case for 'command' option.
+        // Register a valid callback (Tcl proc) to handle
+        // a button click from php.
+        // Keep in mind that 'command' getter will return
+        // a Tcl script instead of the callback.
         if ($name === 'command') {
             if (is_callable($value)) {
                 $value = $this->window()->registerCallback($this, $value);
