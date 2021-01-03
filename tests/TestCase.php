@@ -2,6 +2,7 @@
 
 namespace TclTk\Tests;
 
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use TclTk\App;
 use TclTk\Widgets\TkWidget;
@@ -24,6 +25,7 @@ class TestCase extends FrameworkTestCase
 
     public function createWindowStub(): TkWidget
     {
+        /** @var Window|Stub $win */
         $win = $this->createStub(Window::class);
         $win->method('app')->willReturn($this->app);
         $win->method('window')->willReturnSelf();
