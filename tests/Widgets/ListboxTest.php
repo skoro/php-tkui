@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Listbox;
 use TclTk\Widgets\ListboxItem;
+use TclTk\Widgets\Scrollbar;
 
 class ListboxTest extends TestCase
 {
@@ -264,5 +265,19 @@ class ListboxTest extends TestCase
             new ListboxItem('bbb'),
         ]);
         $lb->unselect(0, 1);
+    }
+
+    /** @test */
+    public function vert_and_horiz_scrollbars()
+    {
+        $lb = new Listbox($this->createWindowStub());
+
+        $scr = $this->createMock(Scrollbar::class);
+        $scr->expects($this->exactly(2))
+            ->method('__set')
+            ->with('command', $lb)
+            ;
+        $lb->xScrollCommand = $scr;
+        $lb->yScrollCommand = $scr;
     }
 }
