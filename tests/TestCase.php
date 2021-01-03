@@ -2,6 +2,7 @@
 
 namespace TclTk\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use TclTk\App;
@@ -18,6 +19,9 @@ class TestCase extends FrameworkTestCase
         $this->app = $this->createAppMock();
     }
 
+    /**
+     * @return App|MockObject
+     */
     protected function createAppMock()
     {
         return $this->createMock(App::class);
