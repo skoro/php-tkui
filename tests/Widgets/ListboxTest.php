@@ -3,6 +3,7 @@
 namespace TclTk\Tests\Widgets;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Listbox;
 use TclTk\Widgets\ListboxItem;
@@ -272,6 +273,7 @@ class ListboxTest extends TestCase
     {
         $lb = new Listbox($this->createWindowStub());
 
+        /** @var Scrollbar|MockObject */
         $scr = $this->createMock(Scrollbar::class);
         $scr->expects($this->exactly(2))
             ->method('__set')

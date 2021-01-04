@@ -2,6 +2,7 @@
 
 namespace TclTk\Tests\Widgets;
 
+use PHPUnit\Framework\MockObject\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\ScrollableWidget;
 use TclTk\Widgets\Scrollbar;
@@ -43,6 +44,7 @@ class ScrollbarTest extends TestCase
     /** @test */
     public function assign_scrollable_as_vertical()
     {
+        /** @var ScrollableWidget|Stub */
         $test = $this->createStub(ScrollableWidget::class);
         $test->method('path')->willReturn('.p');
 
@@ -55,6 +57,7 @@ class ScrollbarTest extends TestCase
     /** @test */
     public function assign_scrollable_as_horizontal()
     {
+        /** @var ScrollableWidget|Stub */
         $test = $this->createStub(ScrollableWidget::class);
         $test->method('path')->willReturn('.p');
 

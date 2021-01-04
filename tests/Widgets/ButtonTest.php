@@ -3,6 +3,8 @@
 namespace TclTk\Tests\Widgets;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Button;
 use TclTk\Widgets\Window;
@@ -42,6 +44,7 @@ class ButtonTest extends TestCase
     /** @test */
     public function register_button_command()
     {
+        /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
         $win->expects($this->once())
             ->method('registerCallback');
@@ -54,6 +57,7 @@ class ButtonTest extends TestCase
     /** @test */
     public function register_button_command_from_options()
     {
+        /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
         $win->expects($this->once())
             ->method('registerCallback');
@@ -68,6 +72,7 @@ class ButtonTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"MyCommand" is not a valid button command.');
 
+        /** @var Window|Stub */
         $win = $this->createStub(Window::class);
 
         $btn = new Button($win, 'Test');
