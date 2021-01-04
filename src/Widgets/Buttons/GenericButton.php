@@ -4,6 +4,7 @@ namespace TclTk\Widgets\Buttons;
 
 use InvalidArgumentException;
 use TclTk\Options;
+use TclTk\Widgets\TkWidget;
 use TclTk\Widgets\Widget;
 
 /**
@@ -30,6 +31,28 @@ abstract class GenericButton extends Widget
     /**
      * @inheritdoc
      */
+    public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
+    {
+        // When the command is passed as an option we must
+        // use the button's property assigning to explicitly
+        // register a callback otherwise the command won't be registered.
+        $command = null;
+        if (isset($options['command'])) {
+            $command = $options['command'];
+            unset($options['command']);
+        }
+
+        parent::__construct($parent, $widget, $name, $options);
+
+        // Register the command from the options.
+        if ($command !== null) {
+            $this->command = $command;
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function initOptions(): Options
     {
         return parent::initOptions()->mergeAsArray([
@@ -46,6 +69,11 @@ abstract class GenericButton extends Widget
      */
     public function __set(string $name, $value)
     {
+        // A special case for 'command' option.
+        // Register a valid callback (Tcl proc) to handle
+        // a button click from php.
+        // Keep in mind that 'command' getter will return
+        // a Tcl script instead of the callback.
         if ($name === 'command') {
             if (is_callable($value)) {
                 $this->commandValue = $value;

@@ -55,6 +55,17 @@ class Tcl
     }
 
     /**
+     * Quote a string.
+     *
+     * When the string has [] characters it must be quoted otherwise
+     * it the data inside square brackets will be substituted by Tcl interp.
+     */
+    public static function quoteString(string $str): string
+    {
+        return '{' . $str . '}';
+    }
+
+    /**
      * Returns a string representation from Tcl_Obj structure.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TclLib/StringObj.htm
