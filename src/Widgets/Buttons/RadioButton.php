@@ -11,8 +11,9 @@ use TclTk\Widgets\TkWidget;
  */
 class RadioButton extends SwitchableButton
 {
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(TkWidget $parent, string $title, array $options = [])
     {
+        $options['text'] = $title;
         parent::__construct($parent, 'radiobutton', 'rb', $options);
     }
 }

@@ -11,9 +11,9 @@ class CheckButtonTest extends TestCase
     public function widget_created()
     {
         $this->tclEvalTest(1, [
-            ['checkbutton', $this->checkWidget('.chk')],
+            ['checkbutton', $this->checkWidget('.chk'), '-text', '{Test}'],
         ]);
 
-        new CheckButton($this->createWindowStub());
+        new CheckButton($this->createWindowStub(), 'Test');
     }
 }

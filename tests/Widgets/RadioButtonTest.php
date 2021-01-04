@@ -11,9 +11,9 @@ class RadioButtonTest extends TestCase
     public function widget_created()
     {
         $this->tclEvalTest(1, [
-            ['radiobutton', $this->checkWidget('.rb')],
+            ['radiobutton', $this->checkWidget('.rb'), '-text', '{Radio test}'],
         ]);
 
-        new RadioButton($this->createWindowStub());
+        new RadioButton($this->createWindowStub(), 'Radio test');
     }
 }

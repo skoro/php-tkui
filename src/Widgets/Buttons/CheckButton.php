@@ -11,8 +11,9 @@ use TclTk\Widgets\TkWidget;
  */
 class CheckButton extends SwitchableButton
 {
-    public function __construct(TkWidget $parent, bool $initialState = false, array $options = [])
+    public function __construct(TkWidget $parent, string $title, bool $initialState = false, array $options = [])
     {
+        $options['text'] = $title;
         parent::__construct($parent, 'checkbutton', 'chk', $options);
     }
 
