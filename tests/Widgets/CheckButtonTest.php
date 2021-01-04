@@ -3,7 +3,7 @@
 namespace TclTk\Tests\Widgets;
 
 use TclTk\Tests\TestCase;
-use TclTk\Widgets\CheckButton;
+use TclTk\Widgets\Buttons\CheckButton;
 
 class CheckButtonTest extends TestCase
 {
