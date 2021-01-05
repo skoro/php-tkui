@@ -85,6 +85,8 @@ int Tcl_ListObjReplace(Tcl_Interp *interp, Tcl_Obj *listPtr, int first,
 Tcl_Obj *Tcl_NewBooleanObj(int boolValue);
 Tcl_Obj *Tcl_NewByteArrayObj(const unsigned char *bytes, int length);
 Tcl_Obj *Tcl_NewDoubleObj(double doubleValue);
+Tcl_Obj *Tcl_NewIntObj(int intValue);
+Tcl_Obj *Tcl_NewStringObj(const char *bytes, int length);
 
 const char *Tcl_GetVar(Tcl_Interp *interp, const char *varName, int flags);
 const char *Tcl_GetVar2(Tcl_Interp *interp, const char *part1, const char *part2, int flags);
@@ -92,6 +94,13 @@ const char *Tcl_SetVar(Tcl_Interp *interp, const char *varName,
                         const char *newValue, int flags);
 const char *Tcl_SetVar2(Tcl_Interp *interp, const char *part1, 
                         const char *part2, const char *newValue, int flags);
+Tcl_Obj *Tcl_ObjSetVar2(Tcl_Interp *interp, Tcl_Obj *part1Ptr,
+	    Tcl_Obj *part2Ptr, Tcl_Obj *newValuePtr, int flags);
+Tcl_Obj *Tcl_ObjGetVar2(Tcl_Interp *interp, Tcl_Obj *part1Ptr,
+	    Tcl_Obj *part2Ptr, int flags);
+int Tcl_UnsetVar(Tcl_Interp *interp, const char *varName, int flags);
+int Tcl_UnsetVar2(Tcl_Interp *interp, const char *part1, const char *part2,
+	    int flags);
 
 void TclFreeObj(Tcl_Obj *objPtr);
 void Tcl_FreeResult(Tcl_Interp *interp);
