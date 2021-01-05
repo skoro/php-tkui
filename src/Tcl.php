@@ -20,6 +20,15 @@ class Tcl
     public const TCL_BREAK = 3;
     public const TCL_CONTINUE = 4;
 
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm#M5
+     */
+    const TCL_GLOBAL_ONLY = 1;
+    const TCL_NAMESPACE_ONLY = 2;
+    const TCL_APPEND_VALUE = 4;
+    const TCL_LEAVE_ERR_MSG = 0x200;
+    const TCL_LIST_ELEMENT = 8;
+
     private FFI $ffi;
 
     public function __construct(FFI $ffi)
@@ -95,5 +104,83 @@ class Tcl
     public function createCommand(Interp $interp, string $command, callable $callback)
     {
         $this->ffi->Tcl_CreateObjCommand($interp->cdata(), $command, $callback, NULL, NULL);
+    }
+
+    /**
+     * Converts a PHP string to the Tcl object.
+     */
+    public function newStringObj(string $str)
+    {
+        return $this->ffi->Tcl_NewStringObj($str, strlen($str));
+    }
+
+    /**
+     * Converts a PHP integer value to the Tcl object.
+     */
+    public function newIntObj(int $i)
+    {
+        return $this->ffi->Tcl_NewIntObj($i);
+    }
+
+    /**
+     * Converts a PHP boolean value to the Tcl object.
+     */
+    public function newBoolObj(bool $b)
+    {
+        return $this->ffi->Tcl_NewBooleanObj($b);
+    }
+
+    /**
+     * Converts a PHP float value to the Tcl object.
+     */
+    public function newFloatObj(float $f)
+    {
+        return $this->ffi->Tcl_NewDoubleObj($f);
+    }
+
+    /**
+     * @param string $varName The Tcl variable name.
+     * @param string|NULL $arrIndex When the variable is an array that will be the array index.
+     * @param mixed $value
+     *
+     * @throws TclException When value cannot be converted to the Tcl object.
+     * @throws TclException When FFI api call is failed.
+     */
+    public function setVar(Interp $interp, string $varName, ?string $arrIndex, $value)
+    {
+        if (is_string($value)) {
+            $obj = $this->newStringObj($value);
+        } elseif (is_int($value)) {
+            $obj = $this->newIntObj($value);
+        } elseif (is_float($value)) {
+            $obj = $this->newFloatObj($value);
+        } elseif (is_bool($value)) {
+            $obj = $this->newBoolObj($value);
+        } else {
+            throw new TclException(sprintf('Failed to convert PHP value type "%s" to Tcl object value.', gettype($value)));
+        }
+
+        $part1 = $this->newStringObj($varName);
+        $part2 = $arrIndex ? $this->newStringObj($arrIndex) : NULL;
+        $result = $this->ffi->Tcl_ObjSetVar2($interp->cdata(), $part1, $part2, $obj, self::TCL_LEAVE_ERR_MSG);
+        if ($result === NULL) {
+            throw new TclException('SetVar: ' . $this->getStringResult($interp));
+        }
+    }
+
+    public function getVar(Interp $interp, string $varName, string $arrIndex = '')
+    {
+        $part1 = $this->newStringObj($varName);
+        $part2 = $arrIndex ? $this->newStringObj($arrIndex) : NULL;
+        $result = $this->ffi->Tcl_ObjGetVar2($interp->cdata(), $part1, $part2, self::TCL_LEAVE_ERR_MSG);
+        if ($result === NULL) {
+            throw new TclException('GetVar: ' . $this->getStringResult($interp));
+        }
+        return $result;
+    }
+
+    public function unsetVar(Interp $interp, string $var)
+    {
+
     }
 }
