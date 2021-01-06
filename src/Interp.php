@@ -3,6 +3,8 @@
 namespace TclTk;
 
 use FFI\CData;
+use TclTk\Exceptions\TclException;
+use TclTk\Exceptions\TclInterpException;
 
 /**
  * Tcl interpreter implementation.
@@ -60,16 +62,19 @@ class Interp
     {
         $this->tcl->createCommand($this, $command, function ($data, $interp, $objc, $objv) use ($callback) {
             $params = [];
-            // TODO: the condition is already checked by for() loop and can be removed.
-            if ($objc > 1) {
-                for ($i = 1; $i < $objc; $i ++) {
-                    $params[] = $this->tcl->getString($objv[$i]);
-                }
+            for ($i = 1; $i < $objc; $i ++) {
+                $params[] = $this->tcl->getString($objv[$i]);
             }
             $callback(...$params);
         });
     }
 
+    /**
+     * Creates a Tcl variable instance.
+     *
+     * @throws TclException
+     * @throws TclInterpException
+     */
     public function createVariable(string $name, string $index = '', $value = NULL): Variable
     {
         return new Variable($this, $name, $index, $value);
