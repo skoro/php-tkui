@@ -3,6 +3,7 @@
 namespace TclTk;
 
 use FFI;
+use FFI\CData;
 use TclTk\Exceptions\EvalException;
 use TclTk\Exceptions\TclException;
 use TclTk\Exceptions\TclInterpException;
@@ -111,7 +112,7 @@ class Tcl
     /**
      * Converts a PHP string to the Tcl object.
      */
-    public function createStringObj(string $str)
+    public function createStringObj(string $str): CData
     {
         return $this->ffi->Tcl_NewStringObj($str, strlen($str));
     }
@@ -119,7 +120,7 @@ class Tcl
     /**
      * Converts a PHP integer value to the Tcl object.
      */
-    public function createIntObj(int $i)
+    public function createIntObj(int $i): CData
     {
         return $this->ffi->Tcl_NewIntObj($i);
     }
@@ -127,7 +128,7 @@ class Tcl
     /**
      * Converts a PHP boolean value to the Tcl object.
      */
-    public function createBoolObj(bool $b)
+    public function createBoolObj(bool $b): CData
     {
         return $this->ffi->Tcl_NewBooleanObj($b);
     }
@@ -135,42 +136,41 @@ class Tcl
     /**
      * Converts a PHP float value to the Tcl object.
      */
-    public function createFloatObj(float $f)
+    public function createFloatObj(float $f): CData
     {
         return $this->ffi->Tcl_NewDoubleObj($f);
     }
 
-    public function getStringFromObj($obj): string
+    public function getStringFromObj(CData $obj): string
     {
-        $len = 0; // Just dummy var.
-        return $this->ffi->Tcl_GetStringFromObj($obj, $len);
+        return $this->ffi->Tcl_GetStringFromObj($obj, FFI::new('int*'));
     }
 
-    public function getIntFromObj(Interp $interp, $obj): int
+    public function getIntFromObj(Interp $interp, CData $obj): int
     {
-        $val = 0;
-        if ($this->ffi->Tcl_GetLongFromObj($interp, $obj, $val) != self::TCL_OK) {
+        $val = FFI::new('long');
+        if ($this->ffi->Tcl_GetLongFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetLongFromObj');
         }
-        return $val;
+        return $val->cdata;
     }
 
-    public function getBooleanFromObj(Interp $interp, $obj): bool
+    public function getBooleanFromObj(Interp $interp, CData $obj): bool
     {
-        $val = 0;
-        if ($this->ffi->Tcl_GetBooleanFromObj($interp, $obj, $val) != self::TCL_OK) {
+        $val = FFI::new('int');
+        if ($this->ffi->Tcl_GetBooleanFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetBooleanFromObj');
         }
-        return (bool) $val;
+        return (bool) $val->cdata;
     }
 
-    public function getFloatFromObj(Interp $interp, $obj): float
+    public function getFloatFromObj(Interp $interp, CData $obj): float
     {
-        $val = 0;
-        if ($this->ffi->Tcl_GetDoubleFromObj($interp, $obj, $val) != self::TCL_OK) {
+        $val = FFI::new('double');
+        if ($this->ffi->Tcl_GetDoubleFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetDoubleFromObj');
         }
-        return (float) $val;
+        return $val->cdata;
     }
 
     /**
