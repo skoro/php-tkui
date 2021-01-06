@@ -2,6 +2,8 @@
 
 namespace TclTk;
 
+use FFI\CData;
+
 /**
  * Tcl variable.
  */
@@ -56,9 +58,9 @@ class Variable
         return $this->tcl->getFloatFromObj($this->interp, $this->getObj());
     }
 
-    protected function getObj()
+    protected function getObj(): CData
     {
-        $this->tcl->getVar($this->interp, $this->name, $this->index);
+        return $this->tcl->getVar($this->interp, $this->name, $this->index);
     }
 
     public function __toString(): string
