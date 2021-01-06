@@ -2,25 +2,20 @@
 
 namespace TclTk\Exceptions;
 
-class EvalException extends TclException
+use TclTk\Interp;
+
+class EvalException extends TclInterpException
 {
     private string $script;
-    private string $error;
 
-    public function __construct(string $script, string $error)
+    public function __construct(Interp $interp, string $script)
     {
-        parent::__construct('Eval error: ' . $error);
+        parent::__construct($interp, 'Eval');
         $this->script = $script;
-        $this->error = $error;
     }
 
     public function getScript(): string
     {
         return $this->script;
-    }
-
-    public function getError(): string
-    {
-        return $this->error;
     }
 }
