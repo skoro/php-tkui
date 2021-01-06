@@ -61,7 +61,7 @@ class App
             if ($chr === '"' || $chr === "'" || $chr === '{' || $chr === '[') {
                 return $arg;
             }
-            return strpos($arg, ' ') === FALSE ? $arg : '{' . $arg . '}';
+            return strpos($arg, ' ') === FALSE ? $arg : Tcl::quoteString($arg);
         }
         return (string) $arg;
     }
