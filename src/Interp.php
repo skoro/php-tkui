@@ -60,6 +60,7 @@ class Interp
     {
         $this->tcl->createCommand($this, $command, function ($data, $interp, $objc, $objv) use ($callback) {
             $params = [];
+            // TODO: the condition is already checked by for() loop and can be removed.
             if ($objc > 1) {
                 for ($i = 1; $i < $objc; $i ++) {
                     $params[] = $this->tcl->getString($objv[$i]);
@@ -67,5 +68,10 @@ class Interp
             }
             $callback(...$params);
         });
+    }
+
+    public function createVariable(string $name, string $index = '', $value = NULL): Variable
+    {
+        return new Variable($this, $name, $index, $value);
     }
 }
