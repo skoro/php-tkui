@@ -44,6 +44,14 @@ class Variable
         return $this->arrIndex;
     }
 
+    /**
+     * Returns the variable name with array index for using in Tcl scripts.
+     */
+    public function varNameWithIndex(): string
+    {
+        return empty($this->arrIndex) ? $this->varName : sprintf('%s(%s)', $this->varName, $this->arrIndex);
+    }
+
     public function set($value)
     {
         $this->tcl->setVar($this->interp, $this->varName, $this->arrIndex, $value);
@@ -76,6 +84,6 @@ class Variable
 
     public function __toString(): string
     {
-       return $this->asString();
+       return $this->varNameWithIndex();
     }
 }
