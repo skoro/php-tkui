@@ -176,8 +176,7 @@ class Tcl
     /**
      * @param string $varName The Tcl variable name.
      * @param string|NULL $arrIndex When the variable is an array that will be the array index.
-     * @param mixed $value The variable value. Must be one of these types: string, int,
-     *                     float, boolean.
+     * @param string|int|float|bool|NULL $value The variable value.
      *
      * @throws TclException      When value cannot be converted to the Tcl object.
      * @throws TclInterpException When FFI api call is failed.
@@ -192,6 +191,8 @@ class Tcl
             $obj = $this->createFloatObj($value);
         } elseif (is_bool($value)) {
             $obj = $this->createBoolObj($value);
+        } elseif ($value === NULL) {
+            $obj = $this->createStringObj('');
         } else {
             throw new TclException(sprintf('Failed to convert PHP value type "%s" to Tcl object value.', gettype($value)));
         }
@@ -206,7 +207,7 @@ class Tcl
         return $result;
     }
 
-    public function getVar(Interp $interp, string $varName, string $arrIndex = '')
+    public function getVar(Interp $interp, string $varName, ?string $arrIndex = NULL): CData
     {
         $part1 = $this->createStringObj($varName);
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
@@ -217,8 +218,11 @@ class Tcl
         return $result;
     }
 
-    public function unsetVar(Interp $interp, string $varName)
+    public function unsetVar(Interp $interp, string $varName, ?string $arrIndex = NULL): void
     {
-
+        $result = $this->ffi->Tcl_UnsetVar2($interp->cdata(), $varName, $arrIndex, self::TCL_LEAVE_ERR_MSG);
+        if ($result !== self::TCL_OK) {
+            throw new TclInterpException($interp, 'UnsetVar2');
+        }
     }
 }
