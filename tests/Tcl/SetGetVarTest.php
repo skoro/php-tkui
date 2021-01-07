@@ -2,10 +2,11 @@
 
 namespace TclTk\Tests\Tcl;
 
+use TclTk\Exceptions\TclInterpException;
 use TclTk\Tests\TclInterp;
 use TclTk\Tests\TestCase;
 
-class SetVarTest extends TestCase
+class SetGetVarTest extends TestCase
 {
     use TclInterp;
 
@@ -34,5 +35,32 @@ class SetVarTest extends TestCase
 
         $this->interp->eval('set ::var1');
         $this->assertEquals('in the global', $this->interp->getStringResult());
+    }
+
+    /** @test */
+    public function get_var_from_ffi()
+    {
+        $this->tcl->setVar($this->interp, 'var1', NULL, 'abc');
+
+        $obj = $this->tcl->getVar($this->interp, 'var1');
+        $this->assertEquals('abc', $this->tcl->getStringFromObj($obj));
+    }
+
+    /** @test */
+    public function get_array_var_from_ffi()
+    {
+        $this->tcl->setVar($this->interp, 'myArr', 'first', 'abc');
+
+        $obj = $this->tcl->getVar($this->interp, 'myArr', 'first');
+        $this->assertEquals('abc', $this->tcl->getStringFromObj($obj));
+    }
+
+    /** @test */
+    public function get_non_exist_var()
+    {
+        $this->expectException(TclInterpException::class);
+        $this->expectExceptionMessage('ObjGetVar2: can\'t read "must-be-error": no such variable');
+
+        $this->tcl->getVar($this->interp, 'must-be-error');
     }
 }
