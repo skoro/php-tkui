@@ -3,12 +3,27 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
+use TclTk\Variable;
+use TclTk\Widgets\TkWidget;
 
 /**
  * Parent for switch button classes.
+ *
+ * @property Variable $variable
  */
 abstract class SwitchableButton extends GenericButton
 {
+    public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
+    {
+        $var = isset($options['variable']);
+
+        parent::__construct($parent, $widget, $name, $options);
+
+        if (! $var) {
+            $this->variable = $this->window()->registerWidgetVar($this);
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -21,6 +36,7 @@ abstract class SwitchableButton extends GenericButton
             'selectImage' => null,
             'tristateImage' => null,
             'tristateValue' => null,
+            'variable' => null,
         ]);
     }
 
@@ -40,5 +56,10 @@ abstract class SwitchableButton extends GenericButton
     {
         $this->call('deselect');
         return $this;
+    }
+
+    public function get(): bool
+    {
+        return $this->variable->asBool();
     }
 }

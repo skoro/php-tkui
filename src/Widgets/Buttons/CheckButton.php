@@ -15,6 +15,7 @@ class CheckButton extends SwitchableButton
     {
         $options['text'] = $title;
         parent::__construct($parent, 'checkbutton', 'chk', $options);
+        $this->variable->set($initialState);
     }
 
     /**
