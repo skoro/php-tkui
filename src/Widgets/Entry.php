@@ -4,11 +4,14 @@ namespace TclTk\Widgets;
 
 use TclTk\Options;
 use TclTk\Tcl;
+use TclTk\Variable;
 
 /**
  * Implementation of Tk entry widget.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm
+ *
+ * @property Variable $textVariable
  */
 class Entry extends Widget
 {
@@ -21,7 +24,14 @@ class Entry extends Widget
 
     public function __construct(TkWidget $parent, string $value = '', array $options = [])
     {
+        $var = isset($options['textVariable']);
+
         parent::__construct($parent, 'entry', 'e', $options);
+
+        if (! $var) {
+            $this->textVariable = $this->window()->registerWidgetVar($this);
+        }
+
         if ($value !== '') {
             $this->setValue($value);
         }
@@ -52,7 +62,7 @@ class Entry extends Widget
      */
     public function get(): string
     {
-        return $this->call('get');
+        return $this->textVariable->asString();
     }
 
     /**
@@ -75,7 +85,7 @@ class Entry extends Widget
      */
     public function clear(): self
     {
-        $this->call('delete', 0, 'end');
+        $this->textVariable->set('');
         return $this;
     }
 
@@ -95,8 +105,8 @@ class Entry extends Widget
      */
     public function setValue(string $value): self
     {
-        $this->clear();
-        return $this->insert(0, $value);
+        $this->textVariable->set($value);
+        return $this;
     }
 
     /**
