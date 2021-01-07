@@ -3,80 +3,67 @@
 namespace TclTk\Tests\Tcl;
 
 use TclTk\Exceptions\TclInterpException;
+use TclTk\Tests\TclInterp;
 use TclTk\Tests\TestCase;
 
 class TclObjTest extends TestCase
 {
+    use TclInterp;
+
     /** @test */
     public function check_obj_string()
     {
-        $tcl = $this->createTcl();
-        $obj = $tcl->createStringObj('test tcl');
-
-        $this->assertEquals('test tcl', $tcl->getStringFromObj($obj));
+        $obj = $this->tcl->createStringObj('test tcl');
+        $this->assertEquals('test tcl', $this->tcl->getStringFromObj($obj));
     }
 
     /** @test */
     public function obj_int()
     {
-        $tcl = $this->createTcl();
-        $interp = $tcl->createInterp();
-        $obj = $tcl->createIntObj(1234567890);
-
-        $this->assertEquals(1234567890, $tcl->getIntFromObj($interp, $obj));
+        $obj = $this->tcl->createIntObj(1234567890);
+        $this->assertEquals(1234567890, $this->tcl->getIntFromObj($this->interp, $obj));
     }
 
     /** @test */
     public function obj_bool_true()
     {
-        $tcl = $this->createTcl();
-        $interp = $tcl->createInterp();
-        $obj = $tcl->createBoolObj(TRUE);
-
-        $this->assertEquals(TRUE, $tcl->getBooleanFromObj($interp, $obj));
+        $obj = $this->tcl->createBoolObj(TRUE);
+        $this->assertEquals(TRUE, $this->tcl->getBooleanFromObj($this->interp, $obj));
     }
 
     /** @test */
     public function obj_bool_false()
     {
-        $tcl = $this->createTcl();
-        $interp = $tcl->createInterp();
-        $obj = $tcl->createBoolObj(FALSE);
-
-        $this->assertEquals(FALSE, $tcl->getBooleanFromObj($interp, $obj));
+        $obj = $this->tcl->createBoolObj(FALSE);
+        $this->assertEquals(FALSE, $this->tcl->getBooleanFromObj($this->interp, $obj));
     }
 
     /** @test */
     public function obj_float()
     {
-        $tcl = $this->createTcl();
-        $interp = $tcl->createInterp();
-        $obj = $tcl->createFloatObj(108.91);
-
-        $this->assertEquals(108.91, $tcl->getFloatFromObj($interp, $obj));
+        $obj = $this->tcl->createFloatObj(108.91);
+        $this->assertEquals(108.91, $this->tcl->getFloatFromObj($this->interp, $obj));
     }
 
     /** @test */
     public function int_convert_error()
     {
-        $tcl = $this->createTcl();
-        $obj = $tcl->createStringObj('error');
+        $obj = $this->tcl->createStringObj('error');
 
         $this->expectException(TclInterpException::class);
         $this->expectExceptionMessage('GetLongFromObj: expected integer but got "error"');
 
-        $tcl->getIntFromObj($tcl->createInterp(), $obj);
+        $this->tcl->getIntFromObj($this->tcl->createInterp(), $obj);
     }
 
     /** @test */
     public function bool_convert_error()
     {
-        $tcl = $this->createTcl();
-        $obj = $tcl->createStringObj('test');
+        $obj = $this->tcl->createStringObj('test');
 
         $this->expectException(TclInterpException::class);
         $this->expectExceptionMessage('GetBooleanFromObj: expected boolean value but got "test"');
 
-        $tcl->getBooleanFromObj($tcl->createInterp(), $obj);
+        $this->tcl->getBooleanFromObj($this->tcl->createInterp(), $obj);
     }
 }
