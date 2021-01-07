@@ -180,6 +180,8 @@ class Tcl
      *
      * @throws TclException      When value cannot be converted to the Tcl object.
      * @throws TclInterpException When FFI api call is failed.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
      */
     public function setVar(Interp $interp, string $varName, ?string $arrIndex, $value)
     {
@@ -207,6 +209,10 @@ class Tcl
         return $result;
     }
 
+    /**
+     * @throws TclInterpException When FFI api call is failed.
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
+     */
     public function getVar(Interp $interp, string $varName, ?string $arrIndex = NULL): CData
     {
         $part1 = $this->createStringObj($varName);
@@ -218,6 +224,10 @@ class Tcl
         return $result;
     }
 
+    /**
+     * @throws TclInterpException When FFI api call is failed.
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
+     */
     public function unsetVar(Interp $interp, string $varName, ?string $arrIndex = NULL): void
     {
         $result = $this->ffi->Tcl_UnsetVar2($interp->cdata(), $varName, $arrIndex, self::TCL_LEAVE_ERR_MSG);
