@@ -29,7 +29,7 @@ class TestCase extends FrameworkTestCase
         return $this->createMock(App::class);
     }
 
-    public function createWindowStub(): TkWidget
+    protected function createWindowStub(): TkWidget
     {
         /** @var Window|Stub $win */
         $win = $this->createStub(Window::class);

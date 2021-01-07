@@ -2,15 +2,34 @@
 
 namespace TclTk\Tests\Widgets;
 
+use PHPUnit\Framework\MockObject\Stub\Stub;
 use TclTk\Tests\TestCase;
+use TclTk\Variable;
 use TclTk\Widgets\Entry;
+use TclTk\Widgets\TkWidget;
 
 class EntryTest extends TestCase
 {
+    protected function createWindowStub(): TkWidget
+    {
+        /** @var TkWidget|Stub $win */
+        $win = parent::createWindowStub();
+
+        $var = $this->createStub(Variable::class);
+        $var->method('__toString')->willReturn('var');
+
+        $win->method('registerWidgetVar')->willReturn($var);
+
+        return $win;
+    }
+
     /** @test */
     public function entry_created()
     {
-        $this->tclEvalTest(1, [['entry', '.e1']]);
+        $this->tclEvalTest(2, [
+            ['entry', '.e1'],
+            ['.e1', 'configure', '-textvariable', 'var'],
+        ]);
 
         new Entry($this->createWindowStub());
     }
@@ -18,10 +37,9 @@ class EntryTest extends TestCase
     /** @test */
     public function entry_with_predefined_value()
     {
-        $this->tclEvalTest(3, [
+        $this->tclEvalTest(2, [
             ['entry', $this->checkWidget('.e')],
-            [$this->checkWidget('.e'), 'delete', '0', 'end'],
-            [$this->checkWidget('.e'), 'insert', '0', '{Some text}']
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
         ]);
 
         new Entry($this->createWindowStub(), 'Some text');
@@ -32,7 +50,7 @@ class EntryTest extends TestCase
     {
         $this->tclEvalTest(2, [
             ['entry', $this->checkWidget('.e')],
-            [$this->checkWidget('.e'), 'get']
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var']
         ]);
 
         (new Entry($this->createWindowStub()))->get();
@@ -43,17 +61,26 @@ class EntryTest extends TestCase
     {
         $this->tclEvalTest(2, [
             ['entry', $this->checkWidget('.e')],
-            [$this->checkWidget('.e'), 'delete', '0', 'end']
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
         ]);
 
-        (new Entry($this->createWindowStub()))->clear();
+        $varMock = $this->createMock(Variable::class);
+        $varMock->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive(['initial value'], ['']);
+        $varMock->method('__toString')->willReturn('var');
+        $win = parent::createWindowStub();
+        $win->method('registerWidgetVar')->willReturn($varMock);
+
+        (new Entry($win, 'initial value'))->clear();
     }
 
     /** @test */
     public function insert_value()
     {
-        $this->tclEvalTest(2, [
+        $this->tclEvalTest(3, [
             ['entry', $this->checkWidget('.e')],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'insert', '10', '{Test}']
         ]);
 
@@ -63,8 +90,9 @@ class EntryTest extends TestCase
     /** @test */
     public function delete_one_char()
     {
-        $this->tclEvalTest(2, [
+        $this->tclEvalTest(3, [
             ['entry', $this->checkWidget('.e')],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'delete', '5']
         ]);
 
@@ -74,8 +102,9 @@ class EntryTest extends TestCase
     /** @test */
     public function delete_a_range_of_chars()
     {
-        $this->tclEvalTest(2, [
+        $this->tclEvalTest(3, [
             ['entry', $this->checkWidget('.e')],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'delete', '5', '10']
         ]);
 
