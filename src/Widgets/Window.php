@@ -8,6 +8,7 @@ use TclTk\Interp;
 use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Tcl;
+use TclTk\Variable;
 
 /**
  * Application window.
@@ -86,7 +87,7 @@ class Window implements TkWidget
 
     protected function callbackCommandName(): string
     {
-        return self::CALLBACK_HANDLER . $this->path();
+        return self::CALLBACK_HANDLER . '_' . $this->varName();
     }
 
     protected function createCallbackHandler()
@@ -195,5 +196,16 @@ class Window implements TkWidget
     public function grid(TkWidget $widget, array $options = []): Grid
     {
         return new Grid($widget, $options);
+    }
+
+    public function registerWidgetVar(TkWidget $widget): Variable
+    {
+        // TODO: variable in namespace ?
+        return $this->interp->createVariable($this->varName() . '_wgd', $widget->path());
+    }
+
+    protected function varName(): string
+    {
+        return $this->id() ?: 'w0';
     }
 }
