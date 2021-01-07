@@ -11,31 +11,42 @@ class Variable
 {
     private Interp $interp;
     private Tcl $tcl;
-    private string $name;
-    private string $index;
+    private string $varName;
+    private ?string $arrIndex;
 
-    public function __construct(Interp $interp, string $name, string $index = '', $value = NULL)
+    /**
+     * @param Interp $interp   The Tcl interp.
+     * @param string $varName  The variable name.
+     * @param string $arrIndex When the variable is an array this is the index.
+     * @param int|string|float|bool $value The variable value.
+     */
+    public function __construct(Interp $interp, string $varName, ?string $arrIndex = NULL, $value = NULL)
     {
         $this->interp = $interp;
         $this->tcl = $interp->tcl();
-        $this->name = $name;
-        $this->index = $index;
+        $this->varName = $varName;
+        $this->arrIndex = $arrIndex;
         $this->set($value);
     }
 
-    public function name(): string
+    public function __destruct()
     {
-        return $this->name;
+        $this->tcl->unsetVar($this->interp, $this->varName, $this->arrIndex);
     }
 
-    public function index(): string
+    public function varName(): string
     {
-        return $this->index;
+        return $this->varName;
+    }
+
+    public function arrIndex(): string
+    {
+        return $this->arrIndex;
     }
 
     public function set($value)
     {
-        $this->tcl->setVar($this->interp, $this->name, $this->index, $value);
+        $this->tcl->setVar($this->interp, $this->varName, $this->arrIndex, $value);
     }
 
     public function asString(): string
@@ -60,7 +71,7 @@ class Variable
 
     protected function getObj(): CData
     {
-        return $this->tcl->getVar($this->interp, $this->name, $this->index);
+        return $this->tcl->getVar($this->interp, $this->varName, $this->arrIndex);
     }
 
     public function __toString(): string

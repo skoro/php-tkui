@@ -75,8 +75,8 @@ class Interp
      * @throws TclException
      * @throws TclInterpException
      */
-    public function createVariable(string $name, string $index = '', $value = NULL): Variable
+    public function createVariable(string $varName, ?string $arrIndex = NULL, $value = NULL): Variable
     {
-        return new Variable($this, $name, $index, $value);
+        return new Variable($this, $varName, $arrIndex, $value);
     }
 }
