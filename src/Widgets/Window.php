@@ -78,6 +78,7 @@ class Window implements TkWidget
     public function __destruct()
     {
         // TODO: unregister callback handler.
+        // TODO: destroy all variables.
     }
 
     private function generateId(): void
