@@ -8,6 +8,8 @@ use TclTk\Widgets\TkWidget;
  * Implementation of Tk checkbutton widget.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/checkbutton.htm
+ *
+ * @property string $text
  */
 class CheckButton extends SwitchableButton
 {
