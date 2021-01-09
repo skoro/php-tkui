@@ -29,7 +29,7 @@ class Entry extends Widget
         parent::__construct($parent, 'entry', 'e', $options);
 
         if (! $var) {
-            $this->textVariable = $this->window()->registerWidgetVar($this);
+            $this->textVariable = $this->window()->registerVar($this);
         }
 
         if ($value !== '') {

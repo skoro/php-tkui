@@ -43,6 +43,12 @@ class Window implements TkWidget
     private array $callbacks;
 
     /**
+     * @var Variable[]
+     * @todo WeakMap ?
+     */
+    private array $vars;
+
+    /**
      * Window instance id.
      */
     private int $id;
@@ -60,6 +66,7 @@ class Window implements TkWidget
         $this->app = $app;
         $this->interp = $app->tk()->interp();
         $this->callbacks = [];
+        $this->vars = [];
         $this->options = $this->initOptions();
         $this->createCallbackHandler();
         $this->createWindow();
@@ -199,10 +206,19 @@ class Window implements TkWidget
         return new Grid($widget, $options);
     }
 
-    public function registerWidgetVar(TkWidget $widget): Variable
+    /**
+     * @param TkWidget|string $varName
+     */
+    public function registerVar($varName): Variable
     {
-        // TODO: variable in namespace ?
-        return $this->interp->createVariable($this->varName() . '_wgd', $widget->path());
+        if ($varName instanceof TkWidget) {
+            $varName = $varName->path();
+        }
+        if (! isset($this->vars[$varName])) {
+            // TODO: variable in namespace ?
+            $this->vars[$varName] = $this->interp->createVariable($this->varName(), $varName);
+        }
+        return $this->vars[$varName];
     }
 
     protected function varName(): string

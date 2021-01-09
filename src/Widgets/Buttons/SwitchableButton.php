@@ -20,7 +20,7 @@ abstract class SwitchableButton extends GenericButton
         parent::__construct($parent, $widget, $name, $options);
 
         if (! $var) {
-            $this->variable = $this->window()->registerWidgetVar($this);
+            $this->variable = $this->window()->registerVar($this);
         }
     }
 
