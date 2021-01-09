@@ -116,6 +116,24 @@ class Pack extends Manager
     }
 
     /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/pack.htm#M19
+     */
+    public function padX($amount): self
+    {
+        $this->padx = $amount;
+        return $this;
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/pack.htm#M20
+     */
+    public function padY($amount): self
+    {
+        $this->pady = $amount;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function manage(): TkWidget

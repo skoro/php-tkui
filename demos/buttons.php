@@ -21,17 +21,23 @@ $demo = new class extends Window
              ->sideLeft()
              ->ipadX(4)
              ->ipadY(4)
+             ->padX(4)
+             ->padY(2)
              ->anchor('n')
              ->manage();
 
         $this->checkboxes()
              ->pack()
+             ->padX(2)
+             ->padY(2)
              ->sideLeft()
              ->anchor('n')
              ->manage();
 
         $this->radiobuttons()
              ->pack()
+             ->padX(2)
+             ->padY(2)
              ->sideLeft()
              ->anchor('n')
              ->manage();
