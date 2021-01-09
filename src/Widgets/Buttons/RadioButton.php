@@ -30,4 +30,12 @@ class RadioButton extends SwitchableButton
             'value' => null,
         ]);
     }
+
+    /**
+     * @return string
+     */
+    public function get()
+    {
+        return $this->variable->asString();
+    }
 }

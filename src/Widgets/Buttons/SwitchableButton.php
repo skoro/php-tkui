@@ -58,7 +58,10 @@ abstract class SwitchableButton extends GenericButton
         return $this;
     }
 
-    public function get(): bool
+    /**
+     * @return bool
+     */
+    public function get()
     {
         return $this->variable->asBool();
     }
