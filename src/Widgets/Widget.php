@@ -40,7 +40,7 @@ abstract class Widget implements TkWidget
 
     public function __destruct()
     {
-        // TODO: destroy widget.
+        // TODO: unregister var.
     }
 
     private function generateId(): void
