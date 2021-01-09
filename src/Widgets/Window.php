@@ -101,7 +101,8 @@ class Window implements TkWidget
     protected function createCallbackHandler()
     {
         $this->interp->createCommand($this->callbackCommandName(), function ($path) {
-            $this->callbacks[$path]();
+            list ($widget, $callback) = $this->callbacks[$path];
+            $callback($widget);
         });
     }
 
@@ -130,7 +131,10 @@ class Window implements TkWidget
 
     public function registerCallback(TkWidget $widget, callable $callback): string
     {
-        $this->callbacks[$widget->path()] = $callback;
+        // TODO: it would be better to use WeakMap.
+        //       in that case it will be like this:
+        //       $this->callbacks[$widget] = $callback;
+        $this->callbacks[$widget->path()] = [$widget, $callback];
         return $this->callbackCommandName() . ' ' . $widget->path();
     }
 
