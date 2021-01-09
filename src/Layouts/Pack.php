@@ -123,4 +123,10 @@ class Pack extends Manager
         $this->call('pack');
         return parent::manage();
     }
+
+    public function anchor(string $dir): self
+    {
+        $this->anchor = $dir;
+        return $this;
+    }
 }
