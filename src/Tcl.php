@@ -230,6 +230,7 @@ class Tcl
      */
     public function unsetVar(Interp $interp, string $varName, ?string $arrIndex = NULL): void
     {
+        $arrIndex = $arrIndex === '' ? NULL : $arrIndex;
         $result = $this->ffi->Tcl_UnsetVar2($interp->cdata(), $varName, $arrIndex, self::TCL_LEAVE_ERR_MSG);
         if ($result !== self::TCL_OK) {
             throw new TclInterpException($interp, 'UnsetVar2');
