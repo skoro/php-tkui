@@ -45,7 +45,7 @@ $demo = new class extends Window
                     ->manage();
         /** @var Button $btn */
         $btn->onClick(function () use ($e) {
-            $this->addNewItem($e->get());
+            $this->addNewItem($e->getValue());
             $e->clear();
         });
 

@@ -13,7 +13,7 @@ use TclTk\Variable;
  *
  * @property Variable $textVariable
  */
-class Entry extends Widget
+class Entry extends Widget implements Valuable
 {
     /**
      * States for the 'state' option.
@@ -60,7 +60,7 @@ class Entry extends Widget
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M45
      */
-    public function get(): string
+    public function getValue(): string
     {
         return $this->textVariable->asString();
     }
@@ -102,8 +102,10 @@ class Entry extends Widget
 
     /**
      * Sets the new entry's string.
+     *
+     * @param string $value
      */
-    public function setValue(string $value): self
+    public function setValue($value): self
     {
         $this->textVariable->set($value);
         return $this;

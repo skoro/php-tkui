@@ -5,7 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\Variable;
 use TclTk\Widgets\Buttons\RadioButton;
 
-class RadioGroup extends Frame
+class RadioGroup extends Frame implements Valuable
 {
     private Variable $variable;
 
@@ -22,13 +22,14 @@ class RadioGroup extends Frame
         ]);
     }
 
-    public function get()
+    public function getValue(): string
     {
         return $this->variable->asString();
     }
 
-    public function setValue($value)
+    public function setValue($value): self
     {
         $this->variable->set($value);
+        return $this;
     }
 }

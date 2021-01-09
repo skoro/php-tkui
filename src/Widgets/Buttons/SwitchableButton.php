@@ -5,13 +5,14 @@ namespace TclTk\Widgets\Buttons;
 use TclTk\Options;
 use TclTk\Variable;
 use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Valuable;
 
 /**
  * Parent for switch button classes.
  *
  * @property Variable $variable
  */
-abstract class SwitchableButton extends GenericButton
+abstract class SwitchableButton extends GenericButton implements Valuable
 {
     public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
     {
@@ -59,10 +60,20 @@ abstract class SwitchableButton extends GenericButton
     }
 
     /**
+     * @inheritdoc
      * @return bool
      */
-    public function get()
+    public function getValue()
     {
         return $this->variable->asBool();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setValue($value): self
+    {
+        $this->variable->set($value);
+        return $this;
     }
 }

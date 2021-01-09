@@ -16,9 +16,25 @@ $demo = new class extends Window
     public function __construct()
     {
         parent::__construct(App::create(), 'Buttons Demo');
-        $this->buttons()->pack()->sideLeft()->ipadX(4)->ipadY(4)->manage();
-        $this->checkboxes()->pack()->sideLeft()->manage();
-        $this->radiobuttons()->pack()->sideLeft()->manage();
+        $this->buttons()
+             ->pack()
+             ->sideLeft()
+             ->ipadX(4)
+             ->ipadY(4)
+             ->anchor('n')
+             ->manage();
+
+        $this->checkboxes()
+             ->pack()
+             ->sideLeft()
+             ->anchor('n')
+             ->manage();
+
+        $this->radiobuttons()
+             ->pack()
+             ->sideLeft()
+             ->anchor('n')
+             ->manage();
     }
 
     protected function buttons(): LabelFrame
@@ -50,7 +66,7 @@ $demo = new class extends Window
             if ($name === 'Three') {
                 $cb->select();
             }
-            $cb->onClick(fn (CheckButton $cb) => $l->text = $cb->text . ': ' . $cb->get());
+            $cb->onClick(fn (CheckButton $cb) => $l->text = $cb->text . ': ' . $cb->getValue());
         }
         return $f;
     }
@@ -64,7 +80,7 @@ $demo = new class extends Window
         $rg->setValue('two');
         foreach (['One', 'Two', 'Three', 'Four'] as $name) {
             $rg->add($name, strtolower($name))
-                ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->get())
+                ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->getValue())
                 ->pack()
                 ->anchor('w')
                 ->manage();
