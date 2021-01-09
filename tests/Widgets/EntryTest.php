@@ -18,7 +18,7 @@ class EntryTest extends TestCase
         $var = $this->createStub(Variable::class);
         $var->method('__toString')->willReturn('var');
 
-        $win->method('registerWidgetVar')->willReturn($var);
+        $win->method('registerVar')->willReturn($var);
 
         return $win;
     }
@@ -53,7 +53,7 @@ class EntryTest extends TestCase
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var']
         ]);
 
-        (new Entry($this->createWindowStub()))->get();
+        (new Entry($this->createWindowStub()))->getValue();
     }
 
     /** @test */
@@ -70,7 +70,7 @@ class EntryTest extends TestCase
             ->withConsecutive(['initial value'], ['']);
         $varMock->method('__toString')->willReturn('var');
         $win = parent::createWindowStub();
-        $win->method('registerWidgetVar')->willReturn($varMock);
+        $win->method('registerVar')->willReturn($varMock);
 
         (new Entry($win, 'initial value'))->clear();
     }

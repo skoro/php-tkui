@@ -22,8 +22,20 @@ class CheckButtonTest extends TestCase
         $win = $this->createWindowStub();
         $varStub = $this->createStub(Variable::class);
         $varStub->method('__toString')->willReturn('var');
-        $win->method('registerWidgetVar')->willReturn($varStub);
+        $win->method('registerVar')->willReturn($varStub);
 
         new CheckButton($win, 'Test');
+    }
+
+    /** @test */
+    public function value_toggle()
+    {
+        $this->tclEvalTest(3, [
+            ['checkbutton', $this->checkWidget('.chk'), '-text', '{Test}'],
+            [$this->checkWidget('.chk'), 'configure', '-variable', ''],
+            [$this->checkWidget('.chk'), 'toggle'],
+        ]);
+
+        (new CheckButton($this->createWindowStub(), 'Test', FALSE))->toggle();
     }
 }

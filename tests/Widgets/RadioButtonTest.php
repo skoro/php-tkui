@@ -22,8 +22,8 @@ class RadioButtonTest extends TestCase
         $win = $this->createWindowStub();
         $varStub = $this->createStub(Variable::class);
         $varStub->method('__toString')->willReturn('var');
-        $win->method('registerWidgetVar')->willReturn($varStub);
+        $win->method('registerVar')->willReturn($varStub);
 
-        new RadioButton($win, 'Radio test');
+        new RadioButton($win, 'Radio test', 1);
     }
 }
