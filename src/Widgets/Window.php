@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\App;
+use TclTk\Exceptions\TclException;
 use TclTk\Options;
 use TclTk\Interp;
 use TclTk\Layouts\Grid;
@@ -223,6 +224,22 @@ class Window implements TkWidget
             $this->vars[$varName] = $this->interp->createVariable($this->varName(), $varName);
         }
         return $this->vars[$varName];
+    }
+
+    /**
+     * @param TkWidget|string $varName
+     * @throws TclException When a variable with the specified name is not registered.
+     */
+    public function unregisterVar($varName): void
+    {
+        if ($varName instanceof TkWidget) {
+            $varName = $varName->path();
+        }
+        if (! isset($this->vars[$varName])) {
+            throw new TclException(sprintf('Variable "%s" is not registered.', $varName));
+        }
+        // Implicitly call of Variable's __destruct().
+        unset($this->vars[$varName]);
     }
 
     protected function varName(): string
