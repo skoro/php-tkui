@@ -3,6 +3,7 @@
 namespace TclTk\Tests\Widgets;
 
 use TclTk\Exceptions\EvalException;
+use TclTk\Exceptions\TclException;
 use TclTk\Tests\TclInterp;
 use TclTk\Tests\TestCase;
 use TclTk\Tk;
@@ -67,5 +68,16 @@ class WindowVarsTest extends TestCase
         $this->expectExceptionMessage("Eval: can't read");
 
         $this->interp->eval("set $winId(var1)");
+    }
+
+    /** @test */
+    public function unregister_non_var()
+    {
+        $win = new Window($this->app, 'Test');
+
+        $this->expectException(TclException::class);
+        $this->expectExceptionMessage('Variable "myVar" is not registered.');
+
+        $win->unregisterVar('myVar');
     }
 }
