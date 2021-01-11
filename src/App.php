@@ -89,4 +89,12 @@ class App
     {
         return $this->tk;
     }
+
+    /**
+     * Quits the application and deletes all the widgets.
+     */
+    public function quit(): void
+    {
+        $this->tclEval('destroy', '.');
+    }
 }
