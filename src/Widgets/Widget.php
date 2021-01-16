@@ -181,4 +181,13 @@ abstract class Widget implements TkWidget
         $this->window()->app()->tclEval('focus', $this->path());
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function bind(string $event, callable $callback): self
+    {
+        $this->window()->app()->bind($this, $event, $callback);
+        return $this;
+    }
 }

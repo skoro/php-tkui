@@ -40,4 +40,9 @@ interface TkWidget
      * The last widget in the chain must be Window.
      */
     public function parent(): TkWidget;
+
+    /**
+     * Sets the event binding to the widget.
+     */
+    public function bind(string $event, callable $callback): self;
 }

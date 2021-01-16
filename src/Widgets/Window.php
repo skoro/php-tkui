@@ -246,4 +246,13 @@ class Window implements TkWidget
     {
         return $this->id() ?: 'w0';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function bind(string $event, callable $callback): self
+    {
+        $this->app()->bind($this, $event, $callback);
+        return $this;
+    }
 }
