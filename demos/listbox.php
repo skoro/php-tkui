@@ -5,6 +5,7 @@ use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Entry;
 use TclTk\Widgets\Frame;
 use TclTk\Widgets\Label;
+use TclTk\Widgets\LabelFrame;
 use TclTk\Widgets\Listbox;
 use TclTk\Widgets\ListboxItem;
 use TclTk\Widgets\Scrollbar;
@@ -19,6 +20,7 @@ $demo = new class extends Window
     public function __construct()
     {
         parent::__construct(App::create(), 'Demo Listbox');
+        $this->helpFrame()->pack()->sideTop()->fillX()->manage();
         $this->newItemFrame()->pack()->sideTop()->fillX()->manage();
         $this->listControlsFrame()->pack()->sideRight()->fillY()->manage();
         $lf = new Frame($this);
@@ -49,6 +51,8 @@ $demo = new class extends Window
             $e->clear();
         });
 
+        $e->bind('Return', fn () => $btn->invoke());
+
         return $f;
     }
 
@@ -70,15 +74,41 @@ $demo = new class extends Window
         $btnDel = new Button($f, 'Delete');
         $btnDel->pack($fillX)->manage();
         $btnDel->onClick(fn () => $this->deleteItems());
+        $this->bind('Control-d', [$btnDel, 'invoke']);
 
         $btnClear = new Button($f, 'Clear');
         $btnClear->pack($fillX)->manage();
         $btnClear->onClick(fn () => $this->listBox->clear());
+        $this->bind('Control-l', [$btnClear, 'invoke']);
 
         $btnAppend = new Button($f, 'Append');
         $btnAppend->pack($fillX)->manage();
         $btnAppend->onClick(fn () => $this->initItems());
+        $this->bind('Control-a', [$btnAppend, 'invoke']);
 
+        return $f;
+    }
+
+    protected function helpFrame(): LabelFrame
+    {
+        $f = new LabelFrame($this, 'Help');
+        (new Label($f, 'Button demo'))
+            ->pack()
+            ->sideTop()
+            ->manage();
+        $text = [
+            'Use the following shortcuts:',
+            '* Control-D = delete item',
+            '* Control-L = clear items',
+            '* Control-A = append items'
+        ];
+        foreach ($text as $t) {
+            (new Label($f, $t))
+                ->pack()
+                ->sideTop()
+                ->anchor('w')
+                ->manage();
+        }
         return $f;
     }
 
