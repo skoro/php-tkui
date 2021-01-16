@@ -2,6 +2,8 @@
 
 namespace TclTk;
 
+use TclTk\Widgets\TkWidget;
+
 /**
  * Main application.
  */
@@ -9,11 +11,18 @@ class App
 {
     private Tk $tk;
     private Interp $interp;
+    private Bindings $bindings;
 
     public function __construct(Tk $tk)
     {
         $this->tk = $tk;
         $this->interp = $tk->interp();
+        $this->bindings = $this->initBindings();
+    }
+
+    protected function initBindings(): Bindings
+    {
+        return new Bindings($this->interp);
     }
 
     /**
@@ -96,5 +105,13 @@ class App
     public function quit(): void
     {
         $this->tclEval('destroy', '.');
+    }
+
+    /**
+     * Sets the widget binding.
+     */
+    public function bind(TkWidget $widget, $event, $callback)
+    {
+        $this->bindings->bindWidget($widget, $event, $callback);
     }
 }
