@@ -114,3 +114,19 @@ Tcl_Command Tcl_CreateObjCommand(Tcl_Interp *interp,
 	    const char *cmdName,
 	    Tcl_ObjCmdProc *proc, ClientData clientData,
 	    Tcl_CmdDeleteProc *deleteProc);
+int Tcl_DeleteCommand(Tcl_Interp *interp, const char *cmdName);
+
+typedef struct Tcl_CmdProc_  *Tcl_CmdProc;
+typedef struct Tcl_Namespace *Tcl_Namespace;
+typedef struct Tcl_CmdInfo {
+    int isNativeObjectProc;
+    Tcl_ObjCmdProc *objProc;
+    ClientData objClientData;
+    Tcl_CmdProc *proc;
+    ClientData clientData;
+    Tcl_CmdDeleteProc *deleteProc;
+    ClientData deleteData;
+    Tcl_Namespace *namespacePtr;
+} Tcl_CmdInfo;
+int Tcl_GetCommandInfo(Tcl_Interp *interp, const char *cmdName,
+	    Tcl_CmdInfo *infoPtr);

@@ -70,6 +70,14 @@ class Interp
     }
 
     /**
+     * @throws TclInterpException When the command delete failed.
+     */
+    public function deleteCommand(string $command): void
+    {
+        $this->tcl->deleteCommand($this, $command);
+    }
+
+    /**
      * Creates a Tcl variable instance.
      *
      * @throws TclException

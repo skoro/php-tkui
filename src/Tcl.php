@@ -110,6 +110,17 @@ class Tcl
     }
 
     /**
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/CrtObjCmd.htm
+     * @throws TclInterpException When the command delete failed.
+     */
+    public function deleteCommand(Interp $interp, string $command)
+    {
+        if ($this->ffi->Tcl_DeleteCommand($interp->cdata(), $command) === -1) {
+            throw new TclInterpException($interp, 'DeleteCommand');
+        }
+    }
+
+    /**
      * Converts a PHP string to the Tcl object.
      */
     public function createStringObj(string $str): CData
