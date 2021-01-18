@@ -12,6 +12,8 @@ use TclTk\Variable;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm
  *
  * @property Variable $textVariable
+ * @property string $validate
+ * @property bool $show
  */
 class Entry extends Widget implements Valuable
 {
@@ -21,6 +23,17 @@ class Entry extends Widget implements Valuable
     const STATE_NORMAL = 'normal';
     const STATE_READONLY = 'readonly';
     const STATE_DISABLED = 'disabled';
+
+    /**
+     * Validate modes for 'validate' option.
+     * Defaults 'none'.
+     */
+    const VALIDATE_NONE = 'none';
+    const VALIDATE_FOCUS = 'focus';
+    const VALIDATE_FOCUS_IN = 'focusin';
+    const VALIDATE_FOCUS_OUT = 'focusout';
+    const VALIDATE_KEY = 'key';
+    const VALIDATE_ALL = 'all';
 
     public function __construct(TkWidget $parent, string $value = '', array $options = [])
     {
