@@ -121,6 +121,10 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     public function delete(int $first, int $last = 0): self
     {
+        if ($this->size() === 0) {
+            return $this;
+        }
+
         $this->validateRanges($first, $last);
 
         if ($last === 0) {
