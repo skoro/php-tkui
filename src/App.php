@@ -110,8 +110,21 @@ class App
     /**
      * Sets the widget binding.
      */
-    public function bind(TkWidget $widget, $event, $callback)
+    public function bind(TkWidget $widget, $event, $callback): void
     {
         $this->bindings->bindWidget($widget, $event, $callback);
+    }
+
+    /**
+     * Unbinds the event from the widget.
+     */
+    public function unbind(TkWidget $widget, $event): void
+    {
+        $this->bindings->unbindWidget($widget, $event);
+    }
+
+    public function bindings(): Bindings
+    {
+        return $this->bindings;
     }
 }
