@@ -8,6 +8,9 @@ use TclTk\Options;
  * Implementation of Tk text widget.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/text.htm
+ *
+ * @property Scrollbar $xScrollCommand
+ * @property Scrollbar $yScrollCommand
  */
 class Text extends ScrollableWidget
 {
