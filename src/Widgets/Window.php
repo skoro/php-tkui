@@ -250,9 +250,13 @@ class Window implements TkWidget
     /**
      * @inheritdoc
      */
-    public function bind(string $event, callable $callback): self
+    public function bind(string $event, ?callable $callback): self
     {
-        $this->app()->bind($this, $event, $callback);
+        if ($callback === null) {
+            $this->app()->unbind($this, $event);
+        } else {
+            $this->app()->bind($this, $event, $callback);
+        }
         return $this;
     }
 }
