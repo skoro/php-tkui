@@ -40,7 +40,10 @@ class Bindings
             return;
         }
         $command = $this->createTclBindCallback($tag, $event, $callback);
-        $script = sprintf('bind %s <%s> %s', $tag, $event, $command);
+        if (!($event[0] === '<' && substr($event, -1, 1) === '>')) {
+            $event = '<' . $event . '>';
+        }
+        $script = sprintf('bind %s %s %s', $tag, $event, $command);
         $this->interp->eval($script);
     }
 
