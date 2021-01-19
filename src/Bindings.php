@@ -41,10 +41,13 @@ class Bindings
         }
         $command = $this->createTclBindCallback($tag, $event, $callback);
         if (!($event[0] === '<' && substr($event, -1, 1) === '>')) {
-            $event = '<' . $event . '>';
+            $tkEvent = '<' . $event . '>';
+        } else {
+            $tkEvent = $event;
         }
-        $script = sprintf('bind %s %s %s', $tag, $event, $command);
+        $script = sprintf('bind %s %s %s', $tag, $tkEvent, $command);
         $this->interp->eval($script);
+        $this->callbacks[$tag][$event] = $callback;
     }
 
     protected function deleteCallback(string $tag, string $event)
