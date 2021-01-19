@@ -14,7 +14,7 @@ class ButtonTest extends TestCase
     /** @test */
     public function widget_created()
     {
-        $this->tclEvalTest(1, [['button', '.b1', '-text', '{Button}']]);
+        $this->tclEvalTest(1, [['button', $this->checkWidget('.b'), '-text', '{Button}']]);
 
         new Button($this->createWindowStub(), 'Button');
     }
