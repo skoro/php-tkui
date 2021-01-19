@@ -351,4 +351,15 @@ class Listbox extends ScrollableWidget implements SplObserver
         $item = $this->items[$index];
         $this->call('itemconfigure', $index, ...$item->options()->asStringArray());
     }
+
+    /**
+     * @param callable $callback Executes the callback when an item
+     *                          is selected. The callback accepts two parameters: a list
+     *                          of selected items and the listbox widget.
+     */
+    public function onSelect(callable $callback): self
+    {
+        $this->bind('<<ListboxSelect>>', fn () => $callback($this->curselection(), $this));
+        return $this;
+    }
 }

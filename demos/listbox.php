@@ -58,10 +58,19 @@ $demo = new class extends Window
 
     protected function createListBox(Frame $parent): Listbox
     {
+        $l = new Label($parent, 'Selected...');
+        $l->pack()->sideBottom()->anchor('w')->manage();
+
         $lb = new Listbox($parent);
         $lb->yScrollCommand = new Scrollbar($parent);
         $lb->yScrollCommand->pack()->sideRight()->fillY()->manage();
         $lb->pack()->sideLeft()->fillBoth()->expand()->manage();
+
+        /** @var ListboxItem[] $items */
+        $lb->onSelect(function (array $items) use ($l) {
+            $l->text = 'Selected: ' . implode(', ', array_map(fn ($item) => $item->value(), $items));
+        });
+
         return $lb;
     }
 
