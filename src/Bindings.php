@@ -36,9 +36,6 @@ class Bindings
 
     protected function tkBind(string $tag, string $event, callable $callback)
     {
-        if (isset($this->callbacks[$tag][$event])) {
-            return;
-        }
         $command = $this->createTclBindCallback($tag, $event, $callback);
         if (!($event[0] === '<' && substr($event, -1, 1) === '>')) {
             $tkEvent = '<' . $event . '>';

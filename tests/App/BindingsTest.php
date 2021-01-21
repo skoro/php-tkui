@@ -24,10 +24,10 @@ class BindingsTest extends TestCase
     }
 
     /** @test */
-    public function only_once_bind_for_same_event()
+    public function allow_to_redefine_event_callback()
     {
         $interp = $this->createMock(Interp::class);
-        $interp->expects($this->once())
+        $interp->expects($this->exactly(2))
                ->method('eval')
                ->with('bind .b2 <Control-a> PHP_Bind__b2_Control-a');
 
