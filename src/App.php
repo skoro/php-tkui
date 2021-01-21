@@ -53,6 +53,31 @@ class App
         return $this->interp->getStringResult();
     }
 
+    protected function initTtk(): void
+    {
+        $this->interp->eval('package require Ttk');
+        foreach ($this->ttkWidgets() as $widget) {
+            $this->interp->eval("interp alias {} $widget {} ttk::$widget");
+        }
+    }
+
+    public function isTtkUsed(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Returns a list of Tk widgets that can be aliased to Ttk.
+     *
+     * @return string[]
+     */
+    public function ttkWidgets(): array
+    {
+        return [
+            'button', 'label', 'entry', 'scrollbar',
+        ];
+    }
+
     /**
      * Encloses the argument in the curly brackets.
      *
@@ -82,6 +107,7 @@ class App
     {
         $this->interp->init();
         $this->tk->init();
+        $this->initTtk();
     }
 
     /**
