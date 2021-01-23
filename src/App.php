@@ -2,6 +2,7 @@
 
 namespace TclTk;
 
+use TclTk\Exceptions\TclInterpException;
 use TclTk\Widgets\TkWidget;
 
 /**
@@ -12,10 +13,12 @@ class App
     private Tk $tk;
     private Interp $interp;
     private Bindings $bindings;
+    private bool $ttkEnabled;
 
     public function __construct(Tk $tk)
     {
         $this->tk = $tk;
+        $this->ttkEnabled = false;
         $this->interp = $tk->interp();
         $this->bindings = $this->initBindings();
     }
@@ -53,17 +56,28 @@ class App
         return $this->interp->getStringResult();
     }
 
+    /**
+     * Initialization of ttk package.
+     */
     protected function initTtk(): void
     {
-        $this->interp->eval('package require Ttk');
-        foreach ($this->ttkWidgets() as $widget) {
-            $this->interp->eval("interp alias {} $widget {} ttk::$widget");
+        try {
+            $this->interp->eval('package require Ttk');
+            foreach ($this->ttkWidgets() as $widget) {
+                $this->interp->eval("interp alias {} $widget {} ttk::$widget");
+            }
+            $this->ttkEnabled = true;
+        } catch (TclInterpException $e) {
+            $this->ttkEnabled = false;
         }
     }
 
-    public function isTtkUsed(): bool
+    /**
+     * The application has ttk support.
+     */
+    public function hasTtk(): bool
     {
-        return true;
+        return $this->ttkEnabled;
     }
 
     /**
