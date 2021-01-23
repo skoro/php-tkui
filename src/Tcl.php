@@ -87,11 +87,41 @@ class Tcl
     }
 
     /**
-     * Converts the Tcl Obj to a string.
+     * Gets the Tcl eval result as a string.
      */
     public function getStringResult(Interp $interp): string
     {
         return $this->ffi->Tcl_GetString($this->ffi->Tcl_GetObjResult($interp->cdata()));
+    }
+
+    /**
+     * Gets the Tcl eval result as a list of strings.
+     *
+     * @throws TclInterpException When FFI api call is failed.
+     *
+     * @return string[]
+     */
+    public function getListResult(Interp $interp): array
+    {
+        $interpCdata = $interp->cdata();
+        $listObj = $this->ffi->Tcl_GetObjResult($interpCdata);
+        $clen = FFI::new('int');
+        if ($this->ffi->Tcl_ListObjLength($interpCdata, $listObj, FFI::addr($clen)) != self::TCL_OK) {
+            throw new TclInterpException($interp, 'ListObjResult');
+        }
+        $len = (int) $clen->cdata;
+        if ($len === 0) {
+            return [];
+        }
+        $elements = [];
+        for ($index = 0; $index < $len; $index++) {
+            $elemObj = FFI::new($this->ffi->type('Tcl_Obj*'));
+            if ($this->ffi->Tcl_ListObjIndex($interpCdata, $listObj, $index, FFI::addr($elemObj)) != self::TCL_OK) {
+                throw new TclInterpException($interp, 'ListObjIndex');
+            }
+            $elements[] = $this->ffi->Tcl_GetString($elemObj);
+        }
+        return $elements;
     }
 
     /**

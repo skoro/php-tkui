@@ -87,4 +87,12 @@ class Interp
     {
         return new Variable($this, $varName, $arrIndex, $value);
     }
+
+    /**
+     * Gets the interp eval result as a list of strings.
+     */
+    public function getListResult(): array
+    {
+        return $this->tcl->getListResult($this);
+    }
 }
