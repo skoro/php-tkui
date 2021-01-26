@@ -2,6 +2,7 @@
 
 namespace TclTk;
 
+use TclTk\Exceptions\TclException;
 use TclTk\Exceptions\TclInterpException;
 use TclTk\Widgets\TkWidget;
 
@@ -13,17 +14,18 @@ class App
     private Tk $tk;
     private Interp $interp;
     private Bindings $bindings;
-    private bool $ttkEnabled;
+    private ?Style $style;
 
     public function __construct(Tk $tk)
     {
         $this->tk = $tk;
         $this->ttkEnabled = false;
         $this->interp = $tk->interp();
-        $this->bindings = $this->initBindings();
+        $this->bindings = $this->createBindings();
+        $this->style = null;
     }
 
-    protected function initBindings(): Bindings
+    protected function createBindings(): Bindings
     {
         return new Bindings($this->interp);
     }
@@ -66,10 +68,15 @@ class App
             foreach ($this->ttkWidgets() as $widget) {
                 $this->interp->eval("interp alias {} $widget {} ttk::$widget");
             }
-            $this->ttkEnabled = true;
+            $this->style = $this->createStyle();
         } catch (TclInterpException $e) {
-            $this->ttkEnabled = false;
+            $this->style = null;
         }
+    }
+
+    protected function createStyle(): Style
+    {
+        return new Style($this->interp);
     }
 
     /**
@@ -77,13 +84,15 @@ class App
      */
     public function hasTtk(): bool
     {
-        return $this->ttkEnabled;
+        return $this->style !== null;
     }
 
     /**
      * Returns a list of Tk widgets that can be aliased to Ttk.
      *
      * @return string[]
+     *
+     * @see App::initTtk()
      */
     public function ttkWidgets(): array
     {
@@ -166,5 +175,16 @@ class App
     public function bindings(): Bindings
     {
         return $this->bindings;
+    }
+
+    /**
+     * @throws TclException When ttk is not supported.
+     */
+    public function style(): Style
+    {
+        if ($this->hasTtk()) {
+            return $this->style;
+        }
+        throw new TclException('ttk is not supported.');
     }
 }
