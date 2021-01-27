@@ -8,6 +8,11 @@ use TclTk\Widgets\TkWidget;
 
 /**
  * A basic Ttk widget implementation.
+ *
+ * @property string $class
+ * @property string $cursor
+ * @property bool $takeFocus
+ * @property string $style
  */
 abstract class TtkWidget extends TkWidget
 {

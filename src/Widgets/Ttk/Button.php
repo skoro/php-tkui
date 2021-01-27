@@ -8,6 +8,13 @@ use TclTk\Widgets\Widget;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_button.htm
+ *
+ * @property string $text
+ * @property callable $command
+ * @property string $default
+ * @property int $underline
+ * @property int $width
+ * @property string $compound
  */
 class Button extends TtkWidget
 {
@@ -44,6 +51,7 @@ class Button extends TtkWidget
             'width' => null,
             'command' => null,
             'default' => null,
+            'state' => null,
         ]);
     }
 
