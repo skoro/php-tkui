@@ -65,9 +65,6 @@ class App
     {
         try {
             $this->interp->eval('package require Ttk');
-            foreach ($this->ttkWidgets() as $widget) {
-                $this->interp->eval("interp alias {} $widget {} ttk::$widget");
-            }
             $this->style = $this->createStyle();
         } catch (TclInterpException $e) {
             $this->style = null;
@@ -85,20 +82,6 @@ class App
     public function hasTtk(): bool
     {
         return $this->style !== null;
-    }
-
-    /**
-     * Returns a list of Tk widgets that can be aliased to Ttk.
-     *
-     * @return string[]
-     *
-     * @see App::initTtk()
-     */
-    public function ttkWidgets(): array
-    {
-        return [
-            'button', 'label', 'entry', 'scrollbar',
-        ];
     }
 
     /**
