@@ -6,13 +6,13 @@ use PHPUnit\Framework\MockObject\Stub\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Variable;
 use TclTk\Widgets\Entry;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 class EntryTest extends TestCase
 {
-    protected function createWindowStub(): TkWidget
+    protected function createWindowStub(): Widget
     {
-        /** @var TkWidget|Stub $win */
+        /** @var Widget|Stub $win */
         $win = parent::createWindowStub();
 
         $var = $this->createStub(Variable::class);

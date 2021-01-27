@@ -3,7 +3,7 @@
 namespace TclTk\Layouts;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * grid geometry manager.
@@ -32,7 +32,7 @@ class Grid extends Manager
         ]);
     }
 
-    public function manage(): TkWidget
+    public function manage(): Widget
     {
         $this->call('grid');
         return parent::manage();

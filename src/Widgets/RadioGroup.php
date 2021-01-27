@@ -9,7 +9,7 @@ class RadioGroup extends Frame implements Valuable
 {
     private Variable $variable;
 
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         parent::__construct($parent, $options);
         $this->variable = $this->window()->registerVar($this);

@@ -7,9 +7,9 @@ namespace TclTk\Widgets;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/frame.htm
  */
-class Frame extends Widget
+class Frame extends TkWidget
 {
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         parent::__construct($parent, 'frame', 'fr', $options);
     }

@@ -3,7 +3,7 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * Implementation of Tk radiobutton widget.
@@ -17,7 +17,7 @@ class RadioButton extends SwitchableButton
     /**
      * @param int|string|float|bool $value
      */
-    public function __construct(TkWidget $parent, string $title, $value, array $options = [])
+    public function __construct(Widget $parent, string $title, $value, array $options = [])
     {
         $options['text'] = $title;
         $options['value'] = $value;

@@ -26,7 +26,7 @@ use TclTk\Variable;
  * @property Variable $variable
  * @property string $width
  */
-class Scale extends Widget implements Valuable
+class Scale extends TkWidget implements Valuable
 {
     const SLIDER_RELIEF_RAISED = 'raised';
     const SLIDER_RELIEF_SUNKEN = 'sunken';
@@ -38,7 +38,7 @@ class Scale extends Widget implements Valuable
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         parent::__construct($parent, 'scale', 'sc', $options);
     }

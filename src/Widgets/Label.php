@@ -14,7 +14,7 @@ use TclTk\Options;
  * @property int $width
  * @property string $text
  */
-class Label extends Widget
+class Label extends TkWidget
 {
     /**
      * States for the 'state' option.
@@ -23,7 +23,7 @@ class Label extends Widget
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, 'label', 'lb', $options);

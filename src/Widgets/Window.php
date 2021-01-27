@@ -17,7 +17,7 @@ use TclTk\Variable;
  * @property string $title
  * @property string $state
  */
-class Window implements TkWidget
+class Window implements Widget
 {
     /**
      * The window states.
@@ -166,7 +166,7 @@ class Window implements TkWidget
     /**
      * @inheritdoc
      */
-    public function parent(): TkWidget
+    public function parent(): Widget
     {
         return $this;
     }
@@ -201,22 +201,22 @@ class Window implements TkWidget
 
     // @todo consider to accept an array of widgets then we can pack
     //       several widgets at once.
-    public function pack(TkWidget $widget, array $options = []): Pack
+    public function pack(Widget $widget, array $options = []): Pack
     {
         return new Pack($widget, $options);
     }
 
-    public function grid(TkWidget $widget, array $options = []): Grid
+    public function grid(Widget $widget, array $options = []): Grid
     {
         return new Grid($widget, $options);
     }
 
     /**
-     * @param TkWidget|string $varName
+     * @param Widget|string $varName
      */
     public function registerVar($varName): Variable
     {
-        if ($varName instanceof TkWidget) {
+        if ($varName instanceof Widget) {
             $varName = $varName->path();
         }
         if (! isset($this->vars[$varName])) {
@@ -227,12 +227,12 @@ class Window implements TkWidget
     }
 
     /**
-     * @param TkWidget|string $varName
+     * @param Widget|string $varName
      * @throws TclException When a variable with the specified name is not registered.
      */
     public function unregisterVar($varName): void
     {
-        if ($varName instanceof TkWidget) {
+        if ($varName instanceof Widget) {
             $varName = $varName->path();
         }
         if (! isset($this->vars[$varName])) {

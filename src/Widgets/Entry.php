@@ -15,7 +15,7 @@ use TclTk\Variable;
  * @property string $validate
  * @property bool $show
  */
-class Entry extends Widget implements Valuable
+class Entry extends TkWidget implements Valuable
 {
     /**
      * States for the 'state' option.
@@ -35,7 +35,7 @@ class Entry extends Widget implements Valuable
     const VALIDATE_KEY = 'key';
     const VALIDATE_ALL = 'all';
 
-    public function __construct(TkWidget $parent, string $value = '', array $options = [])
+    public function __construct(Widget $parent, string $value = '', array $options = [])
     {
         $var = isset($options['textVariable']);
 

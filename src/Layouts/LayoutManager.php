@@ -2,12 +2,12 @@
 
 namespace TclTk\Layouts;
 
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 interface LayoutManager
 {
     /**
      * Do widget layout.
      */
-    public function manage(): TkWidget;
+    public function manage(): Widget;
 }

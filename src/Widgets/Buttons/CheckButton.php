@@ -2,7 +2,7 @@
 
 namespace TclTk\Widgets\Buttons;
 
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * Implementation of Tk checkbutton widget.
@@ -13,7 +13,7 @@ use TclTk\Widgets\TkWidget;
  */
 class CheckButton extends SwitchableButton
 {
-    public function __construct(TkWidget $parent, string $title, bool $initialState = false, array $options = [])
+    public function __construct(Widget $parent, string $title, bool $initialState = false, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, 'checkbutton', 'chk', $options);

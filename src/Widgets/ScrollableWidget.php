@@ -4,7 +4,7 @@ namespace TclTk\Widgets;
 
 use InvalidArgumentException;
 
-abstract class ScrollableWidget extends Widget
+abstract class ScrollableWidget extends TkWidget
 {
     private Scrollbar $xScroll;
     private Scrollbar $yScroll;

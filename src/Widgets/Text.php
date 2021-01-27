@@ -20,7 +20,7 @@ class Text extends ScrollableWidget
     const STATE_NORMAL = 'normal';
     const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         parent::__construct($parent, 'text', 't', $options);
     }

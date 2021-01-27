@@ -4,7 +4,7 @@ namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
 use TclTk\Variable;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 use TclTk\Widgets\Valuable;
 
 /**
@@ -14,7 +14,7 @@ use TclTk\Widgets\Valuable;
  */
 abstract class SwitchableButton extends GenericButton implements Valuable
 {
-    public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
+    public function __construct(Widget $parent, string $widget, string $name, array $options = [])
     {
         $var = isset($options['variable']);
 

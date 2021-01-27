@@ -9,9 +9,9 @@ use TclTk\Options;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/labelframe.htm
  */
-class LabelFrame extends Widget
+class LabelFrame extends TkWidget
 {
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, 'labelframe', 'lbf', $options);

@@ -58,7 +58,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      *
      * @param ListboxItem[] $items Listbox items.
      */
-    public function __construct(TkWidget $parent, array $items = [], array $options = [])
+    public function __construct(Widget $parent, array $items = [], array $options = [])
     {
         parent::__construct($parent, 'listbox', 'lb', $options);
 

@@ -2,7 +2,7 @@
 
 namespace TclTk;
 
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 class Bindings
 {
@@ -23,13 +23,13 @@ class Bindings
         }
     }
 
-    public function bindWidget(TkWidget $widget, string $event, callable $callback)
+    public function bindWidget(Widget $widget, string $event, callable $callback)
     {
         $tag = $widget->path();
         $this->tkBind($tag, $event, $callback);
     }
 
-    public function unbindWidget(TkWidget $widget, string $event)
+    public function unbindWidget(Widget $widget, string $event)
     {
         $this->deleteCallback($widget->path(), $event);
     }

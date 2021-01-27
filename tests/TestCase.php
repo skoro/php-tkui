@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use TclTk\App;
 use TclTk\FFILoader;
 use TclTk\Tcl;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 use TclTk\Widgets\Window;
 
 class TestCase extends FrameworkTestCase
@@ -29,7 +29,7 @@ class TestCase extends FrameworkTestCase
         return $this->createMock(App::class);
     }
 
-    protected function createWindowStub(): TkWidget
+    protected function createWindowStub(): Widget
     {
         /** @var Window|Stub $win */
         $win = $this->createStub(Window::class);

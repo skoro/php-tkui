@@ -3,7 +3,7 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * Implementation of Tk button widget.
@@ -15,7 +15,7 @@ use TclTk\Widgets\TkWidget;
  */
 class Button extends GenericButton
 {
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, 'button', 'b', $options);

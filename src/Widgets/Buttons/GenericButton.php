@@ -16,7 +16,7 @@ use TclTk\Widgets\Widget;
  * @property int $height
  * @property int $width
  */
-abstract class GenericButton extends Widget
+abstract class GenericButton extends TkWidget
 {
     /**
      * States for the 'state' option.
@@ -31,7 +31,7 @@ abstract class GenericButton extends Widget
     /**
      * @inheritdoc
      */
-    public function __construct(TkWidget $parent, string $widget, string $name, array $options = [])
+    public function __construct(Widget $parent, string $widget, string $name, array $options = [])
     {
         // When the command is passed as an option we must
         // use the button's property assigning to explicitly

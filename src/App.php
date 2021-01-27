@@ -4,7 +4,7 @@ namespace TclTk;
 
 use TclTk\Exceptions\TclException;
 use TclTk\Exceptions\TclInterpException;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * Main application.
@@ -159,7 +159,7 @@ class App
     /**
      * Sets the widget binding.
      */
-    public function bind(TkWidget $widget, $event, $callback): void
+    public function bind(Widget $widget, $event, $callback): void
     {
         $this->bindings->bindWidget($widget, $event, $callback);
     }
@@ -167,7 +167,7 @@ class App
     /**
      * Unbinds the event from the widget.
      */
-    public function unbind(TkWidget $widget, $event): void
+    public function unbind(Widget $widget, $event): void
     {
         $this->bindings->unbindWidget($widget, $event);
     }
