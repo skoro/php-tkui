@@ -15,7 +15,7 @@ abstract class TkWidget implements Widget
     private static array $idCounter = [];
     private string $widget;
     private string $name;
-    private WidgetOptions $options;
+    private Options $options;
     private int $id;
 
     /**
