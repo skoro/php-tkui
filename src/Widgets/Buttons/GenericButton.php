@@ -26,9 +26,6 @@ abstract class GenericButton extends TkWidget
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
-    /** @var callable */
-    private $commandValue;
-
     /**
      * @inheritdoc
      */
