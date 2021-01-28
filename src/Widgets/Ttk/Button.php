@@ -3,7 +3,6 @@
 namespace TclTk\Widgets\Ttk;
 
 use TclTk\Options;
-use TclTk\Widgets\Buttons\Command;
 use TclTk\Widgets\Widget;
 
 /**
@@ -16,25 +15,15 @@ use TclTk\Widgets\Widget;
  * @property int $width
  * @property string $compound
  */
-class Button extends TtkWidget
+class Button extends GenericButton
 {
-    use Command;
-
+    /**
+     * @inheritdoc
+     */
     public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-
-        $command = null;
-        if (isset($options['command'])) {
-            $command = $options['command'];
-            unset($options['command']);
-        }
-
         parent::__construct($parent, 'ttk::button', 'b', $options);
-
-        if ($command !== null) {
-            $this->command = $command;
-        }
     }
 
     /**
@@ -42,21 +31,8 @@ class Button extends TtkWidget
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
-            'text' => null,
-            'compound' => null,
-            'image' => null,
-            'textVariable' => null,
-            'underline' => null,
-            'width' => null,
-            'command' => null,
+        return parent::initWidgetOptions()->mergeAsArray([
             'default' => null,
-            'state' => null,
         ]);
-    }
-
-    public function invoke(): void
-    {
-        $this->call('invoke');
     }
 }
