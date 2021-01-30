@@ -36,6 +36,15 @@ class Style
         return $this;
     }
 
+    /**
+     * Returns the name of the current theme.
+     */
+    public function currentTheme(): string
+    {
+        $this->call('theme', 'use');
+        return $this->interp->getStringResult();
+    }
+
     protected function call(...$args)
     {
         $this->interp->eval('ttk::style ' . implode(' ', $args));
