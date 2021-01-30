@@ -5,18 +5,26 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 
 /**
- * Implementation of Tk labelframe widget.
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_labelframe.htm
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/labelframe.htm
+ * @property string $padding
+ * @property int $width
+ * @property int $height
+ * @property string $text
+ * @property string $labelAnchor
+ * @property int $underline
+ * @property string $labelWidget
+ * 
+ * @todo Implement padding property.
  */
-class LabelFrame extends TkWidget
+class LabelFrame extends Frame
 {
-    protected string $widget = 'labelframe';
+    protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
 
-    public function __construct(Widget $parent, string $title, array $options = [])
+    public function __construct(Widget $parent, string $text, array $options = [])
     {
-        $options['text'] = $title;
+        $options['text'] = $text;
         parent::__construct($parent, $options);
     }
 
@@ -26,14 +34,13 @@ class LabelFrame extends TkWidget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'background' => null,
-            'class' => null,
-            'colormap' => null,
-            'height' => null,
-            'labelAnchor' => null,
-            'labelWidget' => null,
-            'visual' => null,
+            'padding' => null,
             'width' => null,
+            'height' => null,
+            'text' => null,
+            'labelAnchor' => null,
+            'underline' => null,
+            'labelWidget' => null,
         ]);
     }
 }
