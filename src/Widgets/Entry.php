@@ -5,37 +5,30 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
+use TclTk\Widgets\Consts\Justify;
+use TclTk\Widgets\Consts\Validate;
 
 /**
  * Implementation of Tk entry widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_entry.htm
  *
+ * @property string $font
+ * @property string $textColor
+ * @property callable $xScrollCommand TODO
+ * @property bool $exportSelection
+ * @property callable $invalidCommand TODO
+ * @property string $justify
+ * @property bool $show
+ * @property string $state
  * @property Variable $textVariable
  * @property string $validate
- * @property bool $show
+ * @property callable $validateCommand TODO
+ * @property int $width
  */
-class Entry extends TkWidget implements Valuable
+class Entry extends TtkWidget implements Valuable, Justify, Validate
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_READONLY = 'readonly';
-    const STATE_DISABLED = 'disabled';
-
-    /**
-     * Validate modes for 'validate' option.
-     * Defaults 'none'.
-     */
-    const VALIDATE_NONE = 'none';
-    const VALIDATE_FOCUS = 'focus';
-    const VALIDATE_FOCUS_IN = 'focusin';
-    const VALIDATE_FOCUS_OUT = 'focusout';
-    const VALIDATE_KEY = 'key';
-    const VALIDATE_ALL = 'all';
-
-    protected string $widget = 'entry';
+    protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
     public function __construct(Widget $parent, string $value = '', array $options = [])
@@ -59,12 +52,15 @@ class Entry extends TkWidget implements Valuable
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'disabledBackground' => null,
-            'disabledForeground' => null,
+            'font' => null,
+            'textColor' => null,
+            'xScrollCommand' => null,
+            'exportSelection' => null,
             'invalidCommand' => null,
-            'readonlyBackground' => null,
+            'justify' => null,
             'show' => null,
             'state' => null,
+            'textVariable' => null,
             'validate' => null,
             'validateCommand' => null,
             'width' => null,
