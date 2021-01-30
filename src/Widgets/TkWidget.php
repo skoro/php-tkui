@@ -13,25 +13,29 @@ abstract class TkWidget implements Widget
 {
     private Widget $parent;
     private static array $idCounter = [];
-    private string $widget;
-    private string $name;
     private Options $options;
     private int $id;
+
+    /**
+     * Tk widget command.
+     */
+    protected string $widget;
+
+    /**
+     * The widget short name.
+     */
+    protected string $name;
 
     /**
      * Creates a new widget.
      *
      * @param Widget $parent  The parent widget.
-     * @param string $widget  Tk widget command.
-     * @param string $name    The widget name.
      * @param array  $options Override widget options.
      */
-    public function __construct(Widget $parent, string $widget, string $name, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         $this->generateId();
         $this->parent = $parent;
-        $this->widget = $widget;
-        $this->name = $name;
         $this->options = $this->initOptions()
                               ->merge($this->initWidgetOptions())
                               ->mergeAsArray($options);

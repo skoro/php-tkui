@@ -14,6 +14,9 @@ use TclTk\Widgets\Widget;
  */
 class RadioButton extends SwitchableButton
 {
+    protected string $widget = 'radiobutton';
+    protected string $name = 'rb';
+
     /**
      * @param int|string|float|bool $value
      */
@@ -21,7 +24,7 @@ class RadioButton extends SwitchableButton
     {
         $options['text'] = $title;
         $options['value'] = $value;
-        parent::__construct($parent, 'radiobutton', 'rb', $options);
+        parent::__construct($parent, $options);
     }
 
     protected function initWidgetOptions(): Options

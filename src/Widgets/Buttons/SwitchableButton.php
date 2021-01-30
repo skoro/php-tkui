@@ -13,11 +13,11 @@ use TclTk\Widgets\Widget;
  */
 abstract class SwitchableButton extends GenericButton implements SelectableButton
 {
-    public function __construct(Widget $parent, string $widget, string $name, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         $var = isset($options['variable']);
 
-        parent::__construct($parent, $widget, $name, $options);
+        parent::__construct($parent, $options);
 
         if (! $var) {
             $this->variable = $this->window()->registerVar($this);

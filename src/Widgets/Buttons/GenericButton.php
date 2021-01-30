@@ -29,7 +29,7 @@ abstract class GenericButton extends TkWidget
     /**
      * @inheritdoc
      */
-    public function __construct(Widget $parent, string $widget, string $name, array $options = [])
+    public function __construct(Widget $parent, array $options = [])
     {
         // When the command is passed as an option we must
         // use the button's property assigning to explicitly
@@ -40,7 +40,7 @@ abstract class GenericButton extends TkWidget
             unset($options['command']);
         }
 
-        parent::__construct($parent, $widget, $name, $options);
+        parent::__construct($parent, $options);
 
         // Register the command from the options.
         if ($command !== null) {

@@ -53,6 +53,9 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     protected array $items;
 
+    protected string $widget = 'listbox';
+    protected string $name = 'lb';
+
     /**
      * @inheritdoc
      *
@@ -60,7 +63,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     public function __construct(Widget $parent, array $items = [], array $options = [])
     {
-        parent::__construct($parent, 'listbox', 'lb', $options);
+        parent::__construct($parent, $options);
 
         $this->items = [];
         foreach ($items as $item) {

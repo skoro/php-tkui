@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Ttk;
+namespace TclTk\Widgets;
 
 use TclTk\Exceptions\TkException;
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
 
 /**
  * A basic Ttk widget implementation.

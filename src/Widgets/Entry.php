@@ -35,11 +35,14 @@ class Entry extends TkWidget implements Valuable
     const VALIDATE_KEY = 'key';
     const VALIDATE_ALL = 'all';
 
+    protected string $widget = 'entry';
+    protected string $name = 'e';
+
     public function __construct(Widget $parent, string $value = '', array $options = [])
     {
         $var = isset($options['textVariable']);
 
-        parent::__construct($parent, 'entry', 'e', $options);
+        parent::__construct($parent, $options);
 
         if (! $var) {
             $this->textVariable = $this->window()->registerVar($this);

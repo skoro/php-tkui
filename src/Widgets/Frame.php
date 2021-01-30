@@ -9,8 +9,6 @@ namespace TclTk\Widgets;
  */
 class Frame extends TkWidget
 {
-    public function __construct(Widget $parent, array $options = [])
-    {
-        parent::__construct($parent, 'frame', 'fr', $options);
-    }
+    protected string $widget = 'frame';
+    protected string $name = 'fr';
 }

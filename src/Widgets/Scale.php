@@ -38,9 +38,12 @@ class Scale extends TkWidget implements Valuable
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
+    protected string $widget = 'scale';
+    protected string $name = 'sc';
+
     public function __construct(Widget $parent, array $options = [])
     {
-        parent::__construct($parent, 'scale', 'sc', $options);
+        parent::__construct($parent, $options);
     }
 
     /**

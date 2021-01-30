@@ -11,10 +11,13 @@ use TclTk\Options;
  */
 class LabelFrame extends TkWidget
 {
+    protected string $widget = 'labelframe';
+    protected string $name = 'lbf';
+
     public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-        parent::__construct($parent, 'labelframe', 'lbf', $options);
+        parent::__construct($parent, $options);
     }
 
     /**

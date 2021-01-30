@@ -20,9 +20,12 @@ class Text extends ScrollableWidget
     const STATE_NORMAL = 'normal';
     const STATE_DISABLED = 'disabled';
 
+    protected string $widget = 'text';
+    protected string $name = 't';
+
     public function __construct(Widget $parent, array $options = [])
     {
-        parent::__construct($parent, 'text', 't', $options);
+        parent::__construct($parent, $options);
     }
 
     /**

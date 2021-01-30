@@ -14,13 +14,16 @@ use TclTk\Options;
  */
 class Scrollbar extends TkWidget
 {
+    protected string $widget = 'scrollbar';
+    protected string $name = 'scr';
+
     /**
      * @param bool $vert Vertical scrollbar otherwise horizontal. Same as setting 'orient' option.
      */
     public function __construct(Widget $parent, bool $vert = TRUE, array $options = [])
     {
         $options['orient'] = $vert ? WidgetOptions::ORIENT_VERTICAL : WidgetOptions::ORIENT_HORIZONTAL;
-        parent::__construct($parent, 'scrollbar', 'sb', $options);
+        parent::__construct($parent, $options);
     }
 
     /**

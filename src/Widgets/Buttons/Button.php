@@ -15,10 +15,13 @@ use TclTk\Widgets\Widget;
  */
 class Button extends GenericButton
 {
+    protected string $widget = 'button';
+    protected string $name = 'b';
+
     public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-        parent::__construct($parent, 'button', 'b', $options);
+        parent::__construct($parent, $options);
     }
 
     /**

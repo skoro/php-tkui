@@ -23,10 +23,13 @@ class Label extends TkWidget
     const STATE_ACTIVE = 'active';
     const STATE_DISABLED = 'disabled';
 
+    protected string $widget = 'label';
+    protected string $name = 'lb';
+
     public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-        parent::__construct($parent, 'label', 'lb', $options);
+        parent::__construct($parent, $options);
     }
 
     /**
