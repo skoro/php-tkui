@@ -11,20 +11,6 @@ use TclTk\Options;
  */
 class WidgetOptions extends Options
 {
-    const JUSTIFY_LEFT = 'left';
-    const JUSTIFY_CENTER = 'center';
-    const JUSTIFY_RIGHT = 'right';
-
-    const ORIENT_HORIZONTAL = 'horizontal';
-    const ORIENT_VERTICAL = 'vertical';
-
-    const RELIEF_RAISED = 'raised';
-    const RELIEF_SUNKEN = 'sunken';
-    const RELIEF_FLAT = 'flat';
-    const RELIEF_RIDGE = 'ridge';
-    const RELIEF_SOLID = 'solid';
-    const RELIEF_GROOVE = 'groove';
-
     public function __construct(array $options = [])
     {
         parent::__construct($this->defaults());
