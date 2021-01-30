@@ -3,37 +3,22 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Buttons\Command;
+use TclTk\Widgets\TtkWidget;
 use TclTk\Widgets\Widget;
 
 /**
- * Parent of button classes.
- *
- * @property string $state
- * @property string $overRelief
  * @property callable $command
- * @property int $height
+ * @property int $underline
  * @property int $width
+ * @property string $compound
  */
-abstract class GenericButton extends TkWidget
+abstract class GenericButton extends TtkWidget
 {
     use Command;
 
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
-
-    /**
-     * @inheritdoc
-     */
     public function __construct(Widget $parent, array $options = [])
     {
-        // When the command is passed as an option we must
-        // use the button's property assigning to explicitly
-        // register a callback otherwise the command won't be registered.
         $command = null;
         if (isset($options['command'])) {
             $command = $options['command'];
@@ -42,7 +27,6 @@ abstract class GenericButton extends TkWidget
 
         parent::__construct($parent, $options);
 
-        // Register the command from the options.
         if ($command !== null) {
             $this->command = $command;
         }
@@ -51,51 +35,22 @@ abstract class GenericButton extends TkWidget
     /**
      * @inheritdoc
      */
-    protected function initOptions(): Options
+    protected function initWidgetOptions(): Options
     {
-        return parent::initOptions()->mergeAsArray([
-            'state' => null,
+        return new Options([
+            'text' => null,
+            'compound' => null,
+            'image' => null,
+            'textVariable' => null,
+            'underline' => null,
             'width' => null,
-            'height' => null,
             'command' => null,
-            'overRelief' => null,
+            'state' => null,
         ]);
     }
 
-    /**
-     * Flashes the button.
-     *
-     * This operation is ignored if the button's state is disabled.
-     *
-     * @link http://www.tcl.tk/man/tcl8.6/TkCmd/button.htm#M16
-     */
-    public function flash(): void
-    {
-        $this->call('flash');
-    }
-
-    /**
-     * Manually click the button.
-     *
-     * @link http://www.tcl.tk/man/tcl8.6/TkCmd/button.htm#M17
-     */
     public function invoke(): void
     {
         $this->call('invoke');
-    }
-
-    public function isDisabled(): bool
-    {
-        return $this->state === self::STATE_DISABLED;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->state === self::STATE_ACTIVE;
-    }
-
-    public function isNormal(): bool
-    {
-        return $this->state === self::STATE_NORMAL;
     }
 }

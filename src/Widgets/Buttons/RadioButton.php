@@ -3,18 +3,19 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
+use TclTk\Variable;
 use TclTk\Widgets\Widget;
 
 /**
- * Implementation of Tk radiobutton widget.
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_radiobutton.htm
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/radiobutton.htm
- *
- * @property string|int|bool|float $value
+ * @property string $text
+ * @property string $value
+ * @property Variable $variable
  */
 class RadioButton extends SwitchableButton
 {
-    protected string $widget = 'radiobutton';
+    protected string $widget = 'ttk::radiobutton';
     protected string $name = 'rb';
 
     /**
@@ -27,9 +28,12 @@ class RadioButton extends SwitchableButton
         parent::__construct($parent, $options);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return parent::initWidgetOptions()->mergeAsArray([
             'value' => null,
         ]);
     }
@@ -37,8 +41,26 @@ class RadioButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->variable->asString();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function select(): self
+    {
+        $this->setValue($this->value);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function deselect(): self
+    {
+        $this->setValue('');
+        return $this;
     }
 }

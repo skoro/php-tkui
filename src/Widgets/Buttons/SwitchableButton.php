@@ -3,13 +3,11 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Variable;
+use TclTk\Widgets\Buttons\SelectableButton;
 use TclTk\Widgets\Widget;
 
 /**
- * Parent for switch button classes.
- *
- * @property Variable $variable
+ * The base class for buttons that can be switched.
  */
 abstract class SwitchableButton extends GenericButton implements SelectableButton
 {
@@ -27,34 +25,28 @@ abstract class SwitchableButton extends GenericButton implements SelectableButto
     /**
      * @inheritdoc
      */
-    protected function initOptions(): Options
+    protected function initWidgetOptions(): Options
     {
-        return parent::initOptions()->mergeAsArray([
-            'indicatorOn' => null,
-            'offRelief' => null,
-            'selectColor' => null,
-            'selectImage' => null,
-            'tristateImage' => null,
-            'tristateValue' => null,
+        return parent::initWidgetOptions()->mergeAsArray([
             'variable' => null,
         ]);
     }
 
     /**
-     * Selects the checkbutton.
+     * @inheritdoc
      */
     public function select(): self
     {
-        $this->call('select');
+        $this->setValue(true);
         return $this;
     }
 
     /**
-     * Deselects the checkbutton.
+     * @inheritdoc
      */
     public function deselect(): self
     {
-        $this->call('deselect');
+        $this->setValue(false);
         return $this;
     }
 

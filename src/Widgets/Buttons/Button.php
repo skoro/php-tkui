@@ -6,18 +6,23 @@ use TclTk\Options;
 use TclTk\Widgets\Widget;
 
 /**
- * Implementation of Tk button widget.
- *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/button.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_button.htm
  *
  * @property string $text
+ * @property callable $command
  * @property string $default
+ * @property int $underline
+ * @property int $width
+ * @property string $compound
  */
 class Button extends GenericButton
 {
-    protected string $widget = 'button';
+    protected string $widget = 'ttk::button';
     protected string $name = 'b';
 
+    /**
+     * @inheritdoc
+     */
     public function __construct(Widget $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
@@ -29,7 +34,7 @@ class Button extends GenericButton
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return parent::initWidgetOptions()->mergeAsArray([
             'default' => null,
         ]);
     }

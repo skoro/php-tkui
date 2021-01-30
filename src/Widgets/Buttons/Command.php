@@ -4,6 +4,9 @@ namespace TclTk\Widgets\Buttons;
 
 use InvalidArgumentException;
 
+/**
+ * Implements widget's '-command' option and onClick method.
+ */
 trait Command
 {
     /** @var callable */
