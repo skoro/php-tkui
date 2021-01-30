@@ -3,27 +3,31 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Variable;
 
 /**
  * Implementation of Tk label widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/label.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_label.htm
  *
- * @property string $state
- * @property int $height
- * @property int $width
  * @property string $text
+ * @property Variable $textVariable
+ * @property int $underline
+ * @property int $width
+ * @property string $anchor
+ * @property string $frameColor
+ * @property string $textColor
+ * @property string $justify
+ * @property string $relief
+ * @property int $wrapLength
  */
 class Label extends TkWidget
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
+    const JUSTIFY_LEFT = 'left';
+    const JUSTIFY_CENTER = 'center';
+    const JUSTIFY_RIGHT = 'right';
 
-    protected string $widget = 'label';
+    protected string $widget = 'ttk::label';
     protected string $name = 'lb';
 
     public function __construct(Widget $parent, string $title, array $options = [])
@@ -38,9 +42,21 @@ class Label extends TkWidget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'height' => null,
+            'compound' => null,
+            'image' => null,
+            'padding' => null,
             'state' => null,
+            'text' => null,
+            'textVariable' => null,
+            'underline' => null,
             'width' => null,
+            'anchor' => null,
+            'frameColor' => null,
+            'font' => null,
+            'textColor' => null,
+            'justify' => null,
+            'relief' => null,
+            'wrapLength' => null,
         ]);
     }
 }
