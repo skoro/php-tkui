@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Widgets\Consts\Relief;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_frame.htm
@@ -15,18 +16,8 @@ use TclTk\Options;
  * 
  * @todo Implement padding property.
  */
-class Frame extends TtkWidget
+class Frame extends TtkWidget implements Relief
 {
-    /**
-     * Values for 'relief' property.
-     */
-    public const RELIEF_FLAT = 'flat';
-    public const RELIEF_GROOVE = 'groove';
-    public const RELIEF_RAISED = 'raised';
-    public const RELIEF_RIDGE = 'ridge';
-    public const RELIEF_SOLID = 'solid';
-    public const RELIEF_SUNKEN = 'sunken';
-
     protected string $widget = 'ttk::frame';
     protected string $name = 'fr';
 

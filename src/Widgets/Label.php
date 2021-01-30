@@ -4,6 +4,9 @@ namespace TclTk\Widgets;
 
 use TclTk\Options;
 use TclTk\Variable;
+use TclTk\Widgets\Consts\Anchor;
+use TclTk\Widgets\Consts\Justify;
+use TclTk\Widgets\Consts\Relief;
 
 /**
  * Implementation of Tk label widget.
@@ -21,11 +24,8 @@ use TclTk\Variable;
  * @property string $relief
  * @property int $wrapLength
  */
-class Label extends TkWidget
+class Label extends TtkWidget implements Justify, Relief, Anchor
 {
-    const JUSTIFY_LEFT = 'left';
-    const JUSTIFY_CENTER = 'center';
-    const JUSTIFY_RIGHT = 'right';
 
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';
