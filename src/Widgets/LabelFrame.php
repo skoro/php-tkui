@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Widgets\Consts\Anchor;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_labelframe.htm
@@ -11,13 +12,13 @@ use TclTk\Options;
  * @property int $width
  * @property int $height
  * @property string $text
- * @property string $labelAnchor
+ * @property string $labelAnchor One of ANCHOR_* consts.
  * @property int $underline
  * @property string $labelWidget
  * 
  * @todo Implement padding property.
  */
-class LabelFrame extends Frame
+class LabelFrame extends Frame implements Anchor
 {
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
