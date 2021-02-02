@@ -277,4 +277,12 @@ class Tcl
             throw new TclInterpException($interp, 'UnsetVar2');
         }
     }
+
+    /**
+     * Converts a PHP array to a Tcl list.
+     */
+    public static function arrayToList(array $input): string
+    {
+        return '{' . implode(' ', array_map([self::class, 'quoteString'], $input)) . '}';
+    }
 }
