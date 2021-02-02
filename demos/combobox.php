@@ -2,11 +2,13 @@
 
 use TclTk\App;
 use TclTk\Widgets\Buttons\Button;
+use TclTk\Widgets\Buttons\CheckButton;
 use TclTk\Widgets\Combobox;
 use TclTk\Widgets\Entry;
 use TclTk\Widgets\Frame;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
+use TclTk\Widgets\RadioGroup;
 use TclTk\Widgets\Scrollbar;
 use TclTk\Widgets\Window;
 
@@ -59,6 +61,13 @@ $demo = new class extends Window
         (new Button($f, 'Button'))->pack()->sideTop()->padY(4)->manage();
         (new Entry($f, 'value...'))->pack()->sideTop()->padY(4)->manage();
         (new Scrollbar($f, false))->pack()->sideTop()->pad(4, 4)->fillX()->expand()->manage();
+        (new CheckButton($f, 'Enabled checkbutton', false))->pack()->pad(4, 4)->manage();
+        (new CheckButton($f, 'Disabled checkbutton', true))->pack()->pad(4, 4)->manage();
+        $rg = new RadioGroup($f);
+        $rg->add('Radio button', 1)->pack(['fill' => 'x'])->manage();
+        $rg->add('Radio button', 2)->pack(['fill' => 'x'])->manage();
+        $rg->add('Radio button', 3)->pack(['fill' => 'x'])->manage();
+        $rg->pack()->fillX()->manage();
         return $f;
     }
 
