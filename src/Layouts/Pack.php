@@ -133,6 +133,20 @@ class Pack extends Manager
         return $this;
     }
 
+    public function pad($amountX, $amountY): self
+    {
+        $this->padx = $amountX;
+        $this->pady = $amountY;
+        return $this;
+    }
+
+    public function ipad($amountX, $amountY): self
+    {
+        $this->ipadx = $amountX;
+        $this->ipady = $amountY;
+        return $this;
+    }
+
     /**
      * @inheritdoc
      */
