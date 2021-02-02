@@ -13,7 +13,7 @@ class ScrollbarTest extends TestCase
     public function vertical_orient_by_default()
     {
         $this->tclEvalTest(1, [
-            ['scrollbar', $this->checkWidget('.sb'), '-orient', 'vertical'],
+            ['ttk::scrollbar', $this->checkWidget('.scr'), '-orient', 'vertical'],
         ]);
         new Scrollbar($this->createWindowStub());
     }
@@ -22,7 +22,7 @@ class ScrollbarTest extends TestCase
     public function create_horizontal_orient()
     {
         $this->tclEvalTest(1, [
-            ['scrollbar', $this->checkWidget('.sb'), '-orient', 'horizontal'],
+            ['ttk::scrollbar', $this->checkWidget('.scr'), '-orient', 'horizontal'],
         ]);
         new Scrollbar($this->createWindowStub(), FALSE);
     }

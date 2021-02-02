@@ -5,6 +5,7 @@ namespace TclTk\Tests\Widgets;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
+use TclTk\App;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Window;
@@ -14,7 +15,7 @@ class ButtonTest extends TestCase
     /** @test */
     public function widget_created()
     {
-        $this->tclEvalTest(1, [['button', $this->checkWidget('.b'), '-text', '{Button}']]);
+        $this->tclEvalTest(1, [['ttk::button', $this->checkWidget('.b'), '-text', '{Button}']]);
 
         new Button($this->createWindowStub(), 'Button');
     }
@@ -23,7 +24,7 @@ class ButtonTest extends TestCase
     public function button_text_changed()
     {
         $this->tclEvalTest(2, [
-            ['button', $this->checkWidget('.b'), '-text', '{New Button}'],
+            ['ttk::button', $this->checkWidget('.b'), '-text', '{New Button}'],
             [$this->checkWidget('.b'), 'configure', '-text', '{Changed}']
         ]);
 
@@ -35,10 +36,10 @@ class ButtonTest extends TestCase
     public function make_widget_with_options()
     {
         $this->tclEvalTest(1, [
-            ['button', $this->checkWidget('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE],
+            ['ttk::button', $this->checkWidget('.b'), '-text', '{Title}', '-underline', 2],
         ]);
 
-        new Button($this->createWindowStub(), 'Title', ['state' => Button::STATE_ACTIVE]);
+        new Button($this->createWindowStub(), 'Title', ['underline' => 2]);
     }
 
     /** @test */
@@ -49,6 +50,7 @@ class ButtonTest extends TestCase
         $win->expects($this->once())
             ->method('registerCallback');
         $win->method('window')->willReturnSelf();
+        $win->method('app')->willReturn($this->createAppMock());
         
         $btn = new Button($win, 'Test');
         $btn->command = function () {};
@@ -62,6 +64,7 @@ class ButtonTest extends TestCase
         $win->expects($this->once())
             ->method('registerCallback');
         $win->method('window')->willReturnSelf();
+        $win->method('app')->willReturn($this->createAppMock());
 
         new Button($win, 'Test', ['command' => function () {}]);
     }
@@ -74,6 +77,8 @@ class ButtonTest extends TestCase
 
         /** @var Window|Stub */
         $win = $this->createStub(Window::class);
+        $win->method('window')->willReturnSelf();
+        $win->method('app')->willReturn($this->createAppMock());
 
         $btn = new Button($win, 'Test');
         $btn->command = 'MyCommand';

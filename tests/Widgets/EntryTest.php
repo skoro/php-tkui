@@ -27,7 +27,7 @@ class EntryTest extends TestCase
     public function entry_created()
     {
         $this->tclEvalTest(2, [
-            ['entry', '.e1'],
+            ['ttk::entry', '.e1'],
             ['.e1', 'configure', '-textvariable', 'var'],
         ]);
 
@@ -38,7 +38,7 @@ class EntryTest extends TestCase
     public function entry_with_predefined_value()
     {
         $this->tclEvalTest(2, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
         ]);
 
@@ -49,7 +49,7 @@ class EntryTest extends TestCase
     public function entry_get_value()
     {
         $this->tclEvalTest(2, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var']
         ]);
 
@@ -60,7 +60,7 @@ class EntryTest extends TestCase
     public function clear_value()
     {
         $this->tclEvalTest(2, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
         ]);
 
@@ -79,7 +79,7 @@ class EntryTest extends TestCase
     public function insert_value()
     {
         $this->tclEvalTest(3, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'insert', '10', '{Test}']
         ]);
@@ -91,7 +91,7 @@ class EntryTest extends TestCase
     public function delete_one_char()
     {
         $this->tclEvalTest(3, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'delete', '5']
         ]);
@@ -103,7 +103,7 @@ class EntryTest extends TestCase
     public function delete_a_range_of_chars()
     {
         $this->tclEvalTest(3, [
-            ['entry', $this->checkWidget('.e')],
+            ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
             [$this->checkWidget('.e'), 'delete', '5', '10']
         ]);

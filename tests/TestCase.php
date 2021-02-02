@@ -26,7 +26,10 @@ class TestCase extends FrameworkTestCase
      */
     protected function createAppMock()
     {
-        return $this->createMock(App::class);
+        $app = $this->createMock(App::class);
+        $app->method('hasTtk')
+            ->willReturn(true);
+        return $app;
     }
 
     protected function createWindowStub(): Widget
