@@ -26,4 +26,34 @@ class CheckButtonTest extends TestCase
 
         new CheckButton($win, 'Test');
     }
+
+    /** @test */
+    public function select_set_true()
+    {
+        $varMock = $this->createMock(Variable::class);
+        $varMock->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive([false], [true]);
+
+        $win = $this->createWindowStub();
+        $win->method('registerVar')->willReturn($varMock);
+
+        $cb = new CheckButton($win, 'Test', false);
+        $cb->select();
+    }
+
+    /** @test */
+    public function deselect_set_false()
+    {
+        $varMock = $this->createMock(Variable::class);
+        $varMock->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive([true], [false]);
+
+        $win = $this->createWindowStub();
+        $win->method('registerVar')->willReturn($varMock);
+
+        $cb = new CheckButton($win, 'Test', true);
+        $cb->deselect();
+    }
 }
