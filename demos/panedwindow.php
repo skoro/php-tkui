@@ -17,7 +17,8 @@ $demo = new class extends Window
         $pw->pack()->expand()->fillBoth()->pad(2, 2)->manage();
 
         $pw->add(new Label($pw, "This is the left side."))
-           ->add(new Label($pw, "This is the right side."));
+           ->add(new Label($pw, "This is the middle."))
+           ->add(new Label($pw, 'This is the right side.'));
     }
 };
 
