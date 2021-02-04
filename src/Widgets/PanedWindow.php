@@ -38,7 +38,7 @@ class PanedWindow extends TtkWidget
     public function add(Widget $widget, int $weight = 0): self
     {
         $this->checkWidgetParent($widget);
-        $this->call('add', $widget->path());
+        $this->call('add', $widget->path(), '-weight', $weight);
         return $this;
     }
 
