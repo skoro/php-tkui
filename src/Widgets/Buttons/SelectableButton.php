@@ -2,7 +2,7 @@
 
 namespace TclTk\Widgets\Buttons;
 
-use TclTk\Widgets\Valuable;
+use TclTk\Widgets\Common\Valuable;
 
 /**
  * Contract for buttons which can be selected or deselected.

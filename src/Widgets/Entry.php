@@ -5,6 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
+use TclTk\Widgets\Common\Valuable;
 use TclTk\Widgets\Consts\Justify;
 use TclTk\Widgets\Consts\Validate;
 

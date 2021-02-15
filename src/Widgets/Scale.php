@@ -4,6 +4,7 @@ namespace TclTk\Widgets;
 
 use TclTk\Options;
 use TclTk\Variable;
+use TclTk\Widgets\Common\Valuable;
 
 /**
  * Implementation of Tk scale widget.

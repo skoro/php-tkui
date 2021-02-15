@@ -4,6 +4,7 @@ namespace TclTk\Widgets;
 
 use TclTk\Variable;
 use TclTk\Widgets\Buttons\RadioButton;
+use TclTk\Widgets\Common\Valuable;
 
 class RadioGroup extends Frame implements Valuable
 {
