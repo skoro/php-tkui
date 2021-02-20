@@ -5,7 +5,6 @@ namespace TclTk\Tests\Widgets;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
-use TclTk\App;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Window;
