@@ -68,7 +68,7 @@ $demo = new class extends Window
         $l->pack()->manage();
         foreach (['One', 'Two', 'Three', 'Four'] as $name) {
             $cb = new CheckButton($f, $name);
-            $cb->pack()->sideTop()->anchor('w')->manage();
+            $cb->pack()->sideTop()->anchor('w')->fillX()->manage();
             if ($name === 'Three') {
                 $cb->select();
             }
@@ -89,6 +89,7 @@ $demo = new class extends Window
                 ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->getValue())
                 ->pack()
                 ->anchor('w')
+                ->fillX()
                 ->manage();
         }
         $rg->pack()->fillBoth()->expand()->manage();
