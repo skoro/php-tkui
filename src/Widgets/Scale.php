@@ -22,7 +22,7 @@ use TclTk\Widgets\Consts\Orient;
  */
 class Scale extends TtkWidget implements Valuable, Orient
 {
-    protected string $widget = 'scale';
+    protected string $widget = 'ttk::scale';
     protected string $name = 'sc';
 
     public function __construct(Widget $parent, array $options = [])
