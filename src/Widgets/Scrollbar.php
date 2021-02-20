@@ -4,6 +4,7 @@ namespace TclTk\Widgets;
 
 use LogicException;
 use TclTk\Options;
+use TclTk\Widgets\Consts\Orient;
 
 /**
  * Implementation of Tk scrollbar widget.
@@ -13,11 +14,8 @@ use TclTk\Options;
  * @property string $orient
  * @property callable $command
  */
-class Scrollbar extends TtkWidget
+class Scrollbar extends TtkWidget implements Orient
 {
-    const ORIENT_HORIZONTAL = 'horizontal';
-    const ORIENT_VERTICAL = 'vertical';
-
     protected string $widget = 'ttk::scrollbar';
     protected string $name = 'scr';
 
