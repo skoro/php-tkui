@@ -11,7 +11,7 @@ use TclTk\Widgets\Consts\Orient;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm
  *
- * @property string $orient
+ * @property string $orient By default, vertical orientation.
  * @property callable $command
  */
 class Scrollbar extends TtkWidget implements Orient
@@ -20,22 +20,13 @@ class Scrollbar extends TtkWidget implements Orient
     protected string $name = 'scr';
 
     /**
-     * @param bool $vert Vertical scrollbar otherwise horizontal. Same as setting 'orient' option.
-     */
-    public function __construct(Widget $parent, bool $vert = TRUE, array $options = [])
-    {
-        $options['orient'] = $vert ? self::ORIENT_VERTICAL : self::ORIENT_HORIZONTAL;
-        parent::__construct($parent, $options);
-    }
-
-    /**
      * @inheritdoc
      */
     public function initWidgetOptions(): Options
     {
         return new Options([
             'command' => null,
-            'orient' => null,
+            'orient' => self::ORIENT_VERTICAL,
         ]);
     }
 

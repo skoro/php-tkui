@@ -4,22 +4,17 @@ namespace TclTk\Widgets;
 
 use TclTk\Exceptions\TkException;
 use TclTk\Options;
+use TclTk\Widgets\Consts\Orient;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_panedwindow.htm
  *
- * @property string $orient
+ * @property string $orient By default, vertical orientation.
  * @property int $width
  * @property int $height
  */
-class PanedWindow extends TtkWidget
+class PanedWindow extends TtkWidget implements Orient
 {
-    /**
-     * Values for 'orient' property.
-     */
-    const ORIENT_VERTICAL = 'vertical';
-    const ORIENT_HORIZONTAL = 'horizontal';
-
     protected string $widget = 'ttk::panedwindow';
     protected string $name = 'pnw';
 
@@ -29,7 +24,7 @@ class PanedWindow extends TtkWidget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'orient' => null,
+            'orient' => self::ORIENT_VERTICAL,
             'width' => null,
             'height' => null,
         ]);

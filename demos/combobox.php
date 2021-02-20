@@ -60,7 +60,8 @@ $demo = new class extends Window
         $f = new LabelFrame($this, 'Theme demo:');
         (new Button($f, 'Button'))->pack()->sideTop()->padY(4)->manage();
         (new Entry($f, 'value...'))->pack()->sideTop()->padY(4)->manage();
-        (new Scrollbar($f, false))->pack()->sideTop()->pad(4, 4)->fillX()->expand()->manage();
+        (new Scrollbar($f, ['orient' => Scrollbar::ORIENT_HORIZONTAL]))
+            ->pack()->sideTop()->pad(4, 4)->fillX()->expand()->manage();
         (new CheckButton($f, 'Enabled checkbutton', false))->pack()->pad(4, 4)->manage();
         (new CheckButton($f, 'Disabled checkbutton', true))->pack()->pad(4, 4)->manage();
         $rg = new RadioGroup($f);

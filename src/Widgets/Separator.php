@@ -10,7 +10,7 @@ use TclTk\Widgets\Consts\Orient;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_separator.htm
  *
- * @property string $orient
+ * @property string $orient By default, vertical orientation.
  */
 class Separator extends TtkWidget implements Orient
 {
@@ -23,7 +23,7 @@ class Separator extends TtkWidget implements Orient
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'orient' => null,
+            'orient' => self::ORIENT_VERTICAL,
         ]);
     }
 }
