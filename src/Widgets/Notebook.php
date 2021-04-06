@@ -74,7 +74,7 @@ class Notebook extends TtkWidget implements SplObserver
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_notebook.htm#M24
      *
-     * @param int|NotebookTab $index
+     * @param int|string|NotebookTab $index Can be tab index, 'current' or tab instance.
      */
     public function hide($index): self
     {
@@ -100,7 +100,7 @@ class Notebook extends TtkWidget implements SplObserver
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_notebook.htm#M23
      *
-     * @param int|NotebookTab $index
+     * @param int|string|NotebookTab $index Can be tab index, 'current' or tab instance.
      */
     public function forget($index): self
     {
