@@ -141,11 +141,16 @@ class Notebook extends TtkWidget implements SplObserver
     }
 
     /**
-     * @param callable $callback The callback will be executed when a new tab is selected.
+     * @param callable $callback Will be executed when a new tab is selected.
+     *                          The callback accepts two parameters:
+     *                          the tab instance and notebook widget.
      */
     public function onChanged(callable $callback): self
     {
-        $this->bind('<<NotebookTabChanged>>', fn () => $callback($this));
+        $this->bind('<<NotebookTabChanged>>', function () use ($callback) {
+            $index = (int) $this->call('index', 'current');
+            $callback($this->tab($index), $this);
+        });
         return $this;
     }
 }
