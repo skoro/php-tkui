@@ -1,6 +1,6 @@
 ## php-tk
 
-`php-tk` allows you to build desktop ui applications with only php. It leverages [FFI](https://www.php.net/manual/en/book.ffi) and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile any extensions.
+`php-tk` allows you to build desktop ui applications with PHP only. It leverages [FFI](https://www.php.net/manual/en/book.ffi) extension and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile or install any external extensions.
 
 ### Requirements
 
@@ -10,7 +10,7 @@
 
 ### Getting started
 
-Make sure that Tcl/Tk is installed in your OS. For Debian/Ubuntu based distros you can install it with `apt`:
+Make sure that Tcl/Tk is installed in your OS. For Debian/Ubuntu based distros you may install it with `apt`:
 ```sh
 sudo apt install tcl tk
 ```
@@ -18,6 +18,6 @@ sudo apt install tcl tk
 Clone this repository and try demos:
 ```sh
 git clone https://github.com/skoro/php-tk.git php-tk
-cd php-tk/demos
-php buttons.php
+cd php-tk
+php demos/buttons.php
 ```
