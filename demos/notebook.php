@@ -20,6 +20,7 @@ $demo = new class extends Window
         $nb->add($this->createTab1($nb));
         $nb->add($this->createTab2($nb));
         $nb->pack()->expand()->fillBoth()->manage();
+        $nb->onChanged([$this, 'OnChangeTab']);
     }
 
     private function createTab1(Notebook $parent): NotebookTab
@@ -27,7 +28,7 @@ $demo = new class extends Window
         $f = new Frame($parent);
         $tab = new NotebookTab($f, 'First tab');
 
-        (new Button($f, 'Click!'))
+        (new Button($f, 'Click to change tab text'))
             ->onClick(function () use ($tab) {
                 $tab->text = 'Changed !';
             })->pack()->padY(8)->manage();
@@ -40,6 +41,11 @@ $demo = new class extends Window
         $f = new LabelFrame($parent, 'Second frame');
 
         return new NotebookTab($f, 'Second tab', ['padding' => 4]);
+    }
+
+    public function onChangeTab(Notebook $nb): void
+    {
+        echo 'Changed.'.PHP_EOL;
     }
 };
 
