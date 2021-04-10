@@ -58,6 +58,13 @@ $demo = new class extends Window
             ->pack()
             ->sideTop()
             ->manage();
+
+        // Disabled button with state in options.
+        (new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]))
+            ->pack()
+            ->sideTop()
+            ->manage();
+
         return $f;
     }
 
@@ -74,6 +81,12 @@ $demo = new class extends Window
             }
             $cb->onClick(fn (CheckButton $cb) => $l->text = $cb->text . ': ' . $cb->getValue());
         }
+
+        // Disabled check button, setting state via method (allows chaining).
+        (new CheckButton($f, 'Disabled'))
+            ->state(CheckButton::STATE_DISABLED)
+            ->pack()->sideTop()->anchor('w')->fillX()->manage();
+
         return $f;
     }
 
@@ -92,6 +105,12 @@ $demo = new class extends Window
                 ->fillX()
                 ->manage();
         }
+
+        // Disabled, setting state as a property.
+        $x = $rg->add('Disabled', 'disabled');
+        $x->state = RadioButton::STATE_DISABLED;
+        $x->pack()->anchor('w')->fillX()->manage();
+
         $rg->pack()->fillBoth()->expand()->manage();
         return $f;
     }
