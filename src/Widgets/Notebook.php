@@ -24,6 +24,8 @@ class Notebook extends TtkWidget implements SplObserver
     /** @var NotebookTab[] */
     private array $tabs = [];
 
+    private bool $keyboardTraversal = false;
+
     /**
      * @inheritdoc
      */
@@ -44,6 +46,9 @@ class Notebook extends TtkWidget implements SplObserver
         $this->tabs[] = $tab;
         $this->call('add', $tab->container()->path(), ...$tab->options()->asStringArray());
         $tab->attach($this);
+        if ($tab->underline !== null) {
+            $this->enableTraversal();
+        }
         return $this;
     }
 
@@ -151,6 +156,22 @@ class Notebook extends TtkWidget implements SplObserver
             $index = (int) $this->call('index', 'current');
             $callback($this->tab($index), $this);
         });
+        return $this;
+    }
+
+    /**
+     * Enables keyboard traversal for the widget.
+     *
+     * ALT-K bindings will be activated for accessing an arbitrary tab.
+     */
+    public function enableTraversal(): self
+    {
+        if (! $this->keyboardTraversal) {
+            $this->window()
+                 ->app()
+                 ->tclEval('::ttk::notebook::enableTraversal', $this->path());
+            $this->keyboardTraversal = true;
+        }
         return $this;
     }
 }
