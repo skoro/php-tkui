@@ -53,4 +53,16 @@ class Text extends ScrollableWidget
             'wrap' => null,
         ]);
     }
+
+    public function insert(string $text): self
+    {
+        $this->call('insert', 'end', $text);
+        return $this;
+    }
+
+    public function clear(): self
+    {
+        $this->call('delete', '0.0', 'end');
+        return $this;
+    }
 }
