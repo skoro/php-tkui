@@ -2,12 +2,12 @@
 
 namespace TclTk\Widgets\Buttons;
 
-use TclTk\Widgets\Common\Valuable;
+use TclTk\Widgets\Common\ValueInVariable;
 
 /**
  * Contract for buttons which can be selected or deselected.
  */
-interface SelectableButton extends Valuable
+interface SelectableButton extends ValueInVariable
 {
     /**
      * Sets the button's value.

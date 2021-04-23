@@ -5,7 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
-use TclTk\Widgets\Common\Valuable;
+use TclTk\Widgets\Common\ValueInVariable;
 use TclTk\Widgets\Consts\Justify;
 
 /**
@@ -20,7 +20,7 @@ use TclTk\Widgets\Consts\Justify;
  * @property array $values TODO
  * @property int $width
  */
-class Combobox extends TtkWidget implements Valuable, Justify
+class Combobox extends TtkWidget implements ValueInVariable, Justify
 {
     protected string $widget = 'ttk::combobox';
     protected string $name = 'cb';

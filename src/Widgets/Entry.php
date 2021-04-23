@@ -6,7 +6,7 @@ use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
 use TclTk\Widgets\Common\Editable;
-use TclTk\Widgets\Common\Valuable;
+use TclTk\Widgets\Common\ValueInVariable;
 use TclTk\Widgets\Consts\Justify;
 use TclTk\Widgets\Consts\Validate;
 
@@ -28,7 +28,7 @@ use TclTk\Widgets\Consts\Validate;
  * @property callable $validateCommand TODO
  * @property int $width
  */
-class Entry extends TtkWidget implements Valuable, Justify, Validate, Editable
+class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Editable
 {
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';

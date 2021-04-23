@@ -4,9 +4,9 @@ namespace TclTk\Widgets;
 
 use TclTk\Variable;
 use TclTk\Widgets\Buttons\RadioButton;
-use TclTk\Widgets\Common\Valuable;
+use TclTk\Widgets\Common\ValueInVariable;
 
-class RadioGroup extends Frame implements Valuable
+class RadioGroup extends Frame implements ValueInVariable
 {
     private Variable $variable;
 

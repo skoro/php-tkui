@@ -4,7 +4,7 @@ namespace TclTk\Widgets;
 
 use TclTk\Options;
 use TclTk\Variable;
-use TclTk\Widgets\Common\Valuable;
+use TclTk\Widgets\Common\ValueInVariable;
 use TclTk\Widgets\Consts\Orient;
 
 /**
@@ -20,7 +20,7 @@ use TclTk\Widgets\Consts\Orient;
  * @property float $value
  * @property Variable $variable
  */
-class Scale extends TtkWidget implements Valuable, Orient
+class Scale extends TtkWidget implements ValueInVariable, Orient
 {
     protected string $widget = 'ttk::scale';
     protected string $name = 'sc';
@@ -57,7 +57,7 @@ class Scale extends TtkWidget implements Valuable, Orient
     /**
      * @inheritdoc
      */
-    public function setValue($value): Valuable
+    public function setValue($value): ValueInVariable
     {
         $this->call('set', $value);
         return $this;
