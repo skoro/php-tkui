@@ -44,8 +44,8 @@ $demo = new class extends Window
 
     protected function fillText(): void
     {
-        $this->text->insert("This is demo of text widget.\n");
-        $this->text->insert("Date: " . date('Y-m-d') . "\n");
+        $this->text->append("This is demo of text widget.\n");
+        $this->text->append("Date: " . date('Y-m-d') . "\n");
     }
 };
 
