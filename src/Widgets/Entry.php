@@ -5,6 +5,7 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
+use TclTk\Widgets\Common\Editable;
 use TclTk\Widgets\Common\Valuable;
 use TclTk\Widgets\Consts\Justify;
 use TclTk\Widgets\Consts\Validate;
@@ -27,7 +28,7 @@ use TclTk\Widgets\Consts\Validate;
  * @property callable $validateCommand TODO
  * @property int $width
  */
-class Entry extends TtkWidget implements Valuable, Justify, Validate
+class Entry extends TtkWidget implements Valuable, Justify, Validate, Editable
 {
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
@@ -82,10 +83,13 @@ class Entry extends TtkWidget implements Valuable, Justify, Validate
      * Delete one or more elements of the entry.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M44
+     *
+     * @param string|int $first
+     * @param string|int $last
      */
-    public function delete(int $first, int $last = 0): self
+    public function delete($first, $last = null): self
     {
-        if ($last > 0) {
+        if ($last) {
             $this->call('delete', $first, $last);
         } else {
             $this->call('delete', $first);
@@ -94,7 +98,7 @@ class Entry extends TtkWidget implements Valuable, Justify, Validate
     }
 
     /**
-     * Clears the current entry string.
+     * @inheritdoc
      */
     public function clear(): self
     {
@@ -106,8 +110,10 @@ class Entry extends TtkWidget implements Valuable, Justify, Validate
      * Insert a string just before the specified index.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M48
+     *
+     * @param string|int $index
      */
-    public function insert(int $index, string $str): self
+    public function insert($index, string $str): self
     {
         $this->call('insert', $index, Tcl::quoteString($str));
         return $this;
@@ -128,10 +134,29 @@ class Entry extends TtkWidget implements Valuable, Justify, Validate
      * Arrange for the insertion cursor to be displayed just before the character given by index.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M46
+     *
+     * @param string|int $index
      */
-    public function insertCursor(int $index): self
+    public function insertCursor($index): self
     {
         $this->call('icursor', $index);
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function append(string $text): self
+    {
+        $this->insert('end', $text);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContent(): string
+    {
+        return $this->getValue();
     }
 }
