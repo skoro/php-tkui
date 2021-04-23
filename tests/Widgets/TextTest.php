@@ -16,14 +16,14 @@ class TextTest extends TestCase
     }
 
     /** @test */
-    public function insert_end_text()
+    public function append_text()
     {
         $this->tclEvalTest(2, [
             ['text', $this->checkWidget('.t')],
             [$this->checkWidget('.t'), 'insert', 'end', 'Text text text'],
         ]);
 
-        (new Text($this->createWindowStub()))->insert('Text text text');
+        (new Text($this->createWindowStub()))->append('Text text text');
     }
 
     /** @test */
@@ -35,5 +35,19 @@ class TextTest extends TestCase
         ]);
 
         (new Text($this->createWindowStub()))->clear();
+    }
+
+    /** @test */
+    public function get_content()
+    {
+        $this->tclEvalTest(3, [
+            ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'insert', 'end', 'test'],
+            [$this->checkWidget('.t'), 'get', '0.0'],
+        ]);
+
+        (new Text($this->createWindowStub()))
+            ->append('test')
+            ->getContent();
     }
 }
