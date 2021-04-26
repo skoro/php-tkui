@@ -3,6 +3,7 @@
 namespace TclTk;
 
 use InvalidArgumentException;
+use TclTk\Widgets\Widget;
 
 /**
  * Tcl command options.
@@ -75,6 +76,10 @@ class Options
                         $value = Tcl::quoteString($value);
                     }
                     $str[] = $value === '' ? '{}' : $value;
+                } elseif ($value instanceof Widget) {
+                    $str[] = $value->path();
+                } elseif (is_array($value)) {
+                    $str[] = Tcl::arrayToList($value);
                 } else {
                     $str[] = (string) $value;
                 }
