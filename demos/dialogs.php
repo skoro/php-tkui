@@ -39,6 +39,7 @@ $demo = new class extends Window
         $dlg2 = new OpenFile($this, ['title' => 'Choose a file']);
         $dlg2->addFileType('PHP', '.php');
         $dlg2->addFileType('Text files', '.txt');
+        $dlg2->addFileType('Pictures', ['.png', '.jpg', '.jpeg', '.gif', '.svg']);
         $dlg2->addFileType('All files', '*');
 
         $dlg2->onSuccess(fn ($file) => $res->text = $file);
