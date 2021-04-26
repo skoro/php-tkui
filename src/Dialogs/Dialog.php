@@ -37,7 +37,7 @@ abstract class Dialog implements ModalWindow
     }
 
     /**
-     * The command implementing the dialog.
+     * The Tk command implementing the dialog.
      */
     abstract public function command(): string;
 
@@ -83,12 +83,18 @@ abstract class Dialog implements ModalWindow
         return $result;
     }
 
+    /**
+     * Fires when the user confirms the dialog action.
+     */
     public function onSuccess(callable $callback): self
     {
         $this->callbackSuccess = $callback;
         return $this;
     }
 
+    /**
+     * Fires when the user cancels the dialog.
+     */
     public function onCancel(callable $callback): self
     {
         $this->callbackCancel = $callback;
