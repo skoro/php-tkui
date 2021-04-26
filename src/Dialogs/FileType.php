@@ -7,18 +7,20 @@ use TclTk\Tcl;
 class FileType
 {
     private string $typeName;
-    private array $extensions;
-    private array $macTypes;
+    /** @var string[] */
+    private array $extensions = [];
+    /** @var string[] */
+    private array $macTypes = [];
 
     public function __construct(string $typeName, $extensions, $macTypes = null)
     {
         $this->typeName = $typeName;
         if (! is_array($extensions)) {
-            $this->extensions = array($extensions);
+            $extensions = array($extensions);
         }
-        $this->macTypes = [];
+        $this->extensions = $extensions;
         if ($macTypes) {
-            if (!is_array($macTypes)) {
+            if (! is_array($macTypes)) {
                 $this->macTypes = array($macTypes);
             }
         }
