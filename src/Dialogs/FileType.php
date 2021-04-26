@@ -12,6 +12,10 @@ class FileType
     /** @var string[] */
     private array $macTypes = [];
 
+    /**
+     * @param array|string $extensions
+     * @param array|string $macTypes
+     */
     public function __construct(string $typeName, $extensions, $macTypes = null)
     {
         $this->typeName = $typeName;
@@ -33,6 +37,27 @@ class FileType
             $this->getExtensionsString(),
             $this->getMacTypesString()
         );
+    }
+
+    public function getTypeName(): string
+    {
+        return $this->typeName;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExtensions(): array
+    {
+        return $this->extensions;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMacTypes(): array
+    {
+        return $this->macTypes;
     }
 
     public function getExtensionsString(): string
