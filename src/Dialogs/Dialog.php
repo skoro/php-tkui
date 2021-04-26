@@ -2,7 +2,6 @@
 
 namespace TclTk\Dialogs;
 
-use RuntimeException;
 use TclTk\Exceptions\TkException;
 use TclTk\Options;
 use TclTk\Widgets\Common\ModalWindow;
