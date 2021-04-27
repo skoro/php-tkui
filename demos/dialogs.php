@@ -1,6 +1,7 @@
 <?php
 
 use TclTk\App;
+use TclTk\Dialogs\ChooseDirectory;
 use TclTk\Dialogs\OpenFile;
 use TclTk\Dialogs\SaveFile;
 use TclTk\Widgets\Buttons\Button;
@@ -17,6 +18,7 @@ $demo = new class extends Window
         parent::__construct(App::create(), 'Dialogs demo');
         $this->createOpenDialogFrame();
         $this->createSaveDialogFrame();
+        $this->createChooseDirectoryFrame();
     }
 
     private function createOpenDialogFrame()
@@ -64,6 +66,25 @@ $demo = new class extends Window
         $dlg = new SaveFile($this, ['title' => 'Save the file']);
         $dlg->initialFile = 'test.txt';
         $dlg->onSuccess(fn ($file) => $res->text = $file);
+        $dlg->onCancel(fn () => $res->text = 'Cancelled');
+
+        $b->onClick([$dlg, 'showModal']);
+
+        $f->pack()->fillX()->pad(4, 2)->manage();
+    }
+
+    private function createChooseDirectoryFrame()
+    {
+        $f = new LabelFrame($this, 'Choose directory');
+
+        $b = new Button($f, 'Choose directory ...');
+        $b->pack()->sideLeft()->pad(2, 2)->manage();
+
+        $res = new Label($f, '');
+        $res->pack()->sideRight()->fillX()->expand()->manage();
+
+        $dlg = new ChooseDirectory($this, ['title' => 'Directory']);
+        $dlg->onSuccess(fn ($dir) => $res->text = $dir);
         $dlg->onCancel(fn () => $res->text = 'Cancelled');
 
         $b->onClick([$dlg, 'showModal']);
