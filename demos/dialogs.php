@@ -1,6 +1,7 @@
 <?php
 
 use TclTk\App;
+use TclTk\Dialogs\ChooseColor;
 use TclTk\Dialogs\ChooseDirectory;
 use TclTk\Dialogs\OpenFile;
 use TclTk\Dialogs\SaveFile;
@@ -19,6 +20,7 @@ $demo = new class extends Window
         $this->createOpenDialogFrame();
         $this->createSaveDialogFrame();
         $this->createChooseDirectoryFrame();
+        $this->createChooseColorFrame();
     }
 
     private function createOpenDialogFrame()
@@ -75,7 +77,7 @@ $demo = new class extends Window
 
     private function createChooseDirectoryFrame()
     {
-        $f = new LabelFrame($this, 'Choose directory');
+        $f = new LabelFrame($this, 'Directory');
 
         $b = new Button($f, 'Choose directory ...');
         $b->pack()->sideLeft()->pad(2, 2)->manage();
@@ -88,6 +90,32 @@ $demo = new class extends Window
         $dlg->onCancel(fn () => $res->text = 'Cancelled');
 
         $b->onClick([$dlg, 'showModal']);
+
+        $f->pack()->fillX()->pad(4, 2)->manage();
+    }
+
+    private function createChooseColorFrame()
+    {
+        $f = new LabelFrame($this, 'Color');
+
+        $btnFg = new Button($f, 'Foreground');
+        $btnFg->pack()->sideLeft()->pad(2, 2)->manage();
+        $btnBg = new Button($f, 'Background');
+        $btnBg->pack()->sideLeft()->pad(2, 2)->manage();
+
+        $res = new Label($f, 'Color');
+        $res->pack()->sideRight()->fillX()->expand()->manage();
+
+        $dlgFg = new ChooseColor($this);
+        $dlgFg->title = 'Foreground';
+        $dlgFg->onSuccess(fn ($color) => $res->foreground = $color);
+
+        $dlgBg = new ChooseColor($this);
+        $dlgBg->title = 'Background';
+        $dlgBg->onSuccess(fn ($color) => $res->background = $color);
+
+        $btnFg->onClick([$dlgFg, 'showModal']);
+        $btnBg->onClick([$dlgBg, 'showModal']);
 
         $f->pack()->fillX()->pad(4, 2)->manage();
     }
