@@ -18,8 +18,8 @@ use TclTk\Widgets\Consts\Relief;
  * @property int $underline
  * @property int $width
  * @property string $anchor
- * @property string $frameColor
- * @property string $textColor
+ * @property string $background
+ * @property string $foreground
  * @property string $justify
  * @property string $relief
  * @property int $wrapLength
@@ -51,9 +51,9 @@ class Label extends TtkWidget implements Justify, Relief, Anchor
             'underline' => null,
             'width' => null,
             'anchor' => null,
-            'frameColor' => null,
+            'background' => null,
             'font' => null,
-            'textColor' => null,
+            'foreground' => null,
             'justify' => null,
             'relief' => null,
             'wrapLength' => null,
