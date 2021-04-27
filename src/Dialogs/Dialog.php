@@ -73,13 +73,19 @@ abstract class Dialog implements ModalWindow
     public function showModal()
     {
         $result = $this->parent->app()->tclEval($this->command(), ...$this->options->asStringArray());
+        return $this->handleResult($result);
+    }
 
+    /**
+     * @return mixed
+     */
+    protected function handleResult($result)
+    {
         if ($result === '') {
             $this->doCancel();
         } else {
             $this->doSuccess($result);
         }
-
         return $result;
     }
 
