@@ -5,12 +5,14 @@ namespace TclTk\Dialogs;
 use TclTk\Options;
 
 /**
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/chooseColor.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/chooseDirectory.htm
  *
- * @property string $initialColor
+ * @property string $initialDir
+ * @property string $message
+ * @property bool $mustExist
  * @property string $title
  */
-class ChooseColor extends Dialog
+class DirectoryDialog extends Dialog
 {
     /**
      * @inheritdoc
@@ -18,7 +20,9 @@ class ChooseColor extends Dialog
     protected function createOptions(): Options
     {
         return parent::createOptions()->mergeAsArray([
-            'initialColor' => null,
+            'initialDir' => null,
+            'message' => null,
+            'mustExist' => null,
             'title' => null,
         ]);
     }
@@ -28,12 +32,6 @@ class ChooseColor extends Dialog
      */
     public function command(): string
     {
-        return 'tk_chooseColor';
-    }
-
-    protected function doSuccess($value)
-    {
-        $this->initialColor = $value;
-        parent::doSuccess($value);
+        return 'tk_chooseDirectory';
     }
 }

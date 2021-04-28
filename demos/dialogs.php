@@ -1,11 +1,11 @@
 <?php
 
 use TclTk\App;
-use TclTk\Dialogs\ChooseColor;
-use TclTk\Dialogs\ChooseDirectory;
-use TclTk\Dialogs\FontChooser;
-use TclTk\Dialogs\OpenFile;
-use TclTk\Dialogs\SaveFile;
+use TclTk\Dialogs\ColorDialog;
+use TclTk\Dialogs\DirectoryDialog;
+use TclTk\Dialogs\FontDialog;
+use TclTk\Dialogs\OpenFileDialog;
+use TclTk\Dialogs\SaveFileDialog;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
@@ -38,11 +38,11 @@ $demo = new class extends Window
         $res = new Label($f, '');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlg1 = new OpenFile($this, ['title' => 'Choose a file']);
+        $dlg1 = new OpenFileDialog($this, ['title' => 'Choose a file']);
         $dlg1->onSuccess(fn ($file) => $res->text = $file);
         $dlg1->onCancel(fn () => $res->text = 'Cancelled');
 
-        $dlg2 = new OpenFile($this, ['title' => 'Choose a file']);
+        $dlg2 = new OpenFileDialog($this, ['title' => 'Choose a file']);
         $dlg2->addFileType('PHP', '.php');
         $dlg2->addFileType('Text files', '.txt');
         $dlg2->addFileType('Pictures', ['.png', '.jpg', '.jpeg', '.gif', '.svg']);
@@ -67,7 +67,7 @@ $demo = new class extends Window
         $res = new Label($f, '');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlg = new SaveFile($this, ['title' => 'Save the file']);
+        $dlg = new SaveFileDialog($this, ['title' => 'Save the file']);
         $dlg->initialFile = 'test.txt';
         $dlg->onSuccess(fn ($file) => $res->text = $file);
         $dlg->onCancel(fn () => $res->text = 'Cancelled');
@@ -87,7 +87,7 @@ $demo = new class extends Window
         $res = new Label($f, '');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlg = new ChooseDirectory($this, ['title' => 'Directory']);
+        $dlg = new DirectoryDialog($this, ['title' => 'Directory']);
         $dlg->onSuccess(fn ($dir) => $res->text = $dir);
         $dlg->onCancel(fn () => $res->text = 'Cancelled');
 
@@ -108,11 +108,11 @@ $demo = new class extends Window
         $res = new Label($f, 'Color');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlgFg = new ChooseColor($this);
+        $dlgFg = new ColorDialog($this);
         $dlgFg->title = 'Foreground';
         $dlgFg->onSuccess(fn ($color) => $res->foreground = $color);
 
-        $dlgBg = new ChooseColor($this);
+        $dlgBg = new ColorDialog($this);
         $dlgBg->title = 'Background';
         $dlgBg->onSuccess(fn ($color) => $res->background = $color);
 
@@ -132,7 +132,7 @@ $demo = new class extends Window
         $res = new Label($f, 'Text Sample');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlg = new FontChooser($this, ['title' => 'Choose a font']);
+        $dlg = new FontDialog($this, ['title' => 'Choose a font']);
         $dlg->onSuccess(fn ($font) => $res->text = $font);
 
         $b->onClick([$dlg, 'showModal']);

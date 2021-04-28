@@ -19,7 +19,7 @@ use TclTk\Widgets\Window;
  * @property string $title
  * @property Window $parent
  */
-class FontChooser extends Dialog implements Widget
+class FontDialog extends Dialog implements Widget
 {
     private string $onSelectCallback;
     private string $id;

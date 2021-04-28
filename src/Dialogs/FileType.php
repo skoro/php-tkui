@@ -4,6 +4,11 @@ namespace TclTk\Dialogs;
 
 use TclTk\Tcl;
 
+/**
+ * File types filter for file dialogs.
+ *
+ * TODO: implement Stringable
+ */
 class FileType
 {
     private string $typeName;
