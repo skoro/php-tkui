@@ -101,9 +101,11 @@ class Window implements Widget
 
     protected function createCallbackHandler()
     {
-        $this->interp->createCommand($this->callbackCommandName(), function ($path) {
+        $this->interp->createCommand($this->callbackCommandName(), function (...$args) {
+            $path = array_shift($args);
+            // TODO: check if arguments are empty ?
             list ($widget, $callback) = $this->callbacks[$path];
-            $callback($widget);
+            $callback($widget, ...$args);
         });
     }
 
@@ -130,7 +132,7 @@ class Window implements Widget
         return ($this->id === 0) ? '' : 'w' . $this->id;
     }
 
-    public function registerCallback(TkWidget $widget, callable $callback): string
+    public function registerCallback(Widget $widget, callable $callback): string
     {
         // TODO: it would be better to use WeakMap.
         //       in that case it will be like this:
