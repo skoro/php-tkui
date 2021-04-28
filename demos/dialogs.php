@@ -3,6 +3,7 @@
 use TclTk\App;
 use TclTk\Dialogs\ChooseColor;
 use TclTk\Dialogs\ChooseDirectory;
+use TclTk\Dialogs\FontChooser;
 use TclTk\Dialogs\OpenFile;
 use TclTk\Dialogs\SaveFile;
 use TclTk\Widgets\Buttons\Button;
@@ -21,6 +22,7 @@ $demo = new class extends Window
         $this->createSaveDialogFrame();
         $this->createChooseDirectoryFrame();
         $this->createChooseColorFrame();
+        $this->createChooseFontFrame();
     }
 
     private function createOpenDialogFrame()
@@ -118,6 +120,24 @@ $demo = new class extends Window
         $btnBg->onClick([$dlgBg, 'showModal']);
 
         $f->pack()->fillX()->pad(4, 2)->manage();
+    }
+
+    private function createChooseFontFrame()
+    {
+        $f = new LabelFrame($this, 'Font');
+
+        $b = new Button($f, 'Font');
+        $b->pack()->sideLeft()->pad(2, 2)->manage();
+
+        $res = new Label($f, 'Text Sample');
+        $res->pack()->sideRight()->fillX()->expand()->manage();
+
+        $dlg = new FontChooser($this, ['title' => 'Choose a font']);
+        $dlg->onSuccess(fn ($font) => $res->text = $font);
+
+        $b->onClick([$dlg, 'showModal']);
+
+        $f->pack()->fillX()->padX(4, 2)->manage();
     }
 };
 
