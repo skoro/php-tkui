@@ -125,4 +125,9 @@ abstract class Dialog implements ModalWindow
     {
         $callback(...$args);
     }
+
+    public function getOptions(): Options
+    {
+        return $this->options;
+    }
 }
