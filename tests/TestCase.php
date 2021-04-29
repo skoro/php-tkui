@@ -37,6 +37,7 @@ class TestCase extends FrameworkTestCase
         /** @var Window|Stub $win */
         $win = $this->createStub(Window::class);
         $win->method('app')->willReturn($this->app);
+        $win->method('path')->willReturn('.');
         $win->method('window')->willReturnSelf();
         return $win;
     }
