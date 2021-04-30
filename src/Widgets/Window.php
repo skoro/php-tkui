@@ -197,6 +197,7 @@ class Window implements Widget
                     break;
                 case 'state':
                     $this->app->tclEval('wm', 'state', $this->path(), $value);
+                    break;
             }
         }
     }
