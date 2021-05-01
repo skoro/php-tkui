@@ -16,7 +16,7 @@ use TclTk\Widgets\Consts\Relief;
  * 
  * @todo Implement padding property.
  */
-class Frame extends TtkWidget implements Relief
+class Frame extends TtkContainer implements Relief
 {
     protected string $widget = 'ttk::frame';
     protected string $name = 'fr';

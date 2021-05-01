@@ -9,12 +9,32 @@ use TclTk\Widgets\Widget;
 /**
  * Main application.
  */
-class App
+class TkApplication implements Application
 {
     private Tk $tk;
     private Interp $interp;
     private Bindings $bindings;
-    private ?Style $style;
+    private ?ThemeManager $themeManager;
+
+    /**
+     * @var Variable[]
+     * @todo WeakMap ?
+     */
+    private array $vars;
+
+    /**
+     * Widgets callbacks.
+     *
+     * Index is the widget path and value - the callback function.
+     *
+     * @todo must be WeakMap (php8) or polyfill ?
+     */
+    private array $callbacks;
+
+    /**
+     * @todo Create a namespace for window callbacks handler.
+     */
+    private const CALLBACK_HANDLER = 'PHP_tk_ui_Handler';
 
     public function __construct(Tk $tk)
     {
@@ -22,12 +42,15 @@ class App
         $this->ttkEnabled = false;
         $this->interp = $tk->interp();
         $this->bindings = $this->createBindings();
-        $this->style = null;
+        $this->themeManager = null;
+        $this->vars = [];
+        $this->callbacks = [];
+        $this->createCallbackHandler();
     }
 
     protected function createBindings(): Bindings
     {
-        return new Bindings($this->interp);
+        return new TkBindings($this->interp);
     }
 
     /**
@@ -65,15 +88,15 @@ class App
     {
         try {
             $this->interp->eval('package require Ttk');
-            $this->style = $this->createStyle();
+            $this->themeManager = $this->createThemeManager();
         } catch (TclInterpException $e) {
-            $this->style = null;
+            $this->themeManager = null;
         }
     }
 
-    protected function createStyle(): Style
+    protected function createThemeManager(): ThemeManager
     {
-        return new Style($this->interp);
+        return new ThemeManager($this->interp);
     }
 
     /**
@@ -81,7 +104,7 @@ class App
      */
     public function hasTtk(): bool
     {
-        return $this->style !== null;
+        return $this->themeManager !== null;
     }
 
     /**
@@ -121,7 +144,7 @@ class App
      *
      * Will process all the app events.
      */
-    public function mainLoop(): void
+    public function run(): void
     {
         $this->tk->mainLoop();
     }
@@ -142,7 +165,7 @@ class App
     /**
      * Sets the widget binding.
      */
-    public function bind(Widget $widget, $event, $callback): void
+    public function bindWidget(Widget $widget, $event, $callback): void
     {
         $this->bindings->bindWidget($widget, $event, $callback);
     }
@@ -150,7 +173,7 @@ class App
     /**
      * Unbinds the event from the widget.
      */
-    public function unbind(Widget $widget, $event): void
+    public function unbindWidget(Widget $widget, $event): void
     {
         $this->bindings->unbindWidget($widget, $event);
     }
@@ -163,11 +186,55 @@ class App
     /**
      * @throws TclException When ttk is not supported.
      */
-    public function style(): Style
+    public function getThemeManager(): ThemeManager
     {
         if ($this->hasTtk()) {
-            return $this->style;
+            return $this->themeManager;
         }
         throw new TclException('ttk is not supported.');
+    }
+
+    protected function createCallbackHandler()
+    {
+        $this->interp->createCommand(self::CALLBACK_HANDLER, function (...$args) {
+            $path = array_shift($args);
+            // TODO: check if arguments are empty ?
+            list ($widget, $callback) = $this->callbacks[$path];
+            $callback($widget, ...$args);
+        });
+    }
+
+    public function registerVar($varName): Variable
+    {
+        if ($varName instanceof Widget) {
+            $varName = $varName->path();
+        }
+        if (! isset($this->vars[$varName])) {
+            // TODO: variable in namespace ?
+            // TODO: generate an array index for access performance.
+            $this->vars[$varName] = $this->interp->createVariable($varName);
+        }
+        return $this->vars[$varName];
+    }
+
+    public function unregisterVar($varName): void
+    {
+        if ($varName instanceof Widget) {
+            $varName = $varName->path();
+        }
+        if (! isset($this->vars[$varName])) {
+            throw new TclException(sprintf('Variable "%s" is not registered.', $varName));
+        }
+        // Implicitly call of Variable's __destruct().
+        unset($this->vars[$varName]);
+    }
+
+    public function registerCallback(Widget $widget, callable $callback): string
+    {
+        // TODO: it would be better to use WeakMap.
+        //       in that case it will be like this:
+        //       $this->callbacks[$widget] = $callback;
+        $this->callbacks[$widget->path()] = [$widget, $callback];
+        return self::CALLBACK_HANDLER . ' ' . $widget->path();
     }
 }

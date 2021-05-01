@@ -4,21 +4,21 @@ namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
 use TclTk\Widgets\Buttons\SelectableButton;
-use TclTk\Widgets\Widget;
+use TclTk\Widgets\Container;
 
 /**
  * The base class for buttons that can be switched.
  */
 abstract class SwitchableButton extends GenericButton implements SelectableButton
 {
-    public function __construct(Widget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         $var = isset($options['variable']);
 
         parent::__construct($parent, $options);
 
         if (! $var) {
-            $this->variable = $this->window()->registerVar($this);
+            $this->variable = $this->getEval()->registerVar($this);
         }
     }
 

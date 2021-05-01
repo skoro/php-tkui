@@ -4,8 +4,8 @@ namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
 use TclTk\Widgets\Buttons\Command;
+use TclTk\Widgets\Container;
 use TclTk\Widgets\TtkWidget;
-use TclTk\Widgets\Widget;
 
 /**
  * @property callable $command
@@ -17,7 +17,7 @@ abstract class GenericButton extends TtkWidget
 {
     use Command;
 
-    public function __construct(Widget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         $command = null;
         if (isset($options['command'])) {

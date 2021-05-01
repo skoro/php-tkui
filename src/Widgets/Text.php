@@ -24,7 +24,7 @@ class Text extends ScrollableWidget implements Editable
     protected string $widget = 'text';
     protected string $name = 't';
 
-    public function __construct(Widget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
     }

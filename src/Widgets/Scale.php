@@ -25,11 +25,6 @@ class Scale extends TtkWidget implements ValueInVariable, Orient
     protected string $widget = 'ttk::scale';
     protected string $name = 'sc';
 
-    public function __construct(Widget $parent, array $options = [])
-    {
-        parent::__construct($parent, $options);
-    }
-
     /**
      * @inheritdoc
      */

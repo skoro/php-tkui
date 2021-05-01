@@ -23,7 +23,7 @@ class LabelFrame extends Frame implements Anchor
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
 
-    public function __construct(Widget $parent, string $text, array $options = [])
+    public function __construct(Container $parent, string $text, array $options = [])
     {
         $options['text'] = $text;
         parent::__construct($parent, $options);

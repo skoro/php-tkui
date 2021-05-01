@@ -29,9 +29,9 @@ abstract class Manager implements LayoutManager
     protected function call(string $command)
     {
         return $this->widget
-                    ->window()
-                    ->app()
-                    ->tclEval($command, $this->widget->path(), ...$this->options->asStringArray());
+            ->parent()
+            ->getEval()
+            ->tclEval($command, $this->widget->path(), ...$this->options->asStringArray());
     }
 
     public function __get($name)

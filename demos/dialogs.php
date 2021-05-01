@@ -1,6 +1,5 @@
 <?php
 
-use TclTk\App;
 use TclTk\Dialogs\ColorDialog;
 use TclTk\Dialogs\DirectoryDialog;
 use TclTk\Dialogs\FontDialog;
@@ -9,15 +8,14 @@ use TclTk\Dialogs\SaveFileDialog;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     public function __construct()
     {
-        parent::__construct(App::create(), 'Dialogs demo');
+        parent::__construct('Dialogs demo');
         $this->createOpenDialogFrame();
         $this->createSaveDialogFrame();
         $this->createChooseDirectoryFrame();
@@ -141,4 +139,4 @@ $demo = new class extends Window
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

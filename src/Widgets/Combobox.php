@@ -25,7 +25,7 @@ class Combobox extends TtkWidget implements ValueInVariable, Justify
     protected string $widget = 'ttk::combobox';
     protected string $name = 'cb';
 
-    public function __construct(Widget $parent, array $values = [], array $options = [])
+    public function __construct(Container $parent, array $values = [], array $options = [])
     {
         if (! empty($values)) {
             $options['values'] = Tcl::arrayToList($values);

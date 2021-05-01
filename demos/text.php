@@ -1,21 +1,19 @@
 <?php
 
-use TclTk\App;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Frame;
 use TclTk\Widgets\Scrollbar;
 use TclTk\Widgets\Text;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     private Text $text;
 
     public function __construct()
     {
-        parent::__construct(App::create(), 'Demo Textbox');
+        parent::__construct('Demo Textbox');
         $this->createActions();
         $f = new Frame($this);
         $this->text = $this->createTextbox($f);
@@ -49,4 +47,4 @@ $demo = new class extends Window
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

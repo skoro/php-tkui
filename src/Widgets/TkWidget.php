@@ -2,6 +2,7 @@
 
 namespace TclTk\Widgets;
 
+use TclTk\Evaluator;
 use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
@@ -11,10 +12,11 @@ use TclTk\Options;
  */
 abstract class TkWidget implements Widget
 {
-    private Widget $parent;
+    private Container $parent;
     private static array $idCounter = [];
     private Options $options;
     private int $id;
+    private Evaluator $eval;
 
     /**
      * Tk widget command.
@@ -29,13 +31,14 @@ abstract class TkWidget implements Widget
     /**
      * Creates a new widget.
      *
-     * @param Widget $parent  The parent widget.
-     * @param array  $options Override widget options.
+     * @param Container $parent The parent widget.
+     * @param array $options Override widget options.
      */
-    public function __construct(Widget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         $this->generateId();
         $this->parent = $parent;
+        $this->eval = $parent->getEval();
         $this->options = $this->initOptions()
                               ->merge($this->initWidgetOptions())
                               ->mergeAsArray($options);
@@ -76,7 +79,7 @@ abstract class TkWidget implements Widget
      */
     protected function make()
     {
-        $this->window()->app()->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
+        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
     }
 
     /**
@@ -109,14 +112,17 @@ abstract class TkWidget implements Widget
         return $this->name . $this->id;
     }
 
+    protected function getEval(): Evaluator
+    {
+        return $this->eval;
+    }
+
     /**
      * Call the widget method.
      */
     protected function call(string $method, ...$args): string
     {
-        return $this->window()
-                    ->app()
-                    ->tclEval($this->path(), $method, ...$args);
+        return $this->eval->tclEval($this->path(), $method, ...$args);
     }
 
     public function pack(array $options = []): Pack
@@ -127,14 +133,6 @@ abstract class TkWidget implements Widget
     public function grid(array $options = []): Grid
     {
         return new Grid($this, $options);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function window(): Window
-    {
-        return $this->parent->window();
     }
 
     /**
@@ -172,7 +170,7 @@ abstract class TkWidget implements Widget
     /**
      * @inheritdoc
      */
-    public function parent(): Widget
+    public function parent(): Container
     {
         return $this->parent;
     }
@@ -182,7 +180,7 @@ abstract class TkWidget implements Widget
      */
     public function focus(): self
     {
-        $this->window()->app()->tclEval('focus', $this->path());
+        $this->eval->tclEval('focus', $this->path());
         return $this;
     }
 
@@ -191,7 +189,7 @@ abstract class TkWidget implements Widget
      */
     public function bind(string $event, ?callable $callback): self
     {
-        $this->window()->app()->bind($this, $event, $callback);
+        $this->parent->bindWidget($this, $event, $callback);
         return $this;
     }
 }

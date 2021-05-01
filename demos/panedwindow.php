@@ -1,18 +1,16 @@
 <?php
 
-use TclTk\App;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
 use TclTk\Widgets\PanedWindow;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     public function __construct()
     {
-        parent::__construct(App::create(), 'Paned window demo');
+        parent::__construct('Paned window demo');
 
         $vert = new PanedWindow($this);
         $vert->pack()->expand()->fillBoth()->pad(2, 2)->manage();
@@ -36,4 +34,4 @@ $demo = new class extends Window
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

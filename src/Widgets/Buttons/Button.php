@@ -3,7 +3,7 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Widgets\Widget;
+use TclTk\Widgets\Container;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_button.htm
@@ -23,7 +23,7 @@ class Button extends GenericButton
     /**
      * @inheritdoc
      */
-    public function __construct(Widget $parent, string $title, array $options = [])
+    public function __construct(Container $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, $options);

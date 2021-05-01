@@ -7,7 +7,7 @@ namespace TclTk;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_style.htm
  */
-class Style
+class ThemeManager
 {
     private Interp $interp;
 

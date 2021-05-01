@@ -33,14 +33,14 @@ class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Edi
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
-    public function __construct(Widget $parent, string $value = '', array $options = [])
+    public function __construct(Container $parent, string $value = '', array $options = [])
     {
         $var = isset($options['textVariable']);
 
         parent::__construct($parent, $options);
 
         if (! $var) {
-            $this->textVariable = $this->window()->registerVar($this);
+            $this->textVariable = $this->getEval()->registerVar($this);
         }
 
         if ($value !== '') {

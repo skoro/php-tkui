@@ -10,10 +10,10 @@ class RadioGroup extends Frame implements ValueInVariable
 {
     private Variable $variable;
 
-    public function __construct(Widget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
-        $this->variable = $this->window()->registerVar($this);
+        $this->variable = $this->getEval()->registerVar($this);
     }
 
     public function add(string $title, $value): RadioButton

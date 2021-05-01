@@ -4,7 +4,7 @@ namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
 use TclTk\Variable;
-use TclTk\Widgets\Widget;
+use TclTk\Widgets\Container;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_checkbutton.htm
@@ -24,7 +24,7 @@ class CheckButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    public function __construct(Widget $parent, string $title, bool $initialState = false, array $options = [])
+    public function __construct(Container $parent, string $title, bool $initialState = false, array $options = [])
     {
         $options['text'] = $title;
 

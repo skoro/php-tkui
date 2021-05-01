@@ -72,7 +72,7 @@ abstract class Dialog implements ModalWindow
      */
     public function showModal()
     {
-        $result = $this->parent->app()->tclEval($this->command(), ...$this->options->asStringArray());
+        $result = $this->parent->getEval()->tclEval($this->command(), ...$this->options->asStringArray());
         return $this->handleResult($result);
     }
 

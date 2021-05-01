@@ -25,7 +25,7 @@ trait Command
         if ($name === 'command') {
             if (is_callable($value)) {
                 $this->commandValue = $value;
-                $value = $this->window()->registerCallback($this, $value);
+                $value = $this->parent()->getEval()->registerCallback($this, $value);
             } else {
                 throw new InvalidArgumentException(sprintf('"%s" is not a valid button command.', $value));
             }

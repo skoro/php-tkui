@@ -16,7 +16,7 @@ use TclTk\Options;
  * @property string $padding TODO: must be list of integers ?
  * @property int $width
  */
-class Notebook extends TtkWidget implements SplObserver
+class Notebook extends TtkContainer implements SplObserver
 {
     protected string $widget = 'ttk::notebook';
     protected string $name = 'nbk';
@@ -167,8 +167,7 @@ class Notebook extends TtkWidget implements SplObserver
     public function enableTraversal(): self
     {
         if (! $this->keyboardTraversal) {
-            $this->window()
-                 ->app()
+            $this->getEval()
                  ->tclEval('::ttk::notebook::enableTraversal', $this->path());
             $this->keyboardTraversal = true;
         }

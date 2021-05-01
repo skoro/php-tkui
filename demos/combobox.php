@@ -1,6 +1,5 @@
 <?php
 
-use TclTk\App;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Buttons\CheckButton;
 use TclTk\Widgets\Combobox;
@@ -10,18 +9,17 @@ use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
 use TclTk\Widgets\RadioGroup;
 use TclTk\Widgets\Scrollbar;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     private array $themes;
 
     public function __construct()
     {
-        parent::__construct(App::create(), 'Combobox Demo');
-        $this->themes = $this->app()->style()->themes();
+        parent::__construct('Combobox Demo');
+        $this->themes = $this->app->getThemeManager()->themes();
         $this->themeSelector()->pack()->pad(6, 6)->fillX()->manage();
         $this->plainSelector()->pack()->pad(6, 6)->fillX()->manage();
         $this->themeDemo()->pack()->pad(6, 6)->fillX()->manage();
@@ -36,7 +34,7 @@ $demo = new class extends Window
         $themes->pack()->fillX()->pad(4, 4)->manage();
         $themes->onSelect([$this, 'changeTheme']);
 
-        $cur = $this->app()->style()->currentTheme();
+        $cur = $this->app->getThemeManager()->currentTheme();
         if (($idx = array_search($cur, $this->themes)) !== false) {
             $themes->setSelection($idx);
         }
@@ -75,8 +73,8 @@ $demo = new class extends Window
     public function changeTheme(int $index)
     {
         $theme = $this->themes[$index];
-        $this->app()->style()->useTheme($theme);
+        $this->app->getThemeManager()->useTheme($theme);
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

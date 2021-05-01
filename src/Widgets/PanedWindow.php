@@ -13,7 +13,7 @@ use TclTk\Widgets\Consts\Orient;
  * @property int $width
  * @property int $height
  */
-class PanedWindow extends TtkWidget implements Orient
+class PanedWindow extends TtkContainer implements Orient
 {
     protected string $widget = 'ttk::panedwindow';
     protected string $name = 'pnw';
@@ -30,7 +30,7 @@ class PanedWindow extends TtkWidget implements Orient
         ]);
     }
 
-    public function add(Widget $widget, int $weight = 0): self
+    public function add(Container $widget, int $weight = 0): self
     {
         $this->checkWidgetParent($widget);
         $this->call('add', $widget->path(), '-weight', $weight);

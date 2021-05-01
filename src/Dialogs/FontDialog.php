@@ -2,9 +2,8 @@
 
 namespace TclTk\Dialogs;
 
-use LogicException;
-use TclTk\App;
 use TclTk\Options;
+use TclTk\Widgets\Container;
 use TclTk\Widgets\Widget;
 use TclTk\Widgets\Window;
 
@@ -23,14 +22,12 @@ class FontDialog extends Dialog implements Widget
 {
     private string $onSelectCallback;
     private string $id;
-    private App $app;
 
     public function __construct(Window $parent, array $options = [])
     {
         parent::__construct($parent, $options);
         $this->id = uniqid();
-        $this->onSelectCallback = $parent->registerCallback($this, [$this, 'onSelect']);
-        $this->app = $parent->app();
+        $this->onSelectCallback = $parent->getEval()->registerCallback($this, [$this, 'onSelect']);
     }
 
     /**
@@ -77,24 +74,14 @@ class FontDialog extends Dialog implements Widget
         return 'tk fontchooser';
     }
 
-    public function window(): Window
-    {
-        return $this->parent;
-    }
-
     public function options(): Options
     {
         return $this->getOptions();
     }
 
-    public function parent(): Widget
+    public function parent(): Container
     {
         return $this->parent;
-    }
-
-    public function bind(string $event, ?callable $callback): Widget
-    {
-        throw new LogicException('Cannot bind event to font dialog.');
     }
 
     public function onSelect(Widget $self, string $fontSpec)
@@ -105,6 +92,6 @@ class FontDialog extends Dialog implements Widget
 
     protected function call(...$args)
     {
-        return $this->app->tclEval('tk', $this->command(), ...$args);
+        return $this->parent()->getEval()->tclEval('tk', $this->command(), ...$args);
     }
 }

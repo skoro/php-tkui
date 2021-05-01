@@ -30,7 +30,7 @@ class Label extends TtkWidget implements Justify, Relief, Anchor
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';
 
-    public function __construct(Widget $parent, string $title, array $options = [])
+    public function __construct(Container $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, $options);

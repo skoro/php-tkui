@@ -4,7 +4,7 @@ namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
 use TclTk\Variable;
-use TclTk\Widgets\Widget;
+use TclTk\Widgets\Container;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_radiobutton.htm
@@ -21,7 +21,7 @@ class RadioButton extends SwitchableButton
     /**
      * @param int|string|float|bool $value
      */
-    public function __construct(Widget $parent, string $title, $value, array $options = [])
+    public function __construct(Container $parent, string $title, $value, array $options = [])
     {
         $options['text'] = $title;
         $options['value'] = $value;

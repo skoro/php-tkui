@@ -1,17 +1,13 @@
 <?php declare(strict_types=1);
 
-use TclTk\App;
 use TclTk\Widgets\Frame;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\Separator;
 use TclTk\Widgets\Sizegrip;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$app = App::create();
-
-$win = new Window($app, 'Sizegrip demo');
+$win = new DemoAppWindow('Sizegrip demo');
 
 $f = new Frame($win);
 $f->pack()->sideBottom()->fillX()->manage();
@@ -38,4 +34,4 @@ $sizeGrip->pack()->sideRight()->anchor('se')->manage();
     ->fillX()
     ->manage();
 
-$app->mainLoop();
+$win->run();

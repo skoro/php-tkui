@@ -2,14 +2,12 @@
 
 namespace TclTk\Widgets;
 
-use TclTk\App;
-use TclTk\Exceptions\TclException;
+use TclTk\Application;
+use TclTk\Evaluator;
 use TclTk\Options;
-use TclTk\Interp;
 use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Tcl;
-use TclTk\Variable;
 
 /**
  * Application window.
@@ -17,7 +15,7 @@ use TclTk\Variable;
  * @property string $title
  * @property string $state
  */
-class Window implements Widget
+class Window implements Container
 {
     /**
      * The window states.
@@ -30,24 +28,8 @@ class Window implements Widget
     const STATE_ICON = 'icon';
     const STATE_ZOOMED = 'zoomed';
 
-    private App $app;
-    private Interp $interp;
+    private Application $app;
     private Options $options;
-
-    /**
-     * Child widgets callbacks.
-     *
-     * Index is the widget path and value - the callback function.
-     *
-     * @todo must be WeakMap (php8) or polyfill ?
-     */
-    private array $callbacks;
-
-    /**
-     * @var Variable[]
-     * @todo WeakMap ?
-     */
-    private array $vars;
 
     /**
      * Window instance id.
@@ -56,22 +38,12 @@ class Window implements Widget
 
     private static int $idCounter = 0;
 
-    /**
-     * @todo Create a namespace for window callbacks handler.
-     */
-    private const CALLBACK_HANDLER = 'PHP_tk_ui_Handler';
-
-    public function __construct(App $app, string $title)
+    public function __construct(Application $app, string $title)
     {
         $this->generateId();
         $this->app = $app;
-        $this->interp = $app->tk()->interp();
-        $this->callbacks = [];
-        $this->vars = [];
         $this->options = $this->initOptions();
-        $this->createCallbackHandler();
         $this->createWindow();
-
         $this->title = $title;
     }
 
@@ -92,21 +64,6 @@ class Window implements Widget
     private function generateId(): void
     {
         $this->id = static::$idCounter++;
-    }
-
-    protected function callbackCommandName(): string
-    {
-        return self::CALLBACK_HANDLER . '_' . $this->varName();
-    }
-
-    protected function createCallbackHandler()
-    {
-        $this->interp->createCommand($this->callbackCommandName(), function (...$args) {
-            $path = array_shift($args);
-            // TODO: check if arguments are empty ?
-            list ($widget, $callback) = $this->callbacks[$path];
-            $callback($widget, ...$args);
-        });
     }
 
     protected function createWindow(): void
@@ -130,15 +87,6 @@ class Window implements Widget
     public function id(): string
     {
         return ($this->id === 0) ? '' : 'w' . $this->id;
-    }
-
-    public function registerCallback(Widget $widget, callable $callback): string
-    {
-        // TODO: it would be better to use WeakMap.
-        //       in that case it will be like this:
-        //       $this->callbacks[$widget] = $callback;
-        $this->callbacks[$widget->path()] = [$widget, $callback];
-        return $this->callbackCommandName() . ' ' . $widget->path();
     }
 
     /**
@@ -168,17 +116,9 @@ class Window implements Widget
     /**
      * @inheritdoc
      */
-    public function parent(): Widget
+    public function parent(): Container
     {
         return $this;
-    }
-
-    /**
-     * Application instance.
-     */
-    public function app(): App
-    {
-        return $this->app;
     }
 
     public function __get($name)
@@ -215,50 +155,27 @@ class Window implements Widget
     }
 
     /**
-     * @param Widget|string $varName
+     * @inheritdoc
      */
-    public function registerVar($varName): Variable
+    public function bind(string $event, ?callable $callback): self
     {
-        if ($varName instanceof Widget) {
-            $varName = $varName->path();
-        }
-        if (! isset($this->vars[$varName])) {
-            // TODO: variable in namespace ?
-            $this->vars[$varName] = $this->interp->createVariable($this->varName(), $varName);
-        }
-        return $this->vars[$varName];
-    }
-
-    /**
-     * @param Widget|string $varName
-     * @throws TclException When a variable with the specified name is not registered.
-     */
-    public function unregisterVar($varName): void
-    {
-        if ($varName instanceof Widget) {
-            $varName = $varName->path();
-        }
-        if (! isset($this->vars[$varName])) {
-            throw new TclException(sprintf('Variable "%s" is not registered.', $varName));
-        }
-        // Implicitly call of Variable's __destruct().
-        unset($this->vars[$varName]);
-    }
-
-    protected function varName(): string
-    {
-        return $this->id() ?: 'w0';
+        return $this->bindWidget($this, $event, $callback);
     }
 
     /**
      * @inheritdoc
      */
-    public function bind(string $event, ?callable $callback): self
+    public function getEval(): Evaluator
+    {
+        return $this->app;
+    }
+
+    public function bindWidget(Widget $widget, string $event, ?callable $callback): self
     {
         if ($callback === null) {
-            $this->app()->unbind($this, $event);
+            $this->app->unbindWidget($widget, $event);
         } else {
-            $this->app()->bind($this, $event, $callback);
+            $this->app->bindWidget($widget, $event, $callback);
         }
         return $this;
     }
