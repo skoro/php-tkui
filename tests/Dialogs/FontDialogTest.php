@@ -4,18 +4,16 @@ namespace TclTk\Tests\Dialogs;
 
 use TclTk\Dialogs\FontDialog;
 use TclTk\Tests\TestCase;
-use TclTk\Widgets\Window;
 
 class FontDialogTest extends TestCase
 {
     /** @test */
     public function callback_is_registered()
     {
-        $win = $this->createMock(Window::class);
-        $win->expects($this->once())
+        $this->eval->expects($this->once())
             ->method('registerCallback');
 
-        new FontDialog($win);
+        new FontDialog($this->createWindowStub());
     }
 
     /** @test */
@@ -26,9 +24,10 @@ class FontDialogTest extends TestCase
             ['tk', 'fontchooser', 'show'],
         ]);
 
-        $win = $this->createWindowStub();
-        $win->method('registerCallback')->willReturn('test_callback');
+        $this->eval->expects($this->once())
+            ->method('registerCallback')
+            ->willReturn('test_callback');
 
-        (new FontDialog($win))->showModal();
+        (new FontDialog($this->createWindowStub()))->showModal();
     }
 }

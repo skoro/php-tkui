@@ -7,6 +7,14 @@ use TclTk\Widgets\Window;
 
 class WindowTest extends TestCase
 {
+    protected function tclEvalTest(int $count, $args)
+    {
+        return $this->app
+            ->expects($this->exactly($count))
+            ->method('tclEval')
+            ->withConsecutive(...$args)->willReturn('');
+    }
+
     /** @test */
     public function root_window()
     {

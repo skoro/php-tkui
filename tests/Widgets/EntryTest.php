@@ -17,8 +17,7 @@ class EntryTest extends TestCase
 
         $var = $this->createStub(Variable::class);
         $var->method('__toString')->willReturn('var');
-
-        $win->method('registerVar')->willReturn($var);
+        $this->eval->method('registerVar')->willReturn($var);
 
         return $win;
     }
@@ -69,10 +68,9 @@ class EntryTest extends TestCase
             ->method('set')
             ->withConsecutive(['initial value'], ['']);
         $varMock->method('__toString')->willReturn('var');
-        $win = parent::createWindowStub();
-        $win->method('registerVar')->willReturn($varMock);
+        $this->eval->method('registerVar')->willReturn($varMock);
 
-        (new Entry($win, 'initial value'))->clear();
+        (new Entry($this->createWindowStub(), 'initial value'))->clear();
     }
 
     /** @test */

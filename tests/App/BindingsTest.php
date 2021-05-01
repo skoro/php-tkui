@@ -2,9 +2,9 @@
 
 namespace TclTk\Tests\App;
 
-use TclTk\Bindings;
 use TclTk\Interp;
 use TclTk\Tests\TestCase;
+use TclTk\TkBindings;
 use TclTk\Widgets\Buttons\Button;
 
 class BindingsTest extends TestCase
@@ -17,7 +17,7 @@ class BindingsTest extends TestCase
                ->method('eval')
                ->with('bind .b1 <Control-a> PHP_Bind__b1_Control-a');
 
-        $bindings = new Bindings($interp);
+        $bindings = new TkBindings($interp);
 
         $btn = new Button($this->createWindowStub(), 'test');
         $bindings->bindWidget($btn, 'Control-a', function () {});
@@ -31,7 +31,7 @@ class BindingsTest extends TestCase
                ->method('eval')
                ->with('bind .b2 <Control-a> PHP_Bind__b2_Control-a');
 
-        $bindings = new Bindings($interp);
+        $bindings = new TkBindings($interp);
 
         $btn = new Button($this->createWindowStub(), 'test');
         $bindings->bindWidget($btn, 'Control-a', function () {});
@@ -49,7 +49,7 @@ class BindingsTest extends TestCase
                ->method('deleteCommand')
                ->with('PHP_Bind__b3_Control-a');
 
-        $bindings = new Bindings($interp);
+        $bindings = new TkBindings($interp);
 
         $btn = new Button($this->createWindowStub(), 'test');
         $bindings->bindWidget($btn, 'Control-a', function () {});

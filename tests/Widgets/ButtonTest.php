@@ -4,7 +4,6 @@ namespace TclTk\Tests\Widgets;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Window;
@@ -42,28 +41,32 @@ class ButtonTest extends TestCase
     }
 
     /** @test */
-    public function register_button_command()
+    public function register_button_command_as_property()
     {
+        $eval = $this->createEvalMock();
+        $eval->expects($this->once())
+            ->method('registerCallback');
+        $eval->method('tclEval')->willReturn('');
+
         /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
-        $win->expects($this->once())
-            ->method('registerCallback');
-        $win->method('window')->willReturnSelf();
-        $win->method('app')->willReturn($this->createAppMock());
+        $win->method('getEval')->willReturn($eval);
         
         $btn = new Button($win, 'Test');
         $btn->command = function () {};
     }
 
     /** @test */
-    public function register_button_command_from_options()
+    public function register_button_command_as_options()
     {
+        $eval = $this->createEvalMock();
+        $eval->expects($this->once())
+            ->method('registerCallback');
+        $eval->method('tclEval')->willReturn('');
+
         /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
-        $win->expects($this->once())
-            ->method('registerCallback');
-        $win->method('window')->willReturnSelf();
-        $win->method('app')->willReturn($this->createAppMock());
+        $win->method('getEval')->willReturn($eval);
 
         new Button($win, 'Test', ['command' => function () {}]);
     }
@@ -74,12 +77,7 @@ class ButtonTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"MyCommand" is not a valid button command.');
 
-        /** @var Window|Stub */
-        $win = $this->createStub(Window::class);
-        $win->method('window')->willReturnSelf();
-        $win->method('app')->willReturn($this->createAppMock());
-
-        $btn = new Button($win, 'Test');
+        $btn = new Button($this->createWindowStub(), 'Test');
         $btn->command = 'MyCommand';
     }
 }
