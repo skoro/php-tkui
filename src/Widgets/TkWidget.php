@@ -2,51 +2,194 @@
 
 namespace TclTk\Widgets;
 
+use TclTk\Evaluator;
+use TclTk\Layouts\Grid;
+use TclTk\Layouts\Pack;
 use TclTk\Options;
 
 /**
- * Basic Tk widget.
+ * A basic Tk widget implementation.
  */
-interface TkWidget
+abstract class TkWidget implements Widget
 {
-    /**
-     * Widget's path hierarchy including its id.
-     */
-    public function path(): string;
+    private Container $parent;
+    private static array $idCounter = [];
+    private Options $options;
+    private int $id;
+    private Evaluator $eval;
 
     /**
-     * Unique widget id (without hierarchy and leading dot).
+     * Tk widget command.
      */
-    public function id(): string;
+    protected string $widget;
 
     /**
-     * A Tk command used for constructing the widget.
+     * The widget short name.
      */
-    public function widget(): string;
+    protected string $name;
 
     /**
-     * Gets the parent window to which the widget belongs.
-     */
-    public function window(): Window;
-
-    /**
-     * Gets the widget options.
-     */
-    public function options(): Options;
-
-    /**
-     * Parent widget.
+     * Creates a new widget.
      *
-     * The last widget in the chain must be Window.
+     * @param Container $parent The parent widget.
+     * @param array $options Override widget options.
      */
-    public function parent(): TkWidget;
+    public function __construct(Container $parent, array $options = [])
+    {
+        $this->generateId();
+        $this->parent = $parent;
+        $this->eval = $parent->getEval();
+        $this->options = $this->initOptions()
+                              ->merge($this->initWidgetOptions())
+                              ->mergeAsArray($options);
+        $this->make();
+    }
+
+    public function __destruct()
+    {
+        // TODO: unregister var.
+    }
+
+    private function generateId(): void
+    {
+        if (!isset(static::$idCounter[static::class])) {
+            static::$idCounter[static::class] = 0;
+        }
+        $this->id = ++static::$idCounter[static::class];
+    }
 
     /**
-     * Sets the event binding to the widget.
-     *
-     * @param string       $event    The event name.
-     * @param callable|NULL $callback The event callback or in case of NULL
-     *                               removes the callback from the widget.
+     * Initialize the common widget options.
      */
-    public function bind(string $event, ?callable $callback): self;
+    protected function initOptions(): Options
+    {
+        return new WidgetOptions();
+    }
+
+    /**
+     * Initialize specific widget options.
+     */
+    protected function initWidgetOptions(): Options
+    {
+        return new Options();
+    }
+
+    /**
+     * Create Tk widget.
+     */
+    protected function make()
+    {
+        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function widget(): string
+    {
+        return $this->widget;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function path(): string
+    {
+        $pid = $this->parent->path();
+        // Widget belongs to the root window.
+        if ($pid === '.') {
+            return '.' . $this->id();
+        }
+
+        return $pid . '.' . $this->id();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function id(): string
+    {
+        return $this->name . $this->id;
+    }
+
+    protected function getEval(): Evaluator
+    {
+        return $this->eval;
+    }
+
+    /**
+     * Call the widget method.
+     */
+    protected function call(string $method, ...$args): string
+    {
+        return $this->eval->tclEval($this->path(), $method, ...$args);
+    }
+
+    public function pack(array $options = []): Pack
+    {
+        return new Pack($this, $options);
+    }
+
+    public function grid(array $options = []): Grid
+    {
+        return new Grid($this, $options);
+    }
+
+    /**
+     * Get the widget option value.
+     */
+    public function __get(string $name)
+    {
+        $value = $this->options->$name;
+        if ($value === null) {
+            $value = $this->call('cget', Options::getTclOption($name));
+            $this->options->$name = $value;
+        }
+        return $value;
+    }
+
+    /**
+     * Set the widget option value.
+     */
+    public function __set(string $name, $value)
+    {
+        if ($this->options->$name !== $value) {
+            $this->options->$name = $value;
+            $this->call('configure', ...$this->options->only($name)->asStringArray());
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function options(): Options
+    {
+        return $this->options;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function parent(): Container
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Force to focus widget.
+     */
+    public function focus(): self
+    {
+        $this->eval->tclEval('focus', $this->path());
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function bind(string $event, ?callable $callback): self
+    {
+        $this->parent->bindWidget($this, $event, $callback);
+        return $this;
+    }
 }

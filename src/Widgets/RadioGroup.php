@@ -4,15 +4,16 @@ namespace TclTk\Widgets;
 
 use TclTk\Variable;
 use TclTk\Widgets\Buttons\RadioButton;
+use TclTk\Widgets\Common\ValueInVariable;
 
-class RadioGroup extends Frame implements Valuable
+class RadioGroup extends Frame implements ValueInVariable
 {
     private Variable $variable;
 
-    public function __construct(TkWidget $parent, array $options = [])
+    public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
-        $this->variable = $this->window()->registerVar($this);
+        $this->variable = $this->getEval()->registerVar($this);
     }
 
     public function add(string $title, $value): RadioButton

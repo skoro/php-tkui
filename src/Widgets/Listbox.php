@@ -53,14 +53,17 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     protected array $items;
 
+    protected string $widget = 'listbox';
+    protected string $name = 'lb';
+
     /**
      * @inheritdoc
      *
      * @param ListboxItem[] $items Listbox items.
      */
-    public function __construct(TkWidget $parent, array $items = [], array $options = [])
+    public function __construct(Container $parent, array $items = [], array $options = [])
     {
-        parent::__construct($parent, 'listbox', 'lb', $options);
+        parent::__construct($parent, $options);
 
         $this->items = [];
         foreach ($items as $item) {

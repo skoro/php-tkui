@@ -3,14 +3,14 @@
 namespace TclTk\Layouts;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 abstract class Manager implements LayoutManager
 {
-    private TkWidget $widget;
+    private Widget $widget;
     private Options $options;
 
-    public function __construct(TkWidget $widget, array $options = [])
+    public function __construct(Widget $widget, array $options = [])
     {
         $this->options = $this->initOptions()->mergeAsArray($options);
         $this->widget = $widget;
@@ -21,7 +21,7 @@ abstract class Manager implements LayoutManager
         return new Options();
     }
 
-    public function widget(): TkWidget
+    public function widget(): Widget
     {
         return $this->widget;
     }
@@ -29,9 +29,9 @@ abstract class Manager implements LayoutManager
     protected function call(string $command)
     {
         return $this->widget
-                    ->window()
-                    ->app()
-                    ->tclEval($command, $this->widget->path(), ...$this->options->asStringArray());
+            ->parent()
+            ->getEval()
+            ->tclEval($command, $this->widget->path(), ...$this->options->asStringArray());
     }
 
     public function __get($name)
@@ -44,7 +44,7 @@ abstract class Manager implements LayoutManager
         $this->options->$name = $value;
     }
 
-    public function manage(): TkWidget
+    public function manage(): Widget
     {
         return $this->widget;
     }

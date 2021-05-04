@@ -7,7 +7,7 @@ namespace TclTk;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_style.htm
  */
-class Style
+class ThemeManager
 {
     private Interp $interp;
 
@@ -34,6 +34,15 @@ class Style
     {
         $this->call('theme', 'use', Tcl::quoteString($name));
         return $this;
+    }
+
+    /**
+     * Returns the name of the current theme.
+     */
+    public function currentTheme(): string
+    {
+        $this->call('theme', 'use');
+        return $this->interp->getStringResult();
     }
 
     protected function call(...$args)

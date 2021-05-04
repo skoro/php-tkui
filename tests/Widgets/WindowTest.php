@@ -3,31 +3,37 @@
 namespace TclTk\Tests\Widgets;
 
 use TclTk\Tests\TestCase;
-use TclTk\Widgets\Window;
+use TclTk\Windows\ChildWindow;
+use TclTk\Windows\MainWindow;
 
 class WindowTest extends TestCase
 {
+    protected function tclEvalTest(int $count, $args)
+    {
+        return $this->app
+            ->expects($this->exactly($count))
+            ->method('tclEval')
+            ->withConsecutive(...$args)->willReturn('');
+    }
+
     /** @test */
     public function root_window()
     {
         $this->tclEvalTest(1, [
             ['wm', 'title', '.', '{Test}']
         ]);
-        new Window($this->app, 'Test');
+        new MainWindow($this->app, 'Test');
     }
 
     /** @test */
-    public function second_window()
+    public function main_and_child_windows()
     {
-        // Because of static window's id all subsequent windows
-        // will be created throughout of toplevel.
-        $this->tclEvalTest(4, [
-            ['toplevel', $this->checkWidget('.w')],
-            ['wm', 'title', $this->checkWidget('.w'), '{Win 1}'],
+        $this->tclEvalTest(3, [
+            ['wm', 'title', '.', '{Win 1}'],
             ['toplevel', $this->checkWidget('.w')],
             ['wm', 'title', $this->checkWidget('.w'), '{Win 2}'],
         ]);
-        new Window($this->app, 'Win 1');
-        new Window($this->app, 'Win 2');
+        $main = new MainWindow($this->app, 'Win 1');
+        new ChildWindow($main, 'Win 2');
     }
 }

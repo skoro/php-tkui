@@ -3,22 +3,30 @@
 namespace TclTk\Widgets\Buttons;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Container;
 
 /**
- * Implementation of Tk button widget.
- *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/button.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_button.htm
  *
  * @property string $text
+ * @property callable $command
  * @property string $default
+ * @property int $underline
+ * @property int $width
+ * @property string $compound
  */
 class Button extends GenericButton
 {
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    protected string $widget = 'ttk::button';
+    protected string $name = 'b';
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(Container $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-        parent::__construct($parent, 'button', 'b', $options);
+        parent::__construct($parent, $options);
     }
 
     /**
@@ -26,7 +34,7 @@ class Button extends GenericButton
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return parent::initWidgetOptions()->mergeAsArray([
             'default' => null,
         ]);
     }

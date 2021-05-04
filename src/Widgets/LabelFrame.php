@@ -3,18 +3,30 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Widgets\Consts\Anchor;
 
 /**
- * Implementation of Tk labelframe widget.
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_labelframe.htm
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/labelframe.htm
+ * @property string $padding
+ * @property int $width
+ * @property int $height
+ * @property string $text
+ * @property string $labelAnchor One of ANCHOR_* consts.
+ * @property int $underline
+ * @property string $labelWidget
+ * 
+ * @todo Implement padding property.
  */
-class LabelFrame extends Widget
+class LabelFrame extends Frame implements Anchor
 {
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    protected string $widget = 'ttk::labelframe';
+    protected string $name = 'lbf';
+
+    public function __construct(Container $parent, string $text, array $options = [])
     {
-        $options['text'] = $title;
-        parent::__construct($parent, 'labelframe', 'lbf', $options);
+        $options['text'] = $text;
+        parent::__construct($parent, $options);
     }
 
     /**
@@ -23,14 +35,13 @@ class LabelFrame extends Widget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'background' => null,
-            'class' => null,
-            'colormap' => null,
-            'height' => null,
-            'labelAnchor' => null,
-            'labelWidget' => null,
-            'visual' => null,
+            'padding' => null,
             'width' => null,
+            'height' => null,
+            'text' => null,
+            'labelAnchor' => null,
+            'underline' => null,
+            'labelWidget' => null,
         ]);
     }
 }

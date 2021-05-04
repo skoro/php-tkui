@@ -4,44 +4,26 @@ namespace TclTk\Widgets;
 
 use TclTk\Options;
 use TclTk\Variable;
+use TclTk\Widgets\Common\ValueInVariable;
+use TclTk\Widgets\Consts\Orient;
 
 /**
  * Implementation of Tk scale widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/scale.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scale.htm
  *
- * @property int $bigIncrement
  * @property callable $command
- * @property int $digits
  * @property float $from
- * @property string $label
  * @property string $length
- * @property float $resolution
- * @property bool $showValue
- * @property string $sliderLength
- * @property string $sliderRelief
- * @property string $state
- * @property float $tickInterval
+ * @property string $orient
  * @property float $to
+ * @property float $value
  * @property Variable $variable
- * @property string $width
  */
-class Scale extends Widget implements Valuable
+class Scale extends TtkWidget implements ValueInVariable, Orient
 {
-    const SLIDER_RELIEF_RAISED = 'raised';
-    const SLIDER_RELIEF_SUNKEN = 'sunken';
-
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
-
-    public function __construct(TkWidget $parent, array $options = [])
-    {
-        parent::__construct($parent, 'scale', 'sc', $options);
-    }
+    protected string $widget = 'ttk::scale';
+    protected string $name = 'sc';
 
     /**
      * @inheritdoc
@@ -49,21 +31,13 @@ class Scale extends Widget implements Valuable
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'bigIncrement' => null,
             'command' => null,
-            'digits' => null,
             'from' => null,
-            'label' => null,
             'length' => null,
-            'resolution' => null,
-            'showValue' => null,
-            'sliderLength' => null,
-            'sliderRelief' => null,
-            'state' => null,
-            'tickInterval' => null,
+            'orient' => null,
             'to' => null,
+            'value' => null,
             'variable' => null,
-            'width' => null,
         ]);
     }
 
@@ -78,7 +52,7 @@ class Scale extends Widget implements Valuable
     /**
      * @inheritdoc
      */
-    public function setValue($value): Valuable
+    public function setValue($value): ValueInVariable
     {
         $this->call('set', $value);
         return $this;

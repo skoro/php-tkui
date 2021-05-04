@@ -11,7 +11,7 @@ class LabelFrameTest extends TestCase
     public function widget_created()
     {
         $this->tclEvalTest(1, [
-            ['labelframe', $this->checkWidget('.lbf'), '-text', '{Frame with label}'],
+            ['ttk::labelframe', $this->checkWidget('.lbf'), '-text', '{Frame with label}'],
         ]);
 
         new LabelFrame($this->createWindowStub(), 'Frame with label');

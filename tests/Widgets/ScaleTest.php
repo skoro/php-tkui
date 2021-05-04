@@ -11,7 +11,7 @@ class ScaleTest extends TestCase
     public function widget_created()
     {
         $this->tclEvalTest(1, [
-            ['scale', $this->checkWidget('.sc')],
+            ['ttk::scale', $this->checkWidget('.sc')],
         ]);
 
         new Scale($this->createWindowStub());

@@ -4,17 +4,16 @@ namespace TclTk\Tests\Widgets;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Window;
+use TclTk\Windows\Window;
 
 class ButtonTest extends TestCase
 {
     /** @test */
     public function widget_created()
     {
-        $this->tclEvalTest(1, [['button', $this->checkWidget('.b'), '-text', '{Button}']]);
+        $this->tclEvalTest(1, [['ttk::button', $this->checkWidget('.b'), '-text', '{Button}']]);
 
         new Button($this->createWindowStub(), 'Button');
     }
@@ -23,7 +22,7 @@ class ButtonTest extends TestCase
     public function button_text_changed()
     {
         $this->tclEvalTest(2, [
-            ['button', $this->checkWidget('.b'), '-text', '{New Button}'],
+            ['ttk::button', $this->checkWidget('.b'), '-text', '{New Button}'],
             [$this->checkWidget('.b'), 'configure', '-text', '{Changed}']
         ]);
 
@@ -35,33 +34,39 @@ class ButtonTest extends TestCase
     public function make_widget_with_options()
     {
         $this->tclEvalTest(1, [
-            ['button', $this->checkWidget('.b'), '-text', '{Title}', '-state', Button::STATE_ACTIVE],
+            ['ttk::button', $this->checkWidget('.b'), '-text', '{Title}', '-underline', 2],
         ]);
 
-        new Button($this->createWindowStub(), 'Title', ['state' => Button::STATE_ACTIVE]);
+        new Button($this->createWindowStub(), 'Title', ['underline' => 2]);
     }
 
     /** @test */
-    public function register_button_command()
+    public function register_button_command_as_property()
     {
+        $eval = $this->createEvalMock();
+        $eval->expects($this->once())
+            ->method('registerCallback');
+        $eval->method('tclEval')->willReturn('');
+
         /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
-        $win->expects($this->once())
-            ->method('registerCallback');
-        $win->method('window')->willReturnSelf();
+        $win->method('getEval')->willReturn($eval);
         
         $btn = new Button($win, 'Test');
         $btn->command = function () {};
     }
 
     /** @test */
-    public function register_button_command_from_options()
+    public function register_button_command_as_options()
     {
+        $eval = $this->createEvalMock();
+        $eval->expects($this->once())
+            ->method('registerCallback');
+        $eval->method('tclEval')->willReturn('');
+
         /** @var Window|MockObject */
         $win = $this->createMock(Window::class);
-        $win->expects($this->once())
-            ->method('registerCallback');
-        $win->method('window')->willReturnSelf();
+        $win->method('getEval')->willReturn($eval);
 
         new Button($win, 'Test', ['command' => function () {}]);
     }
@@ -72,10 +77,7 @@ class ButtonTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"MyCommand" is not a valid button command.');
 
-        /** @var Window|Stub */
-        $win = $this->createStub(Window::class);
-
-        $btn = new Button($win, 'Test');
+        $btn = new Button($this->createWindowStub(), 'Test');
         $btn->command = 'MyCommand';
     }
 }

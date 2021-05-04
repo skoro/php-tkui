@@ -10,7 +10,7 @@ class LabelTest extends TestCase
     /** @test */
     public function label_created()
     {
-        $this->tclEvalTest(1, [['label', $this->checkWidget('.lb'), '-text', '{Test}']]);
+        $this->tclEvalTest(1, [['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}']]);
 
         new Label($this->createWindowStub(), 'Test');
     }
@@ -19,7 +19,7 @@ class LabelTest extends TestCase
     public function text_changed()
     {
         $this->tclEvalTest(2, [
-            ['label', $this->checkWidget('.lb'), '-text', '{Test}'],
+            ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}'],
             [$this->checkWidget('.lb'), 'configure', '-text', '{New text}']
         ]);
 

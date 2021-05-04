@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Widgets\Common\Editable;
 
 /**
  * Implementation of Tk text widget.
@@ -12,7 +13,7 @@ use TclTk\Options;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  */
-class Text extends ScrollableWidget
+class Text extends ScrollableWidget implements Editable
 {
     /**
      * States for the 'state' option.
@@ -20,9 +21,12 @@ class Text extends ScrollableWidget
     const STATE_NORMAL = 'normal';
     const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, array $options = [])
+    protected string $widget = 'text';
+    protected string $name = 't';
+
+    public function __construct(Container $parent, array $options = [])
     {
-        parent::__construct($parent, 'text', 't', $options);
+        parent::__construct($parent, $options);
     }
 
     /**
@@ -49,5 +53,31 @@ class Text extends ScrollableWidget
             'width' => null,
             'wrap' => null,
         ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function append(string $text): self
+    {
+        $this->call('insert', 'end', $text);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function clear(): self
+    {
+        $this->call('delete', '0.0', 'end');
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContent(): string
+    {
+        return $this->call('get', '0.0');
     }
 }

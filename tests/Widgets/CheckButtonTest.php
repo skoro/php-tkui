@@ -2,40 +2,52 @@
 
 namespace TclTk\Tests\Widgets;
 
-use PHPUnit\Framework\MockObject\Stub\Stub;
 use TclTk\Tests\TestCase;
 use TclTk\Variable;
 use TclTk\Widgets\Buttons\CheckButton;
-use TclTk\Widgets\TkWidget;
 
 class CheckButtonTest extends TestCase
 {
     /** @test */
     public function widget_created()
     {
+        $varStub = $this->createStub(Variable::class);
+        $varStub->method('__toString')->willReturn('var');
+        $this->eval->method('registerVar')->willReturn($varStub);
+
         $this->tclEvalTest(2, [
-            ['checkbutton', $this->checkWidget('.chk'), '-text', '{Test}'],
+            ['ttk::checkbutton', $this->checkWidget('.chk'), '-text', '{Test}'],
             [$this->checkWidget('.chk'), 'configure', '-variable', 'var'],
         ]);
 
-        /** @var TkWidget|Stub $win */
-        $win = $this->createWindowStub();
-        $varStub = $this->createStub(Variable::class);
-        $varStub->method('__toString')->willReturn('var');
-        $win->method('registerVar')->willReturn($varStub);
-
-        new CheckButton($win, 'Test');
+        new CheckButton($this->createWindowStub(), 'Test');
     }
 
     /** @test */
-    public function value_toggle()
+    public function select_set_true()
     {
-        $this->tclEvalTest(3, [
-            ['checkbutton', $this->checkWidget('.chk'), '-text', '{Test}'],
-            [$this->checkWidget('.chk'), 'configure', '-variable', ''],
-            [$this->checkWidget('.chk'), 'toggle'],
-        ]);
+        $varMock = $this->createMock(Variable::class);
+        $varMock->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive([false], [true]);
 
-        (new CheckButton($this->createWindowStub(), 'Test', FALSE))->toggle();
+        $this->eval->method('registerVar')->willReturn($varMock);
+
+        $cb = new CheckButton($this->createWindowStub(), 'Test', false);
+        $cb->select();
+    }
+
+    /** @test */
+    public function deselect_set_false()
+    {
+        $varMock = $this->createMock(Variable::class);
+        $varMock->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive([true], [false]);
+
+        $this->eval->method('registerVar')->willReturn($varMock);
+    
+        $cb = new CheckButton($this->createWindowStub(), 'Test', true);
+        $cb->deselect();
     }
 }

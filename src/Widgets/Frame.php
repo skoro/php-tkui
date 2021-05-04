@@ -2,15 +2,36 @@
 
 namespace TclTk\Widgets;
 
+use TclTk\Options;
+use TclTk\Widgets\Consts\Relief;
+
 /**
- * Implementation of Tk frame widget.
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_frame.htm
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/frame.htm
+ * @property string $padding
+ * @property int $borderWidth
+ * @property string $relief
+ * @property int $width
+ * @property int $height
+ * 
+ * @todo Implement padding property.
  */
-class Frame extends Widget
+class Frame extends TtkContainer implements Relief
 {
-    public function __construct(TkWidget $parent, array $options = [])
+    protected string $widget = 'ttk::frame';
+    protected string $name = 'fr';
+
+    /**
+     * @inheritdoc
+     */
+    protected function initWidgetOptions(): Options
     {
-        parent::__construct($parent, 'frame', 'fr', $options);
+        return new Options([
+            'padding' => null,
+            'borderWidth' => null,
+            'relief' => null,
+            'width' => null,
+            'height' => null,
+        ]);
     }
 }

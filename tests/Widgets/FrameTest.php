@@ -10,7 +10,7 @@ class FrameTest extends TestCase
     /** @test */
     public function widget_created()
     {
-        $this->tclEvalTest(1, [['frame', $this->checkWidget('.f')]]);
+        $this->tclEvalTest(1, [['ttk::frame', $this->checkWidget('.f')]]);
 
         new Frame($this->createWindowStub());
     }

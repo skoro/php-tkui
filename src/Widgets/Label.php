@@ -3,30 +3,37 @@
 namespace TclTk\Widgets;
 
 use TclTk\Options;
+use TclTk\Variable;
+use TclTk\Widgets\Consts\Anchor;
+use TclTk\Widgets\Consts\Justify;
+use TclTk\Widgets\Consts\Relief;
 
 /**
  * Implementation of Tk label widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/label.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_label.htm
  *
- * @property string $state
- * @property int $height
- * @property int $width
  * @property string $text
+ * @property Variable $textVariable
+ * @property int $underline
+ * @property int $width
+ * @property string $anchor
+ * @property string $background
+ * @property string $foreground
+ * @property string $justify
+ * @property string $relief
+ * @property int $wrapLength
  */
-class Label extends Widget
+class Label extends TtkWidget implements Justify, Relief, Anchor
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
 
-    public function __construct(TkWidget $parent, string $title, array $options = [])
+    protected string $widget = 'ttk::label';
+    protected string $name = 'lb';
+
+    public function __construct(Container $parent, string $title, array $options = [])
     {
         $options['text'] = $title;
-        parent::__construct($parent, 'label', 'lb', $options);
+        parent::__construct($parent, $options);
     }
 
     /**
@@ -35,9 +42,21 @@ class Label extends Widget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'height' => null,
+            'compound' => null,
+            'image' => null,
+            'padding' => null,
             'state' => null,
+            'text' => null,
+            'textVariable' => null,
+            'underline' => null,
             'width' => null,
+            'anchor' => null,
+            'background' => null,
+            'font' => null,
+            'foreground' => null,
+            'justify' => null,
+            'relief' => null,
+            'wrapLength' => null,
         ]);
     }
 }

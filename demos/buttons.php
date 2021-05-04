@@ -1,21 +1,19 @@
 <?php
 
-use TclTk\App;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Buttons\CheckButton;
 use TclTk\Widgets\Buttons\RadioButton;
 use TclTk\Widgets\Label;
 use TclTk\Widgets\LabelFrame;
 use TclTk\Widgets\RadioGroup;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     public function __construct()
     {
-        parent::__construct(App::create(), 'Buttons Demo');
+        parent::__construct('Buttons Demo');
         $this->buttons()
              ->pack()
              ->sideLeft()
@@ -58,6 +56,13 @@ $demo = new class extends Window
             ->pack()
             ->sideTop()
             ->manage();
+
+        // Disabled button with state in options.
+        (new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]))
+            ->pack()
+            ->sideTop()
+            ->manage();
+
         return $f;
     }
 
@@ -68,12 +73,18 @@ $demo = new class extends Window
         $l->pack()->manage();
         foreach (['One', 'Two', 'Three', 'Four'] as $name) {
             $cb = new CheckButton($f, $name);
-            $cb->pack()->sideTop()->anchor('w')->manage();
+            $cb->pack()->sideTop()->anchor('w')->fillX()->manage();
             if ($name === 'Three') {
                 $cb->select();
             }
             $cb->onClick(fn (CheckButton $cb) => $l->text = $cb->text . ': ' . $cb->getValue());
         }
+
+        // Disabled check button, setting state via method (allows chaining).
+        (new CheckButton($f, 'Disabled'))
+            ->state(CheckButton::STATE_DISABLED)
+            ->pack()->sideTop()->anchor('w')->fillX()->manage();
+
         return $f;
     }
 
@@ -89,11 +100,18 @@ $demo = new class extends Window
                 ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->getValue())
                 ->pack()
                 ->anchor('w')
+                ->fillX()
                 ->manage();
         }
+
+        // Disabled, setting state as a property.
+        $x = $rg->add('Disabled', 'disabled');
+        $x->state = RadioButton::STATE_DISABLED;
+        $x->pack()->anchor('w')->fillX()->manage();
+
         $rg->pack()->fillBoth()->expand()->manage();
         return $f;
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

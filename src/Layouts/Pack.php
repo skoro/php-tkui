@@ -3,7 +3,7 @@
 namespace TclTk\Layouts;
 
 use TclTk\Options;
-use TclTk\Widgets\TkWidget;
+use TclTk\Widgets\Widget;
 
 /**
  * pack geometry manager.
@@ -133,10 +133,24 @@ class Pack extends Manager
         return $this;
     }
 
+    public function pad($amountX, $amountY): self
+    {
+        $this->padx = $amountX;
+        $this->pady = $amountY;
+        return $this;
+    }
+
+    public function ipad($amountX, $amountY): self
+    {
+        $this->ipadx = $amountX;
+        $this->ipady = $amountY;
+        return $this;
+    }
+
     /**
      * @inheritdoc
      */
-    public function manage(): TkWidget
+    public function manage(): Widget
     {
         $this->call('pack');
         return parent::manage();

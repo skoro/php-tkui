@@ -1,6 +1,5 @@
 <?php
 
-use TclTk\App;
 use TclTk\Widgets\Buttons\Button;
 use TclTk\Widgets\Entry;
 use TclTk\Widgets\Frame;
@@ -9,17 +8,16 @@ use TclTk\Widgets\LabelFrame;
 use TclTk\Widgets\Listbox;
 use TclTk\Widgets\ListboxItem;
 use TclTk\Widgets\Scrollbar;
-use TclTk\Widgets\Window;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
-$demo = new class extends Window
+$demo = new class extends DemoAppWindow
 {
     private Listbox $listBox;
 
     public function __construct()
     {
-        parent::__construct(App::create(), 'Demo Listbox');
+        parent::__construct('Demo Listbox');
         $this->helpFrame()->pack()->sideTop()->fillX()->manage();
         $this->newItemFrame()->pack()->sideTop()->fillX()->manage();
         $this->listControlsFrame()->pack()->sideRight()->fillY()->manage();
@@ -144,4 +142,4 @@ $demo = new class extends Window
     }
 };
 
-$demo->app()->mainLoop();
+$demo->run();

@@ -5,44 +5,42 @@ namespace TclTk\Widgets;
 use TclTk\Options;
 use TclTk\Tcl;
 use TclTk\Variable;
+use TclTk\Widgets\Common\Editable;
+use TclTk\Widgets\Common\ValueInVariable;
+use TclTk\Widgets\Consts\Justify;
+use TclTk\Widgets\Consts\Validate;
 
 /**
  * Implementation of Tk entry widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_entry.htm
  *
+ * @property string $font
+ * @property string $textColor
+ * @property callable $xScrollCommand TODO
+ * @property bool $exportSelection
+ * @property callable $invalidCommand TODO
+ * @property string $justify
+ * @property bool $show
+ * @property string $state
  * @property Variable $textVariable
  * @property string $validate
- * @property bool $show
+ * @property callable $validateCommand TODO
+ * @property int $width
  */
-class Entry extends Widget implements Valuable
+class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Editable
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_READONLY = 'readonly';
-    const STATE_DISABLED = 'disabled';
+    protected string $widget = 'ttk::entry';
+    protected string $name = 'e';
 
-    /**
-     * Validate modes for 'validate' option.
-     * Defaults 'none'.
-     */
-    const VALIDATE_NONE = 'none';
-    const VALIDATE_FOCUS = 'focus';
-    const VALIDATE_FOCUS_IN = 'focusin';
-    const VALIDATE_FOCUS_OUT = 'focusout';
-    const VALIDATE_KEY = 'key';
-    const VALIDATE_ALL = 'all';
-
-    public function __construct(TkWidget $parent, string $value = '', array $options = [])
+    public function __construct(Container $parent, string $value = '', array $options = [])
     {
         $var = isset($options['textVariable']);
 
-        parent::__construct($parent, 'entry', 'e', $options);
+        parent::__construct($parent, $options);
 
         if (! $var) {
-            $this->textVariable = $this->window()->registerVar($this);
+            $this->textVariable = $this->getEval()->registerVar($this);
         }
 
         if ($value !== '') {
@@ -56,12 +54,15 @@ class Entry extends Widget implements Valuable
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'disabledBackground' => null,
-            'disabledForeground' => null,
+            'font' => null,
+            'textColor' => null,
+            'xScrollCommand' => null,
+            'exportSelection' => null,
             'invalidCommand' => null,
-            'readonlyBackground' => null,
+            'justify' => null,
             'show' => null,
             'state' => null,
+            'textVariable' => null,
             'validate' => null,
             'validateCommand' => null,
             'width' => null,
@@ -82,10 +83,13 @@ class Entry extends Widget implements Valuable
      * Delete one or more elements of the entry.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M44
+     *
+     * @param string|int $first
+     * @param string|int $last
      */
-    public function delete(int $first, int $last = 0): self
+    public function delete($first, $last = null): self
     {
-        if ($last > 0) {
+        if ($last) {
             $this->call('delete', $first, $last);
         } else {
             $this->call('delete', $first);
@@ -94,7 +98,7 @@ class Entry extends Widget implements Valuable
     }
 
     /**
-     * Clears the current entry string.
+     * @inheritdoc
      */
     public function clear(): self
     {
@@ -106,8 +110,10 @@ class Entry extends Widget implements Valuable
      * Insert a string just before the specified index.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M48
+     *
+     * @param string|int $index
      */
-    public function insert(int $index, string $str): self
+    public function insert($index, string $str): self
     {
         $this->call('insert', $index, Tcl::quoteString($str));
         return $this;
@@ -128,10 +134,29 @@ class Entry extends Widget implements Valuable
      * Arrange for the insertion cursor to be displayed just before the character given by index.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M46
+     *
+     * @param string|int $index
      */
-    public function insertCursor(int $index): self
+    public function insertCursor($index): self
     {
         $this->call('icursor', $index);
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function append(string $text): self
+    {
+        $this->insert('end', $text);
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContent(): string
+    {
+        return $this->getValue();
     }
 }

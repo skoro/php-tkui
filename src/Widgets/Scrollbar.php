@@ -4,24 +4,20 @@ namespace TclTk\Widgets;
 
 use LogicException;
 use TclTk\Options;
+use TclTk\Widgets\Consts\Orient;
 
 /**
  * Implementation of Tk scrollbar widget.
  *
- * @link https://www.tcl.tk/man/tcl8.6/TkCmd/scrollbar.htm
+ * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm
  *
- * @property string $orient
+ * @property string $orient By default, vertical orientation.
+ * @property callable $command
  */
-class Scrollbar extends Widget
+class Scrollbar extends TtkWidget implements Orient
 {
-    /**
-     * @param bool $vert Vertical scrollbar otherwise horizontal. Same as setting 'orient' option.
-     */
-    public function __construct(TkWidget $parent, bool $vert = TRUE, array $options = [])
-    {
-        $options['orient'] = $vert ? WidgetOptions::ORIENT_VERTICAL : WidgetOptions::ORIENT_HORIZONTAL;
-        parent::__construct($parent, 'scrollbar', 'sb', $options);
-    }
+    protected string $widget = 'ttk::scrollbar';
+    protected string $name = 'scr';
 
     /**
      * @inheritdoc
@@ -29,10 +25,8 @@ class Scrollbar extends Widget
     public function initWidgetOptions(): Options
     {
         return new Options([
-            'activeRelief' => null,
             'command' => null,
-            'elementBorderWidth' => null,
-            'width' => null,
+            'orient' => self::ORIENT_VERTICAL,
         ]);
     }
 
@@ -53,13 +47,40 @@ class Scrollbar extends Widget
     public function getOrientToView(): string
     {
         switch ($this->orient) {
-            case WidgetOptions::ORIENT_HORIZONTAL:
+            case self::ORIENT_HORIZONTAL:
                 return 'xview';
 
-            case WidgetOptions::ORIENT_VERTICAL:
+            case self::ORIENT_VERTICAL:
                 return 'yview';
         }
 
         throw new LogicException('Invalid orient: ' . $this->orient);
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M21
+     */
+    public function moveTo(float $fraction): self
+    {
+        $this->call('moveto', $fraction);
+        return $this;
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M22
+     */
+    public function scrollUnits(int $number): self
+    {
+        $this->call('scroll', $number, 'units');
+        return $this;
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M23
+     */
+    public function scrollPages(int $number): self
+    {
+        $this->call('scroll', $number, 'pages');
+        return $this;
     }
 }
