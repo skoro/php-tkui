@@ -69,9 +69,7 @@ class TkApplication implements Application
     }
 
     /**
-     * Evaluates a Tcl command.
-     *
-     * All the arguments will be concatenated as a script.
+     * @inheritdoc
      */
     public function tclEval(...$args): string
     {

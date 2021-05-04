@@ -10,13 +10,24 @@ use TclTk\Widgets\Widget;
 interface Evaluator
 {
     /**
-     * Evaluates a script in the current interpreter.
+     * Evaluates a Tcl script in the current interpreter.
      *
-     * @param string ...$args The tokenized Tcl script.
+     * For example:
+     * <code>
+     * tclEval('set', 'myVar', 'SomeValue');
+     * </code>
+     * Will be executed as a Tcl script: set myVar SomeValue
+     * <code>
+     * tclEval('set myVar SomeValue');
+     * </code>
+     * Will be treated as a Tcl command {set myVar SomeValue}
      *
+     * @param mixed ...$args All the arguments will be concateneted to a Tcl script
+     *                       and executed in the Tcl interpreter.
+     * 
      * @return mixed The return value depends on script result.
      */
-    public function tclEval(string ...$args);
+    public function tclEval(...$args);
 
     /**
      * Registers the variable in the current Tcl interpreter.
