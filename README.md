@@ -15,7 +15,7 @@ Make sure that Tcl/Tk is installed in your OS. For Debian/Ubuntu based distros y
 sudo apt install tcl tk
 ```
 
-Clone this repository and try demos:
+Clone this repository and try out demos:
 ```sh
 git clone https://github.com/skoro/php-tk.git php-tk
 cd php-tk
