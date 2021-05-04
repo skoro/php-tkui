@@ -2,11 +2,11 @@
 
 use TclTk\Application;
 use TclTk\TkApplication;
-use TclTk\Widgets\Window;
+use TclTk\Windows\MainWindow;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-class DemoAppWindow extends Window
+class DemoAppWindow extends MainWindow
 {
     protected Application $app;
 

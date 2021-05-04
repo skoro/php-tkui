@@ -3,6 +3,7 @@
 namespace TclTk\Widgets;
 
 use TclTk\Evaluator;
+use TclTk\Windows\Window;
 
 /**
  * Container widget.

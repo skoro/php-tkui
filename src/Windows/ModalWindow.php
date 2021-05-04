@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Common;
+namespace TclTk\Windows;
 
 /**
- * Widgets which show as a modal window.
+ * Windows that can be shown as modals.
  */
 interface ModalWindow
 {

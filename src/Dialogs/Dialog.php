@@ -4,8 +4,8 @@ namespace TclTk\Dialogs;
 
 use TclTk\Exceptions\TkException;
 use TclTk\Options;
-use TclTk\Widgets\Common\ModalWindow;
-use TclTk\Widgets\Window;
+use TclTk\Windows\ModalWindow;
+use TclTk\Windows\Window;
 
 /**
  * Base class for dialog windows

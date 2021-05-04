@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use TclTk\Tests\TestCase;
 use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Window;
+use TclTk\Windows\Window;
 
 class ButtonTest extends TestCase
 {

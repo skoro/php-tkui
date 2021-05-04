@@ -5,7 +5,7 @@ namespace TclTk\Dialogs;
 use TclTk\Options;
 use TclTk\Widgets\Container;
 use TclTk\Widgets\Widget;
-use TclTk\Widgets\Window;
+use TclTk\Windows\Window;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/fontchooser.htm

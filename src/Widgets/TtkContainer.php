@@ -4,6 +4,7 @@ namespace TclTk\Widgets;
 
 use RuntimeException;
 use TclTk\Evaluator;
+use TclTk\Windows\Window;
 
 abstract class TtkContainer extends TtkWidget implements Container
 {

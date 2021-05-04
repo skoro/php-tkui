@@ -10,7 +10,7 @@ use TclTk\Evaluator;
 use TclTk\FFILoader;
 use TclTk\Tcl;
 use TclTk\Widgets\Widget;
-use TclTk\Widgets\Window;
+use TclTk\Windows\Window;
 
 class TestCase extends FrameworkTestCase
 {
