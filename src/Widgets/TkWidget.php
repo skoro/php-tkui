@@ -185,6 +185,17 @@ abstract class TkWidget implements Widget
     }
 
     /**
+     * Change a widget's position in the stacking order.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/raise.htm
+     */
+    public function raise(): self
+    {
+        $this->eval->tclEval('raise', $this->path());
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function bind(string $event, ?callable $callback): self
