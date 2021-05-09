@@ -11,7 +11,9 @@
     "require": {
         "php": ">=7.4",
         "ext-ffi": "*",
-        "ext-spl": "*"
+        "ext-spl": "*",
+        "psr/log": "^1.1",
+        "monolog/monolog": "^2.2"
     },
     "autoload": {
         "psr-4": {
