@@ -11,6 +11,8 @@ use TclTk\Exceptions\TclInterpException;
  */
 class Interp
 {
+    use HasLogger;
+
     private Tcl $tcl;
     private CData $interp;
 
@@ -25,6 +27,7 @@ class Interp
      */
     public function init(): void
     {
+        $this->debug('init');
         $this->tcl->init($this);
     }
 
@@ -46,7 +49,7 @@ class Interp
      */
     public function eval(string $script)
     {
-        echo "[DEBUG] $script\n";
+        $this->debug('eval', ['script' => $script]);
         $this->tcl->eval($this, $script);
     }
 
@@ -60,6 +63,7 @@ class Interp
      */
     public function createCommand(string $command, callable $callback)
     {
+        $this->debug('createCommand', ['command' => $command]);
         $this->tcl->createCommand($this, $command, function ($data, $interp, $objc, $objv) use ($callback) {
             $params = [];
             for ($i = 1; $i < $objc; $i ++) {
@@ -74,17 +78,25 @@ class Interp
      */
     public function deleteCommand(string $command): void
     {
+        $this->debug('deleteCommand', ['command' => $command]);
         $this->tcl->deleteCommand($this, $command);
     }
 
     /**
      * Creates a Tcl variable instance.
      *
+     * @param mixed $value
+     *
      * @throws TclException
      * @throws TclInterpException
      */
     public function createVariable(string $varName, ?string $arrIndex = NULL, $value = NULL): Variable
     {
+        $this->debug('createVariable', [
+            'varName' => $varName,
+            'arrIndex' => $arrIndex,
+            'value' => $value,
+        ]);
         return new Variable($this, $varName, $arrIndex, $value);
     }
 

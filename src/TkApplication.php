@@ -11,6 +11,8 @@ use TclTk\Widgets\Widget;
  */
 class TkApplication implements Application
 {
+    use HasLogger;
+
     private Tk $tk;
     private Interp $interp;
     private Bindings $bindings;
@@ -54,21 +56,6 @@ class TkApplication implements Application
     }
 
     /**
-     * Application builder.
-     *
-     * Loads and initializes Tcl and Tk libraries.
-     */
-    public static function create(): self
-    {
-        $loader = new FFILoader();
-        $tcl = new Tcl($loader->loadTcl());
-        $interp = $tcl->createInterp();
-        $app = new static(new Tk($loader->loadTk(), $interp));
-        $app->init();
-        return $app;
-    }
-
-    /**
      * @inheritdoc
      */
     public function tclEval(...$args): string
@@ -88,7 +75,9 @@ class TkApplication implements Application
             $this->interp->eval('package require Ttk');
             $this->themeManager = $this->createThemeManager();
         } catch (TclInterpException $e) {
+            // TODO: ttk must be required ?
             $this->themeManager = null;
+            $this->info('package ttk is not found');
         }
     }
 
@@ -132,6 +121,7 @@ class TkApplication implements Application
      */
     public function init(): void
     {
+        $this->debug('init');
         $this->interp->init();
         $this->tk->init();
         $this->initTtk();
@@ -144,6 +134,7 @@ class TkApplication implements Application
      */
     public function run(): void
     {
+        $this->debug('run');
         $this->tk->mainLoop();
     }
 
@@ -157,6 +148,7 @@ class TkApplication implements Application
      */
     public function quit(): void
     {
+        $this->debug('destroy');
         $this->tclEval('destroy', '.');
     }
 
