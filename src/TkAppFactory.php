@@ -6,13 +6,23 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * Tk implementation of Application Factory.
+ */
 class TkAppFactory implements AppFactory
 {
     private DotEnv $dotEnv;
 
-    public function __construct()
+    /**
+     * @param string $envFile A filename with environment settings.
+     */
+    public function __construct(string $envFile = '')
     {
-        $this->dotEnv = new DotEnv(dirname(__DIR__));
+        if ($envFile === '') {
+            $this->dotEnv = new DotEnv(dirname(__DIR__));
+        } else {
+            $this->dotEnv = new DotEnv(dirname($envFile), basename($envFile));
+        }
     }
 
     protected function loadEnv(array $config): void
