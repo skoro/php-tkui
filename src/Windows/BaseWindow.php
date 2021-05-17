@@ -22,6 +22,9 @@ abstract class BaseWindow implements Window
 
     private static int $idCounter = 0;
 
+    /**
+     * @param string $title The window title.
+     */
     public function __construct(string $title)
     {
         $this->generateId();
