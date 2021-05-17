@@ -3,6 +3,7 @@
 namespace TclTk\Windows;
 
 use TclTk\Widgets\Container;
+use TclTk\WindowManager;
 
 /**
  * The application window.
@@ -19,4 +20,6 @@ interface Window extends Container
     const STATE_WITHDRAWN = 'withdrawn';
     const STATE_ICON = 'icon';
     const STATE_ZOOMED = 'zoomed';
+
+    public function getWindowManager(): WindowManager;
 }

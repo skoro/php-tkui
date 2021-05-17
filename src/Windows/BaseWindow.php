@@ -103,13 +103,12 @@ abstract class BaseWindow implements Window
     {
         if ($this->options->has($name) && $this->options->$name !== $value) {
             $this->options->$name = $value;
-            // TODO: must be a proxy to "wm" command.
             switch ($name) {
                 case 'title':
-                    $this->getEval()->tclEval('wm', 'title', $this->path(), Tcl::quoteString($value));
+                    $this->getWindowManager()->setTitle($this, $value);
                     break;
                 case 'state':
-                    $this->getEval()->tclEval('wm', 'state', $this->path(), $value);
+                    $this->getWindowManager()->setState($this, $value);
                     break;
             }
         }

@@ -5,6 +5,7 @@ namespace TclTk\Windows;
 use TclTk\Evaluator;
 use TclTk\Widgets\Container;
 use TclTk\Widgets\Widget;
+use TclTk\WindowManager;
 
 /**
  * Child window implementation.
@@ -51,5 +52,13 @@ class ChildWindow extends BaseWindow
     public function bindWidget(Widget $widget, string $event, ?callable $callback): Container
     {
         return $this->parent->bindWidget($widget, $event, $callback);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWindowManager(): WindowManager
+    {
+        return $this->parent->getWindowManager();
     }
 }
