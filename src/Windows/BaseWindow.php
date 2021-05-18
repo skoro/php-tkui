@@ -5,7 +5,6 @@ namespace TclTk\Windows;
 use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
-use TclTk\Tcl;
 use TclTk\Widgets\Widget;
 
 /**
