@@ -36,4 +36,16 @@ interface WindowManager
      * Arrange for window to be displayed in normal (non-iconified) form.
      */
     public function deiconify(Window $window): void;
+
+    /**
+     * Sets the maximum dimensions for the window.
+     */
+    public function setMaxSize(Window $window, int $width, int $height): void;
+
+    /**
+     * Gets the maximum dimensions for the window.
+     *
+     * @return array The list of two width and height values.
+     */
+    public function getMaxSize(Window $window): array;
 }

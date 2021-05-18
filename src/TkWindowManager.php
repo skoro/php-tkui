@@ -75,9 +75,29 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M54
+     */
+    public function setMaxSize(Window $window, int $width, int $height): void
+    {
+        $this->setWm($window, 'maxsize', $width, $height);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M54
+     */
+    public function getMaxSize(Window $window): array
+    {
+        return explode(' ', $this->getWm($window, 'maxsize'), 2);
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
-    protected function setWm(Window $w, string $command, string ...$value): void
+    protected function setWm(Window $w, string $command, ...$value): void
     {
         $this->eval->tclEval('wm', $command, $w->path(), ...$value);
     }
@@ -89,6 +109,6 @@ class TkWindowManager implements WindowManager
      */
     protected function getWm(Window $w, string $command)
     {
-        return $this->eval->tclEval('wm', $command);
+        return $this->eval->tclEval('wm', $command, $w->path());
     }
 }
