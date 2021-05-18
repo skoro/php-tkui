@@ -12,7 +12,7 @@ interface AppFactory
      *
      * @param array $config The list of parameters to override default ones.
      */
-    public static function create(array $config = []): Application;
+    public function create(array $config = []): Application;
 
     /**
      * The application environment.

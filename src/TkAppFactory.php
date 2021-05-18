@@ -41,18 +41,17 @@ class TkAppFactory implements AppFactory
     /**
      * @inheritdoc
      */
-    public static function create(array $config = []): TkApplication
+    public function create(array $config = []): TkApplication
     {
-        $factory = new static();
-        $factory->loadEnv($config);
-        $env = $factory->getEnvironment();
+        $this->loadEnv($config);
+        $env = $this->getEnvironment();
 
         $loader = new FFILoader();
         $tcl = new Tcl($loader->loadTcl());
         $interp = $tcl->createInterp();
 
         if (($debug = (bool) $env->getEnv('DEBUG'))) {
-            $logger = $factory->createLogger($env->getEnv('DEBUG_LOG', 'php://stdout'));
+            $logger = $this->createLogger($env->getEnv('DEBUG_LOG', 'php://stdout'));
         }
 
         if ($debug) {

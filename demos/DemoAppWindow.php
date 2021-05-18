@@ -12,7 +12,7 @@ class DemoAppWindow extends MainWindow
 
     public function __construct(string $title)
     {
-        $this->app = TkAppFactory::create();
+        $this->app = (new TkAppFactory)->create();
         parent::__construct($this->app, $title);        
     }
 
