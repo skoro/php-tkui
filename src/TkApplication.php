@@ -15,7 +15,6 @@ class TkApplication implements Application
     private Interp $interp;
     private Bindings $bindings;
     private ?ThemeManager $themeManager;
-    private WindowManager $windowManager;
 
     /**
      * @var Variable[]
@@ -46,7 +45,6 @@ class TkApplication implements Application
         $this->themeManager = null;
         $this->vars = [];
         $this->callbacks = [];
-        $this->windowManager = new TkWindowManager($this);
         $this->createCallbackHandler();
     }
 
@@ -236,13 +234,5 @@ class TkApplication implements Application
         //       $this->callbacks[$widget] = $callback;
         $this->callbacks[$widget->path()] = [$widget, $callback];
         return self::CALLBACK_HANDLER . ' ' . $widget->path();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWindowManager(): WindowManager
-    {
-        return $this->windowManager;
     }
 }

@@ -16,9 +16,4 @@ interface Application extends Evaluator, Bindings
      * Get the theme manager.
      */
     public function getThemeManager(): ThemeManager;
-
-    /**
-     * The application window manager.
-     */
-    public function getWindowManager(): WindowManager;
 }

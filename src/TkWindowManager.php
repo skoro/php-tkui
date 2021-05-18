@@ -18,10 +18,12 @@ class TkWindowManager implements WindowManager
     public const STATE_ZOOMED = 'zoomed';
 
     private Evaluator $eval;
+    private Window $window;
 
-    public function __construct(Evaluator $eval)
+    public function __construct(Evaluator $eval, Window $window)
     {
         $this->eval = $eval;
+        $this->window = $window;
     }
 
     /**
@@ -29,9 +31,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M63
      */
-    public function setTitle(Window $window, string $title): void
+    public function setTitle(string $title): void
     {
-        $this->setWm($window, 'title', Tcl::quoteString($title));
+        $this->setWm('title', Tcl::quoteString($title));
     }
 
     /**
@@ -39,9 +41,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
-    public function setState(Window $window, string $state): void
+    public function setState(string $state): void
     {
-        $this->setWm($window, 'state', $state);
+        $this->setWm('state', $state);
     }
 
     /**
@@ -49,9 +51,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
-    public function getState(Window $window): string
+    public function getState(): string
     {
-        return (string) $this->getWm($window, 'state');
+        return (string) $this->getWm('state');
     }
 
     /**
@@ -59,9 +61,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M47
      */
-    public function iconify(Window $window): void
+    public function iconify(): void
     {
-        $this->setWm($window, 'iconify');
+        $this->setWm('iconify');
     }
 
     /**
@@ -69,9 +71,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M38
      */
-    public function deiconify(Window $window): void
+    public function deiconify(): void
     {
-        $this->setWm($window, 'deiconify');
+        $this->setWm('deiconify');
     }
 
     /**
@@ -79,9 +81,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M54
      */
-    public function setMaxSize(Window $window, int $width, int $height): void
+    public function setMaxSize(int $width, int $height): void
     {
-        $this->setWm($window, 'maxsize', $width, $height);
+        $this->setWm('maxsize', $width, $height);
     }
 
     /**
@@ -89,9 +91,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M54
      */
-    public function getMaxSize(Window $window): array
+    public function getMaxSize(): array
     {
-        return explode(' ', $this->getWm($window, 'maxsize'), 2);
+        return explode(' ', $this->getWm('maxsize'), 2);
     }
 
     /**
@@ -99,9 +101,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M55
      */
-    public function setMinSize(Window $window, int $width, int $height): void
+    public function setMinSize(int $width, int $height): void
     {
-        $this->setWm($window, 'minsize', $width, $height);
+        $this->setWm('minsize', $width, $height);
     }
 
     /**
@@ -109,17 +111,17 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M55
      */
-    public function getMinSize(Window $window): array
+    public function getMinSize(): array
     {
-        return explode(' ', $this->getWm($window, 'minsize'), 2);
+        return explode(' ', $this->getWm('minsize'), 2);
     }
 
     /**
      * Proxy the window command to Tk wm command.
      */
-    protected function setWm(Window $w, string $command, ...$value): void
+    protected function setWm(string $command, ...$value): void
     {
-        $this->eval->tclEval('wm', $command, $w->path(), ...$value);
+        $this->eval->tclEval('wm', $command, $this->window->path(), ...$value);
     }
 
     /**
@@ -127,8 +129,8 @@ class TkWindowManager implements WindowManager
      *
      * @return mixed
      */
-    protected function getWm(Window $w, string $command)
+    protected function getWm(string $command)
     {
-        return $this->eval->tclEval('wm', $command, $w->path());
+        return $this->eval->tclEval('wm', $command, $this->window->path());
     }
 }

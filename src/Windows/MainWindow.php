@@ -6,7 +6,6 @@ use TclTk\Application;
 use TclTk\Evaluator;
 use TclTk\Widgets\Container;
 use TclTk\Widgets\Widget;
-use TclTk\WindowManager;
 
 /**
  * The main application window implementation.
@@ -63,13 +62,5 @@ class MainWindow extends BaseWindow
             $this->app->bindWidget($widget, $event, $callback);
         }
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWindowManager(): WindowManager
-    {
-        return $this->app->getWindowManager();
     }
 }

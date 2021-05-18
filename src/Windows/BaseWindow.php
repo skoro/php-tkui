@@ -5,7 +5,9 @@ namespace TclTk\Windows;
 use TclTk\Layouts\Grid;
 use TclTk\Layouts\Pack;
 use TclTk\Options;
+use TclTk\TkWindowManager;
 use TclTk\Widgets\Widget;
+use TclTk\WindowManager;
 
 /**
  * Shares the features for window implementations.
@@ -13,6 +15,7 @@ use TclTk\Widgets\Widget;
 abstract class BaseWindow implements Window
 {
     private Options $options;
+    private WindowManager $wm;
 
     /**
      * Window instance id.
@@ -25,6 +28,7 @@ abstract class BaseWindow implements Window
     {
         $this->generateId();
         $this->options = $this->initOptions();
+        $this->wm = $this->createWindowManager();
         $this->createWindow();
         $this->title = $title;
     }
@@ -41,6 +45,14 @@ abstract class BaseWindow implements Window
             'title' => '',
             'state' => '',
         ]);
+    }
+
+    /**
+     * Create the window manager for the window.
+     */
+    protected function createWindowManager(): WindowManager
+    {
+        return new TkWindowManager($this->getEval(), $this);
     }
 
     /**
@@ -104,10 +116,10 @@ abstract class BaseWindow implements Window
             $this->options->$name = $value;
             switch ($name) {
                 case 'title':
-                    $this->getWindowManager()->setTitle($this, $value);
+                    $this->wm->setTitle($value);
                     break;
                 case 'state':
-                    $this->getWindowManager()->setState($this, $value);
+                    $this->wm->setState($value);
                     break;
             }
         }
@@ -131,5 +143,13 @@ abstract class BaseWindow implements Window
     public function bind(string $event, ?callable $callback): self
     {
         return $this->bindWidget($this, $event, $callback);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWindowManager(): WindowManager
+    {
+        return $this->wm;
     }
 }
