@@ -11,6 +11,12 @@ use TclTk\Windows\Window;
  */
 class TkWindowManager implements WindowManager
 {
+    public const STATE_NORMAL = 'normal';
+    public const STATE_ICONIC = 'iconic';
+    public const STATE_WITHDRAWN = 'withdrawn';
+    public const STATE_ICON = 'icon';
+    public const STATE_ZOOMED = 'zoomed';
+
     private Evaluator $eval;
 
     public function __construct(Evaluator $eval)
@@ -20,6 +26,8 @@ class TkWindowManager implements WindowManager
 
     /**
      * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M63
      */
     public function setTitle(Window $window, string $title): void
     {
@@ -28,6 +36,8 @@ class TkWindowManager implements WindowManager
 
     /**
      * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
     public function setState(Window $window, string $state): void
     {
@@ -36,6 +46,8 @@ class TkWindowManager implements WindowManager
 
     /**
      * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
     public function getState(Window $window): string
     {
@@ -44,6 +56,8 @@ class TkWindowManager implements WindowManager
 
     /**
      * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M47
      */
     public function iconify(Window $window): void
     {
@@ -52,6 +66,8 @@ class TkWindowManager implements WindowManager
 
     /**
      * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M38
      */
     public function deiconify(Window $window): void
     {

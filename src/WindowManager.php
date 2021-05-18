@@ -11,28 +11,29 @@ interface WindowManager
 {
     /**
      * Sets the window title.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M63
      */
     public function setTitle(Window $window, string $title): void;
 
     /**
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
+     * Sets the window state: normal, iconic, withdrawn, icon, zoomed.
+     * But depends on underlying window manager.
      */
     public function setState(Window $window, string $state): void;
 
     /**
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
+     * Gets the window state.
+     *
+     * @see WindowManager::setState()
      */
     public function getState(Window $window): string;
 
     /**
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M47
+     * Arrange for window to be iconified.
      */
     public function iconify(Window $window): void;
 
     /**
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M38
+     * Arrange for window to be displayed in normal (non-iconified) form.
      */
     public function deiconify(Window $window): void;
 }
