@@ -48,4 +48,16 @@ interface WindowManager
      * @return array The list of two width and height values.
      */
     public function getMaxSize(Window $window): array;
+
+    /**
+     * Sets the minimum dimensions for the window.
+     */
+    public function setMinSize(Window $window, int $width, int $height): void;
+
+    /**
+     * Gets the minimum dimensions for the window.
+     *
+     * @return array The list of two width and height values.
+     */
+    public function getMinSize(Window $window): array;
 }

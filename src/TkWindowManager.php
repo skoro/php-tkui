@@ -95,6 +95,26 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M55
+     */
+    public function setMinSize(Window $window, int $width, int $height): void
+    {
+        $this->setWm($window, 'minsize', $width, $height);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M55
+     */
+    public function getMinSize(Window $window): array
+    {
+        return explode(' ', $this->getWm($window, 'minsize'), 2);
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
     protected function setWm(Window $w, string $command, ...$value): void
