@@ -6,6 +6,8 @@ use RuntimeException;
 
 /**
  * .env file environment loader.
+ *
+ * TODO: comments in .ini only ';' but not '#' !
  */
 class DotEnv implements Environment
 {
@@ -25,13 +27,16 @@ class DotEnv implements Environment
     }
 
     /**
+     * Resets the previous environment and loads a new one.
+     *
      * @throws RuntimeException When the env file cannot be read or parsed.
      */
     public function load(): void
     {
+        $this->data = [];
+
         $file = $this->path . DIRECTORY_SEPARATOR . $this->filename;
         if (! file_exists($file)) {
-            $this->data = [];
             return;
         }
 
