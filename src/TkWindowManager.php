@@ -137,6 +137,14 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     */
+    public function setFullScreen(): void
+    {
+        $this->setAttribute('fullscreen', true);
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
     protected function setWm(string $command, ...$value): void

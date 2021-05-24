@@ -2,8 +2,6 @@
 
 namespace TclTk;
 
-use TclTk\Windows\Window;
-
 /**
  * The application window manager.
  */
@@ -74,4 +72,9 @@ interface WindowManager
      * @return mixed
      */
     public function getAttribute(string $attribute);
+
+    /**
+     * Places the window in a mode that takes up the entire screen, has no borders, and covers the general use area.
+     */
+    public function setFullScreen(): void;
 }
