@@ -117,6 +117,26 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M8
+     */
+    public function setAttribute(string $attribute, $value): void
+    {
+        $this->eval->tclEval('wm', 'attributes', $this->window->path(), $this->getTclOption($attribute), $value);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M6
+     */
+    public function getAttribute(string $attribute)
+    {
+        return $this->eval->tclEval('wm', 'attributes', $this->window->path(), $this->getTclOption($attribute));
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
     protected function setWm(string $command, ...$value): void
@@ -132,5 +152,10 @@ class TkWindowManager implements WindowManager
     protected function getWm(string $command)
     {
         return $this->eval->tclEval('wm', $command, $this->window->path());
+    }
+
+    protected function getTclOption(string $name): string
+    {
+        return '-' . strtolower($name);
     }
 }

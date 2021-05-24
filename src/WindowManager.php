@@ -60,4 +60,18 @@ interface WindowManager
      * @return array The list of two width and height values.
      */
     public function getMinSize(): array;
+
+    /**
+     * Sets platform specific attribute associated with the window.
+     *
+     * @param mixed $value Depending on attribute.
+     */
+    public function setAttribute(string $attribute, $value): void;
+
+    /**
+     * Gets platform specific attribute associated with the window.
+     *
+     * @return mixed
+     */
+    public function getAttribute(string $attribute);
 }
