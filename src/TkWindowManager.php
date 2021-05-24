@@ -123,7 +123,7 @@ class TkWindowManager implements WindowManager
      */
     public function setAttribute(string $attribute, $value): void
     {
-        $this->eval->tclEval('wm', 'attributes', $this->window->path(), $this->getTclOption($attribute), $value);
+        $this->eval->tclEval('wm', 'attributes', $this->window->path(), Tcl::strToOption($attribute), $value);
     }
 
     /**
@@ -133,7 +133,7 @@ class TkWindowManager implements WindowManager
      */
     public function getAttribute(string $attribute)
     {
-        return $this->eval->tclEval('wm', 'attributes', $this->window->path(), $this->getTclOption($attribute));
+        return $this->eval->tclEval('wm', 'attributes', $this->window->path(), Tcl::strToOption($attribute));
     }
 
     /**
@@ -152,10 +152,5 @@ class TkWindowManager implements WindowManager
     protected function getWm(string $command)
     {
         return $this->eval->tclEval('wm', $command, $this->window->path());
-    }
-
-    protected function getTclOption(string $name): string
-    {
-        return '-' . strtolower($name);
     }
 }

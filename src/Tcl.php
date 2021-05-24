@@ -285,4 +285,14 @@ class Tcl
     {
         return '{' . implode(' ', array_map([self::class, 'quoteString'], $input)) . '}';
     }
+
+    /**
+     * Formats string to Tcl option.
+     *
+     * The Tcl option is a lower case string with leading dash.
+     */
+    public static function strToOption(string $name): string
+    {
+        return '-' . strtolower($name);
+    }
 }

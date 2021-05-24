@@ -93,7 +93,7 @@ class Options
      */
     public static function getTclOption(string $option): string
     {
-        return '-' . strtolower($option);
+        return Tcl::strToOption($option);
     }
 
     /**
