@@ -21,3 +21,13 @@ git clone https://github.com/skoro/php-tk.git php-tk
 cd php-tk
 php demos/buttons.php
 ```
+
+### Options
+
+You may enable some application features like:
+- debug mode
+- appearance
+
+For that, you need to copy `.env.example` to `.env` and enable necessary options.
+To change the application appearance comment out `THEME` option and set one of:
+_clam_, _alt_, _default_, _vista_ (only available on Windows OS).
