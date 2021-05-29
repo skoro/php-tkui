@@ -48,6 +48,14 @@ abstract class BaseWindow implements Window
     }
 
     /**
+     * @inheritdoc
+     */
+    public function close(): void
+    {
+        $this->getEval()->tclEval('destroy', $this->path());
+    }
+
+    /**
      * Create the window manager for the window.
      */
     protected function createWindowManager(): WindowManager
