@@ -66,6 +66,10 @@ class TkAppFactory implements AppFactory
         }
         $app->init();
 
+        if (($theme = $env->getEnv('THEME'))) {
+            $app->getThemeManager()->useTheme($theme);
+        }
+
         return $app;
     }
 
