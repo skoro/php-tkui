@@ -13,7 +13,8 @@
         "ext-ffi": "*",
         "ext-spl": "*",
         "psr/log": "^1.1",
-        "monolog/monolog": "^2.2"
+        "monolog/monolog": "^2.2",
+        "m1/env": "^2.2"
     },
     "autoload": {
         "psr-4": {
