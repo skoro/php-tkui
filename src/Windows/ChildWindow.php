@@ -5,6 +5,7 @@ namespace TclTk\Windows;
 use TclTk\Evaluator;
 use TclTk\Widgets\Container;
 use TclTk\Widgets\Widget;
+use TclTk\WindowManager;
 
 /**
  * Child window implementation.

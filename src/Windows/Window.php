@@ -3,6 +3,7 @@
 namespace TclTk\Windows;
 
 use TclTk\Widgets\Container;
+use TclTk\WindowManager;
 
 /**
  * The application window.
@@ -10,13 +11,14 @@ use TclTk\Widgets\Container;
 interface Window extends Container
 {
     /**
-     * The window states.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
+     * The window manager instance.
      */
-    const STATE_NORMAL = 'normal';
-    const STATE_ICONIC = 'iconic';
-    const STATE_WITHDRAWN = 'withdrawn';
-    const STATE_ICON = 'icon';
-    const STATE_ZOOMED = 'zoomed';
+    public function getWindowManager(): WindowManager;
+
+    /**
+     * Close the window.
+     *
+     * The window cannot be accessible anymore.
+     */
+    public function close(): void;
 }
