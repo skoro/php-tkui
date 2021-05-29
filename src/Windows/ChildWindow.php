@@ -53,12 +53,4 @@ class ChildWindow extends BaseWindow
     {
         return $this->parent->bindWidget($widget, $event, $callback);
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWindowManager(): WindowManager
-    {
-        return $this->parent->getWindowManager();
-    }
 }
