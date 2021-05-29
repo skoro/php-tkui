@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use TclTk\Application;
-use TclTk\TkApplication;
+use TclTk\TkAppFactory;
 use TclTk\Windows\MainWindow;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -12,7 +12,7 @@ class DemoAppWindow extends MainWindow
 
     public function __construct(string $title)
     {
-        $this->app = TkApplication::create();
+        $this->app = (new TkAppFactory)->create();
         parent::__construct($this->app, $title);        
     }
 
