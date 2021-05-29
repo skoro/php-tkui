@@ -128,4 +128,30 @@ class WindowManagerTest extends TestCase
             ->getWindowManager()
             ->setAttribute('name', 'value');
     }
+
+    /** @test */
+    public function set_window_size()
+    {
+        $this->tclEvalTest(2, [
+            ['wm', 'title', '.', '{Size Test}'],
+            ['wm', 'geometry', '.', '100x120'],
+        ]);
+
+        (new MainWindow($this->app, 'Size Test'))
+            ->getWindowManager()
+            ->setSize(100, 120);
+    }
+
+    /** @test */
+    public function set_window_screen_pos()
+    {
+        $this->tclEvalTest(2, [
+            ['wm', 'title', '.', '{Pos Test}'],
+            ['wm', 'geometry', '.', '+400+200'],
+        ]);
+
+        (new MainWindow($this->app, 'Pos Test'))
+            ->getWindowManager()
+            ->setPos(400, 200);
+    }
 }

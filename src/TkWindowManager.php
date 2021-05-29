@@ -145,6 +145,42 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     */
+    public function setSize(int $width, int $height): void
+    {
+        $this->setWm('geometry', sprintf('%ux%u', $width, $height));
+    }
+
+    /**
+     * @inheritdoc
+     * @todo Unmapped window can return nulled list.
+     */
+    public function getSize(): array
+    {
+        $geometry = $this->getWm('geometry');
+        return sscanf($geometry, '%ux%u+');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPos(int $x, int $y): void
+    {
+        $this->setWm('geometry', sprintf('+%d+%d', $x, $y));
+    }
+
+    /**
+     * @inheritdoc
+     * @todo Unmapped window can return nulled list.
+     */
+    public function getPos(): array
+    {
+        $geometry = $this->getWm('geometry');
+        return sscanf($geometry, '+%d+%d');
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
     protected function setWm(string $command, ...$value): void

@@ -43,7 +43,7 @@ interface WindowManager
     /**
      * Gets the maximum dimensions for the window.
      *
-     * @return array The list of two width and height values.
+     * @return int[] The list of two width and height values.
      */
     public function getMaxSize(): array;
 
@@ -55,7 +55,7 @@ interface WindowManager
     /**
      * Gets the minimum dimensions for the window.
      *
-     * @return array The list of two width and height values.
+     * @return int[] The list of two width and height values.
      */
     public function getMinSize(): array;
 
@@ -77,4 +77,28 @@ interface WindowManager
      * Places the window in a mode that takes up the entire screen, has no borders, and covers the general use area.
      */
     public function setFullScreen(): void;
+
+    /**
+     * Sets the window size.
+     */
+    public function setSize(int $width, int $height): void;
+
+    /**
+     * Gets the window size.
+     *
+     * @return int[] The list of width and height.
+     */
+    public function getSize(): array;
+
+    /**
+     * Sets the window position on the screen.
+     */
+    public function setPos(int $x, int $y): void;
+
+    /**
+     * Gets the window position on the screen.
+     *
+     * @return int[]
+     */
+    public function getPos(): array;
 }
