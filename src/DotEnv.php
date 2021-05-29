@@ -3,11 +3,10 @@
 namespace TclTk;
 
 use RuntimeException;
+use M1\Env\Parser as EnvParser;
 
 /**
  * .env file environment loader.
- *
- * TODO: comments in .ini only ';' but not '#' !
  */
 class DotEnv implements Environment
 {
@@ -41,12 +40,13 @@ class DotEnv implements Environment
         }
 
         if (! is_readable($file)) {
-            throw new RuntimeException('Cannot read file: ' . $file);
+            throw new RuntimeException(sprintf('File "%s" is not readable.', $file));
         }
 
-        if (($this->data = parse_ini_file($file, false)) === false) {
-            throw new RuntimeException('Cannot parse file: ' . $file);
+        if (($buf = @file_get_contents($file)) === false) {
+            throw new RuntimeException("Couldn't read file: " . $file);
         }
+        $this->data = EnvParser::parse($buf);
     }
 
     /**
