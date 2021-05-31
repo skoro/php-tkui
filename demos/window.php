@@ -28,9 +28,18 @@ $demo = new class extends DemoAppWindow
 
         (new Button($this, 'Max and min size'))
             ->onClick(function () {
-                $wm = $this->newWindow('MaxSize')->getWindowManager();
-                $wm->setMaxSize(200, 200);
-                $wm->setMinSize(100, 40);
+                $this->newWindow('MaxSize')
+                     ->getWindowManager()
+                     ->setMaxSize(200, 200)
+                     ->setMinSize(100, 40);
+            })
+            ->pack()->manage();
+
+        (new Button($this, 'Window at 0,0'))
+            ->onClick(function () {
+                $this->newWindow('(0,0)')
+                     ->getWindowManager()
+                     ->setPos(0, 0);
             })
             ->pack()->manage();
 

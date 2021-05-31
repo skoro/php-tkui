@@ -24,6 +24,8 @@ $demo = new class extends DemoAppWindow
 
         $vert->add($pw);
         $vert->add($this->makePanel($vert, 'Frame 4', 'Like A Place In The Sun'));
+
+        $this->getWindowManager()->setMinSize(400, 200);
     }
 
     protected function makePanel(PanedWindow $parent, string $title, string $label)

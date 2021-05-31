@@ -31,9 +31,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M63
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): self
     {
-        $this->setWm('title', Tcl::quoteString($title));
+        return $this->setWm('title', Tcl::quoteString($title));
     }
 
     /**
@@ -41,9 +41,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
-    public function setState(string $state): void
+    public function setState(string $state): self
     {
-        $this->setWm('state', $state);
+        return $this->setWm('state', $state);
     }
 
     /**
@@ -61,9 +61,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M47
      */
-    public function iconify(): void
+    public function iconify(): self
     {
-        $this->setWm('iconify');
+        return $this->setWm('iconify');
     }
 
     /**
@@ -71,9 +71,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M38
      */
-    public function deiconify(): void
+    public function deiconify(): self
     {
-        $this->setWm('deiconify');
+        return $this->setWm('deiconify');
     }
 
     /**
@@ -81,9 +81,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M54
      */
-    public function setMaxSize(int $width, int $height): void
+    public function setMaxSize(int $width, int $height): self
     {
-        $this->setWm('maxsize', $width, $height);
+        return $this->setWm('maxsize', $width, $height);
     }
 
     /**
@@ -101,9 +101,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M55
      */
-    public function setMinSize(int $width, int $height): void
+    public function setMinSize(int $width, int $height): self
     {
-        $this->setWm('minsize', $width, $height);
+        return $this->setWm('minsize', $width, $height);
     }
 
     /**
@@ -121,9 +121,10 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M8
      */
-    public function setAttribute(string $attribute, $value): void
+    public function setAttribute(string $attribute, $value): self
     {
         $this->eval->tclEval('wm', 'attributes', $this->window->path(), Tcl::strToOption($attribute), $value);
+        return $this;
     }
 
     /**
@@ -139,17 +140,54 @@ class TkWindowManager implements WindowManager
     /**
      * @inheritdoc
      */
-    public function setFullScreen(): void
+    public function setFullScreen(): self
     {
-        $this->setAttribute('fullscreen', true);
+        return $this->setAttribute('fullscreen', true);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSize(int $width, int $height): self
+    {
+        return $this->setWm('geometry', sprintf('%ux%u', $width, $height));
+    }
+
+    /**
+     * @inheritdoc
+     * @todo Unmapped window can return nulled list.
+     */
+    public function getSize(): array
+    {
+        $geometry = $this->getWm('geometry');
+        return sscanf($geometry, '%ux%u+');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPos(int $x, int $y): self
+    {
+        return $this->setWm('geometry', sprintf('+%d+%d', $x, $y));
+    }
+
+    /**
+     * @inheritdoc
+     * @todo Unmapped window can return nulled list.
+     */
+    public function getPos(): array
+    {
+        $geometry = $this->getWm('geometry');
+        return sscanf($geometry, '+%d+%d');
     }
 
     /**
      * Proxy the window command to Tk wm command.
      */
-    protected function setWm(string $command, ...$value): void
+    protected function setWm(string $command, ...$value): self
     {
         $this->eval->tclEval('wm', $command, $this->window->path(), ...$value);
+        return $this;
     }
 
     /**

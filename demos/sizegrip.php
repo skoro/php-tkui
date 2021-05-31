@@ -13,6 +13,7 @@ $f = new Frame($win);
 $f->pack()->sideBottom()->fillX()->manage();
 $sizeGrip = new Sizegrip($f);
 $sizeGrip->pack()->sideRight()->anchor('se')->manage();
+$win->getWindowManager()->setSize(400, 200);
 
 (new Label($win, 'Sizegrip widget demo.'))
     ->pack()
