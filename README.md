@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="logo.png" width="280" height="160">
+</p>
+
 ## php-tk
 
 `php-tk` allows you to build desktop ui applications with PHP only. It leverages [FFI](https://www.php.net/manual/en/book.ffi) extension and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile or install any external extensions.
@@ -28,6 +32,15 @@ You may enable some application features like:
 - debug mode
 - appearance
 
-For that, you need to copy `.env.example` to `.env` and enable necessary options.
+Copy the provided `.env.example` into `.env` and customize the options.
+
+Debug mode allows you to find out which commands execute by Tcl engine. To enable
+the debug mode set:
+```
+DEBUG=true
+DEBUG_LOG=php://stdout
+```
+All the debug messages will go to the console. You may specify a file name instead of console.
+
 To change the application appearance comment out `THEME` option and set one of:
 _clam_, _alt_, _default_, _vista_ (only available on Windows OS).
