@@ -35,6 +35,14 @@ $demo = new class extends DemoAppWindow
             })
             ->pack()->manage();
 
+        (new Button($this, 'Window at 0,0'))
+            ->onClick(function () {
+                $this->newWindow('(0,0)')
+                     ->getWindowManager()
+                     ->setPos(0, 0);
+            })
+            ->pack()->manage();
+
         $this->getWindowManager()->setMinSize(200, 200);
     }
 
