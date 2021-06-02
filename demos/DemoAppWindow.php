@@ -12,7 +12,8 @@ class DemoAppWindow extends MainWindow
 
     public function __construct(string $title)
     {
-        $this->app = (new TkAppFactory)->create();
+        $factory = new TkAppFactory(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
+        $this->app = $factory->create();
         parent::__construct($this->app, $title);        
     }
 
