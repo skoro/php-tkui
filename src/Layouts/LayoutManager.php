@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Layouts;
+namespace PhpGui\Layouts;
 
-use TclTk\Widgets\Widget;
+use PhpGui\Widgets\Widget;
 
 interface LayoutManager
 {

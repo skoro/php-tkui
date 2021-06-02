@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
 use FFI;
 use FFI\CData;
-use TclTk\Exceptions\TclException;
+use PhpGui\TclTk\Exceptions\TclException;
 
 /**
  * Low-level interface to Tk FFI.

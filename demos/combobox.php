@@ -1,14 +1,14 @@
 <?php
 
-use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Buttons\CheckButton;
-use TclTk\Widgets\Combobox;
-use TclTk\Widgets\Entry;
-use TclTk\Widgets\Frame;
-use TclTk\Widgets\Label;
-use TclTk\Widgets\LabelFrame;
-use TclTk\Widgets\RadioGroup;
-use TclTk\Widgets\Scrollbar;
+use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Buttons\CheckButton;
+use PhpGui\Widgets\Combobox;
+use PhpGui\Widgets\Entry;
+use PhpGui\Widgets\Frame;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\LabelFrame;
+use PhpGui\Widgets\RadioGroup;
+use PhpGui\Widgets\Scrollbar;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

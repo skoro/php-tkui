@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Widgets\Consts\Anchor;
+use PhpGui\Options;
+use PhpGui\Widgets\Consts\Anchor;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_labelframe.htm

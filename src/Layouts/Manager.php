@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Layouts;
+namespace PhpGui\Layouts;
 
-use TclTk\Options;
-use TclTk\Widgets\Widget;
+use PhpGui\Options;
+use PhpGui\Widgets\Widget;
 
 abstract class Manager implements LayoutManager
 {

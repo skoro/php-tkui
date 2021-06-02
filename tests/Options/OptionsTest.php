@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Unit;
+namespace PhpGui\Tests\Unit;
 
 use InvalidArgumentException;
-use TclTk\Options;
-use TclTk\Tests\TestCase;
+use PhpGui\Options;
+use PhpGui\Tests\TestCase;
 
 class OptionsTest extends TestCase
 {

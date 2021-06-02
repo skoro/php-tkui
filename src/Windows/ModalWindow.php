@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Windows;
+namespace PhpGui\Windows;
 
 /**
  * Windows that can be shown as modals.

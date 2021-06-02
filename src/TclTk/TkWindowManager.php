@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
-use TclTk\Windows\Window;
+use PhpGui\Evaluator;
+use PhpGui\WindowManager;
+use PhpGui\Windows\Window;
 
 /**
  * Tk implementation of Window Manager.

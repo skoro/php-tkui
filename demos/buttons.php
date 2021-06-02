@@ -1,11 +1,11 @@
 <?php
 
-use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Buttons\CheckButton;
-use TclTk\Widgets\Buttons\RadioButton;
-use TclTk\Widgets\Label;
-use TclTk\Widgets\LabelFrame;
-use TclTk\Widgets\RadioGroup;
+use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Buttons\CheckButton;
+use PhpGui\Widgets\Buttons\RadioButton;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\LabelFrame;
+use PhpGui\Widgets\RadioGroup;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

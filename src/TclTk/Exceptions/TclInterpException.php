@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Exceptions;
+namespace PhpGui\TclTk\Exceptions;
 
-use TclTk\Interp;
+use PhpGui\TclTk\Interp;
 
 class TclInterpException extends TclException
 {

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
 use FFI;
 use FFI\CData;
-use TclTk\Exceptions\EvalException;
-use TclTk\Exceptions\TclException;
-use TclTk\Exceptions\TclInterpException;
+use PhpGui\TclTk\Exceptions\EvalException;
+use PhpGui\TclTk\Exceptions\TclException;
+use PhpGui\TclTk\Exceptions\TclInterpException;
 
 /**
  * Low-level interface to Tcl FFI.

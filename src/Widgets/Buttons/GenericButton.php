@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Buttons;
+namespace PhpGui\Widgets\Buttons;
 
-use TclTk\Options;
-use TclTk\Widgets\Buttons\Command;
-use TclTk\Widgets\Container;
-use TclTk\Widgets\TtkWidget;
+use PhpGui\Options;
+use PhpGui\Widgets\Buttons\Command;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\TtkWidget;
 
 /**
  * @property callable $command

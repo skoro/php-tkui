@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests;
+namespace PhpGui\Tests;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
-use TclTk\Application;
-use TclTk\Evaluator;
-use TclTk\FFILoader;
-use TclTk\Tcl;
-use TclTk\Widgets\Widget;
-use TclTk\Windows\Window;
+use PhpGui\Application;
+use PhpGui\Evaluator;
+use PhpGui\FFILoader;
+use PhpGui\TclTk\Tcl;
+use PhpGui\Widgets\Widget;
+use PhpGui\Windows\Window;
 
 class TestCase extends FrameworkTestCase
 {

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
-use TclTk\Tests\TestCase;
-use TclTk\Variable;
-use TclTk\Widgets\Buttons\CheckButton;
+use PhpGui\Tests\TestCase;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Buttons\CheckButton;
 
 class CheckButtonTest extends TestCase
 {

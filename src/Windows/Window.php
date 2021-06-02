@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Windows;
+namespace PhpGui\Windows;
 
-use TclTk\Widgets\Container;
-use TclTk\WindowManager;
+use PhpGui\Widgets\Container;
+use PhpGui\WindowManager;
 
 /**
  * The application window.

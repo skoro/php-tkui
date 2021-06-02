@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Dialogs;
+namespace PhpGui\Dialogs;
 
-use TclTk\Options;
-use TclTk\Widgets\Window;
+use PhpGui\Options;
+use PhpGui\Widgets\Window;
 
 /**
  * @property string $defaultExtension

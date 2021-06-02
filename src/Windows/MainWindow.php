@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Windows;
+namespace PhpGui\Windows;
 
-use TclTk\Application;
-use TclTk\Evaluator;
-use TclTk\Widgets\Container;
-use TclTk\Widgets\Widget;
+use PhpGui\Application;
+use PhpGui\Evaluator;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\Widget;
 
 /**
  * The main application window implementation.

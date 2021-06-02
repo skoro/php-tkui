@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
 /**
  * Implementation of Ttk sizegrip widget.

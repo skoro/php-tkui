@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Dialogs;
+namespace PhpGui\Dialogs;
 
-use TclTk\Options;
-use TclTk\Widgets\Container;
-use TclTk\Widgets\Widget;
-use TclTk\Windows\Window;
+use PhpGui\Options;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\Widget;
+use PhpGui\Windows\Window;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/fontchooser.htm

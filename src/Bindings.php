@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui;
 
-use TclTk\Widgets\Widget;
+use PhpGui\Widgets\Widget;
 
 /**
  * Let you attach/detach widget bindings.

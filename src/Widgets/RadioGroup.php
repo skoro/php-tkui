@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Variable;
-use TclTk\Widgets\Buttons\RadioButton;
-use TclTk\Widgets\Common\ValueInVariable;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Buttons\RadioButton;
+use PhpGui\Widgets\Common\ValueInVariable;
 
 class RadioGroup extends Frame implements ValueInVariable
 {

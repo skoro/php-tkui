@@ -1,9 +1,9 @@
 <?php
 
-use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Frame;
-use TclTk\Widgets\Scrollbar;
-use TclTk\Widgets\Text;
+use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Frame;
+use PhpGui\Widgets\Scrollbar;
+use PhpGui\Widgets\Text;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Variable;
-use TclTk\Widgets\Consts\Anchor;
-use TclTk\Widgets\Consts\Justify;
-use TclTk\Widgets\Consts\Relief;
+use PhpGui\Options;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Consts\Anchor;
+use PhpGui\Widgets\Consts\Justify;
+use PhpGui\Widgets\Consts\Relief;
 
 /**
  * Implementation of Tk label widget.

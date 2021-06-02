@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
-use TclTk\Widgets\Widget;
+use PhpGui\Bindings;
+use PhpGui\Widgets\Widget;
 
 class TkBindings implements Bindings
 {

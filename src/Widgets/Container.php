@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Evaluator;
-use TclTk\Windows\Window;
+use PhpGui\Evaluator;
+use PhpGui\Windows\Window;
 
 /**
  * Container widget.

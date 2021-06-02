@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
-use TclTk\Tests\TestCase;
-use TclTk\Widgets\Scale;
+use PhpGui\Tests\TestCase;
+use PhpGui\Widgets\Scale;
 
 class ScaleTest extends TestCase
 {

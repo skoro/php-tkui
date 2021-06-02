@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Widgets\Common\Editable;
+use PhpGui\Options;
+use PhpGui\Widgets\Common\Editable;
 
 /**
  * Implementation of Tk text widget.

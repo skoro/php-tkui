@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Dialogs;
+namespace PhpGui\Dialogs;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/getOpenFile.htm

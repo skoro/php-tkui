@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Variable;
-use TclTk\Widgets\Common\ValueInVariable;
-use TclTk\Widgets\Consts\Orient;
+use PhpGui\Options;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Common\ValueInVariable;
+use PhpGui\Widgets\Consts\Orient;
 
 /**
  * Implementation of Tk scale widget.

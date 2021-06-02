@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Exceptions;
+namespace PhpGui\TclTk\Exceptions;
 
-use Exception;
+use PhpGui\Exceptions\Exception;
 
 class TclException extends Exception
 {
-    
 }

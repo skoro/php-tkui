@@ -1,10 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PhpGui\AppFactory;
+use PhpGui\DotEnv;
+use PhpGui\Environment;
+use PhpGui\FFILoader;
 
 /**
  * Tk implementation of Application Factory.

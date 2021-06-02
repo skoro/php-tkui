@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use TclTk\Tests\TestCase;
-use TclTk\Widgets\Listbox;
-use TclTk\Widgets\ListboxItem;
-use TclTk\Widgets\Scrollbar;
+use PhpGui\Tests\TestCase;
+use PhpGui\Widgets\Listbox;
+use PhpGui\Widgets\ListboxItem;
+use PhpGui\Widgets\Scrollbar;
 
 class ListboxTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Buttons;
+namespace PhpGui\Widgets\Buttons;
 
-use TclTk\Options;
-use TclTk\Widgets\Buttons\SelectableButton;
-use TclTk\Widgets\Container;
+use PhpGui\Options;
+use PhpGui\Widgets\Buttons\SelectableButton;
+use PhpGui\Widgets\Container;
 
 /**
  * The base class for buttons that can be switched.

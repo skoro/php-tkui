@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
-use TclTk\Tests\TestCase;
-use TclTk\Widgets\Frame;
-use TclTk\Widgets\Notebook;
-use TclTk\Widgets\NotebookTab;
+use PhpGui\Tests\TestCase;
+use PhpGui\Widgets\Frame;
+use PhpGui\Widgets\Notebook;
+use PhpGui\Widgets\NotebookTab;
 
 class NotebookTest extends TestCase
 {

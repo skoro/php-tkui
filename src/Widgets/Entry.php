@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Tcl;
-use TclTk\Variable;
-use TclTk\Widgets\Common\Editable;
-use TclTk\Widgets\Common\ValueInVariable;
-use TclTk\Widgets\Consts\Justify;
-use TclTk\Widgets\Consts\Validate;
+use PhpGui\Options;
+use PhpGui\TclTk\Tcl;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Common\Editable;
+use PhpGui\Widgets\Common\ValueInVariable;
+use PhpGui\Widgets\Consts\Justify;
+use PhpGui\Widgets\Consts\Validate;
 
 /**
  * Implementation of Tk entry widget.

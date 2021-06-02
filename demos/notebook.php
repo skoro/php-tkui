@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Frame;
-use TclTk\Widgets\Label;
-use TclTk\Widgets\LabelFrame;
-use TclTk\Widgets\Notebook;
-use TclTk\Widgets\NotebookTab;
+use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Frame;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\LabelFrame;
+use PhpGui\Widgets\Notebook;
+use PhpGui\Widgets\NotebookTab;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

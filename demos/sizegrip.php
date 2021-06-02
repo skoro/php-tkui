@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-use TclTk\Widgets\Frame;
-use TclTk\Widgets\Label;
-use TclTk\Widgets\Separator;
-use TclTk\Widgets\Sizegrip;
+use PhpGui\Widgets\Frame;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\Separator;
+use PhpGui\Widgets\Sizegrip;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

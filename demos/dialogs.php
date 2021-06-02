@@ -1,13 +1,13 @@
 <?php
 
-use TclTk\Dialogs\ColorDialog;
-use TclTk\Dialogs\DirectoryDialog;
-use TclTk\Dialogs\FontDialog;
-use TclTk\Dialogs\OpenFileDialog;
-use TclTk\Dialogs\SaveFileDialog;
-use TclTk\Widgets\Buttons\Button;
-use TclTk\Widgets\Label;
-use TclTk\Widgets\LabelFrame;
+use PhpGui\Dialogs\ColorDialog;
+use PhpGui\Dialogs\DirectoryDialog;
+use PhpGui\Dialogs\FontDialog;
+use PhpGui\Dialogs\OpenFileDialog;
+use PhpGui\Dialogs\SaveFileDialog;
+use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\LabelFrame;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

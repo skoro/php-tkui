@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\App;
+namespace PhpGui\Tests\App;
 
-use TclTk\Tests\TestCase;
-use TclTk\Windows\MainWindow;
+use PhpGui\Tests\TestCase;
+use PhpGui\Windows\MainWindow;
 
 class WindowManagerTest extends TestCase
 {

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Evaluator;
-use TclTk\Layouts\Grid;
-use TclTk\Layouts\Pack;
-use TclTk\Options;
+use PhpGui\Evaluator;
+use PhpGui\Layouts\Grid;
+use PhpGui\Layouts\Pack;
+use PhpGui\Options;
 
 /**
  * A basic Tk widget implementation.

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Dialogs;
+namespace PhpGui\Dialogs;
 
-use TclTk\Tcl;
+use PhpGui\TclTk\Tcl;
 
 /**
  * File types filter for file dialogs.

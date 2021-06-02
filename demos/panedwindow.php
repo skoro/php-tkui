@@ -1,8 +1,8 @@
 <?php
 
-use TclTk\Widgets\Label;
-use TclTk\Widgets\LabelFrame;
-use TclTk\Widgets\PanedWindow;
+use PhpGui\Widgets\Label;
+use PhpGui\Widgets\LabelFrame;
+use PhpGui\Widgets\PanedWindow;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

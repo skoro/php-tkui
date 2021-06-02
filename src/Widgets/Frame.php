@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets;
+namespace PhpGui\Widgets;
 
-use TclTk\Options;
-use TclTk\Widgets\Consts\Relief;
+use PhpGui\Options;
+use PhpGui\Widgets\Consts\Relief;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_frame.htm

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Tcl;
+namespace PhpGui\Tests\Tcl;
 
-use TclTk\Exceptions\TclInterpException;
-use TclTk\Tests\TclInterp;
-use TclTk\Tests\TestCase;
+use PhpGui\TclTk\Exceptions\TclInterpException;
+use PhpGui\Tests\TclInterp;
+use PhpGui\Tests\TestCase;
 
 class VariableTest extends TestCase
 {

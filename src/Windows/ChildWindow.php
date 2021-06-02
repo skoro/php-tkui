@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Windows;
+namespace PhpGui\Windows;
 
-use TclTk\Evaluator;
-use TclTk\Widgets\Container;
-use TclTk\Widgets\Widget;
+use PhpGui\Evaluator;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\Widget;
 
 /**
  * Child window implementation.

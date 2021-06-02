@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use TclTk\Tests\TestCase;
-use TclTk\Widgets\Listbox;
-use TclTk\Widgets\ListboxItem;
+use PhpGui\Tests\TestCase;
+use PhpGui\Widgets\Listbox;
+use PhpGui\Widgets\ListboxItem;
 
 class ListboxItemTest extends TestCase
 {

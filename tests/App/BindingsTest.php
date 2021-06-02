@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\App;
+namespace PhpGui\Tests\App;
 
-use TclTk\Interp;
-use TclTk\Tests\TestCase;
-use TclTk\TkBindings;
-use TclTk\Widgets\Buttons\Button;
+use PhpGui\TclTk\Interp;
+use PhpGui\Tests\TestCase;
+use PhpGui\TclTk\TkBindings;
+use PhpGui\Widgets\Buttons\Button;
 
 class BindingsTest extends TestCase
 {

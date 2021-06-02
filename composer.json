@@ -1,6 +1,9 @@
 {
-    "name": "skoro/php-tk",
-    "description": "Provides api to Tcl/Tk and UI classes.",
+    "name": "skoro/php-gui",
+    "description": "Create desktop applications using native gui",
+    "keywords": [
+        "gui", "ui", "desktop", "toolkit"
+    ],
     "type": "library",
     "authors": [
         {
@@ -18,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TclTk\\": "src/"
+            "PhpGui\\": "src/"
         }
     },
     "require-dev": {
@@ -26,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TclTk\\Tests\\": "tests/"
+            "PhpGui\\Tests\\": "tests/"
         }
     },
     "scripts": {

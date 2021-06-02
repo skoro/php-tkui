@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui;
 
 use FFI;
 use RuntimeException;

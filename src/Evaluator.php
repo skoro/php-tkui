@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui;
 
-use TclTk\Widgets\Widget;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Widget;
 
 /**
  * Provides the access to low-level Tcl API.

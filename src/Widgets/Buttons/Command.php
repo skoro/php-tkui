@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Buttons;
+namespace PhpGui\Widgets\Buttons;
 
 use InvalidArgumentException;
 

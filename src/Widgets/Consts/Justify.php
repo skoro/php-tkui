@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Consts;
+namespace PhpGui\Widgets\Consts;
 
 /**
  * Values for 'justify' property.

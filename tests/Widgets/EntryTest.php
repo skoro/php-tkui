@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
 use PHPUnit\Framework\MockObject\Stub\Stub;
-use TclTk\Tests\TestCase;
-use TclTk\Variable;
-use TclTk\Widgets\Entry;
-use TclTk\Widgets\Widget;
+use PhpGui\Tests\TestCase;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Entry;
+use PhpGui\Widgets\Widget;
 
 class EntryTest extends TestCase
 {

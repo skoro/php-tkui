@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Dialogs;
+namespace PhpGui\Dialogs;
 
-use TclTk\Exceptions\TkException;
-use TclTk\Options;
-use TclTk\Windows\ModalWindow;
-use TclTk\Windows\Window;
+use PhpGui\TclTk\Exceptions\TkException;
+use PhpGui\Options;
+use PhpGui\Windows\ModalWindow;
+use PhpGui\Windows\Window;
 
 /**
  * Base class for dialog windows

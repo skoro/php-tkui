@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Widgets\Buttons;
+namespace PhpGui\Widgets\Buttons;
 
-use TclTk\Options;
-use TclTk\Widgets\Container;
+use PhpGui\Options;
+use PhpGui\Widgets\Container;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_button.htm

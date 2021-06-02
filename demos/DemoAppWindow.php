@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use TclTk\Application;
-use TclTk\TkAppFactory;
-use TclTk\Windows\MainWindow;
+use PhpGui\Application;
+use PhpGui\TclTk\TkAppFactory;
+use PhpGui\Windows\MainWindow;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 

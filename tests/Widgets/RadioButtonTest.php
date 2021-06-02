@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests\Widgets;
+namespace PhpGui\Tests\Widgets;
 
-use TclTk\Tests\TestCase;
-use TclTk\Variable;
-use TclTk\Widgets\Buttons\RadioButton;
+use PhpGui\Tests\TestCase;
+use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Buttons\RadioButton;
 
 class RadioButtonTest extends TestCase
 {

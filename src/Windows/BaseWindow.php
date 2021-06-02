@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Windows;
+namespace PhpGui\Windows;
 
-use TclTk\Layouts\Grid;
-use TclTk\Layouts\Pack;
-use TclTk\Options;
-use TclTk\TkWindowManager;
-use TclTk\Widgets\Widget;
-use TclTk\WindowManager;
+use PhpGui\Layouts\Grid;
+use PhpGui\Layouts\Pack;
+use PhpGui\Options;
+use PhpGui\TclTk\TkWindowManager;
+use PhpGui\Widgets\Widget;
+use PhpGui\WindowManager;
 
 /**
  * Shares the features for window implementations.

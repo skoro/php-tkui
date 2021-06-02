@@ -1,10 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace TclTk;
+namespace PhpGui\TclTk;
 
-use TclTk\Exceptions\TclException;
-use TclTk\Exceptions\TclInterpException;
-use TclTk\Widgets\Widget;
+use PhpGui\Application;
+use PhpGui\Bindings;
+use PhpGui\HasLogger;
+use PhpGui\TclTk\Exceptions\TclException;
+use PhpGui\TclTk\Exceptions\TclInterpException;
+use PhpGui\Widgets\Widget;
 
 /**
  * Main application.
@@ -16,7 +19,7 @@ class TkApplication implements Application
     private Tk $tk;
     private Interp $interp;
     private Bindings $bindings;
-    private ?ThemeManager $themeManager;
+    private ?TkThemeManager $themeManager;
 
     /**
      * @var Variable[]
@@ -81,9 +84,9 @@ class TkApplication implements Application
         }
     }
 
-    protected function createThemeManager(): ThemeManager
+    protected function createThemeManager(): TkThemeManager
     {
-        return new ThemeManager($this->interp);
+        return new TkThemeManager($this->interp);
     }
 
     /**
@@ -176,7 +179,7 @@ class TkApplication implements Application
     /**
      * @throws TclException When ttk is not supported.
      */
-    public function getThemeManager(): ThemeManager
+    public function getThemeManager(): TkThemeManager
     {
         if ($this->hasTtk()) {
             return $this->themeManager;

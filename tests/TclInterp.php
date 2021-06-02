@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TclTk\Tests;
+namespace PhpGui\Tests;
 
-use TclTk\FFILoader;
-use TclTk\Interp;
-use TclTk\Tcl;
+use PhpGui\FFILoader;
+use PhpGui\TclTk\Interp;
+use PhpGui\TclTk\Tcl;
 
 trait TclInterp
 {
