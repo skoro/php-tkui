@@ -61,8 +61,26 @@ class DotEnv implements Environment
     /**
      * @inheritdoc
      */
-    public function getEnv(string $param, $default = null)
+    public function getValue(string $param, $default = null)
     {
         return $this->data[$param] ?? $default;
+    }
+
+    /**
+     * Creates and loads environment.
+     *
+     * @param string $dst Could be an env filename or directory where .env is located.
+     */
+    public static function create(string $dst): self
+    {
+        if (is_dir($dst)) {
+            $env = new static($dst);
+        } else {
+            $env = new static(dirname($dst), basename($dst));
+        }
+
+        $env->load();
+
+        return $env;
     }
 }
