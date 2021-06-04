@@ -11,5 +11,5 @@ interface Environment
      *
      * @return mixed
      */
-    public function getEnv(string $param, $default = null);
+    public function getValue(string $param, $default = null);
 }
