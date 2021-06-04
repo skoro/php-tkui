@@ -17,7 +17,7 @@ class TkAppFactory implements AppFactory
     /**
      * @inheritdoc
      */
-    public function create(Environment $env): TkApplication
+    public function createFromEnvironment(Environment $env): TkApplication
     {
         $loader = new FFILoader();
         $tcl = new Tcl($loader->loadTcl());
@@ -43,6 +43,20 @@ class TkAppFactory implements AppFactory
             $app->getThemeManager()->useTheme($theme);
         }
 
+        return $app;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function create(): TkApplication
+    {
+        $loader = new FFILoader();
+        $tcl = new Tcl($loader->loadTcl());
+        $interp = $tcl->createInterp();
+        $tk = new Tk($loader->loadTk(), $interp);
+        $app = new TkApplication($tk);
+        $app->init();
         return $app;
     }
 

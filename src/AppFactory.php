@@ -8,7 +8,12 @@ namespace PhpGui;
 interface AppFactory
 {
     /**
-     * Creates a new application instance.
+     * Creates a new application instance based on environment state.
      */
-    public function create(Environment $env): Application;
+    public function createFromEnvironment(Environment $env): Application;
+
+    /**
+     * Creates an application with default values.
+     */
+    public function create(): Application;
 }
