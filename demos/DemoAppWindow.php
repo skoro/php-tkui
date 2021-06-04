@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use PhpGui\Application;
+use PhpGui\DotEnv;
 use PhpGui\TclTk\TkAppFactory;
 use PhpGui\Windows\MainWindow;
 
@@ -12,9 +13,9 @@ class DemoAppWindow extends MainWindow
 
     public function __construct(string $title)
     {
-        $factory = new TkAppFactory(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
-        $this->app = $factory->create();
-        parent::__construct($this->app, $title);        
+        $factory = new TkAppFactory();
+        $this->app = $factory->createFromEnvironment(DotEnv::create(dirname(__DIR__)));
+        parent::__construct($this->app, $title);
     }
 
     public function run(): void
