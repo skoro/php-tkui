@@ -6,7 +6,6 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PhpGui\AppFactory;
-use PhpGui\DotEnv;
 use PhpGui\Environment;
 use PhpGui\FFILoader;
 
@@ -15,47 +14,17 @@ use PhpGui\FFILoader;
  */
 class TkAppFactory implements AppFactory
 {
-    private DotEnv $dotEnv;
-
-    /**
-     * @param string $envFile A filename with environment settings.
-     */
-    public function __construct(string $envFile = '')
-    {
-        if ($envFile === '') {
-            $this->dotEnv = new DotEnv(dirname(__DIR__));
-        } else {
-            $this->dotEnv = new DotEnv(dirname($envFile), basename($envFile));
-        }
-    }
-
-    protected function loadEnv(array $config): void
-    {
-        $this->dotEnv->loadAndMergeWith($config);
-    }
-
     /**
      * @inheritdoc
      */
-    public function getEnvironment(): Environment
+    public function create(Environment $env): TkApplication
     {
-        return $this->dotEnv;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function create(array $config = []): TkApplication
-    {
-        $this->loadEnv($config);
-        $env = $this->getEnvironment();
-
         $loader = new FFILoader();
         $tcl = new Tcl($loader->loadTcl());
         $interp = $tcl->createInterp();
 
-        if (($debug = (bool) $env->getEnv('DEBUG'))) {
-            $logger = $this->createLogger($env->getEnv('DEBUG_LOG', 'php://stdout'));
+        if (($debug = (bool) $env->getValue('DEBUG'))) {
+            $logger = $this->createLogger($env->getValue('DEBUG_LOG', 'php://stdout'));
         }
 
         if ($debug) {
@@ -70,7 +39,7 @@ class TkAppFactory implements AppFactory
         }
         $app->init();
 
-        if (($theme = $env->getEnv('THEME'))) {
+        if (($theme = $env->getValue('THEME'))) {
             $app->getThemeManager()->useTheme($theme);
         }
 
