@@ -25,13 +25,14 @@ class Color
             $this->red = $red;
             $this->green = $green;
             $this->blue = $blue;
+        } else {
+            throw new InvalidArgumentException('Invalid color hex value: ' . $hex);
         }
-        throw new InvalidArgumentException('Invalid color hex value: ' . $hex);
     }
 
     public static function fromRgb(int $red, int $green, int $blue): self
     {
-        return new static(sprintf('%02x%02x%02x', $red, $green, $blue));
+        return new static(sprintf('#%02x%02x%02x', $red, $green, $blue));
     }
 
     public static function fromHex(string $hex): self
