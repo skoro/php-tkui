@@ -6,11 +6,11 @@
 
 function makeColors(string $file)
 {
-    if (($colors = @file_get_contents($file)) === false) {
-        throw new RuntimeException("Couldn't open colors file: " . $colors);
+    if (($lines = @file_get_contents($file)) === false) {
+        throw new RuntimeException("Couldn't open colors file: " . $file);
     }
 
-    foreach (explode("\n", $colors) as $line) {
+    foreach (explode("\n", $lines) as $line) {
         if (!preg_match('/^([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+(.+)$/', $line, $match)) {
             continue;
         }
