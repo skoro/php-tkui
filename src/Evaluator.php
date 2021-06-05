@@ -6,7 +6,7 @@ use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Widget;
 
 /**
- * Provides the access to low-level Tcl API.
+ * Provides the access to low-level API.
  */
 interface Evaluator
 {

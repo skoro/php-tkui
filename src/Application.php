@@ -3,7 +3,7 @@
 namespace PhpGui;
 
 /**
- * Application.
+ * The application instance.
  */
 interface Application extends Evaluator, Bindings
 {

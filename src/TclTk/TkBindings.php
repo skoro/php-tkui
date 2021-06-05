@@ -24,12 +24,20 @@ class TkBindings implements Bindings
         }
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/bind.htm
+     */
     public function bindWidget(Widget $widget, string $event, callable $callback): void
     {
         $tag = $widget->path();
         $this->tkBind($tag, $event, $callback);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function unbindWidget(Widget $widget, string $event): void
     {
         $this->deleteCallback($widget->path(), $event);

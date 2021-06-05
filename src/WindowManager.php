@@ -3,7 +3,9 @@
 namespace PhpGui;
 
 /**
- * The application window manager.
+ * Window Manager performs operation against the current window.
+ *
+ * WM allows you to control the window state and parameters.
  */
 interface WindowManager
 {

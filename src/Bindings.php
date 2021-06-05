@@ -11,8 +11,6 @@ interface Bindings
 {
     /**
      * Attach the binding to the widget.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/bind.htm
      */
     public function bindWidget(Widget $widget, string $event, callable $callback): void;
 
