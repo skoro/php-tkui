@@ -11,7 +11,7 @@ function makeColors(string $file)
     }
 
     foreach (explode("\n", $lines) as $line) {
-        if (!preg_match('/^([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+(.+)$/', $line, $match)) {
+        if (!preg_match('/^[ \t]*([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+(.+)$/', $line, $match)) {
             continue;
         }
         [$_, $r, $g, $b, $name] = $match;
