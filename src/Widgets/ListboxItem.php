@@ -2,6 +2,7 @@
 
 namespace PhpGui\Widgets;
 
+use PhpGui\Color;
 use SplObserver;
 use SplSubject;
 use PhpGui\Options;
@@ -9,10 +10,10 @@ use PhpGui\Options;
 /**
  * Listbox widget item.
  *
- * @property string $background
- * @property string $foreground
- * @property string $selectBackground
- * @property string $selectForeground
+ * @property Color|string $background
+ * @property Color|string $foreground
+ * @property Color|string $selectBackground
+ * @property Color|string $selectForeground
  */
 class ListboxItem implements SplSubject
 {

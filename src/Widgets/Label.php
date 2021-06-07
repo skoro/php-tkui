@@ -2,6 +2,7 @@
 
 namespace PhpGui\Widgets;
 
+use PhpGui\Color;
 use PhpGui\Options;
 use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Consts\Anchor;
@@ -18,8 +19,8 @@ use PhpGui\Widgets\Consts\Relief;
  * @property int $underline
  * @property int $width
  * @property string $anchor
- * @property string $background
- * @property string $foreground
+ * @property Color|string $background
+ * @property Color|string $foreground
  * @property string $justify
  * @property string $relief
  * @property int $wrapLength

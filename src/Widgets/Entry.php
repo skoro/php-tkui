@@ -2,6 +2,7 @@
 
 namespace PhpGui\Widgets;
 
+use PhpGui\Color;
 use PhpGui\Options;
 use PhpGui\TclTk\Tcl;
 use PhpGui\TclTk\Variable;
@@ -16,7 +17,7 @@ use PhpGui\Widgets\Consts\Validate;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_entry.htm
  *
  * @property string $font
- * @property string $textColor
+ * @property Color|string $textColor
  * @property callable $xScrollCommand TODO
  * @property bool $exportSelection
  * @property callable $invalidCommand TODO
