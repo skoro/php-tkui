@@ -1,5 +1,6 @@
 <?php
 
+use PhpGui\Color;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Buttons\CheckButton;
 use PhpGui\Widgets\Combobox;
@@ -29,6 +30,8 @@ $demo = new class extends DemoAppWindow
     {
         $f = new LabelFrame($this, 'Theme:');
         $l = new Label($f, 'Combobox is disabled.');
+        $l->background = Color::fromName('black');
+        $l->foreground = Color::fromName('white');
         $l->pack()->manage();
         $themes = new Combobox($f, $this->themes, ['state' => 'readonly']);
         $themes->pack()->fillX()->pad(4, 4)->manage();
