@@ -30,9 +30,21 @@ class Color
         }
     }
 
+    protected static function assertUnsignedByte(int $value): int
+    {
+        if ($value >= 0 && $value <= 255) {
+            return $value;
+        }
+        throw new InvalidArgumentException('Argument must be unsigned byte.');
+    }
+
     public static function fromRgb(int $red, int $green, int $blue): self
     {
-        return new static(sprintf('#%02x%02x%02x', $red, $green, $blue));
+        return new static(sprintf('#%02x%02x%02x',
+            static::assertUnsignedByte($red),
+            static::assertUnsignedByte($green),
+            static::assertUnsignedByte($blue)
+        ));
     }
 
     public static function fromHex(string $hex): self
