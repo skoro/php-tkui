@@ -16,4 +16,9 @@ interface Application extends Evaluator, Bindings
      * Get the theme manager.
      */
     public function getThemeManager(): ThemeManager;
+
+    /**
+     * Get the font manager.
+     */
+    public function getFontManager(): FontManager;
 }
