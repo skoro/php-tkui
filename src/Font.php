@@ -2,9 +2,13 @@
 
 namespace PhpGui;
 
-class Font
+use InvalidArgumentException;
+use SplObserver;
+use SplSubject;
+
+class Font implements SplSubject
 {
-    public const REGULAR = 'regular';
+    public const REGULAR = 'normal';
     public const BOLD = 'bold';
     public const ITALIC = 'italic';
     public const UNDERLINE = 'underline';
@@ -13,61 +17,170 @@ class Font
     private string $name;
     private int $size;
 
-    /** @var string[] */
+    /** @var SplObserver[] */
+    private array $observers;
+
+    /** @var bool[string] */
     private array $styles;
 
-    /**
-     * @param string[] $styles;
-     */
-    public function __construct(string $name, int $size, array $styles = [])
+    public function __construct(string $name, int $size, ...$styles)
     {
-        $this->name = $name;
-        // TODO: validate styles.
-        $this->styles = $styles;
-        // TODO: validate size.
-        $this->size = $size;
+        $this->observers = [];
+        $this->setName($name);
+        $this->setSize($size);
+        $this->styles = $this->defaultStyles();
+        foreach ($styles as $style) {
+            $this->setStyle($style, true);
+        }
     }
 
-    public function name(): string
+    /**
+     * @return bool[string]
+     */
+    protected function defaultStyles(): array
+    {
+        return [
+            self::REGULAR => true,
+            self::BOLD => false,
+            self::ITALIC => false,
+            self::UNDERLINE => false,
+            self::OVERSTRIKE => false,
+        ];
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function size(): int
+    public function setName(string $name): self
+    {
+        // TODO: name cannot be empty.
+        $this->name = $name;
+        $this->notify();
+        return $this;
+    }
+
+    public function getSize(): int
     {
         return $this->size;
     }
 
+    public function setSize(int $size): self
+    {
+        if ($size <= 0) {
+            throw new InvalidArgumentException('Font size cannot be zero or negative.');
+        }
+        $this->size = $size;
+        $this->notify();
+        return $this;
+    }
+
+    /**
+     * @return bool[string]
+     */
+    public function getStyles(): array
+    {
+        return $this->styles;
+    }
+
     public function isRegular(): bool
     {
-        return empty($this->styles) || in_array(self::REGULAR, $this->styles);
+        return $this->styles[self::REGULAR];
+    }
+
+    public function setRegular(): self
+    {
+        return $this->setStyle(self::REGULAR, true);
     }
 
     public function isBold(): bool
     {
-        return in_array(self::BOLD, $this->styles);
+        return $this->styles[self::BOLD];
+    }
+
+    public function setBold(bool $bold): self
+    {
+        return $this->setStyle(self::BOLD, $bold);
     }
 
     public function isItalic(): bool
     {
-        return in_array(self::ITALIC, $this->styles);
+        return $this->styles[self::ITALIC];
+    }
+
+    public function setItalic(bool $italic): self
+    {
+        return $this->setStyle(self::ITALIC, $italic);
     }
 
     public function isUnderline(): bool
     {
-        return in_array(self::UNDERLINE, $this->styles);
+        return $this->styles[self::UNDERLINE];
+    }
+
+    public function setUnderline(bool $underline): self
+    {
+        return $this->setStyle(self::UNDERLINE, $underline);
     }
 
     public function isOverstrike(): bool
     {
-        return in_array(self::OVERSTRIKE, $this->styles);
+        return $this->styles[self::OVERSTRIKE];
     }
 
-    /**
-     * @return string[]
-     */
-    public function styles(): array
+    public function setOverstrike(bool $overstrike): self
     {
-        return $this->styles;
+        return $this->setStyle(self::OVERSTRIKE, $overstrike);
+    }
+
+    public function setStyle(string $style, bool $value = true): self
+    {
+        $this->validateStyle($style);
+        if ($style === self::REGULAR && $value) {
+            $this->styles[self::BOLD] = false;
+            $this->styles[self::ITALIC] = false;
+        }
+        $this->styles[$style] = $value;
+        if (array_reduce($this->styles, fn ($carry, $val) => $carry || $val, false) === false) {
+            throw new InvalidArgumentException('Font must have at least one style.');
+        }
+        $this->notify();
+        return $this;
+    }
+
+    protected function validateStyle(string $style): void
+    {
+        switch ($style) {
+            case self::REGULAR:
+            case self::BOLD:
+            case self::ITALIC:
+            case self::UNDERLINE:
+            case self::OVERSTRIKE:
+                break;
+
+            default:
+                throw new InvalidArgumentException("Invalid font style: $style");
+        }
+    }
+
+    public function notify(): void
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($this);
+        }
+    }
+
+    public function attach(SplObserver $observer): void
+    {
+        $this->observers[] = $observer;
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        $index = array_search($observer, $this->observers, true);
+        if ($index !== false) {
+            unset($this->observers[$index]);
+        }
     }
 }
