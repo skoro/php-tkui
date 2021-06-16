@@ -4,6 +4,7 @@ namespace PhpGui\TclTk;
 
 use PhpGui\Application;
 use PhpGui\Bindings;
+use PhpGui\FontManager;
 use PhpGui\HasLogger;
 use PhpGui\TclTk\Exceptions\TclException;
 use PhpGui\TclTk\Exceptions\TclInterpException;
@@ -20,6 +21,7 @@ class TkApplication implements Application
     private Interp $interp;
     private Bindings $bindings;
     private ?TkThemeManager $themeManager;
+    private TkFontManager $fontManager;
 
     /**
      * @var Variable[]
@@ -48,6 +50,7 @@ class TkApplication implements Application
         $this->interp = $tk->interp();
         $this->bindings = $this->createBindings();
         $this->themeManager = null;
+        $this->fontManager = $this->createFontManager();
         $this->vars = [];
         $this->callbacks = [];
         $this->createCallbackHandler();
@@ -56,6 +59,11 @@ class TkApplication implements Application
     protected function createBindings(): Bindings
     {
         return new TkBindings($this->interp);
+    }
+
+    protected function createFontManager(): FontManager
+    {
+        return new TkFontManager($this->interp);
     }
 
     /**
@@ -84,6 +92,7 @@ class TkApplication implements Application
         }
     }
 
+    // TODO: should it be ThemeManager or TkThemeManager ?
     protected function createThemeManager(): TkThemeManager
     {
         return new TkThemeManager($this->interp);
@@ -229,5 +238,13 @@ class TkApplication implements Application
         //       $this->callbacks[$widget] = $callback;
         $this->callbacks[$widget->path()] = [$widget, $callback];
         return self::CALLBACK_HANDLER . ' ' . $widget->path();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFontManager(): FontManager
+    {
+        return $this->fontManager;
     }
 }
