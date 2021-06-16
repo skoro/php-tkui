@@ -26,6 +26,16 @@ class TkFontManager implements FontManager
     /**
      * @inheritdoc
      */
+    public function getTextWidth(string $text, Font $font): int
+    {
+        // TODO: TkApplication::encloseArg() must be used.
+        $this->interp->eval(sprintf('font metrics %s %s', (string) $font, Tcl::quoteString($text)));
+        return (int) $this->interp->getStringResult();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getDefaultFont(): Font
     {
         return $this->createFontFromTclEvalResult(self::TK_DEFAULT_FONT);

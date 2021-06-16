@@ -32,7 +32,7 @@ interface FontManager
      *
      * @return int The width in pixels.
      */
-    // public function getTextWidth(string $text, Font $font): int;
+    public function getTextWidth(string $text, Font $font): int;
 
     /**
      * Returns a list of all available font names.
