@@ -108,4 +108,34 @@ class Interp
     {
         return $this->tcl->getListResult($this);
     }
+
+    /**
+     * Returns the result as a key value array.
+     *
+     * Some Tcl commands returns a result that can be used
+     * as a dictionary (key-value).
+     *
+     * @throws TclInterpException When the result is not even.
+     */
+    public function getDictResult(): array
+    {
+        $dict = [];
+        $tclList = $this->getListResult();
+
+        if (count($tclList) % 2 !== 0) {
+            throw $this->createInterpException('Cannot convert the Tcl result to a dictionary');
+        }
+
+        foreach (array_chunk($tclList, 2) as $chunk) {
+            [$option, $value] = $chunk;
+            $dict[$option] = $value;
+        }
+
+        return $dict;
+    }
+
+    protected function createInterpException(string $message): TclInterpException
+    {
+        return new TclInterpException($this, $message);
+    }
 }
