@@ -2,6 +2,7 @@
 
 namespace PhpGui\Tests\Widgets;
 
+use PhpGui\TclTk\TkFont;
 use PHPUnit\Framework\MockObject\Stub\Stub;
 use PhpGui\Tests\TestCase;
 use PhpGui\TclTk\Variable;
@@ -107,5 +108,31 @@ class EntryTest extends TestCase
         ]);
 
         (new Entry($this->createWindowStub()))->delete(5, 10);
+    }
+
+    /** @test */
+    public function set_font_as_property()
+    {
+        $this->tclEvalTest(3, [
+            ['ttk::entry', $this->checkWidget('.e')],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
+            [$this->checkWidget('.e'), 'configure', '-font', '{{Foo Font} 14 normal bold}'],
+        ]);
+
+        $e = new Entry($this->createWindowStub());
+        $e->font = new TkFont('Foo Font', 14, TkFont::BOLD);
+    }
+
+    /** @test */
+    public function create_entry_with_font_as_option()
+    {
+        $this->tclEvalTest(2, [
+            ['ttk::entry', $this->checkWidget('.e'), '-font', '{{Foo Font} 14 normal bold}'],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
+        ]);
+
+        new Entry($this->createWindowStub(), '', [
+            'font' => new TkFont('Foo Font', 14, TkFont::BOLD),
+        ]);
     }
 }

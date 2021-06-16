@@ -2,6 +2,7 @@
 
 namespace PhpGui\Tests\Widgets;
 
+use PhpGui\TclTk\TkFont;
 use PhpGui\Tests\TestCase;
 use PhpGui\Widgets\Label;
 
@@ -25,5 +26,29 @@ class LabelTest extends TestCase
 
         $l = new Label($this->createWindowStub(), 'Test');
         $l->text = 'New text';
+    }
+
+    /** @test */
+    public function set_font_as_property()
+    {
+        $this->tclEvalTest(2, [
+            ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}'],
+            [$this->checkWidget('.lb'), 'configure', '-font', '{{Foo Font} 14 normal bold}'],
+        ]);
+
+        $l = new Label($this->createWindowStub(), 'Test');
+        $l->font = new TkFont('Foo Font', 14, TkFont::BOLD);
+    }
+
+    /** @test */
+    public function create_label_with_font_as_option()
+    {
+        $this->tclEvalTest(1, [
+            ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}', '-font', '{{Foo Font} 14 normal bold}'],
+        ]);
+
+        new Label($this->createWindowStub(), 'Test', [
+            'font' => new TkFont('Foo Font', 14, TkFont::BOLD),
+        ]);
     }
 }
