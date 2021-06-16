@@ -8,8 +8,6 @@ use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Consts\Anchor;
 use PhpGui\Widgets\Consts\Justify;
 use PhpGui\Widgets\Consts\Relief;
-use SplObserver;
-use SplSubject;
 
 /**
  * Implementation of Tk label widget.
@@ -28,7 +26,7 @@ use SplSubject;
  * @property int $wrapLength
  * @property Font|null $font
  */
-class Label extends TtkWidget implements Justify, Relief, Anchor, SplObserver
+class Label extends TtkWidget implements Justify, Relief, Anchor
 {
 
     protected string $widget = 'ttk::label';
@@ -62,30 +60,5 @@ class Label extends TtkWidget implements Justify, Relief, Anchor, SplObserver
             'relief' => null,
             'wrapLength' => null,
         ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __set($name, $value)
-    {
-        parent::__set($name, $value);
-        if ($name === 'font' && $value instanceof Font) {
-            // TODO: PHP8 $this->font?->detach($this)
-            if ($this->font) {
-                $this->font->detach($this);
-            }
-            $value->attach($this);
-        }
-    }
-
-    /**
-     * Updates the widget.
-     */
-    public function update(SplSubject $subject): void
-    {
-        if ($subject === $this->font) {
-            $this->configure('-font', $subject);
-        }
     }
 }

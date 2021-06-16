@@ -2,7 +2,11 @@
 
 namespace PhpGui\Widgets;
 
+use PhpGui\Font;
 use PhpGui\Options;
+use PhpGui\Widgets\Exceptions\FontNotSupportedException;
+use SplObserver;
+use SplSubject;
 
 /**
  * A basic Ttk widget implementation.
@@ -12,7 +16,7 @@ use PhpGui\Options;
  * @property bool $takeFocus
  * @property string $style
  */
-abstract class TtkWidget extends TkWidget
+abstract class TtkWidget extends TkWidget implements SplObserver
 {
     /**
      * Widget states.
@@ -56,6 +60,18 @@ abstract class TtkWidget extends TkWidget
         return parent::__get($name);
     }
 
+    public function __set(string $name, $value)
+    {
+        parent::__set($name, $value);
+
+        /**
+         * TODO: font also can be a string like TkFixedFont.
+         */
+        if ($name === 'font' && $value instanceof Font) {
+            $this->setFont($value);
+        }
+    }
+
     public function state(string $state): self
     {
         $this->call('state', $state);
@@ -65,5 +81,51 @@ abstract class TtkWidget extends TkWidget
     public function inState(string $state): bool
     {
         return (bool) $this->call('instate', $state);
+    }
+
+    /**
+     * @throws FontNotSupportedException When the widget doesn't have "-font" option.
+     */
+    protected function setFont(Font $font): void
+    {
+        if ($this->hasFont()) {
+            // TODO: PHP8 $this->font?->detach($this)
+            if ($this->font) {
+                $this->font->detach($this);
+            }
+            $font->attach($this);
+        } else {
+            throw new FontNotSupportedException($this);
+        }
+    }
+
+    /**
+     * @throws FontNotSupportedException When the widget doesn't have "-font" option.
+     */
+    protected function updateFont(Font $font): void
+    {
+        if ($this->hasFont() && $this->font === $font) {
+            $this->configure('-font', $font);
+        } else {
+            throw new FontNotSupportedException($this);
+        }
+    }
+
+    /**
+     * Whether the widget has "-font" option.
+     */
+    protected function hasFont(): bool
+    {
+        return $this->options()->has('font');
+    }
+
+    /**
+     * Updates the widget.
+     */
+    public function update(SplSubject $subject): void
+    {
+        if ($subject instanceof Font) {
+            $this->updateFont($subject);
+        }
     }
 }
