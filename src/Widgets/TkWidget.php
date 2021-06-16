@@ -155,7 +155,7 @@ abstract class TkWidget implements Widget
     {
         if ($this->options->$name !== $value) {
             $this->options->$name = $value;
-            $this->call('configure', ...$this->options->only($name)->asStringArray());
+            $this->configure(...$this->options->only($name)->asStringArray());
         }
     }
 
@@ -202,5 +202,13 @@ abstract class TkWidget implements Widget
     {
         $this->parent->bindWidget($this, $event, $callback);
         return $this;
+    }
+
+    /**
+     * @param mixed $args
+     */
+    protected function configure(...$args): void
+    {
+        $this->call('configure', ...$args);
     }
 }

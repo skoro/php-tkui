@@ -26,7 +26,7 @@ use SplSubject;
  * @property string $justify
  * @property string $relief
  * @property int $wrapLength
- * @property Font $font
+ * @property Font|null $font
  */
 class Label extends TtkWidget implements Justify, Relief, Anchor, SplObserver
 {
@@ -64,6 +64,9 @@ class Label extends TtkWidget implements Justify, Relief, Anchor, SplObserver
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function __set($name, $value)
     {
         parent::__set($name, $value);
@@ -76,10 +79,13 @@ class Label extends TtkWidget implements Justify, Relief, Anchor, SplObserver
         }
     }
 
+    /**
+     * Updates the widget.
+     */
     public function update(SplSubject $subject): void
     {
         if ($subject === $this->font) {
-            $this->call('configure', '-font', $subject);
+            $this->configure('-font', $subject);
         }
     }
 }
