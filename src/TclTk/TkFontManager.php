@@ -72,4 +72,15 @@ class TkFontManager implements FontManager
         $this->interp->eval('font families');
         return $this->interp->getListResult();
     }
+
+    /**
+     * @inheritdoc
+     *
+     * @param string $fontSpec A Tcl list of the font specification.
+     *                         For example: {{Noto Sans} 72 bold italic overstrike}
+     */
+    public function createFontFromString(string $fontSpec): Font
+    {
+        return $this->createFontFromTclEvalResult($fontSpec);
+    }
 }
