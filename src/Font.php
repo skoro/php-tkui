@@ -53,9 +53,14 @@ class Font implements SplSubject
         return $this->name;
     }
 
+    /**
+     * @throws InvalidArgumentException When the font name is empty.
+     */
     public function setName(string $name): self
     {
-        // TODO: name cannot be empty.
+        if (! $name) {
+            throw new InvalidArgumentException('Font name cannot be empty.');
+        }
         $this->name = $name;
         $this->notify();
         return $this;
@@ -66,6 +71,11 @@ class Font implements SplSubject
         return $this->size;
     }
 
+    /**
+     * @param int $size The font size. Must be a positive value.
+     *
+     * @throws InvalidArgumentException When the font size is negative.
+     */
     public function setSize(int $size): self
     {
         if ($size <= 0) {
