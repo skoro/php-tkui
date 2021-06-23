@@ -26,6 +26,9 @@ class Menu extends TkWidget
     const TYPE_TEAROFF = 'tearoff';
     const TYPE_NORMAL = 'normal';
 
+    protected string $widget = 'menu';
+    protected string $name = 'm';
+
     /**
      * @inheritdoc
      */
