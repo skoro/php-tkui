@@ -3,6 +3,7 @@
 namespace PhpGui\Tests\Dialogs;
 
 use PhpGui\Dialogs\FontDialog;
+use PhpGui\FontManager;
 use PhpGui\Tests\TestCase;
 
 class FontDialogTest extends TestCase
@@ -13,7 +14,9 @@ class FontDialogTest extends TestCase
         $this->eval->expects($this->once())
             ->method('registerCallback');
 
-        new FontDialog($this->createWindowStub());
+        $fm = $this->createMock(FontManager::class);
+
+        new FontDialog($this->createWindowStub(), $fm);
     }
 
     /** @test */
@@ -28,6 +31,8 @@ class FontDialogTest extends TestCase
             ->method('registerCallback')
             ->willReturn('test_callback');
 
-        (new FontDialog($this->createWindowStub()))->showModal();
+        $fm = $this->createMock(FontManager::class);
+
+        (new FontDialog($this->createWindowStub(), $fm))->showModal();
     }
 }

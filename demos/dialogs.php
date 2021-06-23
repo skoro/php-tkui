@@ -5,6 +5,7 @@ use PhpGui\Dialogs\DirectoryDialog;
 use PhpGui\Dialogs\FontDialog;
 use PhpGui\Dialogs\OpenFileDialog;
 use PhpGui\Dialogs\SaveFileDialog;
+use PhpGui\Font;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Label;
 use PhpGui\Widgets\LabelFrame;
@@ -130,8 +131,8 @@ $demo = new class extends DemoAppWindow
         $res = new Label($f, 'Text Sample');
         $res->pack()->sideRight()->fillX()->expand()->manage();
 
-        $dlg = new FontDialog($this, ['title' => 'Choose a font']);
-        $dlg->onSuccess(fn ($font) => $res->text = $font);
+        $dlg = new FontDialog($this, $this->app->getFontManager(), ['title' => 'Choose a font']);
+        $dlg->onSuccess(fn (Font $font) => $res->font = $font);
 
         $b->onClick([$dlg, 'showModal']);
 

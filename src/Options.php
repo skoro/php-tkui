@@ -157,4 +157,41 @@ class Options
     {
         return (new static($options))->asTcl();
     }
+
+    /**
+     * Creates a new options instance from the plain list.
+     *
+     * Example:
+     * <code>
+     * $options = Options::createFromList(['size', 10, 'color', 'red']);
+     * $options->size; // 10
+     * $options->color; // red
+     *
+     * // The same:
+     * $options = Options::createFromList(['-size', 10, '-color', 'red'], true);
+     * </code>
+     *
+     * @param bool $asOptions When enabled odd list items must be options.
+     */
+    public static function createFromList(array $list, bool $asOptions = true): self
+    {
+        if (count($list) % 2 !== 0) {
+            throw new InvalidArgumentException('The list must have even number of elements.');
+        }
+
+        $options = [];
+
+        foreach (array_chunk($list, 2) as [$key, $value]) {
+            if ($asOptions) {
+                if ($key[0] === '-') {
+                    $key = substr($key, 1);
+                } else {
+                    throw new InvalidArgumentException("Item '$key' must be an option.");
+                }
+            }
+            $options[$key] = $value;
+        }
+
+        return new static($options);
+    }
 }

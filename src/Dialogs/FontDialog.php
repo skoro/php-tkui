@@ -2,6 +2,7 @@
 
 namespace PhpGui\Dialogs;
 
+use PhpGui\FontManager;
 use PhpGui\Options;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\Widget;
@@ -15,6 +16,16 @@ use PhpGui\Windows\Window;
  * It doesn't emit onCancel event.
  * The dialog mimics a widget for register the callback.
  *
+ * <example>
+ * use PhpGui\Dialogs\FontDialog;
+ * use PhpGui\Font;
+ *
+ * $dlg = new FontDialog($parent, $fontManager);
+ * $dlg->onSuccess(function (Font $font) {
+ *     //
+ * });
+ * </example>
+ *
  * @property string $title
  * @property Window $parent
  */
@@ -22,11 +33,13 @@ class FontDialog extends Dialog implements Widget
 {
     private string $onSelectCallback;
     private string $id;
+    private FontManager $fontManager;
 
-    public function __construct(Window $parent, array $options = [])
+    public function __construct(Window $parent, FontManager $fontManager, array $options = [])
     {
         parent::__construct($parent, $options);
         $this->id = uniqid();
+        $this->fontManager = $fontManager;
         $this->onSelectCallback = $parent->getEval()->registerCallback($this, [$this, 'onSelect']);
     }
 
@@ -86,12 +99,17 @@ class FontDialog extends Dialog implements Widget
 
     public function onSelect(Widget $self, string $fontSpec)
     {
-        // TODO: make font instance from $fontSpec.
-        $this->doSuccess($fontSpec);
+        $font = $this->fontManager->createFontFromString('{' . $fontSpec . '}');
+        $this->doSuccess($font);
     }
 
     protected function call(...$args)
     {
         return $this->parent()->getEval()->tclEval('tk', $this->command(), ...$args);
+    }
+
+    public function getFontManager(): FontManager
+    {
+        return $this->fontManager;
     }
 }
