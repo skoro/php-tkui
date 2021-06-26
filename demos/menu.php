@@ -22,14 +22,16 @@ $demo = new class extends DemoAppWindow
             //  ->addSeparator()
              ->addItem(new MenuItem('Open', function () {}))
              ->addItem(new MenuItem('Save', function () {}))
-             ->addItem(new MenuItem('Save As...'))
+             ->addItem(new MenuItem('Save As...', function () {}))
             //  ->addSeparator()
-             ->addItem(new MenuItem('Quit'))
+             ->addItem(new MenuItem('Quit', function () {
+                 $this->app->quit();
+             }))
             ;
 
         $menu->addMenu('Edit')
-             ->addItem(new MenuItem('Find...'))
-             ->addItem(new MenuItem('Replace...'))
+             ->addItem(new MenuItem('Find...', function () {}))
+             ->addItem(new MenuItem('Replace...', function () {}))
              ;
 
         $this->getEval()->tclEval($this->path(), 'configure', '-menu', $menu->path());
