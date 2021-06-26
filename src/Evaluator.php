@@ -47,7 +47,9 @@ interface Evaluator
     /**
      * Registers a widget callback.
      *
+     * @param string[] $args Any additional arguments to the widget's callback.
+     *
      * @return string Returns a Tcl procedure name.
      */
-    public function registerCallback(Widget $widget, callable $callback): string;
+    public function registerCallback(Widget $widget, callable $callback, array $args = []): string;
 }
