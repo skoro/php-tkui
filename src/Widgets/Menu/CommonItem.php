@@ -7,11 +7,21 @@ use PhpGui\Options;
 abstract class CommonItem
 {
     private Options $options;
+    private int $id;
+
+    // TODO: id generator ?
+    private static int $idIterator = 0;
 
     public function __construct(array $options = [])
     {
+        $this->id = static::generateId();
         $this->options = $this->createOptions()
                               ->mergeAsArray($options);
+    }
+
+    private static function generateId(): int
+    {
+        return ++static::$idIterator;
     }
 
     protected function createOptions(): Options
@@ -34,5 +44,10 @@ abstract class CommonItem
     public function options(): Options
     {
         return $this->options;
+    }
+
+    public function id(): int
+    {
+        return $this->id;
     }
 }
