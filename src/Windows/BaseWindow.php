@@ -6,6 +6,7 @@ use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\Pack;
 use PhpGui\Options;
 use PhpGui\TclTk\TkWindowManager;
+use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Widget;
 use PhpGui\WindowManager;
 
@@ -162,5 +163,14 @@ abstract class BaseWindow implements Window
     public function getWindowManager(): WindowManager
     {
         return $this->wm;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMenu(Menu $menu): Window
+    {
+        $this->getEval()->tclEval($this->path(), 'configure', '-menu', $menu->path());
+        return $this;
     }
 }

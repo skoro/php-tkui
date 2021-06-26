@@ -34,7 +34,7 @@ $demo = new class extends DemoAppWindow
              ->addItem(new MenuItem('Replace...', function () {}))
              ;
 
-        $this->getEval()->tclEval($this->path(), 'configure', '-menu', $menu->path());
+        $this->setMenu($menu);
     }
 };
 
