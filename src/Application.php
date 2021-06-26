@@ -21,4 +21,9 @@ interface Application extends Evaluator, Bindings
      * Get the font manager.
      */
     public function getFontManager(): FontManager;
+
+    /**
+     * Stop the application and free up resources.
+     */
+    public function quit();
 }
