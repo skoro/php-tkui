@@ -1,6 +1,6 @@
 <?php
 
-use PhpGui\Widgets\Menu;
+use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Menu\MenuItem;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';

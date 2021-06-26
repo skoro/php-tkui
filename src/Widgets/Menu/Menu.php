@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Color;
 use PhpGui\Options;
-use PhpGui\Widgets\Menu\CommonItem;
-use PhpGui\Widgets\Menu\MenuItem;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\TtkContainer;
+use PhpGui\Widgets\Widget;
 
 /**
  * Menu implementation.
