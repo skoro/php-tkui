@@ -4,17 +4,19 @@ namespace PhpGui\Widgets\Menu;
 
 /**
  * @property string $label
+ * @property callable $command
  */
-class MenuItem extends CommonItem implements Clickable
+class MenuItem extends CommonItem
 {
-    private $callback;
-
-    public function __construct(string $label, $callback = null)
+    /**
+     * @param callable $callback
+     */
+    public function __construct(string $label, $callback)
     {
         parent::__construct([
             'label' => $label,
+            'command' => $callback,
         ]);
-        $this->callback = $callback;
     }
 
     public function type(): string
@@ -24,17 +26,7 @@ class MenuItem extends CommonItem implements Clickable
 
     public function onClick(callable $callback): self
     {
-        $this->callback = $callback;
+        $this->command = $callback;
         return $this;
-    }
-
-    public function callback(): ?callable
-    {
-        return $this->callback;
-    }
-
-    public function hasCallback(): bool
-    {
-        return $this->callback !== null;
     }
 }
