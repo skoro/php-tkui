@@ -4,7 +4,6 @@ namespace PhpGui\Widgets;
 
 use PhpGui\Color;
 use PhpGui\Options;
-use PhpGui\Widgets\Menu\Clickable;
 use PhpGui\Widgets\Menu\CommonItem;
 use PhpGui\Widgets\Menu\MenuItem;
 
@@ -37,13 +36,15 @@ class Menu extends TtkContainer
      */
     private array $items = [];
 
-    private array $itemCallbacks = [];
-    private string $cb;
+    /**
+     * Tcl callback command name.
+     */
+    private string $callbackCommand;
 
     public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
-        $this->cb = $this->getEval()->registerCallback($this, [$this, 'handleItemCallback']);
+        $this->callbackCommand = $this->getEval()->registerCallback($this, [$this, 'handleItemCallback']);
     }
 
     /**
@@ -74,23 +75,24 @@ class Menu extends TtkContainer
 
     public function addItem(CommonItem $item): self
     {
-        $this->items[] = $item;
+        $this->items[$item->id()] = $item;
 
-        $options = $item->options()->asStringArray();
+        $options = clone $item->options();
 
-        if ($item instanceof Clickable && $item->hasCallback()) {
-            $this->itemCallbacks[$item] = $item->callback();
-            $options[] = '-command';
-            $options[] = $this->cb . ' ' . $item->label;
+        if ($options->has('command')) {
+            $options->command = $this->callbackCommand . ' ' . $item->id();
         }
 
-        $this->call('add', $item->type(), ...$options);
+        $this->call('add', $item->type(), ...$options->asStringArray());
 
         return $this;
     }
 
-    public function handleItemCallback($widget, ...$args)
+    public function handleItemCallback(Widget $widget, $itemId)
     {
-        var_dump($args);
+        if (isset($this->items[$itemId])) {
+            $item = $this->items[$itemId];
+            call_user_func($item->command, $item, $widget);
+        }
     }
 }
