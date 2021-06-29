@@ -84,8 +84,12 @@ class Menu extends TtkContainer
             $options->command = $this->callbackCommand . ' ' . $item->id();
         }
 
-        $this->call('add', $item->type(), ...$options->asStringArray());
+        return $this->addMenuType($item->type(), $options);
+    }
 
+    public function addSeparator(): self
+    {
+        $this->call('add', 'separator');
         return $this;
     }
 
@@ -95,5 +99,11 @@ class Menu extends TtkContainer
             $item = $this->items[$itemId];
             call_user_func($item->command, $item, $widget);
         }
+    }
+
+    protected function addMenuType(string $type, Options $options): self
+    {
+        $this->call('add', $type, ...$options->asStringArray());
+        return $this;
     }
 }

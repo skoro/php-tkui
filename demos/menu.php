@@ -19,11 +19,11 @@ $demo = new class extends DemoAppWindow
 
         $menu->addMenu('File')
              ->addItem(new MenuItem('New', function () {}))
-            //  ->addSeparator()
+             ->addSeparator()
              ->addItem(new MenuItem('Open', function () {}))
              ->addItem(new MenuItem('Save', function () {}))
              ->addItem(new MenuItem('Save As...', function () {}))
-            //  ->addSeparator()
+             ->addSeparator()
              ->addItem(new MenuItem('Quit', function () {
                  $this->app->quit();
              }))
