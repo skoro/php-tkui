@@ -6,11 +6,13 @@ use PhpGui\Evaluator;
 use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\Pack;
 use PhpGui\Options;
+use SplObserver;
+use SplSubject;
 
 /**
  * A basic Tk widget implementation.
  */
-abstract class TkWidget implements Widget
+abstract class TkWidget implements Widget, SplObserver
 {
     private Container $parent;
     private static array $idCounter = [];
@@ -210,5 +212,22 @@ abstract class TkWidget implements Widget
     protected function configure(...$args): void
     {
         $this->call('configure', ...$args);
+    }
+
+    /**
+     * Updates the widget.
+     *
+     * When the widget has compound options which can be changed
+     * separately this method should actualize the widget appearance.
+     *
+     * For example:
+     * $w = new SomeWidget();
+     * $w->value->state = 'Online';
+     *
+     * The 'value' option above is an object and settings options to it
+     * should be tracked by the underlying widget.
+     */
+    public function update(SplSubject $subject): void
+    {
     }
 }

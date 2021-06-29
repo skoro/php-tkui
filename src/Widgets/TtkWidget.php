@@ -5,7 +5,6 @@ namespace PhpGui\Widgets;
 use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Exceptions\FontNotSupportedException;
-use SplObserver;
 use SplSubject;
 
 /**
@@ -16,7 +15,7 @@ use SplSubject;
  * @property bool $takeFocus
  * @property string $style
  */
-abstract class TtkWidget extends TkWidget implements SplObserver
+abstract class TtkWidget extends TkWidget
 {
     /**
      * Widget states.
@@ -120,10 +119,12 @@ abstract class TtkWidget extends TkWidget implements SplObserver
     }
 
     /**
-     * Updates the widget.
+     * @inheritdoc
      */
     public function update(SplSubject $subject): void
     {
+        parent::update($subject);
+
         if ($subject instanceof Font) {
             $this->updateFont($subject);
         }
