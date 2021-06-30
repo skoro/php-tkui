@@ -7,6 +7,7 @@ use PhpGui\Options;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\TtkContainer;
 use PhpGui\Widgets\Widget;
+use SplSubject;
 
 /**
  * Menu implementation.
@@ -78,6 +79,8 @@ class Menu extends TtkContainer
     {
         $this->items[$item->id()] = $item;
 
+        $item->attach($this);
+
         $options = clone $item->options();
 
         if ($options->has('command')) {
@@ -105,5 +108,11 @@ class Menu extends TtkContainer
     {
         $this->call('add', $type, ...$options->asStringArray());
         return $this;
+    }
+
+    public function update(SplSubject $subject): void
+    {
+        parent::update($subject);
+        // TODO: update menu item options
     }
 }

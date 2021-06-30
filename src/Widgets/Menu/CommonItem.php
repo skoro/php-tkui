@@ -3,11 +3,18 @@
 namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Options;
+use SplObserver;
+use SplSubject;
 
-abstract class CommonItem
+abstract class CommonItem implements SplSubject
 {
     private Options $options;
     private int $id;
+
+    /**
+     * @var SplObserver[]
+     */
+    private array $observers;
 
     // TODO: id generator ?
     private static int $idIterator = 0;
@@ -17,6 +24,7 @@ abstract class CommonItem
         $this->id = static::generateId();
         $this->options = $this->createOptions()
                               ->mergeAsArray($options);
+        $this->observers = [];
     }
 
     private static function generateId(): int
@@ -32,6 +40,7 @@ abstract class CommonItem
     public function __set($name, $value)
     {
         $this->options->$name = $value;
+        $this->notify();
     }
 
     public function __get($name)
@@ -49,5 +58,25 @@ abstract class CommonItem
     public function id(): int
     {
         return $this->id;
+    }
+
+    // TODO: make a trait for observables.
+    public function attach(SplObserver $observer)
+    {
+        $this->observers[] = $observer;
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        if (($i = array_search($observer, $this->observers, true)) !== false) {
+            unset($this->observers[$i]);
+        }
+    }
+
+    public function notify()
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($this);
+        }
     }
 }
