@@ -3,6 +3,8 @@
 namespace PhpGui\Widgets\Menu;
 
 /**
+ * Implements a simple menu item with a callback.
+ *
  * @property string $label
  * @property callable $command
  */
@@ -19,6 +21,9 @@ class MenuItem extends CommonItem
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function type(): string
     {
         return 'command';
