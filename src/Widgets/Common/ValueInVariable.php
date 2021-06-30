@@ -9,11 +9,15 @@ interface ValueInVariable
 {
     /**
      * Sets the widget value.
+     *
+     * @param mixed $value
      */
     public function setValue($value): self;
 
     /**
      * Gets the widget value.
+     *
+     * @return mixed
      */
     public function getValue();
 }
