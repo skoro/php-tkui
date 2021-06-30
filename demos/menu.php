@@ -1,6 +1,7 @@
 <?php
 
 use PhpGui\Widgets\Menu\Menu;
+use PhpGui\Widgets\Menu\MenuCheckItem;
 use PhpGui\Widgets\Menu\MenuItem;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -32,6 +33,13 @@ $demo = new class extends DemoAppWindow
         $menu->addMenu('Edit')
              ->addItem(new MenuItem('Find...', function () {}))
              ->addItem(new MenuItem('Replace...', function () {}))
+             ->addSeparator()
+             ->addItem(new MenuCheckItem('Wrap lines', true, function (MenuCheckItem $item) {
+                 var_dump($item->getValue());
+             }))
+             ->addItem(new MenuCheckItem('Show cursor pos', false, function (MenuCheckItem $item) {
+                 var_dump($item->getValue());
+             }))
              ;
 
         $this->setMenu($menu);
