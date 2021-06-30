@@ -83,7 +83,7 @@ class Menu extends TtkContainer
 
         $options = clone $item->options();
 
-        if ($options->has('command')) {
+        if ($options->has('command') && $options->command) {
             $options->command = $this->callbackCommand . ' ' . $item->id();
         }
 
