@@ -3,9 +3,9 @@
 namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Options;
+use PhpGui\Exceptions\UninitializedVariableException;
 use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Common\ValueInVariable;
-use PhpGui\Widgets\Exceptions\UninitializedVariableException;
 use PhpGui\Widgets\TkWidget;
 use SplObserver;
 
@@ -18,7 +18,10 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
 {
     private bool $value;
 
-    public function __construct(string $label, bool $value, $callback)
+    /**
+     * @param callable|null $callback
+     */
+    public function __construct(string $label, bool $value, $callback = null)
     {
         parent::__construct($label, $callback);
         $this->variable = null;
