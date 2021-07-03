@@ -16,22 +16,15 @@ use SplSubject;
  *
  * @property callable $postCommand
  * @property Color|string $selectColor
- * @property bool $tearOff
- * @property callable $tearOffCommand
  * @property string $title
- * @property string $type
  */
 class Menu extends TtkContainer
 {
-    /**
-     * Menu type.
-     */
-    const TYPE_MENUBAR = 'menubar';
-    const TYPE_TEAROFF = 'tearoff';
-    const TYPE_NORMAL = 'normal';
-
     protected string $widget = 'menu';
     protected string $name = 'm';
+
+    protected const MENU_ITEM_METHOD_ADD = 'add';
+    protected const MENU_ITEM_METHOD_CONFIGURE = 'entryconfig';
 
     /**
      * @var MenuItem[]
@@ -45,7 +38,11 @@ class Menu extends TtkContainer
 
     public function __construct(Container $parent, array $options = [])
     {
+        // TearOff menus isn't supported.
+        $options['tearoff'] = 0;
+
         parent::__construct($parent, $options);
+
         $this->callbackCommand = $this->getEval()->registerCallback($this, [$this, 'handleItemCallback']);
     }
 
@@ -57,11 +54,16 @@ class Menu extends TtkContainer
         return new Options([
             'postCommand' => null,
             'selectColor' => null,
-            'tearOff' => null,
-            'tearOffCommand' => null,
             'title' => null,
-            'type' => null,
         ]);
+    }
+
+    public function handleItemCallback(Widget $widget, $itemId)
+    {
+        if (isset($this->items[$itemId])) {
+            $item = $this->items[$itemId];
+            call_user_func($item->command, $item, $widget);
+        }
     }
 
     public function addMenu(string $title): self
@@ -77,42 +79,71 @@ class Menu extends TtkContainer
 
     public function addItem(CommonItem $item): self
     {
-        $this->items[$item->id()] = $item;
-
         $item->attach($this);
 
-        $options = clone $item->options();
+        $this->items[$item->id()] = $item;
 
-        if ($options->has('command') && $options->command) {
-            $options->command = $this->callbackCommand . ' ' . $item->id();
-        }
+        $this->callMenuItemMethod(self::MENU_ITEM_METHOD_ADD, $item);
 
-        return $this->addMenuType($item->type(), $options);
+        return $this;
     }
 
     public function addSeparator(): self
     {
-        $this->call('add', 'separator');
-        return $this;
+        return $this->addItem(new MenuSeparatorItem());
     }
 
-    public function handleItemCallback(Widget $widget, $itemId)
+    protected function callMenuItemMethod(string $method, CommonItem $item)
     {
-        if (isset($this->items[$itemId])) {
-            $item = $this->items[$itemId];
-            call_user_func($item->command, $item, $widget);
+        $options = clone $item->options();
+
+        // Redirect menu item's callback to menu's one.
+        // Due to items don't have an access to underlying gui engine
+        // all events will be handled by menu itself.
+        if ($options->has('command') && $options->command) {
+            $options->command = $this->callbackCommand . ' ' . $item->id();
+        }
+
+        switch ($method) {
+            case self::MENU_ITEM_METHOD_ADD:
+                $this->callAddMenuItem($item->type(), $options);
+                break;
+
+            case self::MENU_ITEM_METHOD_CONFIGURE:
+                $this->callConfigMenuItem($item->id(), $options);
+                break;
         }
     }
 
-    protected function addMenuType(string $type, Options $options): self
+    protected function callAddMenuItem(string $type, Options $options): void
     {
         $this->call('add', $type, ...$options->asStringArray());
-        return $this;
     }
 
+    protected function callConfigMenuItem(int $id, Options $options): void
+    {
+        $index = 0;
+        $found = null;
+        foreach ($this->items as $k => $item) {
+            if ($k === $id) {
+                $found = $item;
+                break;
+            }
+            $index++;
+        }
+        if ($found) {
+            $this->call('entryconfigure', $index, ...$options->asStringArray());
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function update(SplSubject $subject): void
     {
         parent::update($subject);
-        // TODO: update menu item options
+        if ($subject instanceof CommonItem) {
+            $this->callMenuItemMethod(self::MENU_ITEM_METHOD_CONFIGURE, $subject);
+        }
     }
 }
