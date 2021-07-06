@@ -21,18 +21,24 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
     /**
      * @param callable|null $callback
      */
-    public function __construct(string $label, bool $value, $callback = null)
+    public function __construct(string $label, bool $value, $callback = null, array $options = [])
     {
-        parent::__construct($label, $callback);
-        $this->variable = null;
+        parent::__construct($label, $callback, $options);
+        $this->variable = $options['variable'] ?? null;
         $this->setValue($value);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function type(): string
     {
         return 'checkbutton';
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function createOptions(): Options
     {
         return new Options([
@@ -42,6 +48,9 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
         ]);
     }
 
+    /**
+     * @param bool $value
+     */
     public function setValue($value): self
     {
         $this->value = (bool) $value;
@@ -53,6 +62,9 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getValue()
     {
         if (! $this->variable) {
@@ -64,7 +76,7 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
     public function attach(SplObserver $observer)
     {
         parent::attach($observer);
-        if ($observer instanceof TkWidget) {
+        if ($observer instanceof TkWidget && ! $this->variable) {
             $this->variable = $observer->parent()->getEval()->registerVar($this->makeVariableName());
             $this->setValue($this->value);
         }
