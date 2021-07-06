@@ -2,6 +2,8 @@
 
 namespace PhpGui\Widgets\Menu;
 
+use PhpGui\Options;
+
 /**
  * Implements a simple menu item with a callback.
  *
@@ -13,11 +15,21 @@ class MenuItem extends CommonItem
     /**
      * @param callable $callback
      */
-    public function __construct(string $label, $callback)
+    public function __construct(string $label, $callback, array $options = [])
     {
-        parent::__construct([
-            'label' => $label,
-            'command' => $callback,
+        parent::__construct($options);
+        $this->label = $label;
+        $this->command = $callback;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function createOptions(): Options
+    {
+        return new Options([
+            'label' => null,
+            'command' => null,
         ]);
     }
 
