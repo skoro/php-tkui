@@ -79,7 +79,7 @@ class MenuRadioItem extends MenuItem implements ValueInVariable
     public function attach(SplObserver $observer)
     {
         parent::attach($observer);
-        if ($observer instanceof TkWidget) {
+        if ($observer instanceof TkWidget && ! $this->variable) {
             $this->variable = $observer->parent()->getEval()->registerVar($this->makeVariableName());
             $this->setValue($this->value);
         }
