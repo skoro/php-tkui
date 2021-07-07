@@ -2,6 +2,7 @@
 
 namespace PhpGui\Widgets\Menu;
 
+use PhpGui\Exceptions\UninitializedVariableException;
 use PhpGui\TclTk\Variable;
 
 /**
@@ -14,7 +15,22 @@ class MenuRadioGroup extends CommonGroup
      *
      * It's shared between all radio item instances.
      */
-    private Variable $variable;
+    private ?Variable $variable = null;
+
+    /**
+     * @var mixed
+     */
+    private $selected;
+
+    /**
+     * @param MenuRadioItem[] $items    The list of menu radio items.
+     * @param mixed          $selected The selected value of radio item.
+     */
+    public function __construct(array $items, $selected = null)
+    {
+        parent::__construct($items);
+        $this->select($selected);
+    }
 
     /**
      * @inheritdoc
@@ -27,5 +43,32 @@ class MenuRadioGroup extends CommonGroup
                 $item->variable = $this->variable;
             }
         }
+        $this->select($this->selected);
+    }
+
+    /**
+     * Selects the radio item.
+     *
+     * @param mixed $value
+     */
+    public function select($value): void
+    {
+        if ($this->variable) {
+            $this->variable->set($value);
+        }
+        $this->selected = $value;
+    }
+
+    /**
+     * Gets the selected value of radio item.
+     *
+     * @return string
+     */
+    public function selected()
+    {
+        if (! $this->variable) {
+            throw new UninitializedVariableException();
+        }
+        return $this->variable->asString();
     }
 }
