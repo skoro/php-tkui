@@ -6,6 +6,9 @@ use PhpGui\Options;
 use SplObserver;
 use SplSubject;
 
+/**
+ * Base for a menu item.
+ */
 abstract class CommonItem implements SplSubject
 {
     private Options $options;
@@ -55,6 +58,7 @@ abstract class CommonItem implements SplSubject
         return $this->options;
     }
 
+    // TODO: identificable interface
     public function id(): int
     {
         return $this->id;
