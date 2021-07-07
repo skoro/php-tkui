@@ -66,6 +66,9 @@ class Menu extends TtkContainer
         }
     }
 
+    /**
+     * Adds a submenu to the menu.
+     */
     public function addMenu(string $title): self
     {
         $submenu = new static($this, [
@@ -77,6 +80,9 @@ class Menu extends TtkContainer
         return $submenu;
     }
 
+    /**
+     * Adds a single menu item to the menu.
+     */
     public function addItem(CommonItem $item): self
     {
         $item->attach($this);
@@ -88,9 +94,24 @@ class Menu extends TtkContainer
         return $this;
     }
 
+    /**
+     * Adds a separator between menu items.
+     */
     public function addSeparator(): self
     {
         return $this->addItem(new MenuSeparatorItem());
+    }
+
+    /**
+     * Adds a group of menu items.
+     */
+    public function addGroup(CommonGroup $group): self
+    {
+        $group->attach($this);
+        foreach ($group as $item) {
+            $this->addItem($item);
+        }
+        return $this;
     }
 
     protected function callMenuItemMethod(string $method, CommonItem $item)
