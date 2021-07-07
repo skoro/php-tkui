@@ -6,6 +6,7 @@ use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Buttons\RadioButton;
 use PhpGui\Widgets\Common\ValueInVariable;
 
+// TODO: array iterable
 class RadioGroup extends Frame implements ValueInVariable
 {
     private Variable $variable;
