@@ -15,11 +15,10 @@ use SplObserver;
  * @property string $label
  * @property Variable $variable
  * @property callable $command
+ * @property mixed $value
  */
 class MenuRadioItem extends MenuItem implements ValueInVariable
 {
-    private string $value;
-
     /**
      * @param callable|null $callback
      */
@@ -44,6 +43,7 @@ class MenuRadioItem extends MenuItem implements ValueInVariable
             'label' => null,
             'variable' => null,
             'command' => null,
+            'value' => null,
         ]);
     }
 
