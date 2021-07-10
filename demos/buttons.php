@@ -2,9 +2,12 @@
 
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Buttons\CheckButton;
+use PhpGui\Widgets\Buttons\MenuButton;
 use PhpGui\Widgets\Buttons\RadioButton;
 use PhpGui\Widgets\Label;
 use PhpGui\Widgets\LabelFrame;
+use PhpGui\Widgets\Menu\Menu;
+use PhpGui\Widgets\Menu\MenuItem;
 use PhpGui\Widgets\RadioGroup;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -59,6 +62,17 @@ $demo = new class extends DemoAppWindow
 
         // Disabled button with state in options.
         (new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]))
+            ->pack()
+            ->sideTop()
+            ->manage();
+
+        $cb = fn (MenuItem $i) => $l->text = $i->label;
+        $menu = new Menu($f);
+        $menu->addItem(new MenuItem('Option 1', $cb))
+             ->addItem(new MenuItem('Option 2', $cb))
+             ->addItem(new MenuItem('Option 3', $cb))
+        ;
+        (new MenuButton($f, 'Menu button', $menu))
             ->pack()
             ->sideTop()
             ->manage();
