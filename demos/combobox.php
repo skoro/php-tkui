@@ -29,7 +29,7 @@ $demo = new class extends DemoAppWindow
     protected function themeSelector(): Frame
     {
         $f = new LabelFrame($this, 'Theme:');
-        $l = new Label($f, 'Combobox is disabled.');
+        $l = new Label($f, 'Theme selector');
         $l->background = Color::fromName('black');
         $l->foreground = Color::fromName('white');
         $l->pack()->manage();
