@@ -4,10 +4,9 @@ namespace PhpGui\Dialogs;
 
 use PhpGui\TclTk\Tcl;
 
+// TODO: implement Stringable
 /**
  * File types filter for file dialogs.
- *
- * TODO: implement Stringable
  */
 class FileType
 {

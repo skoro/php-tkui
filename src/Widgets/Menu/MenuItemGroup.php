@@ -15,11 +15,10 @@ class MenuItemGroup extends CommonGroup
     /**
      * @param MenuItem[] $items
      * @param callable $callback The callback for the items.
-     *
-     * TODO: accept items as string also and convert them into MenuItem.
-     * And you could use the group as simple as:
-     * new MenuGroupItem(['item1', 'item2', '...'], $callback)
      */
+    // TODO: accept items as string also and convert them into MenuItem.
+    // And you could use the group as simple as:
+    //new MenuGroupItem(['item1', 'item2', '...'], $callback)
     public function __construct(array $items, $callback)
     {
         parent::__construct($items);

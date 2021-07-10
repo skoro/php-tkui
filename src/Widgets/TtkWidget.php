@@ -64,9 +64,7 @@ abstract class TtkWidget extends TkWidget implements SplObserver
     {
         parent::__set($name, $value);
 
-        /**
-         * TODO: font also can be a string like TkFixedFont.
-         */
+        // TODO: font also can be a string like TkFixedFont.
         if ($name === 'font' && $value instanceof Font) {
             $this->setFont($value);
         }
