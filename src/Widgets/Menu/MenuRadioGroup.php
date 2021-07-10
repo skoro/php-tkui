@@ -23,12 +23,20 @@ class MenuRadioGroup extends CommonGroup
     private $selected;
 
     /**
+     * @var callable|null
+     */
+    private $groupCallback;
+
+    /**
      * @param MenuRadioItem[] $items    The list of menu radio items.
      * @param mixed          $selected The selected value of radio item.
+     * @param callable|null   $groupCallback The callback will be used for all
+     *                                       menu items in the group.
      */
-    public function __construct(array $items, $selected = null)
+    public function __construct(array $items, $selected = null, $groupCallback = null)
     {
         parent::__construct($items);
+        $this->groupCallback = $groupCallback;
         $this->select($selected);
     }
 
@@ -41,6 +49,9 @@ class MenuRadioGroup extends CommonGroup
         foreach ($this->items() as $item) {
             if ($item instanceof MenuRadioItem) {
                 $item->variable = $this->variable;
+                if ($this->groupCallback) {
+                    $item->command = $this->groupCallback;
+                }
             }
         }
         $this->select($this->selected);
