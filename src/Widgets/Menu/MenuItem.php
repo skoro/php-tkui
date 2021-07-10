@@ -13,9 +13,9 @@ use PhpGui\Options;
 class MenuItem extends CommonItem
 {
     /**
-     * @param callable $callback
+     * @param callable|null $callback
      */
-    public function __construct(string $label, $callback, array $options = [])
+    public function __construct(string $label, $callback = null, array $options = [])
     {
         parent::__construct($options);
         $this->label = $label;
