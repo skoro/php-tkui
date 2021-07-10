@@ -8,6 +8,7 @@ use PhpGui\Widgets\Label;
 use PhpGui\Widgets\LabelFrame;
 use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Menu\MenuItem;
+use PhpGui\Widgets\Menu\MenuItemGroup;
 use PhpGui\Widgets\RadioGroup;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -66,12 +67,13 @@ $demo = new class extends DemoAppWindow
             ->sideTop()
             ->manage();
 
-        $cb = fn (MenuItem $i) => $l->text = $i->label;
         $menu = new Menu($f);
-        $menu->addItem(new MenuItem('Option 1', $cb))
-             ->addItem(new MenuItem('Option 2', $cb))
-             ->addItem(new MenuItem('Option 3', $cb))
-        ;
+        $menu->addGroup(new MenuItemGroup([
+            new MenuItem('Option 1'),
+            new MenuItem('Option 2'),
+            new MenuItem('Option 3'),
+        ], fn (MenuItem $i) => $l->text = $i->label));
+
         (new MenuButton($f, 'Menu button', $menu))
             ->pack()
             ->sideTop()
