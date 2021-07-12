@@ -25,6 +25,7 @@ class Button extends GenericButton
      */
     public function __construct(Container $parent, string $title, array $options = [])
     {
+        // TODO: use detect underline ?
         $options['text'] = $title;
         parent::__construct($parent, $options);
     }
