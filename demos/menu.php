@@ -28,30 +28,30 @@ $demo = new class extends DemoAppWindow
 
         $itemCallback = [$this, 'logMenuItem'];
 
-        $menu->addMenu('File')
-             ->addItem(new MenuItem('New', $itemCallback))
+        $menu->addMenu('_File')
+             ->addItem(new MenuItem('_New', $itemCallback))
              ->addSeparator()
-             ->addItem(new MenuItem('Open', $itemCallback))
-             ->addItem(new MenuItem('Save', $itemCallback))
-             ->addItem(new MenuItem('Save As...', $itemCallback))
+             ->addItem(new MenuItem('_Open', $itemCallback))
+             ->addItem(new MenuItem('_Save', $itemCallback))
+             ->addItem(new MenuItem('Save _As...', $itemCallback))
              ->addSeparator()
-             ->addItem(new MenuItem('Quit', [$this->app, 'quit']))
+             ->addItem(new MenuItem('_Quit', [$this->app, 'quit']))
             ;
 
         $checkCallback = [$this, 'logCheckItem'];
         $radioCallback = [$this, 'logRadioItem'];
 
-        $menu->addMenu('Edit')
-             ->addItem(new MenuItem('Find...', $itemCallback))
-             ->addItem(new MenuItem('Replace...', $itemCallback))
+        $menu->addMenu('_Edit')
+             ->addItem(new MenuItem('_Find...', $itemCallback))
+             ->addItem(new MenuItem('_Replace...', $itemCallback))
              ->addSeparator()
-             ->addItem(new MenuCheckItem('Wrap lines', true, $checkCallback))
-             ->addItem(new MenuCheckItem('Show cursor pos', false, $checkCallback))
+             ->addItem(new MenuCheckItem('_Wrap lines', true, $checkCallback))
+             ->addItem(new MenuCheckItem('_Show cursor pos', false, $checkCallback))
              ->addSeparator()
              ->addGroup(new MenuRadioGroup([
-                new MenuRadioItem('Radio 1', 1),
-                new MenuRadioItem('Radio 2', 2),
-                new MenuRadioItem('Radio 3', 3)
+                new MenuRadioItem('Radio _1', 1),
+                new MenuRadioItem('Radio _2', 2),
+                new MenuRadioItem('Radio _3', 3)
              ], 2, $radioCallback))
              ;
 
