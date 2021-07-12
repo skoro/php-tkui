@@ -13,6 +13,7 @@ use SplObserver;
  * @property string $label
  * @property callable $command
  * @property Variable $variable
+ * @property int $underline
  */
 class MenuCheckItem extends MenuItem implements ValueInVariable
 {
@@ -45,6 +46,7 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
             'label' => null,
             'command' => null,
             'variable' => null,
+            'underline' => null,
         ]);
     }
 

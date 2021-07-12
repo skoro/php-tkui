@@ -16,6 +16,7 @@ use SplObserver;
  * @property Variable $variable
  * @property callable $command
  * @property mixed $value
+ * @property int $underline
  */
 class MenuRadioItem extends MenuItem implements ValueInVariable
 {
@@ -44,6 +45,7 @@ class MenuRadioItem extends MenuItem implements ValueInVariable
             'variable' => null,
             'command' => null,
             'value' => null,
+            'underline' => null,
         ]);
     }
 

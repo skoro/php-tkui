@@ -25,11 +25,25 @@ class MenuTest extends TestCase
     {
         $this->tclEvalTest(2, [
             ['menu', $this->checkWidget('.m')],
-            [$this->checkWidget('.m'), 'add', 'command'],
+            [$this->checkWidget('.m'), 'add', 'command', '-label', 'Test 1'],
         ]);
 
         (new Menu($this->createWindowStub()))
             ->addItem(new MenuItem('Test 1', function () {}))
+        ;
+    }
+
+    /** @test */
+    public function item_with_underline()
+    {
+        $this->tclEvalTest(2, [
+            ['menu', $this->checkWidget('.m')],
+            // This test will be failed if it runs separately because of command and static id()
+            [$this->checkWidget('.m'), 'add', 'command', '-label', 'Test 1', '-command', ' 3', '-underline', 5],
+        ]);
+
+        (new Menu($this->createWindowStub()))
+            ->addItem(new MenuItem('Test _1', function () {}))
         ;
     }
 
@@ -83,6 +97,20 @@ class MenuTest extends TestCase
 
         (new Menu($this->createWindowStub()))
             ->addMenu('Submenu')
+        ;
+    }
+
+    /** @test */
+    public function submenu_with_underline()
+    {
+        $this->tclEvalTest(3, [
+            ['menu', $this->checkWidget('.m')],
+            ['menu', $this->checkWidget('.m'), '-title', 'Submenu', '-tearoff', 0],
+            [$this->checkWidget('.m'), 'add', 'cascade', '-label', 'Submenu', '-menu', $this->checkWidget('.m'), '-underline', 2],
+        ]);
+
+        (new Menu($this->createWindowStub()))
+            ->addMenu('Su_bmenu')
         ;
     }
 }

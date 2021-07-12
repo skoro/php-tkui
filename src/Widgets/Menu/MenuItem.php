@@ -3,22 +3,27 @@
 namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Options;
+use PhpGui\Widgets\Common\DetectUnderline;
 
 /**
  * Implements a simple menu item with a callback.
  *
  * @property string $label
  * @property callable $command
+ * @property int $underline
  */
 class MenuItem extends CommonItem
 {
+    use DetectUnderline;
+
     /**
      * @param callable|null $callback
      */
     public function __construct(string $label, $callback = null, array $options = [])
     {
         parent::__construct($options);
-        $this->label = $label;
+        $this->underline = $this->detectUnderlineIndex($label);
+        $this->label = $this->removeUnderlineChar($label);
         $this->command = $callback;
     }
 
@@ -30,6 +35,7 @@ class MenuItem extends CommonItem
         return new Options([
             'label' => null,
             'command' => null,
+            'underline' => null,
         ]);
     }
 

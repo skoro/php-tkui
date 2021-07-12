@@ -4,6 +4,7 @@ namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Color;
 use PhpGui\Options;
+use PhpGui\Widgets\Common\DetectUnderline;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\TtkContainer;
 use PhpGui\Widgets\Widget;
@@ -20,6 +21,8 @@ use SplSubject;
  */
 class Menu extends TtkContainer
 {
+    use DetectUnderline;
+
     protected string $widget = 'menu';
     protected string $name = 'm';
 
@@ -71,11 +74,19 @@ class Menu extends TtkContainer
      */
     public function addMenu(string $title): self
     {
+        $menuTitle = $this->removeUnderlineChar($title);
+
         $submenu = new static($this, [
-            'title' => $title
+            'title' => $menuTitle,
         ]);
 
-        $this->call('add', 'cascade', '-label', $title, '-menu', $submenu->path());
+        $options = new Options([
+            'label' => $menuTitle,
+            'menu' => $submenu->path(),
+            'underline' => $this->detectUnderlineIndex($title),
+        ]);
+
+        $this->call('add', 'cascade', ...$options->asStringArray());
 
         return $submenu;
     }
