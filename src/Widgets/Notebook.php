@@ -13,9 +13,10 @@ use PhpGui\Options;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_notebook.htm
  *
  * @property int $height
- * @property string $padding TODO: must be list of integers ?
+ * @property string $padding
  * @property int $width
  */
+// TODO: $padding must be list of integers ?
 class Notebook extends TtkContainer implements SplObserver
 {
     protected string $widget = 'ttk::notebook';

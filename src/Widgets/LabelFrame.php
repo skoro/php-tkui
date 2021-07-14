@@ -25,6 +25,7 @@ class LabelFrame extends Frame implements Anchor
 
     public function __construct(Container $parent, string $text, array $options = [])
     {
+        // TODO: use detect underline ?
         $options['text'] = $text;
         parent::__construct($parent, $options);
     }

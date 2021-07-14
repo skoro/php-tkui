@@ -25,6 +25,7 @@ class NotebookTab implements SplSubject
 
     public function __construct(Widget $container, string $title, array $options = [])
     {
+        // TODO: use detect underline ?
         $this->container = $container;
         $options['text'] = $title;
         $this->options = $this->initWidgetOptions()->mergeAsArray($options);

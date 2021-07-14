@@ -21,6 +21,7 @@ use PhpGui\TclTk\Tcl;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  */
+// TODO: array iterable
 class Listbox extends ScrollableWidget implements SplObserver
 {
     /**

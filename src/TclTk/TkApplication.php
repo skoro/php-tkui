@@ -201,7 +201,7 @@ class TkApplication implements Application
         $this->interp->createCommand(self::CALLBACK_HANDLER, function (...$args) {
             $path = array_shift($args);
             // TODO: check if arguments are empty ?
-            list ($widget, $callback) = $this->callbacks[$path];
+            [$widget, $callback] = $this->callbacks[$path];
             $callback($widget, ...$args);
         });
     }
@@ -231,13 +231,16 @@ class TkApplication implements Application
         unset($this->vars[$varName]);
     }
 
-    public function registerCallback(Widget $widget, callable $callback): string
+    /**
+     * @inheritdoc
+     */
+    public function registerCallback(Widget $widget, callable $callback, array $args = []): string
     {
         // TODO: it would be better to use WeakMap.
         //       in that case it will be like this:
         //       $this->callbacks[$widget] = $callback;
         $this->callbacks[$widget->path()] = [$widget, $callback];
-        return self::CALLBACK_HANDLER . ' ' . $widget->path();
+        return trim(self::CALLBACK_HANDLER . ' ' . $widget->path() . ' ' . implode(' ', $args));
     }
 
     /**
