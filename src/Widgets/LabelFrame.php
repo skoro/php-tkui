@@ -3,6 +3,7 @@
 namespace PhpGui\Widgets;
 
 use PhpGui\Options;
+use PhpGui\Widgets\Common\DetectUnderline;
 use PhpGui\Widgets\Consts\Anchor;
 
 /**
@@ -20,13 +21,15 @@ use PhpGui\Widgets\Consts\Anchor;
  */
 class LabelFrame extends Frame implements Anchor
 {
+    use DetectUnderline;
+
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
 
     public function __construct(Container $parent, string $text, array $options = [])
     {
-        // TODO: use detect underline ?
-        $options['text'] = $text;
+        $options['text'] = $this->removeUnderlineChar($text);
+        $options['underline'] = $this->detectUnderlineIndex($text);
         parent::__construct($parent, $options);
     }
 

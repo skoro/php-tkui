@@ -5,6 +5,7 @@ namespace PhpGui\Widgets;
 use SplObserver;
 use SplSubject;
 use PhpGui\Options;
+use PhpGui\Widgets\Common\DetectUnderline;
 
 /**
  * @property string $state
@@ -17,6 +18,8 @@ use PhpGui\Options;
  */
 class NotebookTab implements SplSubject
 {
+    use DetectUnderline;
+
     private Widget $container;
     private Options $options;
 
@@ -25,9 +28,9 @@ class NotebookTab implements SplSubject
 
     public function __construct(Widget $container, string $title, array $options = [])
     {
-        // TODO: use detect underline ?
         $this->container = $container;
-        $options['text'] = $title;
+        $options['text'] = $this->removeUnderlineChar($title);
+        $options['underline'] = $this->detectUnderlineIndex($title);
         $this->options = $this->initWidgetOptions()->mergeAsArray($options);
     }
 

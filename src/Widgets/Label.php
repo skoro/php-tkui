@@ -6,6 +6,7 @@ use PhpGui\Color;
 use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\TclTk\Variable;
+use PhpGui\Widgets\Common\DetectUnderline;
 use PhpGui\Widgets\Consts\Anchor;
 use PhpGui\Widgets\Consts\Justify;
 use PhpGui\Widgets\Consts\Relief;
@@ -29,14 +30,15 @@ use PhpGui\Widgets\Consts\Relief;
  */
 class Label extends TtkWidget implements Justify, Relief, Anchor
 {
+    use DetectUnderline;
 
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';
 
     public function __construct(Container $parent, string $title, array $options = [])
     {
-        // TODO: use detect underline ?
-        $options['text'] = $title;
+        $options['text'] = $this->removeUnderlineChar($title);
+        $options['underline'] = $this->detectUnderlineIndex($title);
         parent::__construct($parent, $options);
     }
 

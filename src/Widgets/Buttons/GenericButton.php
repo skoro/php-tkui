@@ -4,6 +4,7 @@ namespace PhpGui\Widgets\Buttons;
 
 use PhpGui\Options;
 use PhpGui\Widgets\Buttons\Command;
+use PhpGui\Widgets\Common\DetectUnderline;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\TtkWidget;
 
@@ -12,10 +13,12 @@ use PhpGui\Widgets\TtkWidget;
  * @property int $underline
  * @property int $width
  * @property string $compound
+ * @property string $text
  */
 abstract class GenericButton extends TtkWidget
 {
     use Command;
+    use DetectUnderline;
 
     public function __construct(Container $parent, array $options = [])
     {
@@ -23,6 +26,12 @@ abstract class GenericButton extends TtkWidget
         if (isset($options['command'])) {
             $command = $options['command'];
             unset($options['command']);
+        }
+
+        if (isset($options['text'])) {
+            $title = $options['text'];
+            $options['text'] = $this->removeUnderlineChar($title);
+            $options['underline'] = $this->detectUnderlineIndex($title);
         }
 
         parent::__construct($parent, $options);

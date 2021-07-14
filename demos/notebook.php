@@ -31,11 +31,7 @@ $demo = new class extends DemoAppWindow
     private function createTab1(Notebook $parent): NotebookTab
     {
         $f = new Frame($parent);
-        $tab = new NotebookTab($f, 'First tab');
-
-        // Setting up 'underline' will automatically enable
-        // keyboard traversing for notebook widget.
-        $tab->underline = 0;
+        $tab = new NotebookTab($f, '_First tab');
 
         (new Button($f, 'Click to change tab text'))
             ->onClick(function () use ($tab) {
@@ -53,14 +49,13 @@ $demo = new class extends DemoAppWindow
     {
         $f = new LabelFrame($parent, 'Second frame');
 
-        return new NotebookTab($f, 'Second tab', ['padding' => 4, 'underline' => 0]);
+        return new NotebookTab($f, '_Second tab', ['padding' => 4]);
     }
 
     private function createTab3(Notebook $parent): NotebookTab
     {
         $f = new Frame($parent);
-        $tab = new NotebookTab($f, 'Hide me');
-        $tab->underline = 2;
+        $tab = new NotebookTab($f, 'Hi_de me');
 
         (new Button($f, 'Click to hide'))
             ->onClick(function () use ($parent, $tab) {

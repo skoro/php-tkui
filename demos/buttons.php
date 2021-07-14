@@ -69,9 +69,9 @@ $demo = new class extends DemoAppWindow
 
         $menu = new Menu($f);
         $menu->addGroup(new MenuItemGroup([
-            new MenuItem('Option 1'),
-            new MenuItem('Option 2'),
-            new MenuItem('Option 3'),
+            new MenuItem('Option _1'),
+            new MenuItem('Option _2'),
+            new MenuItem('Option _3'),
         ], fn (MenuItem $i) => $l->text = $i->label));
 
         (new MenuButton($f, 'Menu button', $menu))
