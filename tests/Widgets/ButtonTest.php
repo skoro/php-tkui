@@ -34,10 +34,10 @@ class ButtonTest extends TestCase
     public function make_widget_with_options()
     {
         $this->tclEvalTest(1, [
-            ['ttk::button', $this->checkWidget('.b'), '-text', '{Title}', '-underline', 2],
+            ['ttk::button', $this->checkWidget('.b'), '-text', '{Title}', '-width', 40],
         ]);
 
-        new Button($this->createWindowStub(), 'Title', ['underline' => 2]);
+        new Button($this->createWindowStub(), 'Title', ['width' => 40]);
     }
 
     /** @test */
