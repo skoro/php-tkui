@@ -1,4 +1,8 @@
-<phpunit bootstrap="./vendor/autoload.php">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./vendor/autoload.php"
+    stopOnError="true"
+    stopOnFailure="true"
+>
     <testsuites>
         <testsuite name="php-gui">
             <directory>./tests</directory>
