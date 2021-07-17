@@ -137,16 +137,27 @@ abstract class BaseWindow implements Window
         }
     }
 
-    // @todo consider to accept an array of widgets then we can pack
-    //       several widgets at once.
-    public function pack(Widget $widget, array $options = []): Pack
+    /**
+     * @inheritdoc
+     */
+    public function pack($widget, array $options = []): Widget
     {
-        return new Pack($widget, $options);
+        $pack = new Pack($this->getEval());
+        $widgets = is_array($widget) ? $widget : array($widget);
+
+        foreach ($widgets as $w) {
+            $pack->add($w, $options);
+        }
+
+        return $this;
     }
 
-    public function grid(Widget $widget, array $options = []): Grid
+    /**
+     * @inheritdoc
+     */
+    public function grid(): Grid
     {
-        return new Grid($widget, $options);
+        return new Grid($this->getEval());
     }
 
     /**
