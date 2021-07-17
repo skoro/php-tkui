@@ -6,6 +6,7 @@ use PhpGui\Dialogs\FontDialog;
 use PhpGui\Dialogs\OpenFileDialog;
 use PhpGui\Dialogs\SaveFileDialog;
 use PhpGui\Font;
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Label;
 use PhpGui\Widgets\LabelFrame;
@@ -17,11 +18,15 @@ $demo = new class extends DemoAppWindow
     public function __construct()
     {
         parent::__construct('Dialogs demo');
-        $this->createOpenDialogFrame();
-        $this->createSaveDialogFrame();
-        $this->createChooseDirectoryFrame();
-        $this->createChooseColorFrame();
-        $this->createChooseFontFrame();
+        $this->pack([
+            $this->createOpenDialogFrame(),
+            $this->createSaveDialogFrame(),
+            $this->createChooseDirectoryFrame(),
+            $this->createChooseColorFrame(),
+            $this->createChooseFontFrame(),
+        ], [
+            'fill' => Pack::FILL_X, 'padx' => 4, 'pady' => 2,
+        ]);
     }
 
     private function createOpenDialogFrame()
@@ -29,13 +34,12 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($this, 'Open file');
 
         $b1 = new Button($f, 'Open ...');
-        $b1->pack()->sideLeft()->pad(2, 2)->manage();
-
         $b2 = new Button($f, 'Open with filter...');
-        $b2->pack()->sideLeft()->pad(2, 2)->manage();
+
+        $f->pack([$b1, $b2], ['side' => Pack::SIDE_LEFT, 'padx' => 2, 'pady' => 2]);
 
         $res = new Label($f, '');
-        $res->pack()->sideRight()->fillX()->expand()->manage();
+        $f->pack($res, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_X, 'expand' => true]);
 
         $dlg1 = new OpenFileDialog($this, ['title' => 'Choose a file']);
         $dlg1->onSuccess(fn ($file) => $res->text = $file);
@@ -53,7 +57,7 @@ $demo = new class extends DemoAppWindow
         $b1->onClick([$dlg1, 'showModal']);
         $b2->onClick([$dlg2, 'showModal']);
 
-        $f->pack()->fillX()->pad(4, 2)->manage();
+        return $f;
     }
 
     private function createSaveDialogFrame()
@@ -61,10 +65,10 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($this, 'Save file');
 
         $b = new Button($f, 'Save ...');
-        $b->pack()->sideLeft()->pad(2, 2)->manage();
+        $f->pack($b, ['side' => Pack::SIDE_LEFT, 'padx' => 2, 'pady' => 2]);
 
         $res = new Label($f, '');
-        $res->pack()->sideRight()->fillX()->expand()->manage();
+        $f->pack($res, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_X, 'expand' => true]);
 
         $dlg = new SaveFileDialog($this, ['title' => 'Save the file']);
         $dlg->initialFile = 'test.txt';
@@ -73,7 +77,7 @@ $demo = new class extends DemoAppWindow
 
         $b->onClick([$dlg, 'showModal']);
 
-        $f->pack()->fillX()->pad(4, 2)->manage();
+        return $f;
     }
 
     private function createChooseDirectoryFrame()
@@ -81,10 +85,10 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($this, 'Directory');
 
         $b = new Button($f, 'Choose directory ...');
-        $b->pack()->sideLeft()->pad(2, 2)->manage();
+        $f->pack($b, ['side' => Pack::SIDE_LEFT, 'padx' => 2, 'pady' => 2]);
 
         $res = new Label($f, '');
-        $res->pack()->sideRight()->fillX()->expand()->manage();
+        $f->pack($res, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_X, 'expand' => true]);
 
         $dlg = new DirectoryDialog($this, ['title' => 'Directory']);
         $dlg->onSuccess(fn ($dir) => $res->text = $dir);
@@ -92,7 +96,7 @@ $demo = new class extends DemoAppWindow
 
         $b->onClick([$dlg, 'showModal']);
 
-        $f->pack()->fillX()->pad(4, 2)->manage();
+        return $f;
     }
 
     private function createChooseColorFrame()
@@ -100,12 +104,17 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($this, 'Color');
 
         $btnFg = new Button($f, 'Foreground');
-        $btnFg->pack()->sideLeft()->pad(2, 2)->manage();
         $btnBg = new Button($f, 'Background');
-        $btnBg->pack()->sideLeft()->pad(2, 2)->manage();
+        $f->pack([$btnFg, $btnBg], [
+            'side' => Pack::SIDE_LEFT,
+            'padx' => 2,
+            'pady' => 2,
+        ]);
 
         $res = new Label($f, 'Color');
-        $res->pack()->sideRight()->fillX()->expand()->manage();
+        $f->pack($res, [
+            'side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_X, 'expand' => true,
+        ]);
 
         $dlgFg = new ColorDialog($this);
         $dlgFg->title = 'Foreground';
@@ -118,7 +127,7 @@ $demo = new class extends DemoAppWindow
         $btnFg->onClick([$dlgFg, 'showModal']);
         $btnBg->onClick([$dlgBg, 'showModal']);
 
-        $f->pack()->fillX()->pad(4, 2)->manage();
+        return $f;
     }
 
     private function createChooseFontFrame()
@@ -126,17 +135,17 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($this, 'Font');
 
         $b = new Button($f, 'Font');
-        $b->pack()->sideLeft()->pad(2, 2)->manage();
+        $f->pack($b, ['side' => Pack::SIDE_LEFT, 'padx' => 2, 'pady' => 2]);
 
         $res = new Label($f, 'Text Sample');
-        $res->pack()->sideRight()->fillX()->expand()->manage();
+        $f->pack($res, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_X, 'expand' => true]);
 
         $dlg = new FontDialog($this, $this->app->getFontManager(), ['title' => 'Choose a font']);
         $dlg->onSuccess(fn (Font $font) => $res->font = $font);
 
         $b->onClick([$dlg, 'showModal']);
 
-        $f->pack()->fillX()->padX(4, 2)->manage();
+        return $f;
     }
 };
 

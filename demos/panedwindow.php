@@ -1,5 +1,6 @@
 <?php
 
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Label;
 use PhpGui\Widgets\LabelFrame;
 use PhpGui\Widgets\PanedWindow;
@@ -12,11 +13,18 @@ $demo = new class extends DemoAppWindow
     {
         parent::__construct('Paned window demo');
 
+        $packOptions = [
+            'fill' => Pack::FILL_BOTH,
+            'padx' => 2,
+            'pady' => 2,
+            'expand' => true,
+        ];
+
         $vert = new PanedWindow($this);
-        $vert->pack()->expand()->fillBoth()->pad(2, 2)->manage();
+        $this->pack($vert, $packOptions);
 
         $pw = new PanedWindow($vert, ['orient' => PanedWindow::ORIENT_HORIZONTAL]);
-        $pw->pack()->expand()->fillBoth()->pad(2, 2)->manage();
+        $this->pack($pw, $packOptions);
 
         $pw->add($this->makePanel($pw, "Frame 1", "This is the left side."))
            ->add($this->makePanel($pw, "Frame 2", "This is the middle."))
@@ -31,7 +39,7 @@ $demo = new class extends DemoAppWindow
     protected function makePanel(PanedWindow $parent, string $title, string $label)
     {
         $f = new LabelFrame($parent, $title);
-        (new Label($f, $label))->pack()->manage();
+        $f->pack(new Label($f, $label));
         return $f;
     }
 };

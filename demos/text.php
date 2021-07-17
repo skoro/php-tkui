@@ -1,5 +1,6 @@
 <?php
 
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
@@ -17,26 +18,28 @@ $demo = new class extends DemoAppWindow
         $this->createActions();
         $f = new Frame($this);
         $this->text = $this->createTextbox($f);
-        $f->pack()->expand()->fillBoth()->manage();
+        $this->pack($f, ['expand' => true, 'fill' => Pack::FILL_BOTH]);
         $this->fillText();
     }
 
     protected function createActions(): void
     {
         $f = new Frame($this);
-        $f->pack()->sideTop()->fillX()->manage();
+        $this->pack($f, ['side' => Pack::SIDE_TOP, 'fill' => Pack::FILL_X]);
 
-        (new Button($f, 'Clear'))->onClick(function () {
+        $b = new Button($f, 'Clear');
+        $b->onClick(function () {
             $this->text->clear();
-        })->pack()->sideLeft()->manage();
+        });
+        $f->pack($b, ['side' => Pack::SIDE_LEFT]);
     }
 
     protected function createTextbox(Frame $parent): Text
     {
         $t = new Text($parent);
         $t->yScrollCommand = new Scrollbar($parent);
-        $t->yScrollCommand->pack()->sideRight()->fillY()->expand()->manage();
-        $t->pack()->sideLeft()->fillBoth()->expand()->manage();
+        $parent->pack($t->yScrollCommand, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_Y, 'expand' => true]);
+        $parent->pack($t, ['side' => Pack::SIDE_LEFT, 'fill' => Pack::FILL_BOTH, 'expand' => true]);
         return $t;
     }
 

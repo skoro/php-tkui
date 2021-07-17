@@ -1,5 +1,6 @@
 <?php
 
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Entry;
 use PhpGui\Widgets\Frame;
@@ -18,11 +19,19 @@ $demo = new class extends DemoAppWindow
     public function __construct()
     {
         parent::__construct('Demo Listbox');
-        $this->helpFrame()->pack()->sideTop()->fillX()->manage();
-        $this->newItemFrame()->pack()->sideTop()->fillX()->manage();
-        $this->listControlsFrame()->pack()->sideRight()->fillY()->manage();
+        $this->pack([
+            $this->helpFrame(),
+            $this->newItemFrame(),
+        ], [
+            'side' => Pack::SIDE_TOP,
+            'fill' => Pack::FILL_X,
+        ]);
+        $this->pack($this->listControlsFrame(), [
+            'side' => Pack::SIDE_RIGHT,
+            'fill' => Pack::FILL_Y,
+        ]);
         $lf = new Frame($this);
-        $lf->pack()->sideLeft()->fillBoth()->expand()->manage();
+        $this->pack($lf, ['side' => Pack::SIDE_LEFT, 'fill' => Pack::FILL_BOTH, 'expand' => true]);
         $this->listBox = $this->createListBox($lf);
         $this->initItems();
     }
@@ -30,24 +39,17 @@ $demo = new class extends DemoAppWindow
     protected function newItemFrame(): Frame
     {
         $f = new Frame($this);
+        $f->pack(new Label($f, 'New item:'), ['side' => Pack::SIDE_LEFT]);
 
-        $this->pack(new Label($f, 'New item:'))->sideLeft()->manage();
+        $e = new Entry($f, 'Demo');
+        $f->pack($e, ['side' => Pack::SIDE_LEFT, 'fill' => Pack::FILL_X, 'expand' => true]);
 
-        /** @var Entry $e */
-        $e = $this->pack(new Entry($f, 'Demo'))
-                  ->sideLeft()
-                  ->fillX()
-                  ->expand()
-                  ->manage();
-
-        $btn = $this->pack(new Button($f, 'Add'))
-                    ->sideRight()
-                    ->manage();
-        /** @var Button $btn */
+        $btn = new Button($f, 'Add');
         $btn->onClick(function () use ($e) {
             $this->addNewItem($e->getValue());
             $e->clear();
         });
+        $f->pack($btn, ['side' => Pack::SIDE_RIGHT]);
 
         $e->bind('Return', fn () => $btn->invoke());
 
@@ -57,12 +59,16 @@ $demo = new class extends DemoAppWindow
     protected function createListBox(Frame $parent): Listbox
     {
         $l = new Label($parent, 'Selected...');
-        $l->pack()->sideBottom()->anchor('w')->manage();
+        $parent->pack($l, ['side' => Pack::SIDE_BOTTOM, 'anchor' => 'w']);
 
         $lb = new Listbox($parent);
         $lb->yScrollCommand = new Scrollbar($parent);
-        $lb->yScrollCommand->pack()->sideRight()->fillY()->manage();
-        $lb->pack()->sideLeft()->fillBoth()->expand()->manage();
+        $parent->pack($lb->yScrollCommand, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_Y]);
+        $parent->pack($lb, [
+            'side' => Pack::SIDE_LEFT,
+            'fill' => Pack::FILL_BOTH,
+            'expand' => true,
+        ]);
 
         /** @var ListboxItem[] $items */
         $lb->onSelect(function (array $items) use ($l) {
@@ -76,22 +82,19 @@ $demo = new class extends DemoAppWindow
     {
         $f = new Frame($this);
 
-        $fillX = ['fill' => 'x'];
-
         $btnDel = new Button($f, 'Delete');
-        $btnDel->pack($fillX)->manage();
         $btnDel->onClick(fn () => $this->deleteItems());
         $this->bind('Control-d', [$btnDel, 'invoke']);
 
         $btnClear = new Button($f, 'Clear');
-        $btnClear->pack($fillX)->manage();
         $btnClear->onClick(fn () => $this->listBox->clear());
         $this->bind('Control-l', [$btnClear, 'invoke']);
 
         $btnAppend = new Button($f, 'Append');
-        $btnAppend->pack($fillX)->manage();
         $btnAppend->onClick(fn () => $this->initItems());
         $this->bind('Control-a', [$btnAppend, 'invoke']);
+
+        $f->pack([$btnDel, $btnClear, $btnAppend], ['fill' => 'x']);
 
         return $f;
     }
@@ -99,10 +102,7 @@ $demo = new class extends DemoAppWindow
     protected function helpFrame(): LabelFrame
     {
         $f = new LabelFrame($this, 'Help');
-        (new Label($f, 'Button demo'))
-            ->pack()
-            ->sideTop()
-            ->manage();
+        $f->pack(new Label($f, 'Button demo'));
         $text = [
             'Use the following shortcuts:',
             '* Control-D = delete item',
@@ -110,11 +110,10 @@ $demo = new class extends DemoAppWindow
             '* Control-A = append items'
         ];
         foreach ($text as $t) {
-            (new Label($f, $t))
-                ->pack()
-                ->sideTop()
-                ->anchor('w')
-                ->manage();
+            $f->pack(new Label($f, $t), [
+                'side' => Pack::SIDE_TOP,
+                'anchor' => 'w',
+            ]);
         }
         return $f;
     }

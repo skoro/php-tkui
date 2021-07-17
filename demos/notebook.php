@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Label;
@@ -16,16 +17,16 @@ $demo = new class extends DemoAppWindow
         parent::__construct('Notebook demo');
 
         $l = new Label($this, '');
-        $l->pack()->pad(2, 2)->fillX()->manage();
+        $this->pack($l, ['padx' => 2, 'pady' => 2, 'fill' => Pack::FILL_X]);
 
         $nb = new Notebook($this);
         $nb->add($this->createTab1($nb));
         $nb->add($this->createTab2($nb));
         $nb->add($this->createTab3($nb));
-        $nb->pack()->expand()->fillBoth()->manage();
         $nb->onChanged(function (NotebookTab $tab) use ($l) {
             $this->showCurrentTabname($l, $tab->text);
         });
+        $this->pack($nb, ['expand' => true, 'fill' => Pack::FILL_BOTH]);
     }
 
     private function createTab1(Notebook $parent): NotebookTab
@@ -33,14 +34,15 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($parent);
         $tab = new NotebookTab($f, '_First tab');
 
-        (new Button($f, 'Click to change tab text'))
-            ->onClick(function () use ($tab) {
-                $tab->text = 'Changed !';
-            })->pack()->padY(8)->manage();
+        $b1 = new Button($f, 'Click to change tab text');
+        $b1->onClick(function () use ($tab) {
+            $tab->text = 'Changed !';
+        });
 
-        (new Button($f, 'Switch to Second'))
-            ->onClick(fn () => $parent->select(1))
-            ->pack()->padY(8)->manage();
+        $b2 = new Button($f, 'Switch to Second');
+        $b2->onClick(fn () => $parent->select(1));
+
+        $f->pack([$b1, $b2], ['pady' => 8]);
 
         return $tab;
     }
@@ -57,11 +59,11 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($parent);
         $tab = new NotebookTab($f, 'Hi_de me');
 
-        (new Button($f, 'Click to hide'))
-            ->onClick(function () use ($parent, $tab) {
-                $parent->hide($tab);
-            })
-            ->pack()->pady(8)->manage();
+        $b = new Button($f, 'Click to hide');
+        $b->onClick(function () use ($parent, $tab) {
+            $parent->hide($tab);
+        });
+        $f->pack($b, ['pady' => 8]);
 
         return $tab;
     }

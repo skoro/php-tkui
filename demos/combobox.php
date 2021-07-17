@@ -1,6 +1,7 @@
 <?php
 
 use PhpGui\Color;
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Buttons\CheckButton;
 use PhpGui\Widgets\Combobox;
@@ -21,9 +22,16 @@ $demo = new class extends DemoAppWindow
     {
         parent::__construct('Combobox Demo');
         $this->themes = $this->app->getThemeManager()->themes();
-        $this->themeSelector()->pack()->pad(6, 6)->fillX()->manage();
-        $this->plainSelector()->pack()->pad(6, 6)->fillX()->manage();
-        $this->themeDemo()->pack()->pad(6, 6)->fillX()->manage();
+
+        $this->pack([
+            $this->themeSelector(),
+            $this->plainSelector(),
+            $this->themeDemo(),
+        ], [
+            'padx' => 6,
+            'pady' => 6,
+            'fill' => Pack::FILL_X,
+        ]);
     }
 
     protected function themeSelector(): Frame
@@ -32,10 +40,10 @@ $demo = new class extends DemoAppWindow
         $l = new Label($f, 'Theme selector');
         $l->background = Color::fromName('black');
         $l->foreground = Color::fromName('white');
-        $l->pack()->manage();
+        $f->pack($l);
         $themes = new Combobox($f, $this->themes, ['state' => 'readonly']);
-        $themes->pack()->fillX()->pad(4, 4)->manage();
         $themes->onSelect([$this, 'changeTheme']);
+        $f->pack($themes, ['padx' => 4, 'pady' => 4]);
 
         $cur = $this->app->getThemeManager()->currentTheme();
         if (($idx = array_search($cur, $this->themes)) !== false) {
@@ -49,27 +57,45 @@ $demo = new class extends DemoAppWindow
     {
         $f = new LabelFrame($this, 'Combobox:');
         $l = new Label($f, 'Selected...');
-        $l->pack()->manage();
+        $f->pack($l);
         $cb = new Combobox($f, ['Item 1', 'Item 2', 'Item 3']);
         $cb->onSelect(fn () => $l->text = $cb->getValue());
-        $cb->pack()->fillX()->pad(4, 4)->manage();
+        $f->pack($cb, ['padx' => 4, 'pady' => 4, 'fill' => Pack::FILL_X]);
         return $f;
     }
 
     protected function themeDemo(): Frame
     {
         $f = new LabelFrame($this, 'Theme demo:');
-        (new Button($f, 'Button'))->pack()->sideTop()->padY(4)->manage();
-        (new Entry($f, 'value...'))->pack()->sideTop()->padY(4)->manage();
-        (new Scrollbar($f, ['orient' => Scrollbar::ORIENT_HORIZONTAL]))
-            ->pack()->sideTop()->pad(4, 4)->fillX()->expand()->manage();
-        (new CheckButton($f, 'Enabled checkbutton', false))->pack()->pad(4, 4)->manage();
-        (new CheckButton($f, 'Disabled checkbutton', true))->pack()->pad(4, 4)->manage();
+        $f->pack([
+            new Button($f, 'Button'),
+            new Entry($f, 'value...'),
+        ], [
+            'side' => Pack::SIDE_TOP,
+            'pady' => 4,
+        ]);
+        $f->pack(new Scrollbar($f, ['orient' => Scrollbar::ORIENT_HORIZONTAL]), [
+            'side' => Pack::SIDE_TOP,
+            'fill' => Pack::FILL_X,
+            'expand' => true,
+            'padx' => 4,
+            'pady' => 4,
+        ]);
+        $f->pack([
+            new CheckButton($f, 'Enabled checkbutton', false),
+            new CheckButton($f, 'Disabled checkbutton', true),
+        ], [
+            'padx' => 4,
+            'pady' => 4,
+        ]);
         $rg = new RadioGroup($f);
-        $rg->add('Radio button', 1)->pack(['fill' => 'x'])->manage();
-        $rg->add('Radio button', 2)->pack(['fill' => 'x'])->manage();
-        $rg->add('Radio button', 3)->pack(['fill' => 'x'])->manage();
-        $rg->pack()->fillX()->manage();
+        $f->pack([
+            $rg->add('Radio button', 1),
+            $rg->add('Radio button', 2),
+            $rg->add('Radio button', 3),
+            $rg,
+        ], ['fill' => Pack::FILL_X]);
+        // $rg->pack()->fillX()->manage();
         return $f;
     }
 

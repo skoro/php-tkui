@@ -12,36 +12,36 @@ $demo = new class extends DemoAppWindow
     {
         parent::__construct('Window demo');
 
-        (new Button($this, 'Fullscreen window'))
-            ->onClick(function () {
-                $this->newWindow('Fullscreen')
-                     ->getWindowManager()
-                     ->setFullScreen();
-            })
-            ->pack()->manage();
+        $b1 = new Button($this, 'Fullscreen window');
+        $b1->onClick(function () {
+            $this->newWindow('Fullscreen')
+                    ->getWindowManager()
+                    ->setFullScreen();
+        });
+        $this->pack($b1);
 
-        (new Button($this, 'Iconify'))
-            ->onClick(function () {
+        $b2 = new Button($this, 'Iconify');
+        $b2->onClick(function () {
                 $this->getWindowManager()->iconify();
-            })
-            ->pack()->manage();
+        });
+        $this->pack($b2);
 
-        (new Button($this, 'Max and min size'))
-            ->onClick(function () {
-                $this->newWindow('MaxSize')
-                     ->getWindowManager()
-                     ->setMaxSize(200, 200)
-                     ->setMinSize(100, 40);
-            })
-            ->pack()->manage();
+        $b3 = new Button($this, 'Max and min size');
+        $b3->onClick(function () {
+            $this->newWindow('MaxSize')
+                    ->getWindowManager()
+                    ->setMaxSize(200, 200)
+                    ->setMinSize(100, 40);
+        });
+        $this->pack($b3);
 
-        (new Button($this, 'Window at 0,0'))
-            ->onClick(function () {
-                $this->newWindow('(0,0)')
-                     ->getWindowManager()
-                     ->setPos(0, 0);
-            })
-            ->pack()->manage();
+        $b4 = new Button($this, 'Window at 0,0');
+        $b4->onClick(function () {
+            $this->newWindow('(0,0)')
+                    ->getWindowManager()
+                    ->setPos(0, 0);
+        });
+        $this->pack($b4);
 
         $this->getWindowManager()->setMinSize(200, 200);
     }
@@ -50,8 +50,8 @@ $demo = new class extends DemoAppWindow
     {
         $w = new ChildWindow($this, $title);
         $btn = new Button($w, 'Close');
-        $btn->pack()->manage();
         $btn->onClick([$w, 'close']);
+        $this->pack($btn);
         return $w;
     }
 

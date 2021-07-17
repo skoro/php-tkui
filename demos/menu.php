@@ -1,6 +1,6 @@
 <?php
 
-use PhpGui\Widgets\Menu\CommonItem;
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Menu\MenuCheckItem;
 use PhpGui\Widgets\Menu\MenuItem;
@@ -61,10 +61,12 @@ $demo = new class extends DemoAppWindow
     protected function makeTextbox(): Text
     {
         $yscr = new Scrollbar($this);
-        $yscr->pack()->sideRight()->fillY()->manage();
+        // $yscr->pack()->sideRight()->fillY()->manage();
         $txt = new Text($this);
-        $txt->pack()->fillBoth()->expand()->manage();
+        // $txt->pack()->fillBoth()->expand()->manage();
         $txt->yScrollCommand = $yscr;
+        $this->pack($yscr, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_Y]);
+        $this->pack($txt, ['fill' => Pack::FILL_BOTH, 'expand' => true]);
         return $txt;
     }
 
