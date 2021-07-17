@@ -3,7 +3,6 @@
 namespace PhpGui\Layouts;
 
 use PhpGui\Options;
-use PhpGui\Widgets\Widget;
 
 /**
  * pack geometry manager.
