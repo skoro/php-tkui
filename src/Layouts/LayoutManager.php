@@ -4,10 +4,20 @@ namespace PhpGui\Layouts;
 
 use PhpGui\Widgets\Widget;
 
+/**
+ * Layout manager interface.
+ *
+ * Layout manager arranges widgets in the container.
+ */
 interface LayoutManager
 {
     /**
-     * Do widget layout.
+     * Pack the widget.
      */
-    public function manage(): Widget;
+    public function add(Widget $widget, array $options = []): self;
+
+    /**
+     * Remove the widget.
+     */
+    public function remove(Widget $widget): self;
 }

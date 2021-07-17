@@ -2,50 +2,58 @@
 
 namespace PhpGui\Layouts;
 
+use PhpGui\Evaluator;
 use PhpGui\Options;
 use PhpGui\Widgets\Widget;
 
+/**
+ * Base layout manager.
+ */
 abstract class Manager implements LayoutManager
 {
-    private Widget $widget;
-    private Options $options;
+    private Evaluator $eval;
 
-    public function __construct(Widget $widget, array $options = [])
+    public function __construct(Evaluator $eval)
     {
-        $this->options = $this->initOptions()->mergeAsArray($options);
-        $this->widget = $widget;
+        $this->eval = $eval;
     }
 
-    protected function initOptions(): Options
+    /**
+     * The options layout manager can handle.
+     */
+    protected function createLayoutOptions(): Options
     {
         return new Options();
     }
 
-    public function widget(): Widget
+    /**
+     * The layout manager implementation command.
+     */
+    abstract protected function command(): string;
+
+    /**
+     * Call the layout manager engine.
+     */
+    protected function call(string $method, ...$options)
     {
-        return $this->widget;
+        $this->eval->tclEval($this->command(), $method, ...$options);
     }
 
-    protected function call(string $command)
+    /**
+     * @inheritdoc
+     */
+    public function add(Widget $widget, array $options = []): self
     {
-        return $this->widget
-            ->parent()
-            ->getEval()
-            ->tclEval($command, $this->widget->path(), ...$this->options->asStringArray());
+        $this->call($widget->path(), ...$this->createLayoutOptions()->mergeAsArray($options)->asStringArray());
+        return $this;
     }
 
-    public function __get($name)
+    /**
+     * @inheritdoc
+     */
+    public function remove(Widget $widget): self
     {
-        return $this->options->$name;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->options->$name = $value;
-    }
-
-    public function manage(): Widget
-    {
-        return $this->widget;
+        $this->call('forget', $widget->path());
+        return $this;
     }
 }
