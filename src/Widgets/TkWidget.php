@@ -3,8 +3,6 @@
 namespace PhpGui\Widgets;
 
 use PhpGui\Evaluator;
-use PhpGui\Layouts\Grid;
-use PhpGui\Layouts\Pack;
 use PhpGui\Options;
 use SplObserver;
 use SplSubject;
@@ -125,16 +123,6 @@ abstract class TkWidget implements Widget, SplObserver
     protected function call(string $method, ...$args): string
     {
         return $this->eval->tclEval($this->path(), $method, ...$args);
-    }
-
-    public function pack(array $options = []): Pack
-    {
-        return new Pack($this, $options);
-    }
-
-    public function grid(array $options = []): Grid
-    {
-        return new Grid($this, $options);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace PhpGui\Widgets;
 
 use RuntimeException;
 use PhpGui\Evaluator;
+use PhpGui\Layouts\Grid;
 use PhpGui\Windows\Window;
 
 abstract class TtkContainer extends TtkWidget implements Container
@@ -29,5 +30,18 @@ abstract class TtkContainer extends TtkWidget implements Container
     public function getEval(): Evaluator
     {
         return $this->parent()->getEval();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function pack($widget, array $options = []): Widget
+    {
+        return $this->parent()->pack($widget, $options);
+    }
+
+    public function grid(): Grid
+    {
+        return $this->parent()->grid();
     }
 }
