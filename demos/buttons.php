@@ -1,5 +1,6 @@
 <?php
 
+use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Buttons\CheckButton;
 use PhpGui\Widgets\Buttons\MenuButton;
@@ -18,54 +19,47 @@ $demo = new class extends DemoAppWindow
     public function __construct()
     {
         parent::__construct('Buttons Demo');
-        $this->buttons()
-             ->pack()
-             ->sideLeft()
-             ->ipadX(4)
-             ->ipadY(4)
-             ->padX(4)
-             ->padY(2)
-             ->anchor('n')
-             ->manage();
 
-        $this->checkboxes()
-             ->pack()
-             ->padX(2)
-             ->padY(2)
-             ->sideLeft()
-             ->anchor('n')
-             ->manage();
+        $this->pack($this->buttons(), [
+            'side' => Pack::SIDE_LEFT,
+            'ipadx' => 4,
+            'ipady' => 4,
+            'padx' => 4,
+            'pady' => 2,
+            'anchor' => 'n',
+        ]);
 
-        $this->radiobuttons()
-             ->pack()
-             ->padX(2)
-             ->padY(2)
-             ->sideLeft()
-             ->anchor('n')
-             ->manage();
+        $packOptions = [
+            'padx' => 2,
+            'pady' => 2,
+            'side' => Pack::SIDE_LEFT,
+            'anchor' => 'n',
+        ];
+
+        $this->pack($this->checkboxes(), $packOptions);
+        $this->pack($this->radiobuttons(), $packOptions);
     }
 
     protected function buttons(): LabelFrame
     {
         $f = new LabelFrame($this, 'Buttons');
+
         $l = new Label($f, 'Press button');
-        $l->pack()->sideTop()->ipadY(2)->manage();
-        (new Button($f, 'Button 1'))
-            ->onClick(fn (Button $b) => $l->text = $b->text)
-            ->pack()
-            ->sideTop()
-            ->manage();
-        (new Button($f, 'Button 2'))
-            ->onClick(fn (Button $b) => $l->text = $b->text)
-            ->pack()
-            ->sideTop()
-            ->manage();
+        $f->pack($l, ['side' => 'top', 'ipady' => 2]);
+
+        $b1= new Button($f, 'Button 1');
+        $b1->onClick(fn (Button $b) => $l->text = $b->text);
+        $this->pack($b1, ['side' => Pack::SIDE_TOP]);
+        
+        $b2 = new Button($f, 'Button 2');
+        $b2->onClick(fn (Button $b) => $l->text = $b->text);
+        $this->pack($b2, ['side' => Pack::SIDE_TOP]);
 
         // Disabled button with state in options.
-        (new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]))
-            ->pack()
-            ->sideTop()
-            ->manage();
+        $this->pack(
+            new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]),
+            ['side' => 'top'],
+        );
 
         $menu = new Menu($f);
         $menu->addGroup(new MenuItemGroup([
@@ -74,10 +68,7 @@ $demo = new class extends DemoAppWindow
             new MenuItem('Option _3'),
         ], fn (MenuItem $i) => $l->text = $i->label));
 
-        (new MenuButton($f, 'Menu button', $menu))
-            ->pack()
-            ->sideTop()
-            ->manage();
+        $this->pack(new MenuButton($f, 'Menu button', $menu), ['side' => Pack::SIDE_TOP]);
 
         return $f;
     }
@@ -86,10 +77,17 @@ $demo = new class extends DemoAppWindow
     {
         $f = new LabelFrame($this, 'Checkboxes');
         $l = new Label($f, 'Selected...');
-        $l->pack()->manage();
+        $f->pack($l);
+
+        $packOptions = [
+            'side' => Pack::SIDE_TOP,
+            'fill' => Pack::FILL_X,
+            'anchor' => 'n',
+        ];
+
         foreach (['One', 'Two', 'Three', 'Four'] as $name) {
             $cb = new CheckButton($f, $name);
-            $cb->pack()->sideTop()->anchor('w')->fillX()->manage();
+            $f->pack($cb, $packOptions);
             if ($name === 'Three') {
                 $cb->select();
             }
@@ -97,9 +95,9 @@ $demo = new class extends DemoAppWindow
         }
 
         // Disabled check button, setting state via method (allows chaining).
-        (new CheckButton($f, 'Disabled'))
-            ->state(CheckButton::STATE_DISABLED)
-            ->pack()->sideTop()->anchor('w')->fillX()->manage();
+        $disabled = (new CheckButton($f, 'Disabled'))
+            ->state(CheckButton::STATE_DISABLED);
+        $this->pack($disabled, $packOptions);
 
         return $f;
     }
@@ -108,24 +106,27 @@ $demo = new class extends DemoAppWindow
     {
         $f = new LabelFrame($this, 'Radio buttons');
         $l = new Label($f, 'Selected...');
-        $l->pack()->manage();
+        $f->pack($l);
+
+        $packOptions = [
+            'fill' => Pack::FILL_X,
+            'anchor' => 'w',
+        ];
+
         $rg = new RadioGroup($f);
         $rg->setValue('two');
         foreach (['One', 'Two', 'Three', 'Four'] as $name) {
-            $rg->add($name, strtolower($name))
-                ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->getValue())
-                ->pack()
-                ->anchor('w')
-                ->fillX()
-                ->manage();
+            $w = $rg->add($name, strtolower($name))
+                ->onClick(fn (RadioButton $b) => $l->text = $b->text . ': ' . $b->getValue());
+            $rg->pack($w, $packOptions);
         }
 
         // Disabled, setting state as a property.
         $x = $rg->add('Disabled', 'disabled');
         $x->state = RadioButton::STATE_DISABLED;
-        $x->pack()->anchor('w')->fillX()->manage();
+        $rg->pack($x, $packOptions);
 
-        $rg->pack()->fillBoth()->expand()->manage();
+        $f->pack($rg, ['fill' => Pack::FILL_BOTH, 'expand' => true]);
         return $f;
     }
 };
