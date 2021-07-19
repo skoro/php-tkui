@@ -141,19 +141,17 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function pack($widget, array $options = []): Widget
+    public function pack($widget, array $options = []): Pack
     {
-        $this->doLayout(new Pack($this->getEval()), $widget, $options);
-        return $this;
+        return $this->doLayout(new Pack($this->getEval()), $widget, $options);
     }
 
     /**
      * @inheritdoc
      */
-    public function grid($widget, array $options = []): Widget
+    public function grid($widget, array $options = []): Grid
     {
-        $this->doLayout(new Grid($this->getEval()), $widget, $options);
-        return $this;
+        return $this->doLayout(new Grid($this->getEval()), $widget, $options);
     }
 
     /**
@@ -168,6 +166,8 @@ abstract class BaseWindow implements Window
         foreach ($widgets as $widget) {
             $manager->add($widget, $options);
         }
+
+        return $manager;
     }
 
     /**

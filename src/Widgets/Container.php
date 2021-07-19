@@ -3,6 +3,8 @@
 namespace PhpGui\Widgets;
 
 use PhpGui\Evaluator;
+use PhpGui\Layouts\Grid;
+use PhpGui\Layouts\Pack;
 use PhpGui\Windows\Window;
 
 /**
@@ -25,7 +27,7 @@ interface Container extends Widget
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
      * @param array          $options  The packing options applied to widget(s).
      */
-    public function pack($widget, array $options = []): Widget;
+    public function pack($widget, array $options = []): Pack;
 
     /**
      * Do the widget layout using grid manager.
@@ -33,5 +35,5 @@ interface Container extends Widget
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
      * @param array          $options The grid options.
      */
-    public function grid($widget, array $options = []): Widget;
+    public function grid($widget, array $options = []): Grid;
 }
