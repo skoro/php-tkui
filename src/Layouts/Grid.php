@@ -3,6 +3,7 @@
 namespace PhpGui\Layouts;
 
 use PhpGui\Options;
+use PhpGui\Widgets\Widget;
 
 /**
  * grid geometry manager.
@@ -40,5 +41,33 @@ class Grid extends Manager
     protected function command(): string
     {
         return 'grid';
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/grid.htm#M24
+     */
+    public function rowConfigure(Widget $widget, int $index, array $options): self
+    {
+        return $this->configure('row', $widget, $index, $options);
+    }
+
+    /**
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/grid.htm#M8
+     */
+    public function columnConfigure(Widget $widget, int $index, array $options): self
+    {
+        return $this->configure('column', $widget, $index, $options);
+    }
+
+    protected function configure(string $type, Widget $widget, int $index, array $options): self
+    {
+        $cmdOptions = new Options([
+            'minsize' => null,
+            'weight' => null,
+            'uniform' => null,
+            'pad' => null,
+        ]);
+        $this->call("{$type}configure", $widget->path(), $index, ...$cmdOptions->mergeAsArray($options)->asStringArray());
+        return $this;
     }
 }
