@@ -38,8 +38,12 @@ $demo = new class extends DemoAppWindow
     {
         $t = new Text($parent);
         $t->yScrollCommand = new Scrollbar($parent);
-        $parent->pack($t->yScrollCommand, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_Y, 'expand' => true]);
-        $parent->pack($t, ['side' => Pack::SIDE_LEFT, 'fill' => Pack::FILL_BOTH, 'expand' => true]);
+        $t->xScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_HORIZONTAL]);
+        $parent->grid($t, ['sticky' => 'nsew', 'row' => 0, 'column' => 0])
+               ->rowConfigure($parent, 0, ['weight' => 1])
+               ->columnConfigure($parent, 0, ['weight' => 1]);
+        $parent->grid($t->yScrollCommand, ['sticky' => 'nsew', 'row' => 0, 'column' => 1]);
+        $parent->grid($t->xScrollCommand, ['sticky' => 'nsew', 'row' => 1, 'column' => 0]);
         return $t;
     }
 
