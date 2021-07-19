@@ -3,6 +3,7 @@
 namespace PhpGui\Windows;
 
 use PhpGui\Layouts\Grid;
+use PhpGui\Layouts\LayoutManager;
 use PhpGui\Layouts\Pack;
 use PhpGui\Options;
 use PhpGui\TclTk\TkWindowManager;
@@ -142,22 +143,31 @@ abstract class BaseWindow implements Window
      */
     public function pack($widget, array $options = []): Widget
     {
-        $pack = new Pack($this->getEval());
-        $widgets = is_array($widget) ? $widget : array($widget);
-
-        foreach ($widgets as $w) {
-            $pack->add($w, $options);
-        }
-
+        $this->doLayout(new Pack($this->getEval()), $widget, $options);
         return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function grid(): Grid
+    public function grid($widget, array $options = []): Widget
     {
-        return new Grid($this->getEval());
+        $this->doLayout(new Grid($this->getEval()), $widget, $options);
+        return $this;
+    }
+
+    /**
+     * @param Widget|Widget[] $widgets
+     */
+    protected function doLayout(LayoutManager $manager, $widgets, array $options)
+    {
+        if (! is_array($widgets)) {
+            $widgets = array($widgets);
+        }
+
+        foreach ($widgets as $widget) {
+            $manager->add($widget, $options);
+        }
     }
 
     /**

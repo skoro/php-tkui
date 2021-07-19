@@ -40,8 +40,11 @@ abstract class TtkContainer extends TtkWidget implements Container
         return $this->parent()->pack($widget, $options);
     }
 
-    public function grid(): Grid
+    /**
+     * @inheritdoc
+     */
+    public function grid($widget, array $options = []): Widget
     {
-        return $this->parent()->grid();
+        return $this->parent()->grid($widget, $options);
     }
 }
