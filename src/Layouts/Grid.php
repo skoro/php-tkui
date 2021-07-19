@@ -3,7 +3,6 @@
 namespace PhpGui\Layouts;
 
 use PhpGui\Options;
-use PhpGui\Widgets\Widget;
 
 /**
  * grid geometry manager.
@@ -17,7 +16,10 @@ use PhpGui\Widgets\Widget;
  */
 class Grid extends Manager
 {
-    protected function initOptions(): Options
+    /**
+     * @inheritdoc
+     */
+    protected function createLayoutOptions(): Options
     {
         return new Options([
             'column' => null,
@@ -32,33 +34,11 @@ class Grid extends Manager
         ]);
     }
 
-    public function manage(): Widget
+    /**
+     * @inheritdoc
+     */
+    protected function command(): string
     {
-        $this->call('grid');
-        return parent::manage();
-    }
-
-    public function column(int $col): self
-    {
-        $this->column = $col;
-        return $this;
-    }
-
-    public function columnSpan(int $span): self
-    {
-        $this->columnSpan = $span;
-        return $this;
-    }
-
-    public function row(int $row): self
-    {
-        $this->row = $row;
-        return $this;
-    }
-
-    public function rowSpan(int $span): self
-    {
-        $this->rowSpan = $span;
-        return $this;
+        return 'grid';
     }
 }
