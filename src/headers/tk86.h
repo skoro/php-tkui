@@ -1,5 +1,4 @@
 #define FFI_SCOPE "tk"
-#define FFI_LIB   "libtk8.6.so"
 
 typedef struct Tcl_Interp_ Tcl_Interp;
 typedef int *ClientData;
