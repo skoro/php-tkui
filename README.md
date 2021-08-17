@@ -6,6 +6,8 @@
 
 `php-gui` allows you to build desktop ui applications with PHP only. It leverages [FFI](https://www.php.net/manual/en/book.ffi) extension and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile or install any external extensions.
 
+<p align="center"><img src="screen-demo-buttons-win.png"></p>
+
 ### Requirements
 
 * PHP >= 7.4
