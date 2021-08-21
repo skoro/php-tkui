@@ -46,3 +46,13 @@ All the debug messages will go to the console. You may specify a file name inste
 
 To change the application appearance comment out `THEME` option and set one of:
 _clam_, _alt_, _default_, _vista_ (only available on Windows OS).
+
+### Windows
+
+You need to install Tcl/Tk binary distribution and set path to dlls
+in `.env` file like this:
+
+```
+WINDOWS_LIB_TCL=c:\\tcltk\\bin\\tcl86t.dll
+WINDOWS_LIB_TK=c:\\tcltk\\bin\\tk86t.dll
+```

@@ -1,5 +1,4 @@
 #define FFI_SCOPE "tcl"
-#define FFI_LIB   "libtcl8.6.so"
 
 typedef void (Tcl_FreeProc) (char *blockPtr);
 

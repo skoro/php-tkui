@@ -7,8 +7,6 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use PhpGui\Application;
 use PhpGui\Evaluator;
-use PhpGui\FFILoader;
-use PhpGui\TclTk\Tcl;
 use PhpGui\Widgets\Widget;
 use PhpGui\Windows\Window;
 
@@ -59,12 +57,6 @@ class TestCase extends FrameworkTestCase
             ->expects($this->exactly($count))
             ->method('tclEval')
             ->withConsecutive(...$args)->willReturn('');
-    }
-
-    protected function createTcl(string $ver = '86'): Tcl
-    {
-        $loader = new FFILoader();
-        return new Tcl($loader->loadTcl("tcl{$ver}.h"));
     }
 
     protected function emptyEval()

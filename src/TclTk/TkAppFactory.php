@@ -7,21 +7,60 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PhpGui\AppFactory;
 use PhpGui\Environment;
-use PhpGui\FFILoader;
+use PhpGui\Exceptions\UnsupportedOSException;
+use PhpGui\System\FFILoader;
+use PhpGui\System\OS;
 
 /**
  * Tk implementation of Application Factory.
  */
 class TkAppFactory implements AppFactory
 {
+    const TCL_HEADER = 'tcl86.h';
+    const TK_HEADER = 'tk86.h';
+
+    const LINUX_LIB_TCL = 'libtcl8.6.so';
+    const LINUX_LIB_TK = 'libtk8.6.so';
+
+    const WINDOWS_LIB_TCL = 'tcl86t.dll';
+    const WINDOWS_LIB_TK = 'tk86t.dll';
+
+    private string $defaultTclHeader;
+    private string $defaultTkHeader;
+
+    public function __construct()
+    {
+        $this->defaultTclHeader = $this->getHeaderPath(self::TCL_HEADER);
+        $this->defaultTkHeader = $this->getHeaderPath(self::TK_HEADER);
+    }
+
+    protected function getHeaderPath(string $file): string
+    {
+        return dirname(__DIR__)
+            . DIRECTORY_SEPARATOR
+            . 'headers'
+            . DIRECTORY_SEPARATOR
+            . $file
+        ;
+    }
+
     /**
      * @inheritdoc
      */
     public function createFromEnvironment(Environment $env): TkApplication
     {
-        $loader = new FFILoader();
-        $tcl = new Tcl($loader->loadTcl());
-        $interp = $tcl->createInterp();
+        if (($libTcl = $env->getValue(sprintf('%s_LIB_TCL', OS::family()))) === null) {
+            $libTcl = $this->getDefaultTclLib();
+        }
+        if (($libTk = $env->getValue(sprintf('%s_LIB_TK', OS::family()))) === null) {
+            $libTk = $this->getDefaultTkLib();
+        }
+
+        $interp = $this->createTcl(
+                $env->getValue('TCL_HEADER', $this->defaultTclHeader),
+                $libTcl
+            )
+            ->createInterp();
 
         if (($debug = (bool) $env->getValue('DEBUG'))) {
             $logger = $this->createLogger($env->getValue('DEBUG_LOG', 'php://stdout'));
@@ -31,7 +70,11 @@ class TkAppFactory implements AppFactory
             $interp->setLogger($logger->withName('interp'));
         }
 
-        $tk = new Tk($loader->loadTk(), $interp);
+        $tk = $this->createTk(
+            $interp,
+            $env->getValue('TK_HEADER', $this->defaultTkHeader),
+            $libTk
+        );
         
         $app = new TkApplication($tk);
         if ($debug) {
@@ -46,15 +89,25 @@ class TkAppFactory implements AppFactory
         return $app;
     }
 
+    protected function createTcl(string $header, string $sharedLib): Tcl
+    {
+        $loader = new FFILoader($header, $sharedLib);
+        return new Tcl($loader->load());
+    }
+
+    protected function createTk(Interp $tclInterp, string $header, string $sharedLib): Tk
+    {
+        $loader = new FFILoader($header, $sharedLib);
+        return new Tk($loader->load(), $tclInterp);
+    }
+
     /**
      * @inheritdoc
      */
     public function create(): TkApplication
     {
-        $loader = new FFILoader();
-        $tcl = new Tcl($loader->loadTcl());
-        $interp = $tcl->createInterp();
-        $tk = new Tk($loader->loadTk(), $interp);
+        $interp = $this->createTcl(self::TCL_HEADER, $this->getDefaultTclLib())->createInterp();
+        $tk = $this->createTk($interp, self::TK_HEADER, $this->getDefaultTkLib());
         $app = new TkApplication($tk);
         $app->init();
         return $app;
@@ -69,5 +122,31 @@ class TkAppFactory implements AppFactory
         $stream->setFormatter($formatter);
         $log->pushHandler($stream);
         return $log;
+    }
+
+    protected function getDefaultTclLib(): string
+    {
+        switch (OS::family()) {
+            case 'WINDOWS':
+                return self::WINDOWS_LIB_TCL;
+
+            case 'LINUX':
+                return self::LINUX_LIB_TCL;
+        }
+
+        throw new UnsupportedOSException();
+    }
+
+    protected function getDefaultTkLib(): string
+    {
+        switch (OS::family()) {
+            case 'WINDOWS':
+                return self::WINDOWS_LIB_TK;
+
+            case 'LINUX':
+                return self::LINUX_LIB_TK;
+        }
+
+        throw new UnsupportedOSException();
     }
 }
