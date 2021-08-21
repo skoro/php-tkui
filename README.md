@@ -38,14 +38,18 @@ Copy the provided `.env.example` into `.env` and customize the options.
 
 Debug mode allows you to find out which commands execute by Tcl engine. To enable
 the debug mode set:
-```
+```env
 DEBUG=true
 DEBUG_LOG=php://stdout
 ```
 All the debug messages will go to the console. You may specify a file name instead of console.
 
 To change the application appearance comment out `THEME` option and set one of:
-_clam_, _alt_, _default_, _vista_ (only available on Windows OS).
+_clam_, _alt_, _default_, _classic_.  Additional themes for Windows: _winnative_, _xpnative_, _vista_.
+By default, _auto_ is used, setting a theme depending on OS:
+```env
+THEME=auto
+```
 
 ### Windows
 

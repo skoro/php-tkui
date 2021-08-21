@@ -25,6 +25,9 @@ class TkAppFactory implements AppFactory
     const WINDOWS_LIB_TCL = 'tcl86t.dll';
     const WINDOWS_LIB_TK = 'tk86t.dll';
 
+    const DEFAULT_WIN_THEME = 'vista';
+    const DEFAULT_THEME = 'clam';
+
     private string $defaultTclHeader;
     private string $defaultTkHeader;
 
@@ -82,8 +85,8 @@ class TkAppFactory implements AppFactory
         }
         $app->init();
 
-        if (($theme = $env->getValue('THEME'))) {
-            $app->getThemeManager()->useTheme($theme);
+        if (($theme = $env->getValue('THEME', 'auto'))) {
+            $app->getThemeManager()->useTheme($this->getTheme($theme));
         }
 
         return $app;
@@ -148,5 +151,12 @@ class TkAppFactory implements AppFactory
         }
 
         throw new UnsupportedOSException();
+    }
+
+    protected function getTheme(string $theme): string
+    {
+        return strtolower($theme) === 'auto'
+            ? (OS::family() === 'WINDOWS' ? self::DEFAULT_WIN_THEME : self::DEFAULT_THEME)
+            : $theme;
     }
 }
