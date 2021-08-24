@@ -43,6 +43,17 @@ $demo = new class extends DemoAppWindow
         });
         $this->pack($b4);
 
+        $b5 = new Button($this, 'No decorate');
+        $b5->onClick(function () {
+            $this->newWindow('No decorate by Window Manager')
+                 ->getWindowManager()
+                 ->setOverrideRedirect(true)
+                 ->setMinSize(260, 320)
+                 ->setPos(400, 300)
+                 ;
+        });
+        $this->pack($b5);
+
         $this->getWindowManager()->setMinSize(200, 200);
     }
 

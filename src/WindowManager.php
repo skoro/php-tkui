@@ -103,4 +103,17 @@ interface WindowManager
      * @return int[] The list of x and y window position.
      */
     public function getPos(): array;
+
+    /**
+     * Override-redirect flag.
+     *
+     * Setting this flag for a window causes it to be ignored by the window manager,
+     * thus it won't be handled by WM and reparented into a decorative frame.
+     */
+    public function setOverrideRedirect(bool $flag): self;
+
+    /**
+     * Gets the override-redirect status.
+     */
+    public function getOverrideRedirect(): bool;
 }

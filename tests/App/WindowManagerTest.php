@@ -154,4 +154,17 @@ class WindowManagerTest extends TestCase
             ->getWindowManager()
             ->setPos(400, 200);
     }
+
+    /** @test */
+    public function set_window_override_redirect()
+    {
+        $this->tclEvalTest(2, [
+            ['wm', 'title', '.', '{Test}'],
+            ['wm', 'overrideredirect', '.', '1'],
+        ]);
+
+        (new MainWindow($this->app, 'Test'))
+            ->getWindowManager()
+            ->setOverrideRedirect(true);
+    }
 }

@@ -184,6 +184,24 @@ class TkWindowManager implements WindowManager
     }
 
     /**
+     * @inheritdoc
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M56
+     */
+    public function setOverrideRedirect(bool $flag): WindowManager
+    {
+        return $this->setWm('overrideredirect', $flag);
+    }
+
+    /**
+     * @inheritdoc
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M56
+     */
+    public function getOverrideRedirect(): bool
+    {
+        return (bool) $this->getWm('overrideredirect');
+    }
+
+    /**
      * Proxy the window command to Tk wm command.
      */
     protected function setWm(string $command, ...$value): self
