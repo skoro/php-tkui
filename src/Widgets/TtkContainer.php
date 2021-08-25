@@ -6,6 +6,7 @@ use RuntimeException;
 use PhpGui\Evaluator;
 use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\Pack;
+use PhpGui\Layouts\Place;
 use PhpGui\Windows\Window;
 
 abstract class TtkContainer extends TtkWidget implements Container
@@ -47,5 +48,13 @@ abstract class TtkContainer extends TtkWidget implements Container
     public function grid($widget, array $options = []): Grid
     {
         return $this->parent()->grid($widget, $options);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function place($widget, array $options = []): Place
+    {
+        return $this->parent()->place($widget, $options);
     }
 }

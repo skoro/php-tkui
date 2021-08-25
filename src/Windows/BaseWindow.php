@@ -5,6 +5,7 @@ namespace PhpGui\Windows;
 use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\LayoutManager;
 use PhpGui\Layouts\Pack;
+use PhpGui\Layouts\Place;
 use PhpGui\Options;
 use PhpGui\TclTk\TkWindowManager;
 use PhpGui\Widgets\Menu\Menu;
@@ -152,6 +153,14 @@ abstract class BaseWindow implements Window
     public function grid($widget, array $options = []): Grid
     {
         return $this->doLayout(new Grid($this->getEval()), $widget, $options);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function place($widget, array $options = []): Place
+    {
+        return $this->doLayout(new Place($this->getEval()), $widget, $options);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace PhpGui\Widgets;
 use PhpGui\Evaluator;
 use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\Pack;
+use PhpGui\Layouts\Place;
 use PhpGui\Windows\Window;
 
 /**
@@ -25,7 +26,7 @@ interface Container extends Widget
      * Do the widget layout using pack manager.
      *
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
-     * @param array          $options  The packing options applied to widget(s).
+     * @param array           $options The packing options applied to widget(s).
      */
     public function pack($widget, array $options = []): Pack;
 
@@ -33,7 +34,15 @@ interface Container extends Widget
      * Do the widget layout using grid manager.
      *
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
-     * @param array          $options The grid options.
+     * @param array           $options The grid manager options.
      */
     public function grid($widget, array $options = []): Grid;
+
+    /**
+     * Do the widget layout using place manager.
+     *
+     * @param Widget|Widget[] $widget  The widget or widgets to be placed.
+     * @param array           $options The place manager options.
+     */
+    public function place($widget, array $options = []): Place;
 }
