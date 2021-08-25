@@ -9,7 +9,7 @@ use PhpGui\Widgets\Widget;
 /**
  * Base layout manager.
  */
-abstract class Manager implements LayoutManager
+abstract class BaseManager implements LayoutManager
 {
     private Evaluator $eval;
 

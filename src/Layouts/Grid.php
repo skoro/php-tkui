@@ -15,7 +15,7 @@ use PhpGui\Widgets\Widget;
  * @property int $row
  * @property int $rowSpan
  */
-class Grid extends Manager
+class Grid extends BaseManager
 {
     /**
      * @inheritdoc

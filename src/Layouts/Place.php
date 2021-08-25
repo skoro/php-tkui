@@ -21,7 +21,7 @@ use PhpGui\Options;
  * @property int $x
  * @property int $y
  */
-class Place extends Manager
+class Place extends BaseManager
 {
     const BORDER_MODE_INSIDE = 'inside';
     const BORDER_MODE_OUTSIDE = 'outside';

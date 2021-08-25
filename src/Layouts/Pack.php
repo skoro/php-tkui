@@ -10,7 +10,7 @@ use PhpGui\Options;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/pack.htm
  *
  */
-class Pack extends Manager
+class Pack extends BaseManager
 {
     const SIDE_LEFT = 'left';
     const SIDE_RIGHT = 'right';
