@@ -11,6 +11,7 @@ use PhpGui\Widgets\Common\DetectUnderline;
  * @property string $label
  * @property callable $command
  * @property int $underline
+ * @property string $accelerator
  */
 class MenuItem extends CommonItem
 {
@@ -36,6 +37,7 @@ class MenuItem extends CommonItem
             'label' => null,
             'command' => null,
             'underline' => null,
+            'accelerator' => null,
         ]);
     }
 

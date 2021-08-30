@@ -20,6 +20,7 @@ $demo = new class extends DemoAppWindow
         parent::__construct('Menu demo');
         $this->appMenu();
         $this->text = $this->makeTextbox();
+        $this->bind('Control-q', [$this->app, 'quit']);
     }
 
     protected function appMenu()
@@ -29,21 +30,21 @@ $demo = new class extends DemoAppWindow
         $itemCallback = [$this, 'logMenuItem'];
 
         $menu->addMenu('_File')
-             ->addItem(new MenuItem('_New', $itemCallback))
+             ->addItem(new MenuItem('_New', $itemCallback, ['accelerator' => 'Ctrl-N']))
              ->addSeparator()
              ->addItem(new MenuItem('_Open', $itemCallback))
              ->addItem(new MenuItem('_Save', $itemCallback))
              ->addItem(new MenuItem('Save _As...', $itemCallback))
              ->addSeparator()
-             ->addItem(new MenuItem('_Quit', [$this->app, 'quit']))
+             ->addItem(new MenuItem('_Quit', [$this->app, 'quit'], ['accelerator' => 'Ctrl-Q']))
             ;
 
         $checkCallback = [$this, 'logCheckItem'];
         $radioCallback = [$this, 'logRadioItem'];
 
         $menu->addMenu('_Edit')
-             ->addItem(new MenuItem('_Find...', $itemCallback))
-             ->addItem(new MenuItem('_Replace...', $itemCallback))
+             ->addItem(new MenuItem('_Find...', $itemCallback, ['accelerator' => 'Ctrl-F']))
+             ->addItem(new MenuItem('_Replace...', $itemCallback, ['accelerator' => 'Ctrl-R']))
              ->addSeparator()
              ->addItem(new MenuCheckItem('_Wrap lines', true, $checkCallback))
              ->addItem(new MenuCheckItem('_Show cursor pos', false, $checkCallback))
