@@ -36,4 +36,17 @@ class WindowTest extends TestCase
         $main = new MainWindow($this->app, 'Win 1');
         new ChildWindow($main, 'Win 2');
     }
+
+    /** @test */
+    public function show_as_modal()
+    {
+        $this->tclEvalTest(4, [
+            ['wm', 'title', '.', '{Parent}'],
+            ['toplevel', $this->checkWidget('.w')],
+            ['wm', 'title', $this->checkWidget('.w'), '{Modal}'],
+            ['grab', $this->checkWidget('.w')],
+        ]);
+        $parent = new MainWindow($this->app, 'Parent');
+        (new ChildWindow($parent, 'Modal'))->showModal();
+    }
 }

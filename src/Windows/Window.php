@@ -9,7 +9,7 @@ use PhpGui\WindowManager;
 /**
  * The application window.
  */
-interface Window extends Container
+interface Window extends Container, ModalWindow
 {
     /**
      * The window manager instance.
