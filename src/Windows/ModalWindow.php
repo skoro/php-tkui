@@ -8,7 +8,7 @@ namespace PhpGui\Windows;
 interface ModalWindow
 {
     /**
-     * @return mixed
+     * @return mixed The modal result.
      */
     public function showModal();
 }

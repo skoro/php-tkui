@@ -203,4 +203,12 @@ abstract class BaseWindow implements Window
         $this->getEval()->tclEval($this->path(), 'configure', '-menu', $menu->path());
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function showModal()
+    {
+        $this->getEval()->tclEval('grab', $this->path());
+    }
 }

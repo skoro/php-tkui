@@ -54,6 +54,14 @@ $demo = new class extends DemoAppWindow
         });
         $this->pack($b5);
 
+        $b6 = new Button($this, 'Show modal');
+        $b6->onClick(function () {
+            $win = $this->newWindow('Modal window');
+            $win->getWindowManager()->setSize(260, 220);
+            $win->showModal();
+        });
+        $this->pack($b6);
+
         $this->getWindowManager()->setMinSize(200, 200);
     }
 
