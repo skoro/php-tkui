@@ -3,7 +3,7 @@
 namespace PhpGui\Widgets\Buttons;
 
 use PhpGui\Options;
-use PhpGui\Widgets\Buttons\Command;
+use PhpGui\Widgets\Common\Clickable;
 use PhpGui\Widgets\Common\DetectUnderline;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\TtkWidget;
@@ -15,7 +15,7 @@ use PhpGui\Widgets\TtkWidget;
  * @property string $compound
  * @property string $text
  */
-abstract class GenericButton extends TtkWidget
+abstract class GenericButton extends TtkWidget implements Clickable
 {
     use Command;
     use DetectUnderline;
@@ -58,8 +58,12 @@ abstract class GenericButton extends TtkWidget
         ]);
     }
 
-    public function invoke(): void
+    /**
+     * @inheritdoc
+     */
+    public function invoke(): self
     {
         $this->call('invoke');
+        return $this;
     }
 }

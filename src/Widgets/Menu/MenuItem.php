@@ -3,6 +3,7 @@
 namespace PhpGui\Widgets\Menu;
 
 use PhpGui\Options;
+use PhpGui\Widgets\Common\Clickable;
 use PhpGui\Widgets\Common\DetectUnderline;
 
 /**
@@ -13,7 +14,7 @@ use PhpGui\Widgets\Common\DetectUnderline;
  * @property int $underline
  * @property string $accelerator
  */
-class MenuItem extends CommonItem
+class MenuItem extends CommonItem implements Clickable
 {
     use DetectUnderline;
 
@@ -49,9 +50,20 @@ class MenuItem extends CommonItem
         return 'command';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onClick(callable $callback): self
     {
         $this->command = $callback;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function invoke(): self
+    {
         return $this;
     }
 }

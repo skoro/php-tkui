@@ -56,8 +56,9 @@ class MenuButton extends GenericButton
     /**
      * @inheritdoc
      */
-    public function invoke(): void
+    public function invoke(): self
     {
         // Does nothing for menubutton widget.
+        return $this;
     }
 }
