@@ -3,7 +3,6 @@
 namespace PhpGui\Widgets\Buttons;
 
 use PhpGui\Options;
-use PhpGui\Widgets\Buttons\SelectableButton;
 use PhpGui\Widgets\Container;
 
 /**
