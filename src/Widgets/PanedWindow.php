@@ -2,9 +2,9 @@
 
 namespace PhpGui\Widgets;
 
-use PhpGui\TclTk\Exceptions\TkException;
 use PhpGui\Options;
 use PhpGui\Widgets\Consts\Orient;
+use PhpGui\Widgets\Exceptions\WidgetException;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_panedwindow.htm
@@ -49,19 +49,19 @@ class PanedWindow extends TtkContainer implements Orient
             $widget = $widget->path();
         }
         elseif (!is_int($widget)) {
-            throw new TkException('Must be widget instance or numeric index of a pane.');
+            throw new WidgetException($this, 'Must be widget instance or numeric index of a pane.');
         }
         $this->call('forget', $widget);
         return $this;
     }
 
     /**
-     * @throws TkException When the widget is not a child of the paned window.
+     * @throws WidgetException When the widget is not a child of the paned window.
      */
     protected function checkWidgetParent(Widget $widget): void
     {
         if ($widget->parent() !== $this) {
-            throw new TkException('Widget must be a child of the panedwindow.');
+            throw new WidgetException($this, 'Widget must be a child of the panedwindow.');
         }
     }
 
