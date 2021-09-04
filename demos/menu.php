@@ -62,9 +62,7 @@ $demo = new class extends DemoAppWindow
     protected function makeTextbox(): Text
     {
         $yscr = new Scrollbar($this);
-        // $yscr->pack()->sideRight()->fillY()->manage();
         $txt = new Text($this);
-        // $txt->pack()->fillBoth()->expand()->manage();
         $txt->yScrollCommand = $yscr;
         $this->pack($yscr, ['side' => Pack::SIDE_RIGHT, 'fill' => Pack::FILL_Y]);
         $this->pack($txt, ['fill' => Pack::FILL_BOTH, 'expand' => true]);
