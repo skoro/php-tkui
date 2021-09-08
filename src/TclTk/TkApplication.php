@@ -260,4 +260,25 @@ class TkApplication implements Application
     {
         return (string) $this->tclEval('tk', 'windowingsystem');
     }
+
+    /**
+     * Sets the gui scaling factor.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
+     */
+    public function setScaling(float $value): self
+    {
+        $this->tclEval('tk', 'scaling', $value);
+        return $this;
+    }
+
+    /**
+     * Gets the gui scaling factor.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
+     */
+    public function getScaling()
+    {
+        return (float) $this->tclEval('tk', 'scaling');
+    }
 }
