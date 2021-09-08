@@ -250,4 +250,14 @@ class TkApplication implements Application
     {
         return $this->fontManager;
     }
+
+    /**
+     * Returns the name of gui type.
+     *
+     * @return string One of "x11", "win32", "aqua".
+     */
+    public function getGuiType(): string
+    {
+        return (string) $this->tclEval('tk', 'windowingsystem');
+    }
 }
