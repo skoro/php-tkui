@@ -51,23 +51,35 @@ class Spinbox extends TtkWidget implements ValueInVariable
         ]);
     }
 
+    /**
+     * Fires when the value is incremented.
+     */
     public function onIncrement(callable $callback): self
     {
         $this->bind('<<Increment>>', $callback);
         return $this;
     }
 
+    /**
+     * Fires when the value is decremented.
+     */
     public function onDecrement(callable $callback): self
     {
         $this->bind('<<Decrement>>', $callback);
         return $this;
     }
 
+    /**
+     * @return int|float|string
+     */
     public function getValue()
     {
         return $this->call('get');
     }
 
+    /**
+     * @param int|float|string $value
+     */
     public function setValue($value): self
     {
         $this->call('set', $value);
