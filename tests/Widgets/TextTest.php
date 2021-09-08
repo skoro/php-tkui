@@ -3,7 +3,7 @@
 namespace PhpGui\Tests\Widgets;
 
 use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Text;
+use PhpGui\Widgets\Text\Text;
 
 class TextTest extends TestCase
 {

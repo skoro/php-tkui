@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace PhpGui\Widgets\Text;
 
 use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Editable;
+use PhpGui\Widgets\Container;
+use PhpGui\Widgets\ScrollableWidget;
 
 /**
  * Implementation of Tk text widget.

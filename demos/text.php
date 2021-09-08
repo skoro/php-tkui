@@ -4,7 +4,7 @@ use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
-use PhpGui\Widgets\Text;
+use PhpGui\Widgets\Text\Text;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
