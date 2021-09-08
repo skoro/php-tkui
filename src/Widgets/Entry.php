@@ -161,4 +161,13 @@ class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Edi
     {
         return $this->getValue();
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function setContent(string $text): self
+    {
+        $this->setValue($text);
+        return $this;
+    }
 }

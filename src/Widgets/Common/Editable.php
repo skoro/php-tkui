@@ -21,4 +21,9 @@ interface Editable
      * Gets the widget content.
      */
     public function getContent(): string;
+
+    /**
+     * Clears the current content and sets new one.
+     */
+    public function setContent(string $text): self;
 }

@@ -85,4 +85,13 @@ class Text extends ScrollableWidget implements Editable
     {
         return $this->call('get', '0.0');
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function setContent(string $text): self
+    {
+        $this->clear()->append($text);
+        return $this;
+    }
 }
