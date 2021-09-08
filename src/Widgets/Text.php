@@ -2,6 +2,7 @@
 
 namespace PhpGui\Widgets;
 
+use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Editable;
 
@@ -12,6 +13,7 @@ use PhpGui\Widgets\Common\Editable;
  *
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
+ * @property Font $font
  */
 class Text extends ScrollableWidget implements Editable
 {
@@ -41,6 +43,7 @@ class Text extends ScrollableWidget implements Editable
             'height' => null,
             'inactiveSelectBackground' => null,
             'insertUnfocussed' => null,
+            'font' => null,
             'maxUndo' => null,
             'spacing1' => null,
             'spacing2' => null,
