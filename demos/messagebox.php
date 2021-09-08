@@ -102,7 +102,7 @@ $demo = new class extends DemoAppWindow
 
         $selections = new RadioGroup($f);
         foreach ($items as $item) {
-            $this->pack($selections->add(ucfirst($item), $item), [
+            $this->pack($selections->add($item, $item), [
                 'side' => Pack::SIDE_TOP,
                 'fill' => Pack::FILL_X,
                 'pady' => 2,
