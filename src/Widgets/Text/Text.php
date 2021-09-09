@@ -6,6 +6,7 @@ use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Editable;
 use PhpGui\Widgets\Container;
+use PhpGui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use PhpGui\Widgets\ScrollableWidget;
 
 /**
@@ -28,9 +29,15 @@ class Text extends ScrollableWidget implements Editable
     protected string $widget = 'text';
     protected string $name = 't';
 
+    /**
+     * @var TextStyle[string]
+     */
+    private array $styles;
+
     public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
+        $this->styles = $this->createStyles();
     }
 
     /**
@@ -61,11 +68,72 @@ class Text extends ScrollableWidget implements Editable
     }
 
     /**
+     * Initializes the default text widget styles.
+     *
+     * @return TextStyle[string]
+     */
+    protected function createStyles(): array
+    {
+        return [];
+    }
+
+    /**
+     * Sets the text style.
+     */
+    public function setStyle(string $styleName, TextStyle $style): self
+    {
+        $this->registerStyle($styleName, $style);
+        $this->styles[$styleName] = $style;
+        return $this;
+    }
+
+    /**
+     * Registers the text style inside the text widget.
+     */
+    protected function registerStyle(string $styleName, TextStyle $style)
+    {
+        $this->call('tag', 'configure', $styleName, ...$style->options()->asStringArray());
+    }
+
+    /**
+     * @return TextStyle[string]
+     */
+    public function getStyles(): array
+    {
+        return $this->styles;
+    }
+
+    /**
+     * @throws TextStyleNotRegisteredException When the text style is not registered.
+     */
+    public function getStyle(string $styleName): TextStyle
+    {
+        if (! isset($this->styles[$styleName])) {
+            throw new TextStyleNotRegisteredException($this, $styleName);
+        }
+        return $this->styles[$styleName];
+    }
+
+    /**
      * @inheritdoc
      */
     public function append(string $text): self
     {
         $this->call('insert', 'end', $text);
+        return $this;
+    }
+
+    /**
+     * Appends a text using the registered text style.
+     *
+     * @throws TextStyleNotRegisteredException When the text style is not registered.
+     */
+    public function appendWithStyle(string $text, string ...$styleNames): self
+    {
+        foreach ($styleNames as $styleName) {
+            $this->getStyle($styleName);
+        }
+        $this->call('insert', 'end', $text, $styleNames);
         return $this;
     }
 
