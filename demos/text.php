@@ -1,10 +1,13 @@
 <?php
 
+use PhpGui\Color;
 use PhpGui\Layouts\Pack;
+use PhpGui\TclTk\TkFont;
 use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
 use PhpGui\Widgets\Text\Text;
+use PhpGui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
@@ -19,6 +22,7 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($this);
         $this->text = $this->createTextbox($f);
         $this->pack($f, ['expand' => true, 'fill' => Pack::FILL_BOTH]);
+        $this->registerTextStyles();
         $this->fillText();
     }
 
@@ -47,10 +51,54 @@ $demo = new class extends DemoAppWindow
         return $t;
     }
 
+    protected function registerTextStyles()
+    {
+        $this->text
+            ->setStyle('big', new TextStyle([
+                'font' => new TkFont('Courier', 12, TkFont::BOLD),
+            ]))
+            ->setStyle('verybig', new TextStyle([
+                'font' => new TkFont('Helvetica', 24, TkFont::BOLD),
+            ]))
+            ->setStyle('tiny', new TextStyle([
+                'font' => new TkFont('Times', 8, TkFont::BOLD),
+            ]))
+            ->setStyle('color1', new TextStyle([
+                'background' => Color::fromHex('#a0b7ce'),
+            ]))
+            ->setStyle('color2', new TextStyle([
+                'foreground' => Color::fromName('red'),
+            ]))
+            ->setStyle('raised', new TextStyle([
+                'relief' => TextStyle::RELIEF_RAISED,
+                'borderWidth' => 1,
+            ]))
+            ->setStyle('sunken', new TextStyle([
+                'relief' => TextStyle::RELIEF_SUNKEN,
+                'borderWidth' => 1,
+            ]))
+        ;
+    }
+
     protected function fillText(): void
     {
-        $this->text->append("This is demo of text widget.\n");
-        $this->text->append("Date: " . date('Y-m-d') . "\n");
+        $this->text
+            ->appendWithStyle("\n1. Font.", 'big')
+            ->append('  You can choose any system font, ')
+            ->appendWithStyle('large', 'verybig')
+            ->append(' or ')
+            ->appendWithStyle('small', 'tiny')
+            ->append(".\n")
+            ->appendWithStyle("\n2. Color", 'big')
+            ->append('  You can change either the ')
+            ->appendWithStyle('background', 'color1')
+            ->append(' or ')
+            ->appendWithStyle('foreground', 'color2')
+            ->append("\ncolor, or ")
+            ->appendWithStyle('both', 'color1', 'color2')
+            ->append('.\n')
+            ->appendWithStyle("\n3. Stippling.", 'big')
+        ;
     }
 };
 
