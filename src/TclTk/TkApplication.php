@@ -125,6 +125,10 @@ class TkApplication implements Application
             }
             return strpos($arg, ' ') === FALSE ? $arg : Tcl::quoteString($arg);
         }
+        elseif (is_array($arg)) {
+            // TODO: deep into $arg to check nested array.
+            $arg = '{' . implode(' ', $arg) . '}';
+        }
         return (string) $arg;
     }
 
