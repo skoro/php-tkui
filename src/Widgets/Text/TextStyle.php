@@ -7,6 +7,7 @@ use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Consts\Justify;
 use PhpGui\Widgets\Consts\Relief;
+use PhpGui\Widgets\Consts\WrapModes;
 
 /**
  * Text style.
@@ -17,15 +18,17 @@ use PhpGui\Widgets\Consts\Relief;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/text.htm#M43
  *
  * @property Color|string $background
+ * @property string $bgstipple
  * @property int $borderWidth
  * @property bool $elide
+ * @property string $fgstipple
  * @property Font $font
  * @property Color|string $foreground
  * @property string $justify
  * @property int $lmargin1
  * @property int $lmargin2
  * @property Color|string $lmarginColor
- * @property int $offset
+ * @property int|string $offset
  * @property bool $overstrike
  * @property Color|string $overstrikeFg
  * @property string $relief
@@ -42,15 +45,8 @@ use PhpGui\Widgets\Consts\Relief;
  * @property Color|string $underlineFg
  * @property string $wrap
  */
-class TextStyle implements Justify, Relief
+class TextStyle implements Justify, Relief, WrapModes
 {
-    /**
-     * Values for "wrap" property.
-     */
-    const WRAP_NONE = 'none';
-    const WRAP_CHAR = 'char';
-    const WRAP_WORD = 'word';
-
     private Options $options;
 
     public function __construct(array $options = [])
@@ -65,8 +61,10 @@ class TextStyle implements Justify, Relief
     {
         return new Options([
             'background' => null,
+            'bgstipple' => null,
             'borderWidth' => null,
             'elide' => null,
+            'fgstipple' => null,
             'font' => null,
             'foreground' => null,
             'justify' => null,
