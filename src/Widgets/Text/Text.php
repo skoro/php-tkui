@@ -181,4 +181,16 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         $this->call('mark', 'set', 'insert', (string) $index);
         return $this;
     }
+
+    public function delete(TextIndex $from, TextIndex $to): self
+    {
+        $this->call('delete', (string) $from, (string) $to);
+        return $this;
+    }
+
+    public function insert(TextIndex $index, string $text, string ...$styleNames): self
+    {
+        $this->call('insert', (string) $index, $text, $styleNames);
+        return $this;
+    }
 }
