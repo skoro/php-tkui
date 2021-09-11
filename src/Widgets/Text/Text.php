@@ -164,4 +164,21 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         $this->clear()->append($text);
         return $this;
     }
+
+    /**
+     * Gets the cursor position.
+     */
+    public function getCursorPos(): TextIndex
+    {
+        return TextIndex::parse($this->call('index', 'insert'));
+    }
+
+    /**
+     * Sets the cursor position.
+     */
+    public function setCursorPos(TextIndex $index): self
+    {
+        $this->call('mark', 'set', 'insert', (string) $index);
+        return $this;
+    }
 }
