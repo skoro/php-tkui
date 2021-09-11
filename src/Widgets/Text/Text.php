@@ -5,6 +5,7 @@ namespace PhpGui\Widgets\Text;
 use PhpGui\Font;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Editable;
+use PhpGui\Widgets\Consts\WrapModes;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use PhpGui\Widgets\ScrollableWidget;
@@ -17,8 +18,9 @@ use PhpGui\Widgets\ScrollableWidget;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  * @property Font $font
+ * @property string $wrap
  */
-class Text extends ScrollableWidget implements Editable
+class Text extends ScrollableWidget implements Editable, WrapModes
 {
     /**
      * States for the 'state' option.
