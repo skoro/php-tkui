@@ -71,6 +71,10 @@ class TkApplication implements Application
      */
     public function tclEval(...$args): string
     {
+        // TODO: to improve performance not all the arguments should be quoted
+        // but only those which are parameters. But this requires a new method
+        // like this: tclCall($command, $method, ...$args)
+        // and only $args must be quoted.
         $script = implode(' ', array_map(fn ($arg) => $this->encloseArg($arg), $args));
         $this->interp->eval($script);
 
@@ -123,7 +127,7 @@ class TkApplication implements Application
             if ($chr === '"' || $chr === "'" || $chr === '{' || $chr === '[') {
                 return $arg;
             }
-            return strpos($arg, ' ') === FALSE ? $arg : Tcl::quoteString($arg);
+            return (strpos($arg, ' ') === FALSE && strpos($arg, "\n") === FALSE)  ? $arg : Tcl::quoteString($arg);
         }
         elseif (is_array($arg)) {
             // TODO: deep into $arg to check nested array.
