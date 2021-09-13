@@ -193,4 +193,13 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         $this->call('insert', (string) $index, $text, $styleNames);
         return $this;
     }
+
+    /**
+     * Adjusts the view in the widget.
+     */
+    public function view(TextIndex $index): self
+    {
+        $this->call('see', (string) $index);
+        return $this;
+    }
 }
