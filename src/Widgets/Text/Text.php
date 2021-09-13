@@ -84,17 +84,27 @@ class Text extends ScrollableWidget implements Editable, WrapModes
      */
     public function setStyle(string $styleName, TextStyle $style): self
     {
-        $this->registerStyle($styleName, $style);
+        $this->configureStyle($styleName, $style);
         $this->styles[$styleName] = $style;
         return $this;
     }
 
     /**
-     * Registers the text style inside the text widget.
+     * Configures the text style inside the text widget.
      */
-    protected function registerStyle(string $styleName, TextStyle $style)
+    protected function configureStyle(string $styleName, TextStyle $style)
     {
         $this->call('tag', 'configure', $styleName, ...$style->options()->asStringArray());
+    }
+
+    /**
+     * Unregisters the text style.
+     */
+    public function unregisterStyle(string $styleName): self
+    {
+        $this->getStyle($styleName);
+        $this->call('tag', 'delete', $styleName);
+        return $this;
     }
 
     /**
@@ -200,6 +210,26 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     public function view(TextIndex $index): self
     {
         $this->call('see', (string) $index);
+        return $this;
+    }
+
+    /**
+     * Applies the text style for the range of characters.
+     */
+    public function applyStyle(string $styleName, TextIndex $index1, TextIndex $index2): self
+    {
+        $this->getStyle($styleName);
+        $this->call('tag', 'add', $styleName, (string) $index1, (string) $index2);
+        return $this;
+    }
+
+    /**
+     * Clears the text style from the range of characters.
+     */
+    public function clearStyle(string $styleName, TextIndex $index1, TextIndex $index2): self
+    {
+        $this->getStyle($styleName);
+        $this->call('tag', 'remove', $styleName, (string) $index1, (string) $index2);
         return $this;
     }
 }
