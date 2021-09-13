@@ -216,20 +216,26 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     /**
      * Applies the text style for the range of characters.
      */
-    public function applyStyle(string $styleName, TextIndex $index1, TextIndex $index2): self
+    public function applyStyle(string $styleName, TextIndex $from, TextIndex $to): self
     {
         $this->getStyle($styleName);
-        $this->call('tag', 'add', $styleName, (string) $index1, (string) $index2);
+        $this->call('tag', 'add', $styleName, (string) $from, (string) $to);
         return $this;
     }
 
     /**
      * Clears the text style from the range of characters.
      */
-    public function clearStyle(string $styleName, TextIndex $index1, TextIndex $index2): self
+    public function clearStyle(string $styleName, TextIndex $from, TextIndex $to): self
     {
         $this->getStyle($styleName);
-        $this->call('tag', 'remove', $styleName, (string) $index1, (string) $index2);
+        $this->call('tag', 'remove', $styleName, (string) $from, (string) $to);
+        return $this;
+    }
+
+    public function onSelection(callable $callback): self
+    {
+        $this->bind('<<Selection>>', fn () => $callback($this));
         return $this;
     }
 }
