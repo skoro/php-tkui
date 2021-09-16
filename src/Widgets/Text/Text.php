@@ -8,6 +8,7 @@ use PhpGui\Widgets\Common\Editable;
 use PhpGui\Widgets\Consts\WrapModes;
 use PhpGui\Widgets\Container;
 use PhpGui\Widgets\Exceptions\TextStyleNotRegisteredException;
+use PhpGui\Widgets\Exceptions\WidgetException;
 use PhpGui\Widgets\ScrollableWidget;
 
 /**
@@ -39,7 +40,6 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
-        $this->styles = $this->createStyles();
     }
 
     /**
@@ -70,40 +70,61 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     }
 
     /**
-     * Initializes the default text widget styles.
-     *
-     * @return TextStyle[string]
+     * Creates a new text style.
      */
-    protected function createStyles(): array
+    public function createStyle(string $styleName, array $options = []): TextStyle
     {
-        return [];
-    }
-
-    /**
-     * Sets the text style.
-     */
-    public function setStyle(string $styleName, TextStyle $style): self
-    {
-        $this->configureStyle($styleName, $style);
+        $style = new TextStyle($this->getStyleCallback(), $styleName, $options);
         $this->styles[$styleName] = $style;
-        return $this;
+        return $style;
     }
 
     /**
-     * Configures the text style inside the text widget.
+     * Returns the low-level styles API bridge.
      */
-    protected function configureStyle(string $styleName, TextStyle $style)
+    protected function getStyleCallback(): TextApiMethodBridge
     {
-        $this->call('tag', 'configure', $styleName, ...$style->options()->asStringArray());
+        return $this->getApiMethodBridge(fn (...$args) => $this->call('tag', ...$args));
+    }
+
+    /**
+     * Gets the api bridge for the text api.
+     */
+    protected function getApiMethodBridge(callable $callback): TextApiMethodBridge
+    {
+        return new class($callback) implements TextApiMethodBridge {
+            
+            private $callback;
+
+            public function __construct($callback)
+            {
+                $this->callback = $callback;
+            }
+
+            public function callMethod(...$args)
+            {
+                return call_user_func_array($this->callback, $args);
+            }
+        };
     }
 
     /**
      * Unregisters the text style.
+     *
+     * @param TextStyle|string $style
      */
-    public function unregisterStyle(string $styleName): self
+    public function unregisterStyle($style): self
     {
-        $this->getStyle($styleName);
-        $this->call('tag', 'delete', $styleName);
+        if (is_string($style)) {
+            $style = $this->getStyle($style);
+        } elseif ($style instanceof TextStyle) {
+            // Just checking the style belongs to the widget.
+            $this->getStyle($style->name());
+        } else {
+            throw new WidgetException($this, 'Style must be instance of TextStyle.');
+        }
+        $style->delete();
+        unset($this->styles[$style->name()]);
         return $this;
     }
 
@@ -142,9 +163,6 @@ class Text extends ScrollableWidget implements Editable, WrapModes
      */
     public function appendWithStyle(string $text, string ...$styleNames): self
     {
-        foreach ($styleNames as $styleName) {
-            $this->getStyle($styleName);
-        }
         $this->call('insert', 'end', $text, $styleNames);
         return $this;
     }
@@ -192,12 +210,18 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         return $this;
     }
 
+    /**
+     * Deletes the text in range of characters.
+     */
     public function delete(TextIndex $from, TextIndex $to): self
     {
         $this->call('delete', (string) $from, (string) $to);
         return $this;
     }
 
+    /**
+     * Inserts the text in the specified position.
+     */
     public function insert(TextIndex $index, string $text, string ...$styleNames): self
     {
         $this->call('insert', (string) $index, $text, $styleNames);
@@ -210,26 +234,6 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     public function view(TextIndex $index): self
     {
         $this->call('see', (string) $index);
-        return $this;
-    }
-
-    /**
-     * Applies the text style for the range of characters.
-     */
-    public function applyStyle(string $styleName, TextIndex $from, TextIndex $to): self
-    {
-        $this->getStyle($styleName);
-        $this->call('tag', 'add', $styleName, (string) $from, (string) $to);
-        return $this;
-    }
-
-    /**
-     * Clears the text style from the range of characters.
-     */
-    public function clearStyle(string $styleName, TextIndex $from, TextIndex $to): self
-    {
-        $this->getStyle($styleName);
-        $this->call('tag', 'remove', $styleName, (string) $from, (string) $to);
         return $this;
     }
 

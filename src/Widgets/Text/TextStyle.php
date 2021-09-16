@@ -48,10 +48,20 @@ use PhpGui\Widgets\Consts\WrapModes;
 class TextStyle implements Justify, Relief, WrapModes
 {
     private Options $options;
+    private string $name;
+    private TextApiMethodBridge $bridge;
 
-    public function __construct(array $options = [])
+    /**
+     * @param TextApiMethodBridge $bridge The underlying text style api.
+     * @param string $name    The style name.
+     * @param array  $options The style options.
+     */
+    public function __construct(TextApiMethodBridge $bridge, string $name, array $options = [])
     {
+        $this->bridge = $bridge;
+        $this->name = $name;
         $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->configure();
     }
 
     /**
@@ -91,6 +101,32 @@ class TextStyle implements Justify, Relief, WrapModes
     }
 
     /**
+     * Configures the style based on its options.
+     */
+    protected function configure()
+    {
+        $this->callMethod('configure', ...$this->options->asStringArray());
+    }
+
+    /**
+     * Calls the low-level styles API method.
+     *
+     * @return mixed
+     */
+    protected function callMethod(string $method, ...$args)
+    {
+        return $this->bridge->callMethod($method, $this->name, ...$args);
+    }
+
+    /**
+     * Returns the style name.
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param string $name
      * @return mixed
      */
@@ -106,10 +142,32 @@ class TextStyle implements Justify, Relief, WrapModes
     public function __set($name, $value)
     {
         $this->options->$name = $value;
+        $this->configure();
     }
 
-    public function options(): Options
+    /**
+     * Clears the text style from the range of characters.
+     */
+    public function clear(TextIndex $from, TextIndex $to): self
     {
-        return $this->options;
+        $this->callMethod('remove', (string) $from, (string) $to);
+        return $this;
+    }
+
+    /**
+     * Applies the text style for the range of characters.
+     */
+    public function add(TextIndex $from, TextIndex $to): self
+    {
+        $this->callMethod('add', (string) $from, (string) $to);
+        return $this;
+    }
+
+    /**
+     * Deletes the style and removes style from all the characters in the text.
+     */
+    public function delete(): void
+    {
+        $this->callMethod('delete');
     }
 }
