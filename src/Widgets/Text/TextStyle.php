@@ -170,4 +170,22 @@ class TextStyle implements Justify, Relief, WrapModes
     {
         $this->callMethod('delete');
     }
+
+    /**
+     * @return Range[]
+     */
+    public function ranges(): array
+    {
+        $ranges = $this->callMethod('ranges');
+        if ($ranges === '') {
+            return [];
+        }
+
+        return array_map(function (array $chunk) {
+            return new Range(
+                TextIndex::parse($chunk[0]),
+                TextIndex::parse($chunk[1])
+            );
+        }, array_chunk(explode(' ', $ranges), 2));
+    }
 }
