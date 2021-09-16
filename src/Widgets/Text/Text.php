@@ -37,9 +37,12 @@ class Text extends ScrollableWidget implements Editable, WrapModes
      */
     private array $styles;
 
+    private Selection $selection;
+
     public function __construct(Container $parent, array $options = [])
     {
         parent::__construct($parent, $options);
+        $this->selection = $this->createSelection();
     }
 
     /**
@@ -77,6 +80,11 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         $style = new TextStyle($this->getStyleCallback(), $styleName, $options);
         $this->styles[$styleName] = $style;
         return $style;
+    }
+
+    protected function createSelection(): Selection
+    {
+        return new Selection($this->getStyleCallback());
     }
 
     /**
@@ -241,5 +249,10 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     {
         $this->bind('<<Selection>>', fn () => $callback($this));
         return $this;
+    }
+
+    public function getSelection(): Selection
+    {
+        return $this->selection;
     }
 }
