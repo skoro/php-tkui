@@ -7,7 +7,6 @@ use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
 use PhpGui\Widgets\Text\Text;
-use PhpGui\Widgets\Text\TextIndex;
 use PhpGui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
