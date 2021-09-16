@@ -10,7 +10,10 @@ class TextTest extends TestCase
     /** @test */
     public function text_created()
     {
-        $this->tclEvalTest(1, [['text', $this->checkWidget('.t')]]);
+        $this->tclEvalTest(2, [
+            ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
+        ]);
 
         new Text($this->createWindowStub());
     }
@@ -18,8 +21,9 @@ class TextTest extends TestCase
     /** @test */
     public function append_text()
     {
-        $this->tclEvalTest(2, [
+        $this->tclEvalTest(3, [
             ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
             [$this->checkWidget('.t'), 'insert', 'end', 'Text text text'],
         ]);
 
@@ -29,8 +33,9 @@ class TextTest extends TestCase
     /** @test */
     public function clear_all_contents()
     {
-        $this->tclEvalTest(2, [
+        $this->tclEvalTest(3, [
             ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
             [$this->checkWidget('.t'), 'delete', '0.0', 'end'],
         ]);
 
@@ -40,8 +45,9 @@ class TextTest extends TestCase
     /** @test */
     public function get_content()
     {
-        $this->tclEvalTest(3, [
+        $this->tclEvalTest(4, [
             ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
             [$this->checkWidget('.t'), 'insert', 'end', 'test'],
             [$this->checkWidget('.t'), 'get', '0.0'],
         ]);
