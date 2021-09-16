@@ -7,6 +7,7 @@ use PhpGui\Widgets\Buttons\Button;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
 use PhpGui\Widgets\Text\Text;
+use PhpGui\Widgets\Text\TextIndex;
 use PhpGui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -54,71 +55,49 @@ $demo = new class extends DemoAppWindow
 
     protected function registerTextStyles()
     {
-        $this->text
-            ->setStyle('big', new TextStyle([
-                'font' => new TkFont('Courier', 12, TkFont::BOLD),
-            ]))
-            ->setStyle('verybig', new TextStyle([
-                'font' => new TkFont('Helvetica', 24, TkFont::BOLD),
-            ]))
-            ->setStyle('tiny', new TextStyle([
-                'font' => new TkFont('Times', 8, TkFont::BOLD),
-            ]))
-            ->setStyle('color1', new TextStyle([
-                'background' => Color::fromHex('#a0b7ce'),
-            ]))
-            ->setStyle('color2', new TextStyle([
-                'foreground' => Color::fromName('red'),
-            ]))
-            ->setStyle('raised', new TextStyle([
+        $this->text->createStyle('big')->font = new TkFont('Courier', 12, TkFont::BOLD);
+        $this->text->createStyle('verybig')->font = new TkFont('Helvetica', 24, TkFont::BOLD);
+        $this->text->createStyle('tiny')->font = new TkFont('Times', 8, TkFont::BOLD);
+        $this->text->createStyle('color1')->background = Color::fromHex('#a0b7ce');
+        $this->text->createStyle('color2')->foreground = Color::fromName('red');
+        $this->text->createStyle('raised', [
                 'relief' => TextStyle::RELIEF_RAISED,
                 'borderWidth' => 1,
-            ]))
-            ->setStyle('sunken', new TextStyle([
+        ]);
+        $this->text->createStyle('sunken', [
                 'relief' => TextStyle::RELIEF_SUNKEN,
                 'borderWidth' => 1,
-            ]))
-            ->setStyle('bgstipple', new TextStyle([
+        ]);
+        $this->text->createStyle('bgstipple', [
                 'background' => Color::fromName('black'),
                 'borderWidth' => 0,
                 'bgstipple' => 'gray12',
-            ]))
-            ->setStyle('fgstipple', new TextStyle([
-                'fgstipple' => 'gray50',
-            ]))
-            ->setStyle('underline', new TextStyle([
-                'underline' => true,
-            ]))
-            ->setStyle('overstrike', new TextStyle([
-                'overstrike' => true,
-            ]))
-            ->setStyle('right', new TextStyle([
-                'justify' => TextStyle::JUSTIFY_RIGHT,
-            ]))
-            ->setStyle('center', new TextStyle([
-                'justify' => TextStyle::JUSTIFY_CENTER,
-            ]))
-            ->setStyle('sub', new TextStyle([
+        ]);
+        $this->text->createStyle('fgstipple')->fgstipple = 'gray50';
+        $this->text->createStyle('underline')->underline = true;
+        $this->text->createStyle('overstrike')->overstrike = true;
+        $this->text->createStyle('right')->justify = TextStyle::JUSTIFY_RIGHT;
+        $this->text->createStyle('center')->justify = TextStyle::JUSTIFY_CENTER;
+        $this->text->createStyle('sub', [
                 'offset' => '4p',
                 'font' => new TkFont('Courier', 10),
-            ]))
-            ->setStyle('super', new TextStyle([
+        ]);
+        $this->text->createStyle('super', [
                 'offset' => '-2p',
                 'font' => new TkFont('Courier', 10),
-            ]))
-            ->setStyle('margins', new TextStyle([
+        ]);
+        $this->text->createStyle('margins', [
                 'lmargin1' => '12m',
                 'lmargin2' => '6m',
                 'rmargin' => '10m',
-            ]))
-            ->setStyle('spacing', new TextStyle([
+        ]);
+        $this->text->createStyle('spacing', [
                 'spacing1' => '10p',
                 'spacing2' => '2p',
                 'lmargin1' => '12m',
                 'lmargin2' => '6m',
                 'rmargin' => '10m',
-            ]))
-        ;
+        ]);
     }
 
     protected function fillText(): void
