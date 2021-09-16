@@ -164,9 +164,9 @@ class TextStyle implements Justify, Relief, WrapModes
     }
 
     /**
-     * Deletes the style and removes style from all the characters in the text.
+     * Unregisters the style and removes style from all the characters in the text.
      */
-    public function delete(): void
+    public function unregister(): void
     {
         $this->callMethod('delete');
     }

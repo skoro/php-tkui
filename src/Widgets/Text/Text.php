@@ -123,7 +123,7 @@ class Text extends ScrollableWidget implements Editable, WrapModes
         } else {
             throw new WidgetException($this, 'Style must be instance of TextStyle.');
         }
-        $style->delete();
+        $style->unregister();
         unset($this->styles[$style->name()]);
         return $this;
     }
