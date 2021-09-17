@@ -117,6 +117,16 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     }
 
     /**
+     * Returns the edit stack manager which provides undo/redo operations and helpers.
+     */
+    public function getEditStack(): EditStack
+    {
+        return new EditStack(
+            $this->getApiMethodBridge(fn (...$args) => $this->call('edit', ...$args))
+        );
+    }
+
+    /**
      * Unregisters the text style.
      *
      * @param TextStyle|string $style
