@@ -32,6 +32,16 @@ class TextIndex
         return $this->char;
     }
 
+    public function addChars(int $chars): self
+    {
+        return new static($this->line, $this->char + $chars);
+    }
+
+    public function addLines(int $lines): self
+    {
+        return new static($this->line + $lines, $this->char);
+    }
+
     public function __toString(): string
     {
         return $this->line < 0 ? 'end' : sprintf('%d.%d', $this->line, $this->char);
