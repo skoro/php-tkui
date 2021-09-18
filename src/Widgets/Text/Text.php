@@ -212,6 +212,22 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     }
 
     /**
+     * Returns a range of characters from the text.
+     */
+    public function getCharRange(TextIndex $from, TextIndex $to): string
+    {
+        return (string) $this->call('get', (string) $from, (string) $to);
+    }
+
+    /**
+     * Returns only a single character at the specified index.
+     */
+    public function getCharAt(TextIndex $index): string
+    {
+        return (string) $this->call('get', (string) $index);
+    }
+
+    /**
      * Gets the cursor position.
      */
     public function getCursorPos(): TextIndex
