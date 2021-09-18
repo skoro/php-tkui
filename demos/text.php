@@ -4,9 +4,12 @@ use PhpGui\Color;
 use PhpGui\Layouts\Pack;
 use PhpGui\TclTk\TkFont;
 use PhpGui\Widgets\Buttons\Button;
+use PhpGui\Widgets\Entry;
 use PhpGui\Widgets\Frame;
 use PhpGui\Widgets\Scrollbar;
+use PhpGui\Widgets\Text\SearchOptions;
 use PhpGui\Widgets\Text\Text;
+use PhpGui\Widgets\Text\TextIndex;
 use PhpGui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -31,11 +34,40 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($this);
         $this->pack($f, ['side' => Pack::SIDE_TOP, 'fill' => Pack::FILL_X]);
 
-        $b = new Button($f, 'Clear');
-        $b->onClick(function () {
-            $this->text->clear();
+        $searchValue = new Entry($f);
+        $searchValue->onSubmit(function (Entry $self) {
+            $this->search($self->getValue());
         });
-        $f->pack($b, ['side' => Pack::SIDE_LEFT]);
+
+        $searchExec = new Button($f, 'Search');
+        $searchExec->onClick(function () use ($searchValue) {
+            if ($this->search($searchValue->getValue()) === false) {
+                $searchValue->focus();
+            }
+        });
+
+        $f->pack([$searchValue, $searchExec], ['side' => Pack::SIDE_LEFT, 'pady' => 2, 'padx' => 2]);
+    }
+
+    protected function search(string $value): bool
+    {
+        if ($value === '') {
+            return false;
+        }
+
+        $style = $this->text->getStyle('searchHighlight');
+        $style->clear(TextIndex::start(), TextIndex::end());
+
+        $options = new SearchOptions();
+        $options->setDirection(SearchOptions::FORWARD);
+        $options->setAllMatches(true);
+
+        $indexes = $this->text->search($value, $options, TextIndex::start());
+        foreach ($indexes as $index) {
+            $style->add($index, $index->addChars(mb_strlen($value)));
+        }
+
+        return true;
     }
 
     protected function createTextbox(Frame $parent): Text
@@ -96,6 +128,9 @@ $demo = new class extends DemoAppWindow
                 'lmargin1' => '12m',
                 'lmargin2' => '6m',
                 'rmargin' => '10m',
+        ]);
+        $this->text->createStyle('searchHighlight', [
+            'background' => Color::fromName('yellow'),
         ]);
     }
 
