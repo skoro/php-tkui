@@ -170,4 +170,13 @@ class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Edi
         $this->setValue($text);
         return $this;
     }
+
+    /**
+     * Invokes the specified callback when Return\Enter key is pressed.
+     */
+    public function onSubmit(callable $callback): self
+    {
+        $this->bind('Return', fn () => $callback($this));
+        return $this;
+    }
 }
