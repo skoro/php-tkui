@@ -199,7 +199,7 @@ class Text extends ScrollableWidget implements Editable, WrapModes
      */
     public function getContent(): string
     {
-        return $this->call('get', '0.0');
+        return $this->call('get', '0.0', 'end');
     }
 
     /**
