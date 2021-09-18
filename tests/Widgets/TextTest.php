@@ -137,4 +137,28 @@ class TextTest extends TestCase
 
         (new Text($this->createWindowStub()))->setCursorPos(new TextIndex(11, 25));
     }
+
+    /** @test */
+    public function get_char_range()
+    {
+        $this->tclEvalTest(3, [
+            ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
+            [$this->checkWidget('.t'), 'get', '1.1', '99.11'],
+        ]);
+
+        (new Text($this->createWindowStub()))->getCharRange(Range::create(1, 1, 99, 11));
+    }
+
+    /** @test */
+    public function get_character_at_specified_position()
+    {
+        $this->tclEvalTest(3, [
+            ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
+            [$this->checkWidget('.t'), 'get', '11.25'],
+        ]);
+
+        (new Text($this->createWindowStub()))->getCharAt(new TextIndex(11, 25));
+    }
 }
