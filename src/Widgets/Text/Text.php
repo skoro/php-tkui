@@ -281,4 +281,43 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     {
         return $this->selection;
     }
+
+    /**
+     * Searches the text pattern.
+     *
+     * @return TextIndex[]
+     */
+    public function search(string $pattern, SearchOptions $searchOptions, TextIndex $index, ?TextIndex $stop = null): array
+    {
+        $switches = [];
+
+        switch ($searchOptions->getDirection()) {
+            case SearchOptions::FORWARD:
+                $switches[] = '-forwards';
+                break;
+
+            case SearchOptions::BACKWARD:
+                $switches[] = '-backwards';
+                break;
+        }
+
+        if ($searchOptions->isRegexp()) {
+            $switches[] = '-regexp';
+        }
+        if ($searchOptions->isIgnoreCase()) {
+            $switches[] = '-nocase';
+        }
+        if ($searchOptions->isAllMatches()) {
+            $switches[] = '-all';
+        }
+
+        $args = [...$switches, '--', $pattern, (string) $index];
+        if ($stop !== null) {
+            $args[] = (string) $stop;
+        }
+
+        $results = $this->call('search', ...$args);
+
+        return array_map(fn (string $pos) => TextIndex::parse($pos), explode(' ', $results));
+    }
 }
