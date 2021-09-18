@@ -318,6 +318,6 @@ class Text extends ScrollableWidget implements Editable, WrapModes
 
         $results = $this->call('search', ...$args);
 
-        return array_map(fn (string $pos) => TextIndex::parse($pos), explode(' ', $results));
+        return empty($results) ? [] : array_map(fn (string $pos) => TextIndex::parse($pos), explode(' ', $results));
     }
 }
