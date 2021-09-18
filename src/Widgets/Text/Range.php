@@ -34,4 +34,14 @@ class Range
     {
         return (string) $this->from . ' ' . (string) $this->to;
     }
+
+    public static function create(int $startLine, int $startChar, int $endLine = null, int $endChar = null): self
+    {
+        return new static(new TextIndex($startLine, $startChar), new TextIndex($endLine, $endChar));
+    }
+
+    public static function createFromStrings(string $start, string $end): self
+    {
+        return new static(TextIndex::parse($start), TextIndex::parse($end));
+    }
 }

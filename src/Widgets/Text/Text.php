@@ -214,9 +214,9 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     /**
      * Returns a range of characters from the text.
      */
-    public function getCharRange(TextIndex $from, TextIndex $to): string
+    public function getCharRange(Range $range): string
     {
-        return (string) $this->call('get', (string) $from, (string) $to);
+        return (string) $this->call('get', (string) $range->from(), (string) $range->to());
     }
 
     /**
@@ -247,9 +247,9 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     /**
      * Deletes the text in range of characters.
      */
-    public function delete(TextIndex $from, TextIndex $to): self
+    public function delete(Range $range): self
     {
-        $this->call('delete', (string) $from, (string) $to);
+        $this->call('delete', (string) $range->from(), (string) $range->to());
         return $this;
     }
 

@@ -3,6 +3,7 @@
 namespace PhpGui\Tests\Widgets;
 
 use PhpGui\Tests\TestCase;
+use PhpGui\Widgets\Text\Range;
 use PhpGui\Widgets\Text\Text;
 use PhpGui\Widgets\Text\TextIndex;
 
@@ -80,7 +81,7 @@ class TextTest extends TestCase
         ]);
 
         (new Text($this->createWindowStub()))
-            ->delete(new TextIndex(3, 12), new TextIndex(101, 0))
+            ->delete(Range::create(3, 12, 101, 0))
             ;
     }
 
