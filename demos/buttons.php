@@ -61,6 +61,14 @@ $demo = new class extends DemoAppWindow
             ['side' => 'top'],
         );
 
+        $withImage = new Button($f, 'With icon');
+        $withImage->compound = Button::COMPOUND_LEFT;
+        $withImage->image = $this->app->getImageFactory()->createFromFile(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . 'icons' . DIRECTORY_SEPARATOR . 'nepomuk.png'
+        );
+        $withImage->onClick(fn (Button $b) => $l->text = $b->text);
+        $this->pack($withImage, ['side' => Pack::SIDE_TOP]);        
+
         $menu = new Menu($f);
         $menu->addGroup(new MenuItemGroup([
             new MenuItem('Option _1'),
