@@ -6,6 +6,7 @@ use PhpGui\Application;
 use PhpGui\Bindings;
 use PhpGui\FontManager;
 use PhpGui\HasLogger;
+use PhpGui\ImageFactory;
 use PhpGui\TclTk\Exceptions\TclException;
 use PhpGui\TclTk\Exceptions\TclInterpException;
 use PhpGui\Widgets\Widget;
@@ -22,6 +23,7 @@ class TkApplication implements Application
     private Bindings $bindings;
     private ?TkThemeManager $themeManager;
     private TkFontManager $fontManager;
+    private TkImageFactory $imageFactory;
 
     /**
      * @var Variable[]
@@ -51,6 +53,7 @@ class TkApplication implements Application
         $this->bindings = $this->createBindings();
         $this->themeManager = null;
         $this->fontManager = $this->createFontManager();
+        $this->imageFactory = $this->createImageFactory();
         $this->vars = [];
         $this->callbacks = [];
         $this->createCallbackHandler();
@@ -64,6 +67,11 @@ class TkApplication implements Application
     protected function createFontManager(): FontManager
     {
         return new TkFontManager($this->interp);
+    }
+
+    protected function createImageFactory(): TkImageFactory
+    {
+        return new TkImageFactory($this->interp);
     }
 
     /**
@@ -288,5 +296,13 @@ class TkApplication implements Application
     public function getScaling()
     {
         return (float) $this->tclEval('tk', 'scaling');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getImageFactory(): ImageFactory
+    {
+        return $this->imageFactory;
     }
 }

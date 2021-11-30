@@ -23,6 +23,11 @@ interface Application extends Evaluator, Bindings
     public function getFontManager(): FontManager;
 
     /**
+     * Image factory.
+     */
+    public function getImageFactory(): ImageFactory;
+
+    /**
      * Stop the application and free up resources.
      */
     public function quit();
