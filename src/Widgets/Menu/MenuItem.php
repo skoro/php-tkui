@@ -2,9 +2,11 @@
 
 namespace PhpGui\Widgets\Menu;
 
+use PhpGui\Image;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Clickable;
 use PhpGui\Widgets\Common\DetectUnderline;
+use PhpGui\Widgets\TtkWidget;
 
 /**
  * Implements a simple menu item with a callback.
@@ -13,6 +15,8 @@ use PhpGui\Widgets\Common\DetectUnderline;
  * @property callable $command
  * @property int $underline
  * @property string $accelerator
+ * @property Image $image
+ * @property string $compound How to show the menu item when both label and image are present.
  */
 class MenuItem extends CommonItem implements Clickable
 {
@@ -39,6 +43,8 @@ class MenuItem extends CommonItem implements Clickable
             'command' => null,
             'underline' => null,
             'accelerator' => null,
+            'image' => null,
+            'compound' => TtkWidget::COMPOUND_LEFT,
         ]);
     }
 
