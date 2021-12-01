@@ -25,7 +25,8 @@ class TkImageFactory implements ImageFactory
 
     public function createFromBinary(string $data): Image
     {
-        $this->interp->eval(sprintf('image create photo -data {%s}', $data));
+        $encoded = base64_encode($data);
+        $this->interp->eval(sprintf('image create photo -data {%s}', $encoded));
         return $this->createImage();
     }
 
