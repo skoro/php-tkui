@@ -1,6 +1,7 @@
 <?php
 
 use PhpGui\Color;
+use PhpGui\Image;
 use PhpGui\Layouts\Pack;
 use PhpGui\TclTk\TkFont;
 use PhpGui\Widgets\Buttons\Button;
@@ -17,11 +18,13 @@ require_once dirname(__FILE__) . '/DemoAppWindow.php';
 $demo = new class extends DemoAppWindow
 {
     private Text $text;
+    private Image $logo;
 
     public function __construct()
     {
         parent::__construct('Demo Textbox');
         $this->createActions();
+        $this->logo = $this->loadImage('nepomuk.png');
         $f = new Frame($this);
         $this->text = $this->createTextbox($f);
         $this->pack($f, ['expand' => true, 'fill' => Pack::FILL_BOTH]);
@@ -216,6 +219,7 @@ $demo = new class extends DemoAppWindow
             ->appendWithStyle("text within these paragraphs.  The selection ", 'spacing')
             ->appendWithStyle("highlight will cover the extra space.", 'spacing')
         ;
+        $this->text->createImage(new TextIndex(2, 10), $this->logo);
     }
 };
 
