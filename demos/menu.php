@@ -1,6 +1,5 @@
 <?php
 
-use PhpGui\Image;
 use PhpGui\Layouts\Pack;
 use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Menu\MenuCheckItem;
@@ -33,14 +32,14 @@ $demo = new class extends DemoAppWindow
         $menu->addMenu('_File')
              ->addItem(new MenuItem('_New', $itemCallback, [
                  'accelerator' => 'Ctrl-N',
-                 'image' => $this->loadIcon('document-new.png'),
+                 'image' => $this->loadImage('document-new.png'),
              ]))
              ->addSeparator()
              ->addItem(new MenuItem('_Open', $itemCallback, [
-                 'image' => $this->loadIcon('document-open.png'),
+                 'image' => $this->loadImage('document-open.png'),
              ]))
              ->addItem(new MenuItem('_Save', $itemCallback, [
-                 'image' => $this->loadIcon('document-save.png'),
+                 'image' => $this->loadImage('document-save.png'),
              ]))
              ->addItem(new MenuItem('Save _As...', $itemCallback))
              ->addSeparator()
@@ -92,13 +91,6 @@ $demo = new class extends DemoAppWindow
     {
         $value = (string) $item->getValue();
         $this->text->append("Radio: {$item->label}, value: {$value}\n");
-    }
-
-    protected function loadIcon(string $filename): Image
-    {
-        $filepath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'icons'
-            . DIRECTORY_SEPARATOR . $filename;
-        return $this->app->getImageFactory()->createFromFile($filepath);
     }
 };
 
