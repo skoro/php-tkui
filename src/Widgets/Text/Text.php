@@ -3,6 +3,7 @@
 namespace PhpGui\Widgets\Text;
 
 use PhpGui\Font;
+use PhpGui\Image;
 use PhpGui\Options;
 use PhpGui\Widgets\Common\Editable;
 use PhpGui\Widgets\Consts\WrapModes;
@@ -93,6 +94,19 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     protected function getStyleCallback(): TextApiMethodBridge
     {
         return $this->getApiMethodBridge(fn (...$args) => $this->call('tag', ...$args));
+    }
+
+    /**
+     * Creates an image at the specified text index.
+     */
+    public function createImage(TextIndex $index, Image $image, array $options = []): EmbeddedImage
+    {
+        return new EmbeddedImage($this->getEmbeddedImageCallback(), $index, $image, $options);
+    }
+
+    protected function getEmbeddedImageCallback(): TextApiMethodBridge
+    {
+        return $this->getApiMethodBridge(fn (...$args) => $this->call('image', ...$args));
     }
 
     /**
