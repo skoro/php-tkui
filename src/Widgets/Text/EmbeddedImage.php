@@ -5,6 +5,13 @@ namespace PhpGui\Widgets\Text;
 use PhpGui\Image;
 use PhpGui\Options;
 
+/**
+ * @property string $align
+ * @property Image $image
+ * @property string $name
+ * @property int $padx
+ * @property int $pady
+ */
 class EmbeddedImage
 {
     const ALIGN_TOP = 'top';
