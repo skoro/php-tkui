@@ -29,6 +29,7 @@ use PhpGui\Widgets\Consts\Relief;
  * @property int $wrapLength
  * @property Font|null $font
  * @property Image $image
+ * @property string $compound
  */
 class Label extends TtkWidget implements Justify, Relief, Anchor
 {
