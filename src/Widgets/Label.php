@@ -4,6 +4,7 @@ namespace PhpGui\Widgets;
 
 use PhpGui\Color;
 use PhpGui\Font;
+use PhpGui\Image;
 use PhpGui\Options;
 use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Common\DetectUnderline;
@@ -27,6 +28,7 @@ use PhpGui\Widgets\Consts\Relief;
  * @property string $relief
  * @property int $wrapLength
  * @property Font|null $font
+ * @property Image $image
  */
 class Label extends TtkWidget implements Justify, Relief, Anchor
 {
