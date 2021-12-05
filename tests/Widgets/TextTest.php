@@ -2,10 +2,12 @@
 
 namespace PhpGui\Tests\Widgets;
 
+use PhpGui\Image;
 use PhpGui\Tests\TestCase;
 use PhpGui\Widgets\Text\Range;
 use PhpGui\Widgets\Text\Text;
 use PhpGui\Widgets\Text\TextIndex;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class TextTest extends TestCase
 {
@@ -160,5 +162,26 @@ class TextTest extends TestCase
         ]);
 
         (new Text($this->createWindowStub()))->getCharAt(new TextIndex(11, 25));
+    }
+
+    /** @test */
+    public function insert_embedded_image_into_specified_position()
+    {
+        $this->tclEvalTest(3, [
+            ['text', $this->checkWidget('.t')],
+            [$this->checkWidget('.t'), 'tag', 'configure', 'sel'],
+            [$this->checkWidget('.t'), 'image', 'create', '5.12', '-image', 'i0'],
+        ]);
+
+        /** @var Image|MockObject */
+        $image = $this->createMock(Image::class);
+        $image->expects($this->once())
+              ->method('__toString')
+              ->willReturn('i0')
+        ;
+
+        (new Text($this->createWindowStub()))
+            ->createImage(new TextIndex(5, 12), $image)
+        ;
     }
 }
