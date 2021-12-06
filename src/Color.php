@@ -20,7 +20,7 @@ class Color
 
     protected function extractColors(string $hex)
     {
-        list ($red, $green, $blue) = sscanf($hex, '#%02x%02x%02x');
+        [$red, $green, $blue] = sscanf($hex, '#%02x%02x%02x');
         if ($red !== null && $green !== null && $blue !== null) {
             $this->red = $red;
             $this->green = $green;
@@ -35,7 +35,7 @@ class Color
         if ($value >= 0 && $value <= 255) {
             return $value;
         }
-        throw new InvalidArgumentException('Argument must be unsigned byte.');
+        throw new InvalidArgumentException(sprintf('Argument must be unsigned byte but got: %d', $value));
     }
 
     public static function fromRgb(int $red, int $green, int $blue): self

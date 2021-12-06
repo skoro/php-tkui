@@ -68,7 +68,7 @@ class ColorTest extends TestCase
     public function red_must_be_unsigned_byte()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Argument must be unsigned byte.');
+        $this->expectExceptionMessage('Argument must be unsigned byte but got: 999');
 
         Color::fromRgb(999, 0, 250);
     }
@@ -77,7 +77,7 @@ class ColorTest extends TestCase
     public function green_must_be_unsigned_byte()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Argument must be unsigned byte.');
+        $this->expectExceptionMessage('Argument must be unsigned byte but got: 999');
 
         Color::fromRgb(0, 999, 250);
     }
@@ -86,8 +86,17 @@ class ColorTest extends TestCase
     public function blue_must_be_unsigned_byte()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Argument must be unsigned byte.');
+        $this->expectExceptionMessage('Argument must be unsigned byte but got: 256');
 
         Color::fromRgb(0, 140, 256);
+    }
+
+    /** @test */
+    public function color_component_cannot_be_negative_value()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument must be unsigned byte but got: -5');
+
+        Color::fromRgb(0, -5, 0);
     }
 }
