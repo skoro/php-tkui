@@ -21,7 +21,7 @@ abstract class CommonGroup implements IteratorAggregate
     private array $items;
 
     /**
-     * @param CommonItem[] The list of menu items.
+     * @param CommonItem[] $items The list of menu items.
      */
     public function __construct(array $items)
     {
