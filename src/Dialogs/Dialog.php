@@ -17,10 +17,10 @@ abstract class Dialog implements ModalWindow
     private Options $options;
     private Window $parent;
 
-    /** @var callable */
-    private $callbackSuccess;
-    /** @var callable */
-    private $callbackCancel;
+    /** @var callable|null */
+    private $callbackSuccess = null;
+    /** @var callable|null */
+    private $callbackCancel = null;
 
     public function __construct(Window $parent, array $options = [])
     {
@@ -59,6 +59,7 @@ abstract class Dialog implements ModalWindow
                     throw new TkException('Parent must be a Window instance.');
                 }
                 $this->parent = $value;
+                /** @phpstan-ignore-next-line */
                 $this->options->parent = $value->path();
                 break;
             
