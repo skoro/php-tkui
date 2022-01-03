@@ -17,6 +17,7 @@ use SplSubject;
  * @property string $style
  * @property Image $image
  * @property string $compound
+ * @property Font $font
  */
 abstract class TtkWidget extends TkWidget
 {
@@ -106,7 +107,7 @@ abstract class TtkWidget extends TkWidget
     {
         if ($this->hasFont()) {
             // TODO: PHP8 $this->font?->detach($this)
-            if ($this->font) {
+            if ($this->font !== null) {
                 $this->font->detach($this);
             }
             $font->attach($this);
