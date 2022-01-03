@@ -193,4 +193,10 @@ class Font implements SplSubject
             unset($this->observers[$index]);
         }
     }
+
+    // TODO: php8 Stringable interface
+    public function __toString(): string
+    {
+        return sprintf('%s %d', $this->name, $this->size);
+    }
 }
