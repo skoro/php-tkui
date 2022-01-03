@@ -31,4 +31,14 @@ class TkFont extends Font
     {
         return array_keys(array_filter($this->getStyles()));
     }
+
+    public static function createFromFontOptions(TkFontOptions $fontOptions): static
+    {
+        $font = new static($fontOptions->family, (int) $fontOptions->size);
+        $font->setBold($fontOptions->weight === 'bold')
+             ->setItalic($fontOptions->slant === 'italic')
+             ->setUnderline((bool) $fontOptions->underline)
+             ->setOverstrike((bool) $fontOptions->overstrike);
+        return $font;
+    }
 }

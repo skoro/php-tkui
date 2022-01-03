@@ -4,7 +4,6 @@ namespace PhpGui\TclTk;
 
 use PhpGui\Font;
 use PhpGui\FontManager;
-use PhpGui\Options;
 
 /**
  * Tk Font Manager.
@@ -55,13 +54,8 @@ class TkFontManager implements FontManager
     protected function createFontFromTclEvalResult(string $name): TkFont
     {
         $this->interp->eval("font actual $name");
-        $options = Options::createFromList($this->interp->getListResult());
-        $font = new TkFont($options->family, (int) $options->size);
-        $font->setBold($options->weight === 'bold')
-             ->setItalic($options->slant === 'italic')
-             ->setUnderline((bool) $options->underline)
-             ->setOverstrike((bool) $options->overstrike);
-        return $font;
+        $fontOptions = new TkFontOptions($this->interp->getListResult());
+        return TkFont::createFromFontOptions($fontOptions);
     }
 
     /**
