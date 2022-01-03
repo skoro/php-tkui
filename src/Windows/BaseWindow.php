@@ -14,6 +14,8 @@ use PhpGui\WindowManager;
 
 /**
  * Shares the features for window implementations.
+ *
+ * @property string $title
  */
 abstract class BaseWindow implements Window
 {
