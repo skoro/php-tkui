@@ -44,7 +44,6 @@ class MenuButton extends GenericButton
             'compound' => null,
             'image' => null,
             'textVariable' => null,
-            'underline' => null,
             'width' => null,
             'state' => null,
             'underline' => null,
