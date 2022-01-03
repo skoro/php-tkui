@@ -20,7 +20,7 @@ class Font implements SplSubject
     /** @var SplObserver[] */
     private array $observers;
 
-    /** @var bool[string] */
+    /** @var array<string, bool> */
     private array $styles;
 
     public function __construct(string $name, int $size, ...$styles)
@@ -35,7 +35,7 @@ class Font implements SplSubject
     }
 
     /**
-     * @return bool[string]
+     * @return array<string, bool>
      */
     protected function defaultStyles(): array
     {
@@ -87,7 +87,7 @@ class Font implements SplSubject
     }
 
     /**
-     * @return bool[string]
+     * @return array<string, bool>
      */
     public function getStyles(): array
     {
