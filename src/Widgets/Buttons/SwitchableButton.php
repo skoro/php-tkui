@@ -3,10 +3,13 @@
 namespace PhpGui\Widgets\Buttons;
 
 use PhpGui\Options;
+use PhpGui\TclTk\Variable;
 use PhpGui\Widgets\Container;
 
 /**
  * The base class for buttons that can be switched.
+ *
+ * @property Variable $variable
  */
 abstract class SwitchableButton extends GenericButton implements SelectableButton
 {
