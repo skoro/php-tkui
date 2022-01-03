@@ -186,7 +186,7 @@ class Font implements SplSubject
         $this->observers[] = $observer;
     }
 
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $observer): void
     {
         $index = array_search($observer, $this->observers, true);
         if ($index !== false) {
