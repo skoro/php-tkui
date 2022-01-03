@@ -40,11 +40,13 @@ class Tcl
 
     public function createInterp(): Interp
     {
+        /** @phpstan-ignore-next-line */
         return new Interp($this, $this->ffi->Tcl_CreateInterp());
     }
 
     public function init(Interp $interp)
     {
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_Init($interp->cdata()) != self::TCL_OK) {
             throw new TclException("Couldn't initialize Tcl interpretator.");
         }
@@ -58,6 +60,7 @@ class Tcl
      */
     public function eval(Interp $interp, string $script): int
     {
+        /** @phpstan-ignore-next-line */
         $status = $this->ffi->Tcl_Eval($interp->cdata(), $script);
         if ($status != self::TCL_OK) {
             throw new EvalException($interp, $script);
@@ -83,6 +86,7 @@ class Tcl
      */
     public function getString($tclObj): string
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_GetString($tclObj);
     }
 
@@ -91,6 +95,7 @@ class Tcl
      */
     public function getStringResult(Interp $interp): string
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_GetString($this->ffi->Tcl_GetObjResult($interp->cdata()));
     }
 
@@ -104,8 +109,10 @@ class Tcl
     public function getListResult(Interp $interp): array
     {
         $interpCdata = $interp->cdata();
+        /** @phpstan-ignore-next-line */
         $listObj = $this->ffi->Tcl_GetObjResult($interpCdata);
         $clen = FFI::new('int');
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_ListObjLength($interpCdata, $listObj, FFI::addr($clen)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'ListObjResult');
         }
@@ -116,9 +123,11 @@ class Tcl
         $elements = [];
         for ($index = 0; $index < $len; $index++) {
             $elemObj = FFI::new($this->ffi->type('Tcl_Obj*'));
+            /** @phpstan-ignore-next-line */
             if ($this->ffi->Tcl_ListObjIndex($interpCdata, $listObj, $index, FFI::addr($elemObj)) != self::TCL_OK) {
                 throw new TclInterpException($interp, 'ListObjIndex');
             }
+            /** @phpstan-ignore-next-line */
             $elements[] = $this->ffi->Tcl_GetString($elemObj);
         }
         return $elements;
@@ -136,6 +145,7 @@ class Tcl
     public function createCommand(Interp $interp, string $command, callable $callback)
     {
         // TODO: check return value ?
+        /** @phpstan-ignore-next-line */
         $this->ffi->Tcl_CreateObjCommand($interp->cdata(), $command, $callback, NULL, NULL);
     }
 
@@ -145,6 +155,7 @@ class Tcl
      */
     public function deleteCommand(Interp $interp, string $command)
     {
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_DeleteCommand($interp->cdata(), $command) === -1) {
             throw new TclInterpException($interp, 'DeleteCommand');
         }
@@ -155,6 +166,7 @@ class Tcl
      */
     public function createStringObj(string $str): CData
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_NewStringObj($str, strlen($str));
     }
 
@@ -163,6 +175,7 @@ class Tcl
      */
     public function createIntObj(int $i): CData
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_NewIntObj($i);
     }
 
@@ -171,6 +184,7 @@ class Tcl
      */
     public function createBoolObj(bool $b): CData
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_NewBooleanObj($b);
     }
 
@@ -179,17 +193,20 @@ class Tcl
      */
     public function createFloatObj(float $f): CData
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_NewDoubleObj($f);
     }
 
     public function getStringFromObj(CData $obj): string
     {
+        /** @phpstan-ignore-next-line */
         return $this->ffi->Tcl_GetStringFromObj($obj, FFI::new('int*'));
     }
 
     public function getIntFromObj(Interp $interp, CData $obj): int
     {
         $val = FFI::new('long');
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_GetLongFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetLongFromObj');
         }
@@ -199,6 +216,7 @@ class Tcl
     public function getBooleanFromObj(Interp $interp, CData $obj): bool
     {
         $val = FFI::new('int');
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_GetBooleanFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetBooleanFromObj');
         }
@@ -208,6 +226,7 @@ class Tcl
     public function getFloatFromObj(Interp $interp, CData $obj): float
     {
         $val = FFI::new('double');
+        /** @phpstan-ignore-next-line */
         if ($this->ffi->Tcl_GetDoubleFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             throw new TclInterpException($interp, 'GetDoubleFromObj');
         }
@@ -242,6 +261,7 @@ class Tcl
 
         $part1 = $this->createStringObj($varName);
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
+        /** @phpstan-ignore-next-line */
         $result = $this->ffi->Tcl_ObjSetVar2($interp->cdata(), $part1, $part2, $obj, self::TCL_LEAVE_ERR_MSG);
         if ($result === NULL) {
             throw new TclInterpException($interp, 'ObjSetVar2');
@@ -258,6 +278,7 @@ class Tcl
     {
         $part1 = $this->createStringObj($varName);
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
+        /** @phpstan-ignore-next-line */
         $result = $this->ffi->Tcl_ObjGetVar2($interp->cdata(), $part1, $part2, self::TCL_LEAVE_ERR_MSG);
         if ($result === NULL) {
             throw new TclInterpException($interp, 'ObjGetVar2');
@@ -272,6 +293,7 @@ class Tcl
     public function unsetVar(Interp $interp, string $varName, ?string $arrIndex = NULL): void
     {
         $arrIndex = $arrIndex === '' ? NULL : $arrIndex;
+        /** @phpstan-ignore-next-line */
         $result = $this->ffi->Tcl_UnsetVar2($interp->cdata(), $varName, $arrIndex, self::TCL_LEAVE_ERR_MSG);
         if ($result !== self::TCL_OK) {
             throw new TclInterpException($interp, 'UnsetVar2');
