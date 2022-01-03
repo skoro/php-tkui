@@ -55,7 +55,7 @@ class DotEnv implements Environment
     public function loadAndMergeWith(array $override): void
     {
         $this->load();
-        array_merge($this->data, $override);
+        $this->data = array_merge($this->data, $override);
     }
 
     /**
