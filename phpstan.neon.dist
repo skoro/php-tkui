@@ -3,3 +3,7 @@ parameters:
   paths:
     - src
     - tests
+
+  ignoreErrors:
+    - '#Call to an undefined method FFI::Tcl_#'
+    - '#Call to an undefined method FFI::Tk_#'
