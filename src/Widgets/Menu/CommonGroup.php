@@ -4,6 +4,7 @@ namespace PhpGui\Widgets\Menu;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * Makes a group of menu items.
@@ -53,7 +54,7 @@ abstract class CommonGroup implements IteratorAggregate
         return 'menu-group-' . $this->id;
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
