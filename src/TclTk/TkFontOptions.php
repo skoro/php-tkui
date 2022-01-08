@@ -14,12 +14,9 @@ use PhpGui\Options;
  */
 class TkFontOptions extends Options
 {
-    public function __construct(array $options = [])
-    {
-        parent::__construct($this->defaults());
-        $this->mergeAsArray($options);
-    }
-
+    /**
+     * @inheritdoc
+     */
     protected function defaults(): array
     {
         return [

@@ -13,9 +13,14 @@ class Options
 {
     private array $options = [];
 
-    public function __construct(array $options = [])
+    final public function __construct(array $options = [])
     {
-        $this->options = $options;
+        $this->mergeAsArray($this->defaults(), $options);
+    }
+
+    protected function defaults(): array
+    {
+        return [];
     }
 
     /**
@@ -124,9 +129,9 @@ class Options
     /**
      * Merge options from an array.
      */
-    public function mergeAsArray(array $options): self
+    public function mergeAsArray(array ...$options): self
     {
-        $this->options = array_merge($this->options, $options);
+        $this->options = array_merge($this->options, ...$options);
         return $this;
     }
 
