@@ -13,14 +13,14 @@ class OptionsTest extends TestCase
     {
         $options = new Options(['text' => 'testing']);
 
-        $this->assertEquals('testing', $options->text);
+        $this->assertEquals('testing', $options->text); /** @phpstan-ignore-line */
     }
 
     /** @test */
     public function can_set_option_as_class_property()
     {
         $options = new Options(['text' => 'init']);
-        $options->text = 'changed';
+        $options->text = 'changed'; /** @phpstan-ignore-line */
         $this->assertEquals('changed', $options->text);
     }
 
@@ -31,7 +31,7 @@ class OptionsTest extends TestCase
         $this->expectExceptionMessage("'text' is not widget option.");
 
         $options = new Options(['color' => 'blue']);
-        $options->text;
+        $options->text; /** @phpstan-ignore-line */
     }
 
     /** @test */
@@ -41,7 +41,7 @@ class OptionsTest extends TestCase
         $this->expectExceptionMessage("'text' is not widget option.");
 
         $options = new Options(['color' => 'blue']);
-        $options->text = 'changed';
+        $options->text = 'changed'; /** @phpstan-ignore-line */
     }
 
     /** @test */
