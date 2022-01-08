@@ -12,7 +12,7 @@ use SplObserver;
 /**
  * @property string $label
  * @property callable $command
- * @property Variable $variable
+ * @property Variable|null $variable
  * @property int $underline
  */
 class MenuCheckItem extends MenuItem implements ValueInVariable
@@ -75,7 +75,7 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
         return $this->variable->asBool();
     }
 
-    public function attach(SplObserver $observer)
+    public function attach(SplObserver $observer): void
     {
         parent::attach($observer);
         if ($observer instanceof TkWidget && ! $this->variable) {
