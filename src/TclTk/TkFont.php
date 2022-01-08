@@ -4,7 +4,7 @@ namespace PhpGui\TclTk;
 
 use PhpGui\Font;
 
-class TkFont extends Font
+final class TkFont extends Font
 {
     public function __toString(): string
     {

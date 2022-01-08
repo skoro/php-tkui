@@ -8,7 +8,7 @@ use M1\Env\Parser as EnvParser;
 /**
  * .env file environment loader.
  */
-class DotEnv implements Environment
+final class DotEnv implements Environment
 {
     private array $data;
     private string $path;

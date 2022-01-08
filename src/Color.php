@@ -13,7 +13,7 @@ class Color
     private int $green;
     private int $blue;
 
-    public function __construct(string $hex)
+    final public function __construct(string $hex)
     {
         $this->extractColors($hex);
     }
