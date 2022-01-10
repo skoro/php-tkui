@@ -54,7 +54,6 @@ abstract class SwitchableButton extends GenericButton implements SelectableButto
 
     /**
      * @inheritdoc
-     * @return bool
      */
     public function getValue()
     {
