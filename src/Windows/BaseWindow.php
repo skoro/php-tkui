@@ -8,6 +8,7 @@ use PhpGui\Layouts\Pack;
 use PhpGui\Layouts\Place;
 use PhpGui\Options;
 use PhpGui\TclTk\TkWindowManager;
+use PhpGui\Widgets\Container;
 use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Widget;
 use PhpGui\WindowManager;
@@ -184,7 +185,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function bind(string $event, ?callable $callback): self
+    public function bind(string $event, ?callable $callback): Container
     {
         return $this->bindWidget($this, $event, $callback);
     }
