@@ -65,7 +65,9 @@ class Menu extends TtkContainer
     {
         if (isset($this->items[$itemId])) {
             $item = $this->items[$itemId];
-            call_user_func($item->command, $item, $widget);
+            if ($item instanceof MenuItem) {
+                call_user_func($item->command, $item, $widget);
+            }
         }
     }
 
