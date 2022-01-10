@@ -24,7 +24,7 @@ abstract class CommonItem implements SplSubject
 
     public function __construct(array $options = [])
     {
-        $this->id = static::generateId();
+        $this->id = self::generateId();
         $this->options = $this->createOptions()
                               ->mergeAsArray($options);
         $this->observers = [];
@@ -32,7 +32,7 @@ abstract class CommonItem implements SplSubject
 
     private static function generateId(): int
     {
-        return ++static::$idIterator;
+        return ++self::$idIterator;
     }
 
     protected function createOptions(): Options

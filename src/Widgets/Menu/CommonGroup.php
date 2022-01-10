@@ -26,13 +26,13 @@ abstract class CommonGroup implements IteratorAggregate
      */
     public function __construct(array $items)
     {
-        $this->id = static::generateId();
+        $this->id = self::generateId();
         $this->items = $items;
     }
 
     private static function generateId(): int
     {
-        return ++static::$idIterator;
+        return ++self::$idIterator;
     }
 
     /**

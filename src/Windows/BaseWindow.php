@@ -78,7 +78,7 @@ abstract class BaseWindow implements Window
 
     private function generateId(): void
     {
-        $this->id = static::$idCounter++;
+        $this->id = self::$idCounter++;
     }
 
     /**
