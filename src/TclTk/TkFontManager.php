@@ -54,7 +54,7 @@ class TkFontManager implements FontManager
     protected function createFontFromTclEvalResult(string $name): TkFont
     {
         $this->interp->eval("font actual $name");
-        $fontOptions = new TkFontOptions($this->interp->getListResult());
+        $fontOptions = TkFontOptions::createFromList($this->interp->getListResult());
         return TkFont::createFromFontOptions($fontOptions);
     }
 
