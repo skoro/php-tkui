@@ -32,7 +32,7 @@ final class TkFont extends Font
         return array_keys(array_filter($this->getStyles()));
     }
 
-    public static function createFromFontOptions(TkFontOptions $fontOptions): static
+    public static function createFromFontOptions(TkFontOptions $fontOptions): self
     {
         $font = new static($fontOptions->family, (int) $fontOptions->size);
         $font->setBold($fontOptions->weight === 'bold')
