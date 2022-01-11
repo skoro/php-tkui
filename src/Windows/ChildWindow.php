@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Windows;
+namespace Tkui\Windows;
 
-use PhpGui\Evaluator;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Widget;
+use Tkui\Evaluator;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Widget;
 
 /**
  * Child window implementation.

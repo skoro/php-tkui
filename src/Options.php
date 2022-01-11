@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui;
+namespace Tkui;
 
 use InvalidArgumentException;
-use PhpGui\Widgets\Widget;
-use PhpGui\TclTk\Tcl;
+use Tkui\Widgets\Widget;
+use Tkui\TclTk\Tcl;
 
 /**
  * Tcl command options.

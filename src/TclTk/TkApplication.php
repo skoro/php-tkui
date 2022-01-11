@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
-use PhpGui\Application;
-use PhpGui\Bindings;
-use PhpGui\FontManager;
-use PhpGui\HasLogger;
-use PhpGui\ImageFactory;
-use PhpGui\TclTk\Exceptions\TclException;
-use PhpGui\TclTk\Exceptions\TclInterpException;
-use PhpGui\Widgets\Widget;
+use Tkui\Application;
+use Tkui\Bindings;
+use Tkui\FontManager;
+use Tkui\HasLogger;
+use Tkui\ImageFactory;
+use Tkui\TclTk\Exceptions\TclException;
+use Tkui\TclTk\Exceptions\TclInterpException;
+use Tkui\Widgets\Widget;
 
 /**
  * Main application.

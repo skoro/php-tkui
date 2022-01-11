@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Text;
+namespace Tkui\Widgets\Text;
 
-use PhpGui\Image;
-use PhpGui\Options;
+use Tkui\Image;
+use Tkui\Options;
 
 /**
  * @property string $align

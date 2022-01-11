@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\App;
+namespace Tkui\Tests\App;
 
-use PhpGui\TclTk\TkFont;
-use PhpGui\Tests\TestCase;
+use Tkui\TclTk\TkFont;
+use Tkui\Tests\TestCase;
 
 class TkFontTest extends TestCase
 {

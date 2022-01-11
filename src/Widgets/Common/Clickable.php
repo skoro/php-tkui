@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Common;
+namespace Tkui\Widgets\Common;
 
 /**
  * The widget that can handle 'click' event from the user.

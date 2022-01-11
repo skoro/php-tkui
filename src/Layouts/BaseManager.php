@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Layouts;
+namespace Tkui\Layouts;
 
-use PhpGui\Evaluator;
-use PhpGui\Options;
-use PhpGui\Widgets\Widget;
+use Tkui\Evaluator;
+use Tkui\Options;
+use Tkui\Widgets\Widget;
 
 /**
  * Base layout manager.

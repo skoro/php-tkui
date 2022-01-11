@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Layouts;
+namespace Tkui\Layouts;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Widget;
+use Tkui\Options;
+use Tkui\Widgets\Widget;
 
 /**
  * grid geometry manager.

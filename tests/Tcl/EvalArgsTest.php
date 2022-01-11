@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Tcl;
+namespace Tkui\Tests\Tcl;
 
-use PhpGui\TclTk\Interp;
-use PhpGui\TclTk\Tk;
-use PhpGui\TclTk\TkApplication;
-use PhpGui\Tests\TestCase;
+use Tkui\TclTk\Interp;
+use Tkui\TclTk\Tk;
+use Tkui\TclTk\TkApplication;
+use Tkui\Tests\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class EvalArgsTest extends TestCase

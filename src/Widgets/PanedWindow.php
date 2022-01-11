@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Consts\Orient;
-use PhpGui\Widgets\Exceptions\WidgetException;
+use Tkui\Options;
+use Tkui\Widgets\Consts\Orient;
+use Tkui\Widgets\Exceptions\WidgetException;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_panedwindow.htm

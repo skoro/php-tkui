@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Text;
+namespace Tkui\Widgets\Text;
 
 /**
  * The text selection.

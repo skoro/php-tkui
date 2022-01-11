@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Dialogs;
+namespace Tkui\Tests\Dialogs;
 
-use PhpGui\Dialogs\OpenFileDialog;
-use PhpGui\Tests\TestCase;
+use Tkui\Dialogs\OpenFileDialog;
+use Tkui\Tests\TestCase;
 
 class OpenFileDialogTest extends TestCase
 {

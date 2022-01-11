@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Color;
-use PhpGui\Font;
-use PhpGui\Image;
-use PhpGui\Options;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Common\DetectUnderline;
-use PhpGui\Widgets\Consts\Anchor;
-use PhpGui\Widgets\Consts\Justify;
-use PhpGui\Widgets\Consts\Relief;
+use Tkui\Color;
+use Tkui\Font;
+use Tkui\Image;
+use Tkui\Options;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Consts\Anchor;
+use Tkui\Widgets\Consts\Justify;
+use Tkui\Widgets\Consts\Relief;
 
 /**
  * Implementation of Tk label widget.

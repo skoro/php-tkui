@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Consts\Orient;
+use Tkui\Options;
+use Tkui\Widgets\Consts\Orient;
 
 /**
  * Implementation of Tk separator widget.

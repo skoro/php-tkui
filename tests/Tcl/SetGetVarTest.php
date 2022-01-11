@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Tcl;
+namespace Tkui\Tests\Tcl;
 
-use PhpGui\TclTk\Exceptions\TclInterpException;
-use PhpGui\Tests\TclInterp;
-use PhpGui\Tests\TestCase;
+use Tkui\TclTk\Exceptions\TclInterpException;
+use Tkui\Tests\TclInterp;
+use Tkui\Tests\TestCase;
 
 class SetGetVarTest extends TestCase
 {

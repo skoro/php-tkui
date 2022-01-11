@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
-use PhpGui\Widgets\Notebook;
-use PhpGui\Widgets\NotebookTab;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
+use Tkui\Widgets\Notebook;
+use Tkui\Widgets\NotebookTab;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

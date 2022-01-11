@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Layouts;
+namespace Tkui\Layouts;
 
-use PhpGui\Widgets\Widget;
+use Tkui\Widgets\Widget;
 
 /**
  * Layout manager interface.

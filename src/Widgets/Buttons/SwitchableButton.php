@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Buttons;
+namespace Tkui\Widgets\Buttons;
 
-use PhpGui\Options;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Container;
+use Tkui\Options;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Container;
 
 /**
  * The base class for buttons that can be switched.

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Text;
+namespace Tkui\Widgets\Text;
 
-use PhpGui\Color;
-use PhpGui\Font;
-use PhpGui\Options;
-use PhpGui\Widgets\Consts\Justify;
-use PhpGui\Widgets\Consts\Relief;
-use PhpGui\Widgets\Consts\WrapModes;
+use Tkui\Color;
+use Tkui\Font;
+use Tkui\Options;
+use Tkui\Widgets\Consts\Justify;
+use Tkui\Widgets\Consts\Relief;
+use Tkui\Widgets\Consts\WrapModes;
 
 /**
  * Text style.

@@ -1,16 +1,16 @@
 <?php
 
-use PhpGui\Color;
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Buttons\CheckButton;
-use PhpGui\Widgets\Combobox;
-use PhpGui\Widgets\Entry;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
-use PhpGui\Widgets\RadioGroup;
-use PhpGui\Widgets\Scrollbar;
+use Tkui\Color;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Buttons\CheckButton;
+use Tkui\Widgets\Combobox;
+use Tkui\Widgets\Entry;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
+use Tkui\Widgets\RadioGroup;
+use Tkui\Widgets\Scrollbar;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

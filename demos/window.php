@@ -1,8 +1,8 @@
 <?php
 
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Windows\ChildWindow;
-use PhpGui\Windows\Window;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Windows\ChildWindow;
+use Tkui\Windows\Window;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

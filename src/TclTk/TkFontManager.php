@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
-use PhpGui\Font;
-use PhpGui\FontManager;
+use Tkui\Font;
+use Tkui\FontManager;
 
 /**
  * Tk Font Manager.

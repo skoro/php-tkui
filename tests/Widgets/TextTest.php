@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Image;
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Text\Range;
-use PhpGui\Widgets\Text\Text;
-use PhpGui\Widgets\Text\TextIndex;
+use Tkui\Image;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Text\Range;
+use Tkui\Widgets\Text\Text;
+use Tkui\Widgets\Text\TextIndex;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class TextTest extends TestCase

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Menu;
+namespace Tkui\Widgets\Menu;
 
-use PhpGui\Image;
-use PhpGui\Options;
-use PhpGui\Widgets\Common\Clickable;
-use PhpGui\Widgets\Common\DetectUnderline;
-use PhpGui\Widgets\TtkWidget;
+use Tkui\Image;
+use Tkui\Options;
+use Tkui\Widgets\Common\Clickable;
+use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\TtkWidget;
 
 /**
  * Implements a simple menu item with a callback.

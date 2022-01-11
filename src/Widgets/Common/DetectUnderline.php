@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Common;
+namespace Tkui\Widgets\Common;
 
 /**
  * Helper for detecting index for the "underline" property.

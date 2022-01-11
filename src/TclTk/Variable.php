@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
 use FFI\CData;
 

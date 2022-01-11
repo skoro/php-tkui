@@ -1,8 +1,8 @@
 {
-    "name": "skoro/php-gui",
-    "description": "Create desktop applications using native gui",
+    "name": "skoro/tkui",
+    "description": "Create desktop applications using Tk gui toolkit",
     "keywords": [
-        "gui", "ui", "desktop", "toolkit"
+        "gui", "ui", "desktop", "toolkit", "tcltk", "tk", "widget"
     ],
     "type": "library",
     "authors": [
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpGui\\": "src/"
+            "Tkui\\": "src/"
         }
     },
     "require-dev": {
@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpGui\\Tests\\": "tests/"
+            "Tkui\\Tests\\": "tests/"
         }
     },
     "scripts": {

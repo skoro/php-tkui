@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Windows\Window;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Windows\Window;
 
 class ButtonTest extends TestCase
 {

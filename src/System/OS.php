@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\System;
+namespace Tkui\System;
 
 class OS
 {

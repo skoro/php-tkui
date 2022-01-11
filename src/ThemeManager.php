@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui;
+namespace Tkui;
 
 /**
  * The application theme manager.

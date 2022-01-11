@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Buttons;
+namespace Tkui\Widgets\Buttons;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Common\Clickable;
-use PhpGui\Widgets\Common\DetectUnderline;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\TtkWidget;
+use Tkui\Options;
+use Tkui\Widgets\Common\Clickable;
+use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\TtkWidget;
 
 /**
  * @property callable $command

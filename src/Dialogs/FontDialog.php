@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Dialogs;
+namespace Tkui\Dialogs;
 
-use PhpGui\FontManager;
-use PhpGui\Options;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Widget;
-use PhpGui\Windows\Window;
+use Tkui\FontManager;
+use Tkui\Options;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Widget;
+use Tkui\Windows\Window;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/fontchooser.htm

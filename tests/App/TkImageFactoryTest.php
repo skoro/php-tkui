@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\App;
+namespace Tkui\Tests\App;
 
-use PhpGui\TclTk\Interp;
-use PhpGui\TclTk\TkImageFactory;
-use PhpGui\Tests\TestCase;
+use Tkui\TclTk\Interp;
+use Tkui\TclTk\TkImageFactory;
+use Tkui\Tests\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class TkImageFactoryTest extends TestCase

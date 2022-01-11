@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Exceptions;
+namespace Tkui\Exceptions;
 
-use PhpGui\System\OS;
+use Tkui\System\OS;
 
 class UnsupportedOSException extends Exception
 {

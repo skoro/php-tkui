@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\TclTk\TkFont;
+use Tkui\TclTk\TkFont;
 use PHPUnit\Framework\MockObject\Stub\Stub;
-use PhpGui\Tests\TestCase;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Entry;
-use PhpGui\Widgets\Widget;
+use Tkui\Tests\TestCase;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Entry;
+use Tkui\Widgets\Widget;
 
 class EntryTest extends TestCase
 {

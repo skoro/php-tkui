@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\PanedWindow;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\PanedWindow;
 
 class PanedWindowTest extends TestCase
 {

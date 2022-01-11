@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Menu;
+namespace Tkui\Widgets\Menu;
 
-use PhpGui\Exceptions\UninitializedVariableException;
-use PhpGui\Options;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Common\ValueInVariable;
-use PhpGui\Widgets\TkWidget;
+use Tkui\Exceptions\UninitializedVariableException;
+use Tkui\Options;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\TkWidget;
 use SplObserver;
 
 /**

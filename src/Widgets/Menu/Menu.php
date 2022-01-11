@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Menu;
+namespace Tkui\Widgets\Menu;
 
-use PhpGui\Color;
-use PhpGui\Options;
-use PhpGui\Widgets\Common\DetectUnderline;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\TtkContainer;
-use PhpGui\Widgets\Widget;
+use Tkui\Color;
+use Tkui\Options;
+use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\TtkContainer;
+use Tkui\Widgets\Widget;
 use SplSubject;
 
 /**

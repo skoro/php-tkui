@@ -1,7 +1,7 @@
 <?php
 
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Label;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Label;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

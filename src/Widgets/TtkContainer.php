@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Evaluator;
-use PhpGui\Layouts\Grid;
-use PhpGui\Layouts\Pack;
-use PhpGui\Layouts\Place;
-use PhpGui\Windows\Window;
+use Tkui\Evaluator;
+use Tkui\Layouts\Grid;
+use Tkui\Layouts\Pack;
+use Tkui\Layouts\Place;
+use Tkui\Windows\Window;
 
 abstract class TtkContainer extends TtkWidget implements Container
 {

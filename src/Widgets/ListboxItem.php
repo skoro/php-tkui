@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Color;
+use Tkui\Color;
 use SplObserver;
 use SplSubject;
-use PhpGui\Options;
+use Tkui\Options;
 
 /**
  * Listbox widget item.

@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Windows;
+namespace Tkui\Windows;
 
-use PhpGui\Layouts\Grid;
-use PhpGui\Layouts\LayoutManager;
-use PhpGui\Layouts\Pack;
-use PhpGui\Layouts\Place;
-use PhpGui\Options;
-use PhpGui\TclTk\TkWindowManager;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\Widgets\Widget;
-use PhpGui\WindowManager;
+use Tkui\Layouts\Grid;
+use Tkui\Layouts\LayoutManager;
+use Tkui\Layouts\Pack;
+use Tkui\Layouts\Place;
+use Tkui\Options;
+use Tkui\TclTk\TkWindowManager;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\Widgets\Widget;
+use Tkui\WindowManager;
 
 /**
  * Shares the features for window implementations.
