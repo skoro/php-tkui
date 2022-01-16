@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Dialogs;
+namespace Tkui\Dialogs;
 
-use PhpGui\Options;
-use PhpGui\Windows\Window;
+use Tkui\Options;
+use Tkui\Windows\Window;
 
 /**
  * MessageBox pops up a message and wait for user response.

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Unit;
+namespace Tkui\Tests\Unit;
 
-use PhpGui\Options;
-use PhpGui\Tests\TestCase;
+use Tkui\Options;
+use Tkui\Tests\TestCase;
 
 class OptionsTclStringTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
-use PhpGui\Image;
-use PhpGui\ImageFactory;
+use Tkui\Image;
+use Tkui\ImageFactory;
 
 /**
  * Tk implementation of Image Factory.

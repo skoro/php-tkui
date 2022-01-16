@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests;
+namespace Tkui\Tests;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
-use PhpGui\Application;
-use PhpGui\Evaluator;
-use PhpGui\Widgets\Widget;
-use PhpGui\Windows\Window;
+use Tkui\Application;
+use Tkui\Evaluator;
+use Tkui\Widgets\Widget;
+use Tkui\Windows\Window;
 
 class TestCase extends FrameworkTestCase
 {

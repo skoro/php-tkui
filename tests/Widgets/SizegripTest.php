@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Sizegrip;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Sizegrip;
 
 class SizegripTest extends TestCase
 {

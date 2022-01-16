@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Windows\ChildWindow;
-use PhpGui\Windows\MainWindow;
+use Tkui\Tests\TestCase;
+use Tkui\Windows\ChildWindow;
+use Tkui\Windows\MainWindow;
 
 class WindowTest extends TestCase
 {

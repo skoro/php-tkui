@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Dialogs;
+namespace Tkui\Tests\Dialogs;
 
-use PhpGui\Dialogs\FontDialog;
-use PhpGui\FontManager;
-use PhpGui\Tests\TestCase;
+use Tkui\Dialogs\FontDialog;
+use Tkui\FontManager;
+use Tkui\Tests\TestCase;
 
 class FontDialogTest extends TestCase
 {

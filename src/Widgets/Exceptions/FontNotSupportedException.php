@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Exceptions;
+namespace Tkui\Widgets\Exceptions;
 
-use PhpGui\Widgets\Widget;
+use Tkui\Widgets\Widget;
 
 /**
  * The widget cannot set or update a font.

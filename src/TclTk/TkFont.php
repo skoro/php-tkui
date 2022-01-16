@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
-use PhpGui\Font;
+use Tkui\Font;
 
 final class TkFont extends Font
 {

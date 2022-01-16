@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Options;
-use PhpGui\TclTk\Tcl;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Common\ValueInVariable;
-use PhpGui\Widgets\Consts\Justify;
+use Tkui\Options;
+use Tkui\TclTk\Tcl;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Consts\Justify;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_combobox.htm

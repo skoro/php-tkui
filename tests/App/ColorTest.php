@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests;
+namespace Tkui\Tests;
 
 use InvalidArgumentException;
-use PhpGui\Color;
+use Tkui\Color;
 
 class ColorTest extends TestCase
 {

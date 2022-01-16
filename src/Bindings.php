@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui;
+namespace Tkui;
 
-use PhpGui\Widgets\Widget;
+use Tkui\Widgets\Widget;
 
 /**
  * Let you attach/detach widget bindings.

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Buttons\MenuButton;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\Widgets\Menu\MenuItem;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Buttons\MenuButton;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\Widgets\Menu\MenuItem;
 
 class MenuButtonTest extends TestCase
 {

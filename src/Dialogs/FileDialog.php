@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Dialogs;
+namespace Tkui\Dialogs;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Window;
+use Tkui\Options;
+use Tkui\Widgets\Window;
 
 /**
  * @property string $defaultExtension

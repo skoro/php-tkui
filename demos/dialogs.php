@@ -1,15 +1,15 @@
 <?php
 
-use PhpGui\Dialogs\ColorDialog;
-use PhpGui\Dialogs\DirectoryDialog;
-use PhpGui\Dialogs\FontDialog;
-use PhpGui\Dialogs\OpenFileDialog;
-use PhpGui\Dialogs\SaveFileDialog;
-use PhpGui\Font;
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
+use Tkui\Dialogs\ColorDialog;
+use Tkui\Dialogs\DirectoryDialog;
+use Tkui\Dialogs\FontDialog;
+use Tkui\Dialogs\OpenFileDialog;
+use Tkui\Dialogs\SaveFileDialog;
+use Tkui\Font;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

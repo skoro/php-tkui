@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Menu;
+namespace Tkui\Widgets\Menu;
 
 use ArrayIterator;
 use IteratorAggregate;

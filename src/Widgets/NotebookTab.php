@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
 use SplObserver;
 use SplSubject;
-use PhpGui\Options;
-use PhpGui\Widgets\Common\DetectUnderline;
+use Tkui\Options;
+use Tkui\Widgets\Common\DetectUnderline;
 
 /**
  * @property string $state

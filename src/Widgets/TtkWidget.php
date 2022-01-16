@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Font;
-use PhpGui\Image;
-use PhpGui\Options;
-use PhpGui\Widgets\Exceptions\FontNotSupportedException;
+use Tkui\Font;
+use Tkui\Image;
+use Tkui\Options;
+use Tkui\Widgets\Exceptions\FontNotSupportedException;
 use SplSubject;
 
 /**

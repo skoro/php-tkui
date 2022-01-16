@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Menu;
+namespace Tkui\Widgets\Menu;
 
-use PhpGui\Exceptions\UninitializedVariableException;
-use PhpGui\TclTk\Variable;
+use Tkui\Exceptions\UninitializedVariableException;
+use Tkui\TclTk\Variable;
 
 /**
  * Allows to create a group of menu radio items.

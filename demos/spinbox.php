@@ -1,7 +1,7 @@
 <?php
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Spinbox;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Spinbox;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

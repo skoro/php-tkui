@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
 use PHPUnit\Framework\MockObject\Stub;
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\ScrollableWidget;
-use PhpGui\Widgets\Scrollbar;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\ScrollableWidget;
+use Tkui\Widgets\Scrollbar;
 
 class ScrollbarTest extends TestCase
 {

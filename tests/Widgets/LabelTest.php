@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\TclTk\TkFont;
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Label;
+use Tkui\TclTk\TkFont;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Label;
 
 class LabelTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Exceptions;
+namespace Tkui\Widgets\Exceptions;
 
-use PhpGui\Exceptions\Exception;
-use PhpGui\Widgets\Widget;
+use Tkui\Exceptions\Exception;
+use Tkui\Widgets\Widget;
 
 /**
  * Generic widget exception.

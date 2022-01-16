@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Windows;
+namespace Tkui\Windows;
 
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\WindowManager;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\WindowManager;
 
 /**
  * The application window.

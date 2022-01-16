@@ -1,9 +1,9 @@
 <?php
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
-use PhpGui\Widgets\PanedWindow;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
+use Tkui\Widgets\PanedWindow;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

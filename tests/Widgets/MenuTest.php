@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\Widgets\Menu\MenuCheckItem;
-use PhpGui\Widgets\Menu\MenuItem;
-use PhpGui\Widgets\Menu\MenuRadioItem;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\Widgets\Menu\MenuCheckItem;
+use Tkui\Widgets\Menu\MenuItem;
+use Tkui\Widgets\Menu\MenuRadioItem;
 
 class MenuTest extends TestCase
 {

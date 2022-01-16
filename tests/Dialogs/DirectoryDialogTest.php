@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Dialogs;
+namespace Tkui\Tests\Dialogs;
 
-use PhpGui\Dialogs\DirectoryDialog;
-use PhpGui\Tests\TestCase;
+use Tkui\Dialogs\DirectoryDialog;
+use Tkui\Tests\TestCase;
 
 class DirectoryDialogTest extends TestCase
 {

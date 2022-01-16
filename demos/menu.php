@@ -1,13 +1,13 @@
 <?php
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\Widgets\Menu\MenuCheckItem;
-use PhpGui\Widgets\Menu\MenuItem;
-use PhpGui\Widgets\Menu\MenuRadioGroup;
-use PhpGui\Widgets\Menu\MenuRadioItem;
-use PhpGui\Widgets\Scrollbar;
-use PhpGui\Widgets\Text\Text;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\Widgets\Menu\MenuCheckItem;
+use Tkui\Widgets\Menu\MenuItem;
+use Tkui\Widgets\Menu\MenuRadioGroup;
+use Tkui\Widgets\Menu\MenuRadioItem;
+use Tkui\Widgets\Scrollbar;
+use Tkui\Widgets\Text\Text;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

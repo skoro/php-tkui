@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Dialogs;
+namespace Tkui\Tests\Dialogs;
 
-use PhpGui\Dialogs\ColorDialog;
-use PhpGui\Tests\TestCase;
+use Tkui\Dialogs\ColorDialog;
+use Tkui\Tests\TestCase;
 
 class ColorDialogTest extends TestCase
 {

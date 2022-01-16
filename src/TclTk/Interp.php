@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
 use FFI\CData;
-use PhpGui\HasLogger;
-use PhpGui\TclTk\Exceptions\TclException;
-use PhpGui\TclTk\Exceptions\TclInterpException;
+use Tkui\HasLogger;
+use Tkui\TclTk\Exceptions\TclException;
+use Tkui\TclTk\Exceptions\TclInterpException;
 
 /**
  * Tcl interpreter implementation.

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-use PhpGui\Application;
-use PhpGui\DotEnv;
-use PhpGui\Image;
-use PhpGui\TclTk\TkAppFactory;
-use PhpGui\Windows\MainWindow;
+use Tkui\Application;
+use Tkui\DotEnv;
+use Tkui\Image;
+use Tkui\TclTk\TkAppFactory;
+use Tkui\Windows\MainWindow;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 

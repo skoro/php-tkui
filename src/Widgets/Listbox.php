@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
 use InvalidArgumentException;
 use SplObserver;
 use SplSubject;
-use PhpGui\Options;
-use PhpGui\TclTk\Tcl;
+use Tkui\Options;
+use Tkui\TclTk\Tcl;
 
 /**
  * Implementation of Tk listbox widget.

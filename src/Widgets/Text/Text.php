@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Text;
+namespace Tkui\Widgets\Text;
 
-use PhpGui\Font;
-use PhpGui\Image;
-use PhpGui\Options;
-use PhpGui\Widgets\Common\Editable;
-use PhpGui\Widgets\Consts\WrapModes;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Exceptions\TextStyleNotRegisteredException;
-use PhpGui\Widgets\Exceptions\WidgetException;
-use PhpGui\Widgets\ScrollableWidget;
+use Tkui\Font;
+use Tkui\Image;
+use Tkui\Options;
+use Tkui\Widgets\Common\Editable;
+use Tkui\Widgets\Consts\WrapModes;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Exceptions\TextStyleNotRegisteredException;
+use Tkui\Widgets\Exceptions\WidgetException;
+use Tkui\Widgets\ScrollableWidget;
 
 /**
  * Implementation of Tk text widget.

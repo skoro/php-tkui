@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Buttons;
+namespace Tkui\Widgets\Buttons;
 
-use PhpGui\Options;
-use PhpGui\Widgets\Container;
-use PhpGui\Widgets\Menu\Menu;
+use Tkui\Options;
+use Tkui\Widgets\Container;
+use Tkui\Widgets\Menu\Menu;
 
 /**
  * Implementation of menubutton.

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Buttons;
+namespace Tkui\Widgets\Buttons;
 
-use PhpGui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Common\ValueInVariable;
 
 /**
  * Contract for buttons which can be selected or deselected.

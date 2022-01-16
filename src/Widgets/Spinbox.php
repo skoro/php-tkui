@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Options;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Common\ValueInVariable;
+use Tkui\Options;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Common\ValueInVariable;
 
 /**
  * Implementation of Ttk spinbox widget.

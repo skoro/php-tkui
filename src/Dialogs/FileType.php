@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Dialogs;
+namespace Tkui\Dialogs;
 
-use PhpGui\TclTk\Tcl;
+use Tkui\TclTk\Tcl;
 
 // TODO: implement Stringable
 /**

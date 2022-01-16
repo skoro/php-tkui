@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk;
+namespace Tkui\TclTk;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use PhpGui\AppFactory;
-use PhpGui\Environment;
-use PhpGui\Exceptions\UnsupportedOSException;
-use PhpGui\System\FFILoader;
-use PhpGui\System\OS;
+use Tkui\AppFactory;
+use Tkui\Environment;
+use Tkui\Exceptions\UnsupportedOSException;
+use Tkui\System\FFILoader;
+use Tkui\System\OS;
 
 /**
  * Tk implementation of Application Factory.

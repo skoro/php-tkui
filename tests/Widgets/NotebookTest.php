@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Notebook;
-use PhpGui\Widgets\NotebookTab;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Notebook;
+use Tkui\Widgets\NotebookTab;
 
 class NotebookTest extends TestCase
 {

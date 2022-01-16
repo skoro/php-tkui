@@ -1,14 +1,14 @@
 <?php
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Entry;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
-use PhpGui\Widgets\Listbox;
-use PhpGui\Widgets\ListboxItem;
-use PhpGui\Widgets\Scrollbar;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Entry;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
+use Tkui\Widgets\Listbox;
+use Tkui\Widgets\ListboxItem;
+use Tkui\Widgets\Scrollbar;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

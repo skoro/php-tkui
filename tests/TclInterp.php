@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests;
+namespace Tkui\Tests;
 
-use PhpGui\DotEnv;
-use PhpGui\System\FFILoader;
-use PhpGui\System\OS;
-use PhpGui\TclTk\Interp;
-use PhpGui\TclTk\Tcl;
+use Tkui\DotEnv;
+use Tkui\System\FFILoader;
+use Tkui\System\OS;
+use Tkui\TclTk\Interp;
+use Tkui\TclTk\Tcl;
 use RuntimeException;
 
 trait TclInterp

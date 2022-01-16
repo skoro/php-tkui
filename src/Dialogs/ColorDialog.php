@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Dialogs;
+namespace Tkui\Dialogs;
 
-use PhpGui\Options;
+use Tkui\Options;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/chooseColor.htm

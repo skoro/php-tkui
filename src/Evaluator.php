@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui;
+namespace Tkui;
 
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Widget;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Widget;
 
 /**
  * Provides the access to low-level API.

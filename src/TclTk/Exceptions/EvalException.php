@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\TclTk\Exceptions;
+namespace Tkui\TclTk\Exceptions;
 
-use PhpGui\TclTk\Interp;
+use Tkui\TclTk\Interp;
 
 class EvalException extends TclInterpException
 {

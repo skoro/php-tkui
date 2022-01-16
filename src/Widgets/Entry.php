@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\Color;
-use PhpGui\Font;
-use PhpGui\Options;
-use PhpGui\TclTk\Tcl;
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Common\Editable;
-use PhpGui\Widgets\Common\ValueInVariable;
-use PhpGui\Widgets\Consts\Justify;
-use PhpGui\Widgets\Consts\Validate;
+use Tkui\Color;
+use Tkui\Font;
+use Tkui\Options;
+use Tkui\TclTk\Tcl;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Common\Editable;
+use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Consts\Justify;
+use Tkui\Widgets\Consts\Validate;
 
 /**
  * Implementation of Tk entry widget.

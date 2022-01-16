@@ -1,17 +1,17 @@
 <?php
 
-use PhpGui\Color;
-use PhpGui\Image;
-use PhpGui\Layouts\Pack;
-use PhpGui\TclTk\TkFont;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Entry;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Scrollbar;
-use PhpGui\Widgets\Text\SearchOptions;
-use PhpGui\Widgets\Text\Text;
-use PhpGui\Widgets\Text\TextIndex;
-use PhpGui\Widgets\Text\TextStyle;
+use Tkui\Color;
+use Tkui\Image;
+use Tkui\Layouts\Pack;
+use Tkui\TclTk\TkFont;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Entry;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Scrollbar;
+use Tkui\Widgets\Text\SearchOptions;
+use Tkui\Widgets\Text\Text;
+use Tkui\Widgets\Text\TextIndex;
+use Tkui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

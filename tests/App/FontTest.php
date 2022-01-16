@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\App;
+namespace Tkui\Tests\App;
 
 use InvalidArgumentException;
-use PhpGui\Font;
-use PhpGui\Tests\TestCase;
+use Tkui\Font;
+use Tkui\Tests\TestCase;
 use SplObserver;
 
 class FontTest extends TestCase

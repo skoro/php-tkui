@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Widgets;
+namespace Tkui\Tests\Widgets;
 
-use PhpGui\Tests\TestCase;
-use PhpGui\Widgets\Text\EditStack;
-use PhpGui\Widgets\Text\Text;
+use Tkui\Tests\TestCase;
+use Tkui\Widgets\Text\EditStack;
+use Tkui\Widgets\Text\Text;
 
 class TextEditStackTest extends TestCase
 {

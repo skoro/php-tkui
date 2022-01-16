@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Tests\Tcl;
+namespace Tkui\Tests\Tcl;
 
-use PhpGui\TclTk\Tcl;
-use PhpGui\Tests\TestCase;
+use Tkui\TclTk\Tcl;
+use Tkui\Tests\TestCase;
 
 class StringTest extends TestCase
 {

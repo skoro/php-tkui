@@ -1,12 +1,12 @@
 <?php
 
-use PhpGui\Dialogs\MessageBox;
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Buttons\RadioButton;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\RadioGroup;
+use Tkui\Dialogs\MessageBox;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Buttons\RadioButton;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\RadioGroup;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

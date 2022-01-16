@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Frame;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\Separator;
-use PhpGui\Widgets\Sizegrip;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Frame;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\Separator;
+use Tkui\Widgets\Sizegrip;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 

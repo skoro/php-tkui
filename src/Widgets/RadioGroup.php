@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
-use PhpGui\TclTk\Variable;
-use PhpGui\Widgets\Buttons\RadioButton;
-use PhpGui\Widgets\Common\Clickable;
-use PhpGui\Widgets\Common\ValueInVariable;
+use Tkui\TclTk\Variable;
+use Tkui\Widgets\Buttons\RadioButton;
+use Tkui\Widgets\Common\Clickable;
+use Tkui\Widgets\Common\ValueInVariable;
 
 // TODO: array iterable
 class RadioGroup extends Frame implements ValueInVariable, Clickable

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
 use InvalidArgumentException;
 use SplObserver;
 use SplSubject;
-use PhpGui\Options;
+use Tkui\Options;
 
 /**
  * Implementation of Ttk notebook widget.

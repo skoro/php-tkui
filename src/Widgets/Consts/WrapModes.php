@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets\Consts;
+namespace Tkui\Widgets\Consts;
 
 /**
  * Values for "wrap" property.

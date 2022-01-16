@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PhpGui\Widgets;
+namespace Tkui\Widgets;
 
 use InvalidArgumentException;
 

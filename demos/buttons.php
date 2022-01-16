@@ -1,16 +1,16 @@
 <?php
 
-use PhpGui\Layouts\Pack;
-use PhpGui\Widgets\Buttons\Button;
-use PhpGui\Widgets\Buttons\CheckButton;
-use PhpGui\Widgets\Buttons\MenuButton;
-use PhpGui\Widgets\Buttons\RadioButton;
-use PhpGui\Widgets\Label;
-use PhpGui\Widgets\LabelFrame;
-use PhpGui\Widgets\Menu\Menu;
-use PhpGui\Widgets\Menu\MenuItem;
-use PhpGui\Widgets\Menu\MenuItemGroup;
-use PhpGui\Widgets\RadioGroup;
+use Tkui\Layouts\Pack;
+use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Buttons\CheckButton;
+use Tkui\Widgets\Buttons\MenuButton;
+use Tkui\Widgets\Buttons\RadioButton;
+use Tkui\Widgets\Label;
+use Tkui\Widgets\LabelFrame;
+use Tkui\Widgets\Menu\Menu;
+use Tkui\Widgets\Menu\MenuItem;
+use Tkui\Widgets\Menu\MenuItemGroup;
+use Tkui\Widgets\RadioGroup;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
