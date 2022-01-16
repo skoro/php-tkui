@@ -2,9 +2,9 @@
     <img src="logo.png" width="280" height="160">
 </p>
 
-## php-gui
+## php-tkui
 
-`php-gui` allows you to build desktop ui applications with PHP only. It leverages [FFI](https://www.php.net/manual/en/book.ffi) extension and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile or install any external extensions.
+`php-tkui` allows you to build desktop ui applications with PHP only. It leverages [FFI](https://www.php.net/manual/en/book.ffi) extension and [Tcl/Tk](https://www.tcl.tk) for that, thus you don't need to compile or install any external extensions.
 
 <p align="center"><img src="screen-demo-buttons-win.png"></p>
 
@@ -23,8 +23,8 @@ sudo apt install tcl tk
 
 Clone this repository and try out demos:
 ```sh
-git clone https://github.com/skoro/php-gui.git php-gui
-cd php-gui
+git clone https://github.com/skoro/php-tkui.git php-tkui
+cd php-tkui
 php demos/buttons.php
 ```
 
