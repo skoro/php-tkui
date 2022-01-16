@@ -4,7 +4,7 @@ namespace PhpGui\TclTk;
 
 use PhpGui\Font;
 
-class TkFont extends Font
+final class TkFont extends Font
 {
     public function __toString(): string
     {
@@ -30,5 +30,15 @@ class TkFont extends Font
     protected function getStyleNames(): array
     {
         return array_keys(array_filter($this->getStyles()));
+    }
+
+    public static function createFromFontOptions(TkFontOptions $fontOptions): self
+    {
+        $font = new static($fontOptions->family, (int) $fontOptions->size);
+        $font->setBold($fontOptions->weight === 'bold')
+             ->setItalic($fontOptions->slant === 'italic')
+             ->setUnderline((bool) $fontOptions->underline)
+             ->setOverstrike((bool) $fontOptions->overstrike);
+        return $font;
     }
 }

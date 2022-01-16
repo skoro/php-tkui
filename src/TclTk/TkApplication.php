@@ -48,7 +48,6 @@ class TkApplication implements Application
     public function __construct(Tk $tk)
     {
         $this->tk = $tk;
-        $this->ttkEnabled = false;
         $this->interp = $tk->interp();
         $this->bindings = $this->createBindings();
         $this->themeManager = null;
@@ -64,7 +63,7 @@ class TkApplication implements Application
         return new TkBindings($this->interp);
     }
 
-    protected function createFontManager(): FontManager
+    protected function createFontManager(): TkFontManager
     {
         return new TkFontManager($this->interp);
     }

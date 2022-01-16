@@ -20,7 +20,7 @@ class Font implements SplSubject
     /** @var SplObserver[] */
     private array $observers;
 
-    /** @var bool[string] */
+    /** @var array<string, bool> */
     private array $styles;
 
     public function __construct(string $name, int $size, ...$styles)
@@ -35,7 +35,7 @@ class Font implements SplSubject
     }
 
     /**
-     * @return bool[string]
+     * @return array<string, bool>
      */
     protected function defaultStyles(): array
     {
@@ -87,7 +87,7 @@ class Font implements SplSubject
     }
 
     /**
-     * @return bool[string]
+     * @return array<string, bool>
      */
     public function getStyles(): array
     {
@@ -186,11 +186,17 @@ class Font implements SplSubject
         $this->observers[] = $observer;
     }
 
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $observer): void
     {
         $index = array_search($observer, $this->observers, true);
         if ($index !== false) {
             unset($this->observers[$index]);
         }
+    }
+
+    // TODO: php8 Stringable interface
+    public function __toString(): string
+    {
+        return sprintf('%s %d', $this->name, $this->size);
     }
 }

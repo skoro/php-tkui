@@ -13,7 +13,7 @@ use SplObserver;
  * Implementation of menu radio button item.
  *
  * @property string $label
- * @property Variable $variable
+ * @property Variable|null $variable
  * @property callable $command
  * @property mixed $value
  * @property int $underline
@@ -78,7 +78,7 @@ class MenuRadioItem extends MenuItem implements ValueInVariable
         }
     }
 
-    public function attach(SplObserver $observer)
+    public function attach(SplObserver $observer): void
     {
         parent::attach($observer);
         if ($observer instanceof TkWidget && ! $this->variable) {

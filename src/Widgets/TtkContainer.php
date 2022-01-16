@@ -2,7 +2,6 @@
 
 namespace PhpGui\Widgets;
 
-use RuntimeException;
 use PhpGui\Evaluator;
 use PhpGui\Layouts\Grid;
 use PhpGui\Layouts\Pack;
@@ -14,11 +13,9 @@ abstract class TtkContainer extends TtkWidget implements Container
     public function window(): Window
     {
         $p = $this->parent();
-        while ($p && (! $p instanceof Window)) {
+        while (! ($p instanceof Window)) {
+            // FIXME: can be infinite loop ?
             $p = $p->parent();
-        }
-        if (! $p) {
-            throw new RuntimeException('Cannot get window.');
         }
         return $p;
     }

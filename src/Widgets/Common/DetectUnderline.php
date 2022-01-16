@@ -20,7 +20,7 @@ trait DetectUnderline
     /**
      * Removes the underline character from the given string.
      *
-     * @param string The string with underline character.
+     * @param string $value The string with underline character.
      *
      * @return string A new string with removed underline character.
      */

@@ -8,7 +8,7 @@ use M1\Env\Parser as EnvParser;
 /**
  * .env file environment loader.
  */
-class DotEnv implements Environment
+final class DotEnv implements Environment
 {
     private array $data;
     private string $path;
@@ -55,7 +55,7 @@ class DotEnv implements Environment
     public function loadAndMergeWith(array $override): void
     {
         $this->load();
-        array_merge($this->data, $override);
+        $this->data = array_merge($this->data, $override);
     }
 
     /**

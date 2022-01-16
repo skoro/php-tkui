@@ -14,7 +14,7 @@ class Range
      * @param TextIndex $from The starting position.
      * @param TextIndex $to   The ending position.
      */
-    public function __construct(TextIndex $from, TextIndex $to)
+    final public function __construct(TextIndex $from, TextIndex $to)
     {
         $this->from = $from;
         $this->to = $to;

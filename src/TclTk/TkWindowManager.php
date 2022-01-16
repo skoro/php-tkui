@@ -95,7 +95,7 @@ class TkWindowManager implements WindowManager
      */
     public function getMaxSize(): array
     {
-        return explode(' ', $this->getWm('maxsize'), 2);
+        return array_map(fn ($value) => (int) $value, explode(' ', $this->getWm('maxsize'), 2));
     }
 
     /**
@@ -115,7 +115,7 @@ class TkWindowManager implements WindowManager
      */
     public function getMinSize(): array
     {
-        return explode(' ', $this->getWm('minsize'), 2);
+        return array_map(fn ($value) => (int) $value, explode(' ', $this->getWm('minsize'), 2));
     }
 
     /**

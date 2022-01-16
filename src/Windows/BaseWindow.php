@@ -8,12 +8,15 @@ use PhpGui\Layouts\Pack;
 use PhpGui\Layouts\Place;
 use PhpGui\Options;
 use PhpGui\TclTk\TkWindowManager;
+use PhpGui\Widgets\Container;
 use PhpGui\Widgets\Menu\Menu;
 use PhpGui\Widgets\Widget;
 use PhpGui\WindowManager;
 
 /**
  * Shares the features for window implementations.
+ *
+ * @property string $title
  */
 abstract class BaseWindow implements Window
 {
@@ -76,7 +79,7 @@ abstract class BaseWindow implements Window
 
     private function generateId(): void
     {
-        $this->id = static::$idCounter++;
+        $this->id = self::$idCounter++;
     }
 
     /**
@@ -182,7 +185,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function bind(string $event, ?callable $callback): self
+    public function bind(string $event, ?callable $callback): Container
     {
         return $this->bindWidget($this, $event, $callback);
     }

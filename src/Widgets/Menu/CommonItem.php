@@ -24,7 +24,7 @@ abstract class CommonItem implements SplSubject
 
     public function __construct(array $options = [])
     {
-        $this->id = static::generateId();
+        $this->id = self::generateId();
         $this->options = $this->createOptions()
                               ->mergeAsArray($options);
         $this->observers = [];
@@ -32,7 +32,7 @@ abstract class CommonItem implements SplSubject
 
     private static function generateId(): int
     {
-        return ++static::$idIterator;
+        return ++self::$idIterator;
     }
 
     protected function createOptions(): Options
@@ -65,19 +65,19 @@ abstract class CommonItem implements SplSubject
     }
 
     // TODO: make a trait for observables.
-    public function attach(SplObserver $observer)
+    public function attach(SplObserver $observer): void
     {
         $this->observers[] = $observer;
     }
 
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $observer): void
     {
         if (($i = array_search($observer, $this->observers, true)) !== false) {
             unset($this->observers[$i]);
         }
     }
 
-    public function notify()
+    public function notify(): void
     {
         foreach ($this->observers as $observer) {
             $observer->update($this);

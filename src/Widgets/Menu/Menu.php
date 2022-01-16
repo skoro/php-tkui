@@ -30,7 +30,7 @@ class Menu extends TtkContainer
     protected const MENU_ITEM_METHOD_CONFIGURE = 'entryconfig';
 
     /**
-     * @var MenuItem[]
+     * @var array<int, CommonItem>
      */
     private array $items = [];
 
@@ -39,7 +39,7 @@ class Menu extends TtkContainer
      */
     private string $callbackCommand;
 
-    public function __construct(Container $parent, array $options = [])
+    final public function __construct(Container $parent, array $options = [])
     {
         // TearOff menus isn't supported.
         $options['tearoff'] = 0;
@@ -65,7 +65,9 @@ class Menu extends TtkContainer
     {
         if (isset($this->items[$itemId])) {
             $item = $this->items[$itemId];
-            call_user_func($item->command, $item, $widget);
+            if ($item instanceof MenuItem) {
+                call_user_func($item->command, $item, $widget);
+            }
         }
     }
 
@@ -132,7 +134,7 @@ class Menu extends TtkContainer
         // Redirect menu item's callback to menu's one.
         // Due to items don't have an access to underlying gui engine
         // all events will be handled by menu itself.
-        if ($options->has('command') && $options->command) {
+        if ($options->has('command') && $options->command) { /** @phpstan-ignore-line */
             $options->command = $this->callbackCommand . ' ' . $item->id();
         }
 

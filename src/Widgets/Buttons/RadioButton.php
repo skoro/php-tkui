@@ -40,8 +40,9 @@ class RadioButton extends SwitchableButton
 
     /**
      * @inheritdoc
+     * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->variable->asString();
     }

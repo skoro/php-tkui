@@ -16,7 +16,7 @@ class TextIndex
      * @param int $line The line, starting from 1, otherwise it will be treated as the end of the text.
      * @param int $char The characted inside the line, starting from 0.
      */
-    public function __construct(int $line = 1, int $char = 0)
+    final public function __construct(int $line = 1, int $char = 0)
     {
         $this->line = $line;
         $this->char = $char;

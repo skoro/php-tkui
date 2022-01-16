@@ -52,10 +52,10 @@ abstract class TkWidget implements Widget, SplObserver
 
     private function generateId(): void
     {
-        if (!isset(static::$idCounter[static::class])) {
-            static::$idCounter[static::class] = 0;
+        if (!isset(self::$idCounter[static::class])) {
+            self::$idCounter[static::class] = 0;
         }
-        $this->id = ++static::$idCounter[static::class];
+        $this->id = ++self::$idCounter[static::class];
     }
 
     /**

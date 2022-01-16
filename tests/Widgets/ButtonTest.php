@@ -78,6 +78,6 @@ class ButtonTest extends TestCase
         $this->expectExceptionMessage('"MyCommand" is not a valid button command.');
 
         $btn = new Button($this->createWindowStub(), 'Test');
-        $btn->command = 'MyCommand';
+        $btn->command = 'MyCommand'; /** @phpstan-ignore-line */
     }
 }

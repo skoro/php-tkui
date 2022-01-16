@@ -34,7 +34,7 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     protected string $name = 't';
 
     /**
-     * @var TextStyle[string]
+     * @var array<string, TextStyle>
      */
     private array $styles;
 
@@ -161,7 +161,7 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     }
 
     /**
-     * @return TextStyle[string]
+     * @return array<string, TextStyle>
      */
     public function getStyles(): array
     {
