@@ -5,12 +5,18 @@
         "gui", "ui", "desktop", "toolkit", "tcltk", "tk", "widget"
     ],
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Skorobogatko Alexei",
-            "email": "skorobogatko.oleksii@gmail.com"
+            "name": "Oleksii Skorobogatko",
+            "email": "skorobogatko.oleksii@gmail.com",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "source": "https://github.com/skoro/php-tkui",
+        "issues": "https://github.com/skoro/php-tkui/issues"
+    },
     "require": {
         "php": ">=7.4",
         "ext-ffi": "*",
