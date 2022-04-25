@@ -4,7 +4,7 @@ namespace Tkui\Dialogs;
 
 use Tkui\TclTk\Exceptions\TkException;
 use Tkui\Options;
-use Tkui\Windows\ModalWindow;
+use Tkui\Windows\ShowAsModal;
 use Tkui\Windows\Window;
 
 /**
@@ -12,7 +12,7 @@ use Tkui\Windows\Window;
  *
  * @property Window $parent.
  */
-abstract class Dialog implements ModalWindow
+abstract class Dialog implements ShowAsModal
 {
     private Options $options;
     private Window $parent;

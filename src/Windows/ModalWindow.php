@@ -3,9 +3,9 @@
 namespace Tkui\Windows;
 
 /**
- * Windows that can be shown as modals.
+ * Window or widget that can be shown as modals.
  */
-interface ModalWindow
+interface ShowAsModal
 {
     /**
      * @return mixed The modal result.

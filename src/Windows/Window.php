@@ -9,7 +9,7 @@ use Tkui\WindowManager;
 /**
  * The application window.
  */
-interface Window extends Container, ModalWindow
+interface Window extends Container, ShowAsModal
 {
     /**
      * The window manager instance.
