@@ -21,7 +21,7 @@ Make sure that Tcl/Tk is installed in your OS. For Debian/Ubuntu based distros y
 sudo apt install tcl tk
 ```
 
-Clone this repository and try out demos:
+Clone this repository and try out the demos:
 ```sh
 git clone https://github.com/skoro/php-tkui.git php-tkui
 cd php-tkui
@@ -36,7 +36,7 @@ You may enable some application features like:
 
 Copy the provided `.env.example` into `.env` and customize the options.
 
-Debug mode allows you to find out which commands execute by Tcl engine. To enable
+Debug mode allows you to find out which commands are executed by Tcl engine. To enable
 the debug mode set:
 ```env
 DEBUG=true
@@ -53,7 +53,7 @@ THEME=auto
 
 ### Windows
 
-You need to install Tcl/Tk binary distribution and set path to dlls
+You need to install one of [Tcl/Tk binary distributions](https://wiki.tcl-lang.org/page/Binary+Distributions) and set path to dlls
 in `.env` file like this:
 
 ```
