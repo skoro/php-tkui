@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tkui\Widgets;
 
 use Tkui\Widgets\Common\HasScrollBars;
 
-abstract class ScrollableWidget extends TkWidget
+abstract class ScrollableTtkWidget extends TtkWidget
 {
     use HasScrollBars;
 }
