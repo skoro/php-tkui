@@ -2,6 +2,8 @@
 
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Scrollbar;
+use Tkui\Widgets\TreeView\Column;
+use Tkui\Widgets\TreeView\Header;
 use Tkui\Widgets\TreeView\TreeView;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
@@ -23,7 +25,9 @@ $demo = new class extends DemoAppWindow
 
     private function buildTreeView(Container $parent, array $options = []): TreeView
     {
-        $tv = new TreeView($parent, $options);
+        $columns = $this->createColumns();
+
+        $tv = new TreeView($parent, $columns, $options);
         $tv->xScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_HORIZONTAL]);
         $tv->yScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_VERTICAL]);
 
@@ -34,6 +38,18 @@ $demo = new class extends DemoAppWindow
         $parent->grid($tv->xScrollCommand, ['sticky' => 'nsew', 'row' => 1, 'column' => 0]);
 
         return $tv;
+    }
+
+    /**
+     * @return array<Column>
+     */
+    private function createColumns(): array
+    {
+        return [
+            new Column('country', new Header('Country')),
+            new Column('capital', new Header('Capital')),
+            new Column('id', new Header('Currenry')),
+        ];
     }
 };
 

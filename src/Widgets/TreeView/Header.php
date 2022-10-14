@@ -4,35 +4,33 @@ declare(strict_types=1);
 
 namespace Tkui\Widgets\TreeView;
 
+use Tkui\Image;
 use Tkui\Options;
 
 /**
- * @property string $id
+ * @property string $text
+ * @property Image $image
  * @property string $anchor
- * @property int $minWidth
- * @property bool $stretch
- * @property int $width
+ * @property callable $command
  */
-class Column
+class Header
 {
     private Options $options;
-    private Header $header;
 
-    public function __construct(string $id, Header $header, array $options = [])
+    public function __construct(string $text, array $options = [])
     {
-        $options['id'] = $id;
-        $this->header = $header;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->mergeAsArray($options + [
+            'text' => $text,
+        ]);
     }
 
     protected function createOptions(): Options
     {
         return new Options([
-            'id' => null,
+            'text' => null,
+            'image' => null,
             'anchor' => null,
-            'minWidth' => null,
-            'stretch' => null,
-            'width' => null,
+            'command' => null,
         ]);
     }
 
@@ -56,10 +54,5 @@ class Column
     public function __set($name, $value)
     {
         $this->options->$name = $value;
-    }
-
-    public function header(): Header
-    {
-        return $this->header;
     }
 }
