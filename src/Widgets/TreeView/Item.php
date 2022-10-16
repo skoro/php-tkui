@@ -16,7 +16,7 @@ use Tkui\Options;
  * @property string[] $values
  * @property Image $image
  * @property bool $open
- * @property string[] tags
+ * @property string[] $tags
  */
 class Item
 {
