@@ -4,18 +4,39 @@ use Tkui\Widgets\Container;
 use Tkui\Widgets\Scrollbar;
 use Tkui\Widgets\TreeView\Column;
 use Tkui\Widgets\TreeView\Header;
+use Tkui\Widgets\TreeView\Item;
 use Tkui\Widgets\TreeView\TreeView;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
 $demo = new class extends DemoAppWindow
 {
+    private array $data = [
+        ['Argentina', 'Buenos Aires', 'ARS'],
+        ['Australia', 'Canberra', 'AUD'],
+        ['Brazil', 'Brazilia', 'BRL'],
+        ['Canada', 'Ottawa', 'CAD'],
+        ['China', 'Beijing', 'CNY'],
+        ['France', 'Paris', 'EUR'],
+        ['Germany', 'Berlin', 'EUR'],
+        ['India', 'New Delhi', 'INR'],
+        ['Italy', 'Rome', 'EUR'],
+        ['Japan', 'Tokyo', 'JPY'],
+        ['Mexico', 'Mexico City', 'MXN'],
+        ['South Africa', 'Pretoria', 'ZAR'],
+        ['United Kingdom', 'London', 'GBP'],
+        ['United States', 'Washington, D.C.', 'USD'],
+    ];
+
     private TreeView $tv;
 
     public function __construct()
     {
         parent::__construct('TreeView demo');
         $this->buildUI();
+        $this->addValues();
+
+        $this->tv->onSelect([$this, 'onSelectItem']);
     }
 
     private function buildUI(): void
@@ -48,8 +69,22 @@ $demo = new class extends DemoAppWindow
         return [
             new Column('country', new Header('Country')),
             new Column('capital', new Header('Capital')),
-            new Column('id', new Header('Currenry')),
+            new Column('id', new Header('Currency')),
         ];
+    }
+
+    private function addValues(): void
+    {
+        foreach ($this->data as $values) {
+            $this->tv->add(new Item($values));
+        }
+    }
+
+    public function onSelectItem(array $selected): void
+    {
+        foreach ($selected as $itemId) {
+            echo "$itemId" . PHP_EOL;
+        }
     }
 };
 

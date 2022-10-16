@@ -12,6 +12,8 @@ use Tkui\Widgets\Scrollbar;
 /**
  * @link https://www.tcl-lang.org/man/tcl/TkCmd/ttk_treeview.htm
  *
+ * @todo Not all methods implemented
+ * 
  * @property int $height
  * @property string $selectMode
  * @property string[] $columns
@@ -63,6 +65,7 @@ class TreeView extends ScrollableTtkWidget
 
     public function onSelect(callable $callback): static
     {
+        $this->bind('<<TreeviewSelect>>', fn () => $callback($this->selected(), $this));
         return $this;
     }
 
@@ -94,5 +97,37 @@ class TreeView extends ScrollableTtkWidget
     private function setColumnHeader(Column $column): void
     {
         $this->call('heading', $column->id, '-text', $column->header()->text);
+    }
+
+    public function add(Item $item, string $parentId = ''): static
+    {
+        $args = $item->options()->asStringArray();
+        $this->call('insert', $parentId ?: '{}', 'end', ...$args);
+        return $this;
+    }
+
+    public function delete(Item ...$items): static
+    {
+        $ids = array_map(fn (Item $item) => $item->id, $items);
+        $this->call('delete', ...$ids);
+        return $this;
+    }
+
+    public function focusItem(Item $item): static
+    {
+        $this->call('focus', $item->id);
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function selected(): array
+    {
+        $result = $this->call('selection');
+        if ($result === '') {
+            return [];
+        }
+        return explode(' ', $result);
     }
 }
