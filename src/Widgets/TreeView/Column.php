@@ -40,6 +40,7 @@ class Column
     {
         return $this->options;
     }
+
     /**
      * @param string $name
      * @return mixed
