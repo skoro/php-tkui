@@ -3,7 +3,6 @@
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Scrollbar;
 use Tkui\Widgets\TreeView\Column;
-use Tkui\Widgets\TreeView\Header;
 use Tkui\Widgets\TreeView\Item;
 use Tkui\Widgets\TreeView\TreeView;
 
@@ -67,9 +66,9 @@ $demo = new class extends DemoAppWindow
     private function createColumns(): array
     {
         return [
-            new Column('country', new Header('Country')),
-            new Column('capital', new Header('Capital')),
-            new Column('id', new Header('Currency')),
+            Column::create('country', 'Country'),
+            Column::create('capital', 'Capital'),
+            Column::create('currency', 'Currency'),
         ];
     }
 

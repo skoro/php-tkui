@@ -18,7 +18,7 @@ class Column
     private Options $options;
     private Header $header;
 
-    public function __construct(string $id, Header $header, array $options = [])
+    final public function __construct(string $id, Header $header, array $options = [])
     {
         $options['id'] = $id;
         $this->header = $header;
@@ -62,5 +62,10 @@ class Column
     public function header(): Header
     {
         return $this->header;
+    }
+
+    public static function create(string $id, string $header): static
+    {
+        return new static($id, new Header($header));
     }
 }

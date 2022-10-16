@@ -22,8 +22,8 @@ class TreeViewTest extends TestCase
         ]);
 
         new TreeView($this->createWindowStub(), [
-            new Column('c1', new Header('column1')),
-            new Column('c2', new Header('column2')),
+            Column::create('c1', 'column1'),
+            Column::create('c2', 'column2'),
         ]);
     }
 
@@ -39,7 +39,7 @@ class TreeViewTest extends TestCase
         ]);
 
         $tv = new TreeView($this->createWindowStub(), [
-            new Column('c1', new Header('h1')),
+            Column::create('c1', 'h1'),
         ]);
         $tv->add($item);
     }
@@ -57,7 +57,7 @@ class TreeViewTest extends TestCase
         ]);
 
         $tv = new TreeView($this->createWindowStub(), [
-            new Column('c1', new Header('h1')),
+            Column::create('c1', 'h1'),
         ]);
         $tv->add($item);
         $tv->delete($item);
