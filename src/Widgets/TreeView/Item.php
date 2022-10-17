@@ -25,7 +25,7 @@ class Item
     /**
      * @param string[] $values
      */
-    public function __construct(array $values = [], array $options = [])
+    final public function __construct(array $values = [], array $options = [])
     {
         $this->options = $this->createOptions()->mergeAsArray($options + [
             'values' => $values,
@@ -74,5 +74,10 @@ class Item
     public function options(): Options
     {
         return $this->options;
+    }
+
+    public static function values(array $values): static
+    {
+        return new static($values);
     }
 }
