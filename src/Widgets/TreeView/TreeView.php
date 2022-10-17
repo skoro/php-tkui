@@ -71,11 +71,13 @@ class TreeView extends ScrollableTtkWidget
 
     public function onOpen(callable $callback): static
     {
+        $this->bind('<<TreeviewOpen>>', fn () => $callback($this));
         return $this;
     }
 
     public function onClose(callable $callback): static
     {
+        $this->bind('<<TreeviewClose>>', fn () => $callback($this));
         return $this;
     }
 
