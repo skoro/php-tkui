@@ -132,4 +132,48 @@ class TreeView extends ScrollableTtkWidget
         }
         return explode(' ', $result);
     }
+
+    /**
+     * Returns the ID of the parent of item.
+     *
+     * @return string The ID or empty string.
+     */
+    public function getParentItemId(string $itemId): string
+    {
+        return $this->call('parent', $itemId);
+    }
+
+    public function isRootItem(string $itemId): bool
+    {
+        return $this->getParentItemId($itemId) === '';
+    }
+
+    /**
+     * Returns the ID of item's next sibling.
+     *
+     * @return string the ID or empty string.
+     */
+    public function getNextItemId(string $itemId): string
+    {
+        return $this->call('next', $itemId);
+    }
+
+    /**
+     * Returns the ID of item's previous sibling.
+     *
+     * @return string the ID or empty string.
+     */
+    public function getPrevItemId(string $itemId): string
+    {
+        return $this->call('prev', $itemId);
+    }
+
+    /**
+     * Sets the viewport to the specified item.
+     */
+    public function seeItemId(string $itemId): static
+    {
+        $this->call('see', $itemId);
+        return $this;
+    }
 }
