@@ -4,6 +4,7 @@ namespace Tkui\Widgets;
 
 use LogicException;
 use Tkui\Options;
+use Tkui\Widgets\Common\Scrollable;
 use Tkui\Widgets\Consts\Orient;
 
 /**
@@ -35,7 +36,7 @@ class Scrollbar extends TtkWidget implements Orient
      */
     public function __set(string $name, $value)
     {
-        if ($name === 'command' && $value instanceof ScrollableWidget) {
+        if ($name === 'command' && $value instanceof Scrollable) {
             $value = $value->path() . ' ' . $this->getOrientToView();
         }
         parent::__set($name, $value);
