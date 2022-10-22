@@ -24,7 +24,7 @@ trait TclInterp
         $env = DotEnv::create($rootDir);
 
         $os = OS::family();
-        $hFile = $env->getValue('TCL_C_HEADER', $defaultTclH);
+        $hFile = $env->getValue('TCL_HEADER', $defaultTclH);
         $shared = $env->getValue($os . '_LIB_TCL');
         if (empty($shared)) {
             switch ($os) {
