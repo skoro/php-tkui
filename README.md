@@ -28,7 +28,7 @@ cd php-tkui
 php demos/buttons.php
 ```
 
-### Options
+### Configuration
 
 You may enable some application features like:
 - debug mode
