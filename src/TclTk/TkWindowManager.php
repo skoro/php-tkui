@@ -38,6 +38,11 @@ class TkWindowManager implements WindowManager
         return $this->setWm('title', Tcl::quoteString($title));
     }
 
+    public function setIcon(string $iconBitmap): self
+    {
+        return $this->setWm('iconbitmap', $iconBitmap);
+    }
+
     /**
      * @inheritdoc
      *

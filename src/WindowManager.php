@@ -15,6 +15,13 @@ interface WindowManager
     public function setTitle(string $title): self;
 
     /**
+     * Sets the window's icon
+     * @param string $iconBitmap Path to the .ico file. Use `/` as directory separator (even on Windows)
+     * @return self
+     */
+    public function setIcon(string $iconBitmap): self;
+
+    /**
      * Sets the window state: normal, iconic, withdrawn, icon, zoomed.
      * But depends on underlying window manager.
      */
