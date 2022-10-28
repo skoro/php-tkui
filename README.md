@@ -20,6 +20,10 @@ Make sure that Tcl/Tk is installed in your OS. For Debian/Ubuntu based distros y
 ```sh
 sudo apt install tcl tk
 ```
+Next, check `FFI` extension is enabled:
+```sh
+php --ri ffi
+```
 
 Clone this repository and try out the demos:
 ```sh
