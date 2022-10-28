@@ -29,6 +29,7 @@ Clone this repository and try out the demos:
 ```sh
 git clone https://github.com/skoro/php-tkui.git php-tkui
 cd php-tkui
+composer install
 php demos/buttons.php
 ```
 
