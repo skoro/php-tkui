@@ -172,20 +172,22 @@ class WindowManagerTest extends TestCase
     }
 
     /** @test */
-    public function set_window_icon(): void
+    public function can_set_window_icons(): void
     {
         $this->tclEvalTest(2, [
             ['wm', 'title', '.', '{Icon Test}'],
-            ['wm', 'iconphoto', '.', '.image1'],
+            ['wm', 'iconphoto', '.', 'image1', 'image2', 'image3'],
         ]);
 
         /** @var Interp|Stub */
         $interp = $this->createStub(Interp::class);
 
-        $icon = new TkImage($interp, '.image1');
-
         (new MainWindow($this->app, 'Icon Test'))
             ->getWindowManager()
-            ->setIcon($icon);
+            ->setIcon(
+                new TkImage($interp, 'image1'),
+                new TkImage($interp, 'image2'),
+                new TkImage($interp, 'image3')
+            );
     }
 }

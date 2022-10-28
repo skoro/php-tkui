@@ -24,8 +24,10 @@ class DemoAppWindow extends MainWindow
 
     private function setIcon(): void
     {
-        $icon = $this->loadImage('php-logo.png');
-        $this->getWindowManager()->setIcon($icon);
+        $this->getWindowManager()->setIcon(
+            $this->loadImage('php-logo128.png'),
+            $this->loadImage('php-logo256.png')
+        );
     }
 
     public function run(): void

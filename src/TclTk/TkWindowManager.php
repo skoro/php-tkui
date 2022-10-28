@@ -205,9 +205,9 @@ class TkWindowManager implements WindowManager
     /**
      * @inheritdoc
      */
-    public function setIcon(Image $icon): self
+    public function setIcon(Image ...$icons): self
     {
-        $this->setWm('iconphoto', $icon);
+        $this->setWm('iconphoto', ...$icons);
         return $this;
     }
 
