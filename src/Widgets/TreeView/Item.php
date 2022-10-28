@@ -76,7 +76,7 @@ class Item
         return $this->options;
     }
 
-    public static function values(array $values): static
+    public static function values(array $values): self
     {
         return new static($values);
     }

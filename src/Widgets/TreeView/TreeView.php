@@ -63,19 +63,19 @@ class TreeView extends ScrollableTtkWidget
         ]);
     }
 
-    public function onSelect(callable $callback): static
+    public function onSelect(callable $callback): self
     {
         $this->bind('<<TreeviewSelect>>', fn () => $callback($this->selected(), $this));
         return $this;
     }
 
-    public function onOpen(callable $callback): static
+    public function onOpen(callable $callback): self
     {
         $this->bind('<<TreeviewOpen>>', fn () => $callback($this));
         return $this;
     }
 
-    public function onClose(callable $callback): static
+    public function onClose(callable $callback): self
     {
         $this->bind('<<TreeviewClose>>', fn () => $callback($this));
         return $this;
@@ -101,21 +101,21 @@ class TreeView extends ScrollableTtkWidget
         $this->call('heading', $column->id, '-text', $column->header()->text);
     }
 
-    public function add(Item $item, string $parentId = ''): static
+    public function add(Item $item, string $parentId = ''): self
     {
         $args = $item->options()->asStringArray();
         $this->call('insert', $parentId ?: '{}', 'end', ...$args);
         return $this;
     }
 
-    public function delete(Item ...$items): static
+    public function delete(Item ...$items): self
     {
         $ids = array_map(fn (Item $item) => $item->id, $items);
         $this->call('delete', ...$ids);
         return $this;
     }
 
-    public function focusItem(Item $item): static
+    public function focusItem(Item $item): self
     {
         $this->call('focus', $item->id);
         return $this;
@@ -171,7 +171,7 @@ class TreeView extends ScrollableTtkWidget
     /**
      * Sets the viewport to the specified item.
      */
-    public function seeItemId(string $itemId): static
+    public function seeItemId(string $itemId): self
     {
         $this->call('see', $itemId);
         return $this;

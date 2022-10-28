@@ -8,6 +8,7 @@ use Tkui\Widgets\Text\Range;
 use Tkui\Widgets\Text\Text;
 use Tkui\Widgets\Text\TextIndex;
 use PHPUnit\Framework\MockObject\MockObject;
+use Tkui\TclTk\TkImage;
 
 class TextTest extends TestCase
 {
@@ -174,7 +175,9 @@ class TextTest extends TestCase
         ]);
 
         /** @var Image|MockObject */
-        $image = $this->createMock(Image::class);
+        // FIXME: Since Image doesn't have Stringable TkImage is used here, after switching
+        // to PHP8 it must be changed to Image interface instead of TkImage.
+        $image = $this->createMock(TkImage::class);
         $image->expects($this->once())
               ->method('__toString')
               ->willReturn('i0')
