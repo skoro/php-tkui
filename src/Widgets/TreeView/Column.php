@@ -64,7 +64,7 @@ class Column
         return $this->header;
     }
 
-    public static function create(string $id, string $header): static
+    public static function create(string $id, string $header): self
     {
         return new static($id, new Header($header));
     }
