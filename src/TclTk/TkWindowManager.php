@@ -38,9 +38,9 @@ class TkWindowManager implements WindowManager
         return $this->setWm('title', Tcl::quoteString($title));
     }
 
-    public function setIcon(string $iconBitmap): self
+    public function setIcon(string $iconBitmapFilePath): self
     {
-        return $this->setWm('iconbitmap', $iconBitmap);
+        return $this->setWm('iconbitmap', $iconBitmapFilePath);
     }
 
     /**

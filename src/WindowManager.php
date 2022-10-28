@@ -16,10 +16,10 @@ interface WindowManager
 
     /**
      * Sets the window's icon
-     * @param string $iconBitmap Path to the .ico file. Use `/` as directory separator (even on Windows)
+     * @param string $iconBitmapFilePath Path to the .ico file. Use `/` as directory separator (even on Windows)
      * @return self
      */
-    public function setIcon(string $iconBitmap): self;
+    public function setIcon(string $iconBitmapFilePath): self;
 
     /**
      * Sets the window state: normal, iconic, withdrawn, icon, zoomed.
