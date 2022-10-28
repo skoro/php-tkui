@@ -2,6 +2,9 @@
 
 namespace Tkui\Tests\App;
 
+use PHPUnit\Framework\MockObject\Stub;
+use Tkui\TclTk\Interp;
+use Tkui\TclTk\TkImage;
 use Tkui\Tests\TestCase;
 use Tkui\Windows\MainWindow;
 
@@ -166,5 +169,23 @@ class WindowManagerTest extends TestCase
         (new MainWindow($this->app, 'Test'))
             ->getWindowManager()
             ->setOverrideRedirect(true);
+    }
+
+    /** @test */
+    public function set_window_icon(): void
+    {
+        $this->tclEvalTest(2, [
+            ['wm', 'title', '.', '{Icon Test}'],
+            ['wm', 'iconphoto', '.', '.image1'],
+        ]);
+
+        /** @var Interp|Stub */
+        $interp = $this->createStub(Interp::class);
+
+        $icon = new TkImage($interp, '.image1');
+
+        (new MainWindow($this->app, 'Icon Test'))
+            ->getWindowManager()
+            ->setIcon($icon);
     }
 }

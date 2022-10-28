@@ -116,4 +116,9 @@ interface WindowManager
      * Gets the override-redirect status.
      */
     public function getOverrideRedirect(): bool;
+
+    /**
+     * Sets the titlebar icon for window.
+     */
+    public function setIcon(Image $icon): self;
 }
