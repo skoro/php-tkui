@@ -86,6 +86,7 @@ Tcl_Obj *Tcl_NewByteArrayObj(const unsigned char *bytes, int length);
 Tcl_Obj *Tcl_NewDoubleObj(double doubleValue);
 Tcl_Obj *Tcl_NewIntObj(int intValue);
 Tcl_Obj *Tcl_NewStringObj(const char *bytes, int length);
+Tcl_Obj *Tcl_NewListObj(int objc, Tcl_Obj *const objv[]);
 
 const char *Tcl_GetVar(Tcl_Interp *interp, const char *varName, int flags);
 const char *Tcl_GetVar2(Tcl_Interp *interp, const char *part1, const char *part2, int flags);
