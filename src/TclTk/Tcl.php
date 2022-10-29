@@ -219,8 +219,13 @@ class Tcl
         return $val->cdata;
     }
 
-    public function addListElement(Interp $interp, CData $listObj, CData $obj): void
+    /**
+     * @param mixed $value
+     */
+    public function addListElement(Interp $interp, CData $listObj, $value): void
     {
+        $obj = $this->phpValueToObj($value);
+    
         if ($this->ffi->Tcl_ListObjAppendElement(null, $listObj, $obj) != self::TCL_OK) {
             throw new TclInterpException($interp, 'Tcl_ListObjAppendElement');
         }
@@ -229,13 +234,15 @@ class Tcl
     /**
      * Converts a PHP value to Tcl Obj structure.
      *
-     * @param string|int|float|bool|null $value
+     * @param string|int|float|bool|CData|null $value
      *
      * @throws TclException When a value cannot be converted to Tcl Obj.
      */
     public function phpValueToObj($value): CData
     {
-        if (is_string($value)) {
+        if ($value instanceof CData) {
+            $obj = $value;
+        } elseif (is_string($value)) {
             $obj = $this->createStringObj($value);
         } elseif (is_int($value)) {
             $obj = $this->createIntObj($value);
@@ -264,12 +271,7 @@ class Tcl
      */
     public function setVar(Interp $interp, string $varName, ?string $arrIndex, $value)
     {
-        if ($value instanceof CData) {
-            $obj = $value;
-        } else {
-            $obj = $this->phpValueToObj($value);
-        }
-
+        $obj = $this->phpValueToObj($value);
         $part1 = $this->createStringObj($varName);
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
         $result = $this->ffi->Tcl_ObjSetVar2($interp->cdata(), $part1, $part2, $obj, self::TCL_LEAVE_ERR_MSG);
