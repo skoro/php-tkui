@@ -23,9 +23,16 @@ class ListVariable
         return $this->name;
     }
 
-    public function append($value): self
+    public function append(...$values): self
     {
-        $this->interp->tcl()->addListElement($this->interp, $this->listObj, $value);
+        foreach ($values as $value) {
+            $this->interp->tcl()->addListElement($this->interp, $this->listObj, $value);
+        }
         return $this;
+    }
+
+    public function count(): int
+    {
+        return $this->interp->tcl()->getListLength($this->interp, $this->listObj);
     }
 }

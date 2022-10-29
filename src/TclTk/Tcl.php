@@ -231,6 +231,15 @@ class Tcl
         }
     }
 
+    public function getListLength(Interp $interp, CData $listObj): int
+    {
+        $len = FFI::new('int');
+        if ($this->ffi->Tcl_ListObjLength($interp->cdata(), $listObj, FFI::addr($len)) != self::TCL_OK) {
+            throw new TclInterpException($interp, 'ListObjLength');
+        }
+        return $len->cdata;
+    }
+
     /**
      * Converts a PHP value to Tcl Obj structure.
      *
