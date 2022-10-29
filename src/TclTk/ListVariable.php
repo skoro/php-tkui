@@ -1,0 +1,31 @@
+<?php declare(strict_types=1);
+
+namespace Tkui\TclTk;
+
+use FFI\CData;
+
+class ListVariable
+{
+    private Interp $interp;
+    private CData $listObj;
+    private string $name;
+
+    public function __construct(Interp $interp, string $name)
+    {
+        $this->interp = $interp;
+        $this->name = $name;
+        $this->listObj = $interp->tcl()->createListObj();
+        $interp->tcl()->setVar($interp, $name, null, $this->listObj);
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function append($value): self
+    {
+        $this->interp->tcl()->addListElement($this->interp, $this->listObj, $value);
+        return $this;
+    }
+}

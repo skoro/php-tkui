@@ -102,6 +102,18 @@ class Interp
     }
 
     /**
+     * Creates a Tcl list variable.
+     */
+    public function createListVariable(string $varName): ListVariable
+    {
+        $this->debug('createListVariable', [
+            'varName' => $varName,
+        ]);
+
+        return new ListVariable($this, $varName);
+    }
+
+    /**
      * Gets the interp eval result as a list of strings.
      */
     public function getListResult(): array
