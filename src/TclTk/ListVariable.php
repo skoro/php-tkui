@@ -35,4 +35,10 @@ class ListVariable
     {
         return $this->interp->tcl()->getListLength($this->interp, $this->listObj);
     }
+
+    public function index(int $i)
+    {
+        $result = $this->interp->tcl()->getListIndex($this->interp, $this->listObj, $i);
+        return $this->interp->tcl()->getStringFromObj($result);
+    }
 }

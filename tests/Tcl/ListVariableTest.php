@@ -27,4 +27,14 @@ class ListVariableTest extends TestCase
 
         $this->assertEquals(count($values), $var->count());
     }
+
+    /** @test */
+    public function it_can_get_string_from_list_index(): void
+    {
+        $var = $this->interp->createListVariable('test');
+        $var->append('val1', 'val2', 'val3');
+        $this->assertEquals('val1', $var->index(0));
+        $this->assertEquals('val2', $var->index(1));
+        $this->assertEquals('val3', $var->index(2));
+    }
 }

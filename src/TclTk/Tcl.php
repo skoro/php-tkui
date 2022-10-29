@@ -103,24 +103,19 @@ class Tcl
      */
     public function getListResult(Interp $interp): array
     {
-        $interpCdata = $interp->cdata();
-        $listObj = $this->ffi->Tcl_GetObjResult($interpCdata);
-        $clen = FFI::new('int');
-        if ($this->ffi->Tcl_ListObjLength($interpCdata, $listObj, FFI::addr($clen)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'ListObjResult');
-        }
-        $len = (int) $clen->cdata;
+        $listObj = $this->ffi->Tcl_GetObjResult($interp->cdata());
+
+        $len = $this->getListLength($interp, $listObj);
         if ($len === 0) {
             return [];
         }
+
         $elements = [];
         for ($index = 0; $index < $len; $index++) {
-            $elemObj = FFI::new($this->ffi->type('Tcl_Obj*'));
-            if ($this->ffi->Tcl_ListObjIndex($interpCdata, $listObj, $index, FFI::addr($elemObj)) != self::TCL_OK) {
-                throw new TclInterpException($interp, 'ListObjIndex');
-            }
+            $elemObj = $this->getListIndex($interp, $listObj, $index);
             $elements[] = $this->ffi->Tcl_GetString($elemObj);
         }
+
         return $elements;
     }
 
@@ -238,6 +233,15 @@ class Tcl
             throw new TclInterpException($interp, 'ListObjLength');
         }
         return $len->cdata;
+    }
+
+    public function getListIndex(Interp $interp, CData $listObj, int $index): CData
+    {
+        $result = $this->ffi->new('Tcl_Obj*');
+        if ($this->ffi->Tcl_ListObjIndex($interp->cdata(), $listObj, $index, FFI::addr($result)) != self::TCL_OK) {
+            throw new TclInterpException($interp, 'ListObjIndex');
+        }
+        return $result;
     }
 
     /**
