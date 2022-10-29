@@ -182,6 +182,11 @@ class Tcl
         return $this->ffi->Tcl_NewDoubleObj($f);
     }
 
+    public function createListObj(): CData
+    {
+        return $this->ffi->Tcl_NewListObj(0, NULL);
+    }
+
     public function getStringFromObj(CData $obj): string
     {
         return $this->ffi->Tcl_GetStringFromObj($obj, FFI::new('int*'));
@@ -214,17 +219,21 @@ class Tcl
         return $val->cdata;
     }
 
+    public function addListElement(Interp $interp, CData $listObj, CData $obj): void
+    {
+        if ($this->ffi->Tcl_ListObjAppendElement(null, $listObj, $obj) != self::TCL_OK) {
+            throw new TclInterpException($interp, 'Tcl_ListObjAppendElement');
+        }
+    }
+
     /**
-     * @param string $varName The Tcl variable name.
-     * @param string|NULL $arrIndex When the variable is an array that will be the array index.
-     * @param string|int|float|bool|NULL $value The variable value.
+     * Converts a PHP value to Tcl Obj structure.
      *
-     * @throws TclException      When value cannot be converted to the Tcl object.
-     * @throws TclInterpException When FFI api call is failed.
+     * @param string|int|float|bool|null $value
      *
-     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
+     * @throws TclException When a value cannot be converted to Tcl Obj.
      */
-    public function setVar(Interp $interp, string $varName, ?string $arrIndex, $value)
+    public function phpValueToObj($value): CData
     {
         if (is_string($value)) {
             $obj = $this->createStringObj($value);
@@ -238,6 +247,27 @@ class Tcl
             $obj = $this->createStringObj('');
         } else {
             throw new TclException(sprintf('Failed to convert PHP value type "%s" to Tcl object value.', gettype($value)));
+        }
+
+        return $obj;
+    }
+
+    /**
+     * @param string $varName The Tcl variable name.
+     * @param string|NULL $arrIndex When the variable is an array that will be the array index.
+     * @param string|int|float|bool|NULL|CData $value The variable value.
+     *
+     * @throws TclException      When value cannot be converted to the Tcl object.
+     * @throws TclInterpException When FFI api call is failed.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
+     */
+    public function setVar(Interp $interp, string $varName, ?string $arrIndex, $value)
+    {
+        if ($value instanceof CData) {
+            $obj = $value;
+        } else {
+            $obj = $this->phpValueToObj($value);
         }
 
         $part1 = $this->createStringObj($varName);
