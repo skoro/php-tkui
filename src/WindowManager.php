@@ -120,7 +120,7 @@ interface WindowManager
     /**
      * Sets the titlebar icon for window.
      *
-     * @param Image ...$icons A list of image icons in various resolutions.
+     * @param Image ...$icons Image icons in various resolutions.
      */
     public function setIcon(Image ...$icons): self;
 }
