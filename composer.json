@@ -18,7 +18,7 @@
         "issues": "https://github.com/skoro/php-tkui/issues"
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "ext-ffi": "*",
         "ext-spl": "*",
         "psr/log": "^1.1",
