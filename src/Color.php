@@ -3,11 +3,12 @@
 namespace Tkui;
 
 use InvalidArgumentException;
+use Stringable;
 
 /**
  * The color specification.
  */
-class Color
+class Color implements Stringable
 {
     private int $red;
     private int $green;
@@ -38,7 +39,7 @@ class Color
         throw new InvalidArgumentException(sprintf('Argument must be unsigned byte but got: %d', $value));
     }
 
-    public static function fromRgb(int $red, int $green, int $blue): self
+    public static function fromRgb(int $red, int $green, int $blue): static
     {
         return new static(sprintf('#%02x%02x%02x',
             static::assertUnsignedByte($red),
@@ -47,12 +48,12 @@ class Color
         ));
     }
 
-    public static function fromHex(string $hex): self
+    public static function fromHex(string $hex): static
     {
         return new static($hex);
     }
 
-    public static function fromName(string $name): self
+    public static function fromName(string $name): static
     {
         $lname = strtolower($name);
         if (! isset(ColorNames::$color[$lname])) {
@@ -76,7 +77,7 @@ class Color
         return $this->blue;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toHexString();
     }

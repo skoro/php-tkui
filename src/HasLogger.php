@@ -16,7 +16,7 @@ trait HasLogger
         return $this->logger;
     }
 
-    public function setLogger(?LoggerInterface $logger): self
+    public function setLogger(?LoggerInterface $logger): static
     {
         $this->logger = $logger;
         return $this;
@@ -24,17 +24,11 @@ trait HasLogger
 
     protected function debug(string $message, array $context = []): void
     {
-        // TODO: PHP8 $this->logger?->debug(...)
-        if ($this->logger) {
-            $this->logger->debug($message, $context);
-        }
+        $this->logger?->debug($message, $context);
     }
 
     protected function info(string $message, array $context = []): void
     {
-        // TODO: PHP8 $this->logger?->debug(...)
-        if ($this->logger) {
-            $this->logger->info($message, $context);
-        }
+        $this->logger?->info($message, $context);
     }
 }

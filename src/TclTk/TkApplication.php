@@ -221,7 +221,7 @@ class TkApplication implements Application
         });
     }
 
-    public function registerVar($varName): Variable
+    public function registerVar(Widget|string $varName): Variable
     {
         if ($varName instanceof Widget) {
             $varName = $varName->path();
@@ -234,7 +234,7 @@ class TkApplication implements Application
         return $this->vars[$varName];
     }
 
-    public function unregisterVar($varName): void
+    public function unregisterVar(Widget|string $varName): void
     {
         if ($varName instanceof Widget) {
             $varName = $varName->path();

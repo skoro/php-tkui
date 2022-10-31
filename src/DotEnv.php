@@ -11,17 +11,15 @@ use M1\Env\Parser as EnvParser;
 final class DotEnv implements Environment
 {
     private array $data;
-    private string $path;
-    private string $filename;
 
     /**
      * @param string $path     The directory where the env file is located.
      * @param string $filename The env file base name.
      */
-    public function __construct(string $path, string $filename = '.env')
-    {
-        $this->path = $path;
-        $this->filename = $filename;
+    public function __construct(
+        private string $path,
+        private string $filename = '.env',
+    ) {
         $this->data = [];
     }
 
@@ -71,7 +69,7 @@ final class DotEnv implements Environment
      *
      * @param string $dst Could be an env filename or directory where .env is located.
      */
-    public static function create(string $dst): self
+    public static function create(string $dst): static
     {
         if (is_dir($dst)) {
             $env = new static($dst);

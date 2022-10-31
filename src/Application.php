@@ -10,7 +10,7 @@ interface Application extends Evaluator, Bindings
     /**
      * Process the application events.
      */
-    public function run();
+    public function run(): void;
 
     /**
      * Get the theme manager.
@@ -29,6 +29,8 @@ interface Application extends Evaluator, Bindings
 
     /**
      * Stop the application and free up resources.
+     *
+     * @todo never in 8.1 ?
      */
-    public function quit();
+    public function quit(): void;
 }

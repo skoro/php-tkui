@@ -5,8 +5,9 @@ namespace Tkui;
 use InvalidArgumentException;
 use SplObserver;
 use SplSubject;
+use Stringable;
 
-class Font implements SplSubject
+class Font implements SplSubject, Stringable
 {
     public const REGULAR = 'normal';
     public const BOLD = 'bold';
@@ -194,7 +195,6 @@ class Font implements SplSubject
         }
     }
 
-    // TODO: php8 Stringable interface
     public function __toString(): string
     {
         return sprintf('%s %d', $this->name, $this->size);

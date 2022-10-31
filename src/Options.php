@@ -3,13 +3,14 @@
 namespace Tkui;
 
 use InvalidArgumentException;
+use Stringable;
 use Tkui\Widgets\Widget;
 use Tkui\TclTk\Tcl;
 
 /**
  * Tcl command options.
  */
-class Options
+class Options implements Stringable
 {
     private array $options = [];
 
