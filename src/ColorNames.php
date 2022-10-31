@@ -9,7 +9,7 @@ namespace Tkui;
  */
 class ColorNames
 {
-    /** @var array<string, array<int, int, int>> */
+    /** @var array<string, array<int>> */
     public static $color = [
         'snow' => [255, 250, 250],
         'ghost white' => [248, 248, 255],
