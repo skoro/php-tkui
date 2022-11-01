@@ -6,6 +6,9 @@ use Tkui\Exceptions\UnsupportedOSException;
 
 class OSDetection
 {
+    /**
+     * @throws UnsupportedOSException When the OperationSystem is not supported.
+     */
     public static function detect(): OS
     {
         return match (strtolower(PHP_OS_FAMILY)) {
