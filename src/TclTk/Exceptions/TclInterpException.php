@@ -6,7 +6,7 @@ use Tkui\TclTk\Interp;
 
 class TclInterpException extends TclException
 {
-    private readonly string $result;
+    private string $result;
 
     public function __construct(
         private readonly Interp $interp,
