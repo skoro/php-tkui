@@ -29,8 +29,6 @@ interface Application extends Evaluator, Bindings
 
     /**
      * Stop the application and free up resources.
-     *
-     * @todo never in 8.1 ?
      */
     public function quit(): void;
 }
