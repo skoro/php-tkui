@@ -79,7 +79,7 @@ class Tcl
      *
      * @link https://www.tcl.tk/man/tcl8.6/TclLib/StringObj.htm
      */
-    public function getString($tclObj): string
+    public function getString(CData $tclObj): string
     {
         return $this->ffi->Tcl_GetString($tclObj);
     }
@@ -105,7 +105,7 @@ class Tcl
         $listObj = $this->ffi->Tcl_GetObjResult($interpCdata);
         $clen = FFI::new('int');
         if ($this->ffi->Tcl_ListObjLength($interpCdata, $listObj, FFI::addr($clen)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'ListObjResult');
+            $interp->throwInterpException('ListObjResult');
         }
         $len = (int) $clen->cdata;
         if ($len === 0) {
@@ -115,7 +115,7 @@ class Tcl
         for ($index = 0; $index < $len; $index++) {
             $elemObj = FFI::new($this->ffi->type('Tcl_Obj*'));
             if ($this->ffi->Tcl_ListObjIndex($interpCdata, $listObj, $index, FFI::addr($elemObj)) != self::TCL_OK) {
-                throw new TclInterpException($interp, 'ListObjIndex');
+                $interp->throwInterpException('ListObjIndex');
             }
             $elements[] = $this->ffi->Tcl_GetString($elemObj);
         }
@@ -143,8 +143,9 @@ class Tcl
      */
     public function deleteCommand(Interp $interp, string $command)
     {
+        // TODO: check the return value, why it's "-1" not TCL_OK ?
         if ($this->ffi->Tcl_DeleteCommand($interp->cdata(), $command) === -1) {
-            throw new TclInterpException($interp, 'DeleteCommand');
+            $interp->throwInterpException('DeleteCommand');
         }
     }
 
@@ -189,7 +190,7 @@ class Tcl
     {
         $val = FFI::new('long');
         if ($this->ffi->Tcl_GetLongFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'GetLongFromObj');
+            $interp->throwInterpException('GetLongFromObj');
         }
         return $val->cdata;
     }
@@ -198,7 +199,7 @@ class Tcl
     {
         $val = FFI::new('int');
         if ($this->ffi->Tcl_GetBooleanFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'GetBooleanFromObj');
+            $interp->throwInterpException('GetBooleanFromObj');
         }
         return (bool) $val->cdata;
     }
@@ -207,7 +208,7 @@ class Tcl
     {
         $val = FFI::new('double');
         if ($this->ffi->Tcl_GetDoubleFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'GetDoubleFromObj');
+            $interp->throwInterpException('GetDoubleFromObj');
         }
         return $val->cdata;
     }
@@ -242,7 +243,7 @@ class Tcl
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
         $result = $this->ffi->Tcl_ObjSetVar2($interp->cdata(), $part1, $part2, $obj, self::TCL_LEAVE_ERR_MSG);
         if ($result === NULL) {
-            throw new TclInterpException($interp, 'ObjSetVar2');
+            $interp->throwInterpException('ObjSetVar2');
         }
         
         return $result;
@@ -258,7 +259,7 @@ class Tcl
         $part2 = $arrIndex ? $this->createStringObj($arrIndex) : NULL;
         $result = $this->ffi->Tcl_ObjGetVar2($interp->cdata(), $part1, $part2, self::TCL_LEAVE_ERR_MSG);
         if ($result === NULL) {
-            throw new TclInterpException($interp, 'ObjGetVar2');
+            $interp->throwInterpException('ObjGetVar2');
         }
         return $result;
     }
@@ -272,7 +273,7 @@ class Tcl
         $arrIndex = $arrIndex === '' ? NULL : $arrIndex;
         $result = $this->ffi->Tcl_UnsetVar2($interp->cdata(), $varName, $arrIndex, self::TCL_LEAVE_ERR_MSG);
         if ($result !== self::TCL_OK) {
-            throw new TclInterpException($interp, 'UnsetVar2');
+            $interp->throwInterpException('UnsetVar2');
         }
     }
 

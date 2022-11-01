@@ -3,6 +3,7 @@
 namespace Tkui\TclTk;
 
 use FFI\CData;
+use ReflectionMethod;
 use Tkui\HasLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
@@ -15,7 +16,7 @@ class Interp
     use HasLogger;
 
     public function __construct(
-        public readonly Tcl $tcl,
+        private readonly Tcl $tcl,
         private readonly CData $interp,
     ) {
     }
@@ -35,6 +36,34 @@ class Interp
     }
 
     /**
+     * Calls underlying Tcl api with replaced interp parameter.
+     *
+     * @throws TclException The method not exist in Tcl Api.
+     */
+    public function callTcl(string $method, mixed ...$arguments)
+    {
+        if (method_exists($this->tcl, $method)) {
+            // TODO: cache reflection results to improve performance.
+            $ref = new ReflectionMethod($this->tcl, $method);
+            $params = $ref->getParameters();
+            if ($params) {
+                /** @phpstan-ignore-next-line */
+                if ($params[0]->getType()->getName() === Interp::class) {
+                    array_unshift($arguments, $this);
+                }
+            }
+            $this->debug($method, array_map(
+                // CData arguments cannot be serialized to strings.
+                fn ($argument) => $argument instanceof CData ? 'FFI\CData' : $argument,
+                $arguments
+            ));
+            return $this->tcl->$method(...$arguments);
+        }
+
+        throw new TclException("Method \"$method\" not found in tcl api.");
+    }
+
+    /**
      * Gets the string result of the last executed command.
      */
     public function getStringResult(): string
@@ -44,6 +73,9 @@ class Interp
 
     /**
      * Evaluates a Tcl script.
+     *
+     * An evaluation result can be found via getStringResult().
+     * @see Interp::getStringResult
      */
     public function eval(string $script)
     {
@@ -51,14 +83,11 @@ class Interp
         $this->tcl->eval($this, $script);
     }
 
-    // TODO: tcl property is already public, this is only for compatibility.
-    public function tcl(): Tcl
-    {
-        return $this->tcl;
-    }
-
     /**
      * Creates a Tcl command.
+     *
+     * @param string   $command  The command name.
+     * @param callable $callback The command callback. The callback accepts arguments as strings.
      */
     public function createCommand(string $command, callable $callback)
     {
@@ -94,6 +123,7 @@ class Interp
             'arrIndex' => $arrIndex,
             'value' => $value,
         ]);
+
         return new Variable($this, $varName, $arrIndex, $value);
     }
 
@@ -119,7 +149,7 @@ class Interp
         $tclList = $this->getListResult();
 
         if (count($tclList) % 2 !== 0) {
-            throw $this->createInterpException('Cannot convert the Tcl result to a dictionary');
+            throw $this->throwInterpException('Cannot convert the Tcl result to a dictionary');
         }
 
         foreach (array_chunk($tclList, 2) as $chunk) {
@@ -130,8 +160,13 @@ class Interp
         return $dict;
     }
 
-    public function createInterpException(string $message): TclInterpException
+    /**
+     * A helper for throwing interp exception.
+     *
+     * @throws TclInterpException
+     */
+    public function throwInterpException(string $message): TclInterpException
     {
-        return new TclInterpException($this, $message);
+        throw new TclInterpException($this, $message);
     }
 }

@@ -9,29 +9,24 @@ use FFI\CData;
  */
 class Variable
 {
-    private Interp $interp;
-    private Tcl $tcl;
-    private string $varName;
-    private ?string $arrIndex;
-
     /**
      * @param Interp $interp   The Tcl interp.
      * @param string $varName  The variable name.
      * @param string $arrIndex When the variable is an array this is the index.
      * @param int|string|float|bool $value The variable value.
      */
-    public function __construct(Interp $interp, string $varName, ?string $arrIndex = NULL, $value = NULL)
-    {
-        $this->interp = $interp;
-        $this->tcl = $interp->tcl();
-        $this->varName = $varName;
-        $this->arrIndex = $arrIndex;
+    public function __construct(
+        private readonly Interp $interp,
+        private readonly string $varName,
+        private readonly ?string $arrIndex = NULL,
+        $value = NULL
+    ) {
         $this->set($value);
     }
 
     public function __destruct()
     {
-        $this->tcl->unsetVar($this->interp, $this->varName, $this->arrIndex);
+        $this->interp->callTcl('unsetVar', $this->varName, $this->arrIndex);
     }
 
     public function varName(): string
@@ -54,32 +49,37 @@ class Variable
 
     public function set($value)
     {
-        $this->tcl->setVar($this->interp, $this->varName, $this->arrIndex, $value);
+        $this->interp->callTcl('setVar', $this->varName, $this->arrIndex, $value);
     }
 
     public function asString(): string
     {
-        return $this->tcl->getStringFromObj($this->getObj());
+        return $this->convertToType('getStringFromObj');
     }
 
     public function asBool(): bool
     {
-        return $this->tcl->getBooleanFromObj($this->interp, $this->getObj());
+        return $this->convertToType('getBooleanFromObj');
     }
 
     public function asInt(): int
     {
-        return $this->tcl->getIntFromObj($this->interp, $this->getObj());
+        return $this->convertToType('getIntFromObj');
     }
 
     public function asFloat(): float
     {
-        return $this->tcl->getFloatFromObj($this->interp, $this->getObj());
+        return $this->convertToType('getFloatFromObj');
+    }
+
+    private function convertToType(string $method): mixed
+    {
+        return $this->interp->callTcl($method, $this->getObj());
     }
 
     protected function getObj(): CData
     {
-        return $this->tcl->getVar($this->interp, $this->varName, $this->arrIndex);
+        return $this->interp->callTcl('getVar', $this->varName, $this->arrIndex);
     }
 
     public function __toString(): string
