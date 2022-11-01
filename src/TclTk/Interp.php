@@ -3,6 +3,7 @@
 namespace Tkui\TclTk;
 
 use FFI\CData;
+use LogicException;
 use Tkui\HasLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
@@ -16,6 +17,7 @@ class Interp
 
     private Tcl $tcl;
     private CData $interp;
+    private ?ListVariable $argv = null;
 
     public function __construct(Tcl $tcl, CData $interp)
     {
@@ -28,13 +30,26 @@ class Interp
      */
     public function init(): void
     {
-        $this->debug('init');
+        $this->debug('interp init');
         $this->tcl->init($this);
+        $this->argv = $this->createListVariable('argv');
+        $this->debug('end interp init');
     }
 
     public function cdata(): CData
     {
         return $this->interp;
+    }
+
+    /**
+     * @throws LogicException When interp is not initialized.
+     */
+    public function argv(): ListVariable
+    {
+        if ($this->argv === null) {
+            throw new LogicException('Interp not initialized.');
+        }
+        return $this->argv;
     }
 
     /**

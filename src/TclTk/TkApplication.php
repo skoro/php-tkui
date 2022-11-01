@@ -40,14 +40,20 @@ class TkApplication implements Application
      */
     private array $callbacks;
 
+    private array $argv = [];
+
     /**
      * @todo Create a namespace for window callbacks handler.
      */
     private const CALLBACK_HANDLER = 'PHP_tk_ui_Handler';
 
-    public function __construct(Tk $tk)
+    /**
+     * @param array $argv Arguments and values for the global "argv" interp variable.
+     */
+    public function __construct(Tk $tk, array $argv = [])
     {
         $this->tk = $tk;
+        $this->argv = $argv;
         $this->interp = $tk->interp();
         $this->bindings = $this->createBindings();
         $this->themeManager = null;
@@ -148,10 +154,19 @@ class TkApplication implements Application
      */
     public function init(): void
     {
-        $this->debug('init');
+        $this->debug('app init');
         $this->interp->init();
+        $this->setInterpArgv();
         $this->tk->init();
         $this->initTtk();
+        $this->debug('end app init');
+    }
+
+    protected function setInterpArgv(): void
+    {
+        foreach ($this->argv as $arg => $value) {
+            $this->interp->argv()->append($arg, $value);
+        }
     }
 
     /**

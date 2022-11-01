@@ -31,8 +31,14 @@ class TkAppFactory implements AppFactory
     private string $defaultTclHeader;
     private string $defaultTkHeader;
 
-    public function __construct()
+    private string $appName;
+
+    /**
+     * @param string $appName The application name (or class name in some desktop environments).
+     */
+    public function __construct(string $appName)
     {
+        $this->appName = $appName;
         $this->defaultTclHeader = $this->getHeaderPath(self::TCL_HEADER);
         $this->defaultTkHeader = $this->getHeaderPath(self::TK_HEADER);
     }
@@ -79,10 +85,14 @@ class TkAppFactory implements AppFactory
             $libTk
         );
         
-        $app = new TkApplication($tk);
+        $app = new TkApplication($tk, [
+            '-name' => $env->getValue('APP_NAME', $this->appName),
+        ]);
+
         if ($debug) {
             $app->setLogger($logger->withName('app'));
         }
+
         $app->init();
 
         if (($theme = $env->getValue('THEME', 'auto'))) {
@@ -111,8 +121,13 @@ class TkAppFactory implements AppFactory
     {
         $interp = $this->createTcl(self::TCL_HEADER, $this->getDefaultTclLib())->createInterp();
         $tk = $this->createTk($interp, self::TK_HEADER, $this->getDefaultTkLib());
-        $app = new TkApplication($tk);
+        
+        $app = new TkApplication($tk, [
+            '-name' => $this->appName,
+        ]);
+
         $app->init();
+        
         return $app;
     }
 
