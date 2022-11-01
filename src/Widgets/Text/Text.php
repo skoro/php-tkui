@@ -20,9 +20,9 @@ use Tkui\Widgets\ScrollableWidget;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  * @property Font $font
- * @property string $wrap
+ * @property WrapMode $wrap
  */
-class Text extends ScrollableWidget implements Editable, WrapModes
+class Text extends ScrollableWidget implements Editable
 {
     /**
      * States for the 'state' option.

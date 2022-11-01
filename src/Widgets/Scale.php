@@ -15,12 +15,12 @@ use Tkui\Widgets\Consts\Orient;
  * @property callable $command
  * @property float $from
  * @property string $length
- * @property string $orient
+ * @property Orient $orient
  * @property float $to
  * @property float $value
  * @property Variable $variable
  */
-class Scale extends TtkWidget implements ValueInVariable, Orient
+class Scale extends TtkWidget implements ValueInVariable
 {
     protected string $widget = 'ttk::scale';
     protected string $name = 'sc';

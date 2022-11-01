@@ -87,6 +87,8 @@ class Options implements Stringable
                     $str[] = $value->path();
                 } elseif (is_array($value)) {
                     $str[] = Tcl::arrayToList($value);
+                } elseif (is_object($value) && property_exists($value, 'value')) {
+                    $str[] = $value->value;
                 } else {
                     $str[] = (string) $value;
                 }

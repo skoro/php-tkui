@@ -13,13 +13,13 @@ use Tkui\Widgets\Consts\Anchor;
  * @property int $width
  * @property int $height
  * @property string $text
- * @property string $labelAnchor One of ANCHOR_* consts.
+ * @property Anchor $labelAnchor
  * @property int $underline
  * @property string $labelWidget
  * 
  * @todo Implement padding property.
  */
-class LabelFrame extends Frame implements Anchor
+class LabelFrame extends Frame
 {
     use DetectUnderline;
 

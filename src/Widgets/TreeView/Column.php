@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Tkui\Widgets\TreeView;
 
 use Tkui\Options;
+use Tkui\Widgets\Consts\Anchor;
 
 /**
  * @property string $id
- * @property string $anchor
+ * @property Anchor $anchor
  * @property int $minWidth
  * @property bool $stretch
  * @property int $width

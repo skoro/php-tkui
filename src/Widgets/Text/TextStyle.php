@@ -7,7 +7,7 @@ use Tkui\Font;
 use Tkui\Options;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Relief;
-use Tkui\Widgets\Consts\WrapModes;
+use Tkui\Widgets\Consts\WrapMode;
 
 /**
  * Text style.
@@ -24,14 +24,14 @@ use Tkui\Widgets\Consts\WrapModes;
  * @property string $fgstipple
  * @property Font $font
  * @property Color|string $foreground
- * @property string $justify
+ * @property Justify $justify
  * @property int $lmargin1
  * @property int $lmargin2
  * @property Color|string $lmarginColor
  * @property int|string $offset
  * @property bool $overstrike
  * @property Color|string $overstrikeFg
- * @property string $relief
+ * @property Relief $relief
  * @property int $rmargin
  * @property Color|string $rmarginColor
  * @property Color|string $selectBackground
@@ -43,9 +43,9 @@ use Tkui\Widgets\Consts\WrapModes;
  * @property string $tabStyle
  * @property bool $underline
  * @property Color|string $underlineFg
- * @property string $wrap
+ * @property WrapMode $wrap
  */
-class TextStyle implements Justify, Relief, WrapModes
+class TextStyle
 {
     private Options $options;
     private string $name;

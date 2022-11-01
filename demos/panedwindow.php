@@ -1,6 +1,7 @@
 <?php
 
 use Tkui\Layouts\Pack;
+use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\Label;
 use Tkui\Widgets\LabelFrame;
 use Tkui\Widgets\PanedWindow;
@@ -23,7 +24,7 @@ $demo = new class extends DemoAppWindow
         $vert = new PanedWindow($this);
         $this->pack($vert, $packOptions);
 
-        $pw = new PanedWindow($vert, ['orient' => PanedWindow::ORIENT_HORIZONTAL]);
+        $pw = new PanedWindow($vert, ['orient' => Orient::ORIENT_HORIZONTAL]);
         $this->pack($pw, $packOptions);
 
         $pw->add($this->makePanel($pw, "Frame 1", "This is the left side."))

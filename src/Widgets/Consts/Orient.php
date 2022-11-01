@@ -5,8 +5,8 @@ namespace Tkui\Widgets\Consts;
 /**
  * Values for 'orient' property.
  */
-interface Orient
+enum Orient: string
 {
-    const ORIENT_VERTICAL = 'vertical';
-    const ORIENT_HORIZONTAL = 'horizontal';
+    case ORIENT_VERTICAL = 'vertical';
+    case ORIENT_HORIZONTAL = 'horizontal';
 }

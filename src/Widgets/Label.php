@@ -21,17 +21,17 @@ use Tkui\Widgets\Consts\Relief;
  * @property Variable $textVariable
  * @property int $underline
  * @property int $width
- * @property string $anchor
+ * @property Anchor $anchor
  * @property Color|string $background
  * @property Color|string $foreground
- * @property string $justify
- * @property string $relief
+ * @property Justify $justify
+ * @property Relief $relief
  * @property int $wrapLength
  * @property Font|null $font
  * @property Image $image
  * @property string $compound
  */
-class Label extends TtkWidget implements Justify, Relief, Anchor
+class Label extends TtkWidget
 {
     use DetectUnderline;
 

@@ -22,15 +22,15 @@ use Tkui\Widgets\Consts\Validate;
  * @property callable $xScrollCommand TODO
  * @property bool $exportSelection
  * @property callable $invalidCommand TODO
- * @property string $justify
+ * @property Justify $justify
  * @property bool $show
  * @property string $state
  * @property Variable $textVariable
- * @property string $validate
+ * @property Validate $validate
  * @property callable $validateCommand TODO
  * @property int $width
  */
-class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Editable
+class Entry extends TtkWidget implements ValueInVariable, Editable
 {
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';

@@ -3,12 +3,13 @@
 namespace Tkui\Tests\Widgets;
 
 use Tkui\Tests\TestCase;
+use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\PanedWindow;
 
 class PanedWindowTest extends TestCase
 {
     /** @test */
-    public function widget_created()
+    public function it_creates_paned_window_widget(): void
     {
         $this->tclEvalTest(1, [
             ['ttk::panedwindow', $this->checkWidget('.pnw'), '-orient', 'vertical']
@@ -18,12 +19,12 @@ class PanedWindowTest extends TestCase
     }
 
     /** @test */
-    public function paned_horizontal()
+    public function it_creates_paned_horizontal(): void
     {
         $this->tclEvalTest(1, [
             ['ttk::panedwindow', $this->checkWidget('.pnw'), '-orient', 'horizontal']
         ]);
 
-        new PanedWindow($this->createWindowStub(), ['orient' => PanedWindow::ORIENT_HORIZONTAL]);
+        new PanedWindow($this->createWindowStub(), ['orient' => Orient::ORIENT_HORIZONTAL]);
     }
 }

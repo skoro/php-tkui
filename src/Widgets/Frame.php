@@ -10,13 +10,13 @@ use Tkui\Widgets\Consts\Relief;
  *
  * @property string $padding
  * @property int $borderWidth
- * @property string $relief
+ * @property Relief $relief
  * @property int $width
  * @property int $height
  * 
  * @todo Implement padding property.
  */
-class Frame extends TtkContainer implements Relief
+class Frame extends TtkContainer
 {
     protected string $widget = 'ttk::frame';
     protected string $name = 'fr';

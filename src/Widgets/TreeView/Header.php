@@ -6,11 +6,12 @@ namespace Tkui\Widgets\TreeView;
 
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\Widgets\Consts\Anchor;
 
 /**
  * @property string $text
  * @property Image $image
- * @property string $anchor
+ * @property Anchor $anchor
  * @property callable $command
  */
 class Header

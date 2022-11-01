@@ -12,7 +12,7 @@ use Tkui\Widgets\Consts\Justify;
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_combobox.htm
  * 
  * @property bool $exportSelection
- * @property string $justify
+ * @property Justify $justify
  * @property int $height
  * @property callable $postCommand TODO
  * @property string $state
@@ -20,7 +20,7 @@ use Tkui\Widgets\Consts\Justify;
  * @property array $values TODO
  * @property int $width
  */
-class Combobox extends TtkWidget implements ValueInVariable, Justify
+class Combobox extends TtkWidget implements ValueInVariable
 {
     protected string $widget = 'ttk::combobox';
     protected string $name = 'cb';
