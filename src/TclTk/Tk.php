@@ -4,7 +4,7 @@ namespace Tkui\TclTk;
 
 use FFI;
 use FFI\CData;
-use Tkui\TclTk\Exceptions\TclException;
+use Tkui\TclTk\Exceptions\TkException;
 
 /**
  * Low-level interface to Tk FFI.
@@ -29,7 +29,7 @@ class Tk
     public function init(): void
     {
         if ($this->ffi->Tk_Init($this->tkInterp) !== Tcl::TCL_OK) {
-            throw new TclException("Couldn't init Tk library.");
+            throw new TkException("Couldn't init Tk library.");
         }
     }
 
