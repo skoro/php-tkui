@@ -1,16 +1,23 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tkui\System;
 
-class OS
+abstract class OS
 {
-    public static function name(): string
+    public function family(): string
+    {
+        return strtoupper(PHP_OS_FAMILY);
+    }
+
+    public function name(): string
     {
         return strtoupper(PHP_OS);
     }
 
-    public static function family(): string
-    {
-        return strtoupper(PHP_OS_FAMILY);
-    }
+    abstract public function defaultThemeName(): string;
+
+    abstract public function tclSharedLib(): string;
+    abstract public function tkSharedLib(): string;
 }

@@ -2,12 +2,10 @@
 
 namespace Tkui\Exceptions;
 
-use Tkui\System\OS;
-
 class UnsupportedOSException extends Exception
 {
     public function __construct()
     {
-        parent::__construct(sprintf('Unsupported OS: "%s"', OS::family()));
+        parent::__construct(sprintf('Unsupported OS: "%s"', PHP_OS_FAMILY));
     }
 }
