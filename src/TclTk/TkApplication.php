@@ -9,6 +9,7 @@ use Tkui\HasLogger;
 use Tkui\ImageFactory;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
+use Tkui\TclTk\Exceptions\TkException;
 use Tkui\Widgets\Widget;
 
 /**
@@ -201,14 +202,14 @@ class TkApplication implements Application
     }
 
     /**
-     * @throws TclException When ttk is not supported.
+     * @throws TkException When ttk is not supported.
      */
     public function getThemeManager(): TkThemeManager
     {
         if ($this->hasTtk()) {
             return $this->themeManager;
         }
-        throw new TclException('ttk is not supported.');
+        throw new TkException('ttk is not supported.');
     }
 
     protected function createCallbackHandler()
