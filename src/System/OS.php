@@ -6,12 +6,12 @@ namespace Tkui\System;
 
 abstract class OS
 {
-    public function family(): string
+    final public function family(): string
     {
         return strtoupper(PHP_OS_FAMILY);
     }
 
-    public function name(): string
+    final public function name(): string
     {
         return strtoupper(PHP_OS);
     }
