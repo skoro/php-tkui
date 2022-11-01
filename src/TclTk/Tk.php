@@ -11,17 +11,17 @@ use Tkui\TclTk\Exceptions\TclException;
  */
 class Tk
 {
-    private FFI $ffi;
-    private CData $tkInterp;
-    private Interp $tclInterp;
+    private readonly CData $tkInterp;
+    private readonly Interp $tclInterp;
 
     /**
      * @param FFI    $ffi    FFI to Tk library.
      * @param Interp $interp Tcl interpreter.
      */
-    public function __construct(FFI $ffi, Interp $interp)
-    {
-        $this->ffi = $ffi;
+    public function __construct(
+        private readonly FFI $ffi,
+        Interp $interp,
+    ) {
         $this->tclInterp = $interp;
         $this->tkInterp = $ffi->cast($ffi->type('Tcl_Interp*'), $interp->cdata());
     }
@@ -45,8 +45,7 @@ class Tk
 
     public function mainWindow()
     {
-        $tkWin = $this->ffi->Tk_MainWindow($this->tkInterp);
-        return $tkWin;
+        return $this->ffi->Tk_MainWindow($this->tkInterp);
     }
 
     public function destroy($win)

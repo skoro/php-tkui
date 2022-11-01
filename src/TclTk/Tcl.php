@@ -31,11 +31,9 @@ class Tcl
     const TCL_LEAVE_ERR_MSG = 0x200;
     const TCL_LIST_ELEMENT = 8;
 
-    private FFI $ffi;
-
-    public function __construct(FFI $ffi)
-    {
-        $this->ffi = $ffi;
+    public function __construct(
+        private readonly FFI $ffi,
+    ) {
     }
 
     public function createInterp(): Interp

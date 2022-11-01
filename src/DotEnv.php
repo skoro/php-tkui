@@ -17,8 +17,8 @@ final class DotEnv implements Environment
      * @param string $filename The env file base name.
      */
     public function __construct(
-        private string $path,
-        private string $filename = '.env',
+        public readonly string $path,
+        public readonly string $filename = '.env',
     ) {
         $this->data = [];
     }
@@ -59,7 +59,7 @@ final class DotEnv implements Environment
     /**
      * @inheritdoc
      */
-    public function getValue(string $param, $default = null)
+    public function getValue(string $param, mixed $default = null): mixed
     {
         return $this->data[$param] ?? $default;
     }

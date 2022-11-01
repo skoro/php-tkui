@@ -6,14 +6,14 @@ use Tkui\TclTk\Interp;
 
 class TclInterpException extends TclException
 {
-    private Interp $interp;
-    private string $result;
+    private readonly string $result;
 
-    public function __construct(Interp $interp, string $message)
-    {
+    public function __construct(
+        private readonly Interp $interp,
+        string $message
+    ) {
         $this->result = $interp->getStringResult();
         parent::__construct($message . ': ' . $this->result);
-        $this->interp = $interp;
     }
 
     public function getInterp(): Interp

@@ -14,13 +14,10 @@ class Interp
 {
     use HasLogger;
 
-    private Tcl $tcl;
-    private CData $interp;
-
-    public function __construct(Tcl $tcl, CData $interp)
-    {
-        $this->tcl = $tcl;
-        $this->interp = $interp;
+    public function __construct(
+        public readonly Tcl $tcl,
+        private readonly CData $interp,
+    ) {
     }
 
     /**
@@ -54,6 +51,7 @@ class Interp
         $this->tcl->eval($this, $script);
     }
 
+    // TODO: tcl property is already public, this is only for compatibility.
     public function tcl(): Tcl
     {
         return $this->tcl;
@@ -86,12 +84,10 @@ class Interp
     /**
      * Creates a Tcl variable instance.
      *
-     * @param mixed $value
-     *
      * @throws TclException
      * @throws TclInterpException
      */
-    public function createVariable(string $varName, ?string $arrIndex = NULL, $value = NULL): Variable
+    public function createVariable(string $varName, ?string $arrIndex = NULL, mixed $value = NULL): Variable
     {
         $this->debug('createVariable', [
             'varName' => $varName,
@@ -134,7 +130,7 @@ class Interp
         return $dict;
     }
 
-    protected function createInterpException(string $message): TclInterpException
+    public function createInterpException(string $message): TclInterpException
     {
         return new TclInterpException($this, $message);
     }

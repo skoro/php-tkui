@@ -6,16 +6,10 @@ use Tkui\TclTk\Interp;
 
 class EvalException extends TclInterpException
 {
-    private string $script;
-
-    public function __construct(Interp $interp, string $script)
-    {
+    public function __construct(
+        Interp $interp,
+        public readonly string $script
+    ) {
         parent::__construct($interp, 'Eval');
-        $this->script = $script;
-    }
-
-    public function getScript(): string
-    {
-        return $this->script;
     }
 }

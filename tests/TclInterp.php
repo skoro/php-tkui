@@ -4,10 +4,9 @@ namespace Tkui\Tests;
 
 use Tkui\DotEnv;
 use Tkui\System\FFILoader;
-use Tkui\System\OS;
 use Tkui\TclTk\Interp;
 use Tkui\TclTk\Tcl;
-use RuntimeException;
+use Tkui\System\OSDetection;
 
 trait TclInterp
 {
@@ -23,21 +22,9 @@ trait TclInterp
 
         $env = DotEnv::create($rootDir);
 
-        $os = OS::family();
+        $os = OSDetection::detect();
         $hFile = $env->getValue('TCL_HEADER', $defaultTclH);
-        $shared = $env->getValue($os . '_LIB_TCL');
-        if (empty($shared)) {
-            switch ($os) {
-                case 'LINUX':
-                    $shared = 'libtcl8.6.so';
-                    break;
-                case 'WINDOWS':
-                    $shared = 'tcl86t.dll';
-                    break;
-                default:
-                    throw new RuntimeException("Couldn't load Tcl shared lib for OS: " . $os);
-            }
-        }
+        $shared = $env->getValue("{$os->family()}_LIB_TCL", $os->tclSharedLib());
 
         $loader = new FFILoader($hFile, $shared);
         $this->tcl = new Tcl($loader->load());

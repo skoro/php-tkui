@@ -57,7 +57,7 @@ class Font implements SplSubject, Stringable
     /**
      * @throws InvalidArgumentException When the font name is empty.
      */
-    public function setName(string $name): self
+    public function setName(string $name): static
     {
         if (! $name) {
             throw new InvalidArgumentException('Font name cannot be empty.');
@@ -77,7 +77,7 @@ class Font implements SplSubject, Stringable
      *
      * @throws InvalidArgumentException When the font size is negative.
      */
-    public function setSize(int $size): self
+    public function setSize(int $size): static
     {
         if ($size <= 0) {
             throw new InvalidArgumentException('Font size cannot be zero or negative.');
@@ -100,7 +100,7 @@ class Font implements SplSubject, Stringable
         return $this->styles[self::REGULAR];
     }
 
-    public function setRegular(): self
+    public function setRegular(): static
     {
         return $this->setStyle(self::REGULAR, true);
     }
@@ -110,7 +110,7 @@ class Font implements SplSubject, Stringable
         return $this->styles[self::BOLD];
     }
 
-    public function setBold(bool $bold): self
+    public function setBold(bool $bold): static
     {
         return $this->setStyle(self::BOLD, $bold);
     }
@@ -120,7 +120,7 @@ class Font implements SplSubject, Stringable
         return $this->styles[self::ITALIC];
     }
 
-    public function setItalic(bool $italic): self
+    public function setItalic(bool $italic): static
     {
         return $this->setStyle(self::ITALIC, $italic);
     }
@@ -130,7 +130,7 @@ class Font implements SplSubject, Stringable
         return $this->styles[self::UNDERLINE];
     }
 
-    public function setUnderline(bool $underline): self
+    public function setUnderline(bool $underline): static
     {
         return $this->setStyle(self::UNDERLINE, $underline);
     }
@@ -140,12 +140,12 @@ class Font implements SplSubject, Stringable
         return $this->styles[self::OVERSTRIKE];
     }
 
-    public function setOverstrike(bool $overstrike): self
+    public function setOverstrike(bool $overstrike): static
     {
         return $this->setStyle(self::OVERSTRIKE, $overstrike);
     }
 
-    public function setStyle(string $style, bool $value = true): self
+    public function setStyle(string $style, bool $value = true): static
     {
         $this->validateStyle($style);
         if ($style === self::REGULAR && $value) {

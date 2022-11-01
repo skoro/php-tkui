@@ -6,10 +6,6 @@ interface Environment
 {
     /**
      * Reads the environment value.
-     * 
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    public function getValue(string $param, $default = null);
+    public function getValue(string $param, mixed $default = null): mixed;
 }
