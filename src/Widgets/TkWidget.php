@@ -13,6 +13,7 @@ use SplSubject;
 abstract class TkWidget implements Widget, SplObserver
 {
     private Container $parent;
+    /** @var array<string, int> */
     private static array $idCounter = [];
     private Options $options;
     private int $id;
@@ -52,9 +53,7 @@ abstract class TkWidget implements Widget, SplObserver
 
     private function generateId(): void
     {
-        if (!isset(self::$idCounter[static::class])) {
-            self::$idCounter[static::class] = 0;
-        }
+        self::$idCounter[static::class] ??= 0;
         $this->id = ++self::$idCounter[static::class];
     }
 
