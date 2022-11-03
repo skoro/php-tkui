@@ -111,28 +111,28 @@ class EntryTest extends TestCase
     }
 
     /** @test */
-    public function set_font_as_property()
+    public function it_can_set_font_as_property(): void
     {
         $this->tclEvalTest(3, [
             ['ttk::entry', $this->checkWidget('.e')],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
-            [$this->checkWidget('.e'), 'configure', '-font', '{{Foo Font} 14 normal bold}'],
+            [$this->checkWidget('.e'), 'configure', '-font', '{{Foo Font} 14 bold}'],
         ]);
 
         $e = new Entry($this->createWindowStub());
-        $e->font = new TkFont('Foo Font', 14, TkFont::BOLD);
+        $e->font = new TkFont('Foo Font', 14, TkFont::STYLE_BOLD);
     }
 
     /** @test */
-    public function create_entry_with_font_as_option()
+    public function it_creates_entry_with_font_as_option(): void
     {
         $this->tclEvalTest(2, [
-            ['ttk::entry', $this->checkWidget('.e'), '-font', '{{Foo Font} 14 normal bold}'],
+            ['ttk::entry', $this->checkWidget('.e'), '-font', '{{Foo Font} 14 bold}'],
             [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
         ]);
 
         new Entry($this->createWindowStub(), '', [
-            'font' => new TkFont('Foo Font', 14, TkFont::BOLD),
+            'font' => new TkFont('Foo Font', 14, TkFont::STYLE_BOLD),
         ]);
     }
 }

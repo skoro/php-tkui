@@ -92,9 +92,9 @@ $demo = new class extends DemoAppWindow
 
     protected function registerTextStyles()
     {
-        $this->text->createStyle('big')->font = new TkFont('Courier', 12, TkFont::BOLD);
-        $this->text->createStyle('verybig')->font = new TkFont('Helvetica', 24, TkFont::BOLD);
-        $this->text->createStyle('tiny')->font = new TkFont('Times', 8, TkFont::BOLD);
+        $this->text->createStyle('big')->font = new TkFont('Courier', 12, TkFont::STYLE_BOLD);
+        $this->text->createStyle('verybig')->font = new TkFont('Helvetica', 24, TkFont::STYLE_BOLD);
+        $this->text->createStyle('tiny')->font = new TkFont('Times', 8, TkFont::STYLE_BOLD);
         $this->text->createStyle('color1')->background = Color::fromHex('#a0b7ce');
         $this->text->createStyle('color2')->foreground = Color::fromName('red');
         $this->text->createStyle('raised', [

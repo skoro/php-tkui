@@ -3,17 +3,19 @@
 namespace Tkui;
 
 use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionClassConstant;
 use SplObserver;
 use SplSubject;
 use Stringable;
 
 class Font implements SplSubject, Stringable
 {
-    public const REGULAR = 'normal';
-    public const BOLD = 'bold';
-    public const ITALIC = 'italic';
-    public const UNDERLINE = 'underline';
-    public const OVERSTRIKE = 'overstrike';
+    const STYLE_REGULAR     = 0x0000;
+    const STYLE_BOLD        = 0x0001;
+    const STYLE_ITALIC      = 0x0002;
+    const STYLE_UNDERLINE   = 0x0004;
+    const STYLE_OVERSTRIKE  = 0x0008;
 
     private string $name;
     private int $size;
@@ -21,32 +23,17 @@ class Font implements SplSubject, Stringable
     /** @var SplObserver[] */
     private array $observers;
 
-    /** @var array<string, bool> */
-    private array $styles;
+    private int $styles = self::STYLE_REGULAR;
 
-    public function __construct(string $name, int $size, ...$styles)
+    /**
+     * @throws InvalidArgumentException When name or size is invalid.
+     */
+    public function __construct(string $name, int $size, int $styles = self::STYLE_REGULAR)
     {
         $this->observers = [];
         $this->setName($name);
         $this->setSize($size);
-        $this->styles = $this->defaultStyles();
-        foreach ($styles as $style) {
-            $this->setStyle($style, true);
-        }
-    }
-
-    /**
-     * @return array<string, bool>
-     */
-    protected function defaultStyles(): array
-    {
-        return [
-            self::REGULAR => true,
-            self::BOLD => false,
-            self::ITALIC => false,
-            self::UNDERLINE => false,
-            self::OVERSTRIKE => false,
-        ];
+        $this->styles = $styles;
     }
 
     public function getName(): string
@@ -88,91 +75,78 @@ class Font implements SplSubject, Stringable
     }
 
     /**
-     * @return array<string, bool>
+     * @return array<int, bool>
      */
     public function getStyles(): array
     {
-        return $this->styles;
+        return [
+            self::STYLE_REGULAR     => $this->isRegular(),
+            self::STYLE_BOLD        => $this->isBold(),
+            self::STYLE_ITALIC      => $this->isItalic(),
+            self::STYLE_OVERSTRIKE  => $this->isOverstrike(),
+            self::STYLE_UNDERLINE   => $this->isUnderline(),
+        ];
     }
 
     public function isRegular(): bool
     {
-        return $this->styles[self::REGULAR];
+        return $this->styles === self::STYLE_REGULAR;
     }
 
     public function setRegular(): static
     {
-        return $this->setStyle(self::REGULAR, true);
+        $this->styles = self::STYLE_REGULAR;
+        return $this;
     }
 
     public function isBold(): bool
     {
-        return $this->styles[self::BOLD];
+        return ($this->styles & self::STYLE_BOLD) === self::STYLE_BOLD;
     }
 
-    public function setBold(bool $bold): static
+    public function setBold(bool $bold = true): static
     {
-        return $this->setStyle(self::BOLD, $bold);
+        return $this->setStyle(self::STYLE_BOLD, $bold);
     }
 
     public function isItalic(): bool
     {
-        return $this->styles[self::ITALIC];
+        return ($this->styles & self::STYLE_ITALIC) === self::STYLE_ITALIC;
     }
 
-    public function setItalic(bool $italic): static
+    public function setItalic(bool $italic = true): static
     {
-        return $this->setStyle(self::ITALIC, $italic);
+        return $this->setStyle(self::STYLE_ITALIC, $italic);
     }
 
     public function isUnderline(): bool
     {
-        return $this->styles[self::UNDERLINE];
+        return ($this->styles & self::STYLE_UNDERLINE) === self::STYLE_UNDERLINE;
     }
 
-    public function setUnderline(bool $underline): static
+    public function setUnderline(bool $underline = true): static
     {
-        return $this->setStyle(self::UNDERLINE, $underline);
+        return $this->setStyle(self::STYLE_UNDERLINE, $underline);
     }
 
     public function isOverstrike(): bool
     {
-        return $this->styles[self::OVERSTRIKE];
+        return ($this->styles & self::STYLE_OVERSTRIKE) === self::STYLE_OVERSTRIKE;
     }
 
-    public function setOverstrike(bool $overstrike): static
+    public function setOverstrike(bool $overstrike = true): static
     {
-        return $this->setStyle(self::OVERSTRIKE, $overstrike);
+        return $this->setStyle(self::STYLE_OVERSTRIKE, $overstrike);
     }
 
-    public function setStyle(string $style, bool $value = true): static
+    public function setStyle(int $style, bool $setOrUnset): static
     {
-        $this->validateStyle($style);
-        if ($style === self::REGULAR && $value) {
-            $this->styles[self::BOLD] = false;
-            $this->styles[self::ITALIC] = false;
-        }
-        $this->styles[$style] = $value;
-        if (array_reduce($this->styles, fn ($carry, $val) => $carry || $val, false) === false) {
-            throw new InvalidArgumentException('Font must have at least one style.');
-        }
+        $this->styles = match ($setOrUnset) {
+            true    => $this->styles | $style,
+            false   => $this->styles ^ ($this->styles & $style),
+        };
         $this->notify();
         return $this;
-    }
-
-    protected function validateStyle(string $style): void
-    {
-        switch ($style) {
-            case self::REGULAR:
-            case self::BOLD:
-            case self::ITALIC:
-            case self::UNDERLINE:
-            case self::OVERSTRIKE:
-                break;
-
-            default:
-                throw new InvalidArgumentException("Invalid font style: $style");
-        }
     }
 
     public function notify(): void
@@ -197,6 +171,42 @@ class Font implements SplSubject, Stringable
 
     public function __toString(): string
     {
-        return sprintf('%s %d', $this->name, $this->size);
+        return $this->asString();
+    }
+
+    protected function asString(): string
+    {
+        return sprintf('%s %d %s',
+            $this->name,
+            $this->size,
+            implode(',', $this->getEnabledStyleNames())
+        );
+    }
+
+    protected function getEnabledStyleNames(): array
+    {
+        return array_intersect_key(
+            $this->getStyleNames(),
+            array_filter($this->getStyles())
+        );
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getStyleNames(): array
+    {
+        $rc = new ReflectionClass(static::class);
+
+        $styles = array_filter(
+            $rc->getConstants(ReflectionClassConstant::IS_PUBLIC),
+            fn ($key) => str_starts_with($key, 'STYLE_'),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        return array_map(
+            fn ($v) => strtolower(str_replace('STYLE_', '', $v)),
+            array_flip($styles),
+        );
     }
 }
