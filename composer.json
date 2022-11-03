@@ -44,6 +44,11 @@
         "test": "phpunit",
         "test-f": "phpunit --filter",
         "make-color-names": "@php make-color-names.php colors.txt > ./src/ColorNames.php",
-        "check": "phpstan"
+        "check": "phpstan",
+        "test-check": [
+            "@test",
+            "@check"
+        ],
+        "check-test": "@test-check"
     }
 }
