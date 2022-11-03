@@ -32,11 +32,17 @@ interface Evaluator
 
     /**
      * Registers the variable in the current Tcl interpreter.
+     *
+     * @param Widget|string $varName In case of widget the variable name will be
+     *                               constructed of a widget path.
      */
     public function registerVar(Widget|string $varName): Variable;
 
     /**
      * Unregisters the variable.
+     *
+     * @param Widget|string $varName In case of widget the variable name will be
+     *                               constructed of a widget path.
      */
     public function unregisterVar(Widget|string $varName): void;
 
