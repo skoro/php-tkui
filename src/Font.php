@@ -26,6 +26,7 @@ class Font implements SplSubject, Stringable
     private int $styles = self::STYLE_REGULAR;
 
     /**
+     * @param int $styles ORed font styles.
      * @throws InvalidArgumentException When name or size is invalid.
      */
     public function __construct(string $name, int $size, int $styles = self::STYLE_REGULAR)
@@ -183,6 +184,9 @@ class Font implements SplSubject, Stringable
         );
     }
 
+    /**
+     * @return array<int, string>
+     */
     protected function getEnabledStyleNames(): array
     {
         return array_intersect_key(
