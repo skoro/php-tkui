@@ -3,6 +3,7 @@
 namespace Tkui\TclTk;
 
 use Tkui\Evaluator;
+use Tkui\Image;
 use Tkui\WindowManager;
 use Tkui\Windows\Window;
 
@@ -199,6 +200,15 @@ class TkWindowManager implements WindowManager
     public function getOverrideRedirect(): bool
     {
         return (bool) $this->getWm('overrideredirect');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setIcon(Image ...$icons): self
+    {
+        $this->setWm('iconphoto', ...$icons);
+        return $this;
     }
 
     /**

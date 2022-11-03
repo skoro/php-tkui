@@ -19,6 +19,15 @@ class DemoAppWindow extends MainWindow
         $this->app = $factory->createFromEnvironment(DotEnv::create(dirname(__DIR__)));
         parent::__construct($this->app, $title);
         $this->imageDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'icons' . DIRECTORY_SEPARATOR;
+        $this->setIcon();
+    }
+
+    private function setIcon(): void
+    {
+        $this->getWindowManager()->setIcon(
+            $this->loadImage('php-logo128.png'),
+            $this->loadImage('php-logo256.png')
+        );
     }
 
     public function run(): void
