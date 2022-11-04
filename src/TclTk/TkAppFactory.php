@@ -24,10 +24,13 @@ class TkAppFactory implements AppFactory
     private readonly OS $os;
 
     /**
-     * @param OS|null $os The operation system instance or detection will be used.
+     * @param string  $appName The application name (or class name in some desktop environments).
+     * @param OS|null $os      The operation system instance or detection will be used.
      */
-    public function __construct(?OS $os = null)
-    {
+    public function __construct(
+        private string $appName,
+        ?OS $os = null
+    ) {
         $this->os = $os ?? OSDetection::detect();
         $this->defaultTclHeader = $this->getHeaderPath(self::TCL_HEADER);
         $this->defaultTkHeader = $this->getHeaderPath(self::TK_HEADER);
@@ -77,10 +80,14 @@ class TkAppFactory implements AppFactory
             $libTk
         );
         
-        $app = new TkApplication($tk);
+        $app = new TkApplication($tk, [
+            '-name' => $env->getValue('APP_NAME', $this->appName),
+        ]);
+
         if ($debug) {
             $app->setLogger($logger->withName('app'));
         }
+
         $app->init();
 
         if (($theme = $env->getValue('THEME', 'auto'))) {
@@ -109,8 +116,13 @@ class TkAppFactory implements AppFactory
     {
         $interp = $this->createTcl(self::TCL_HEADER, $this->getDefaultTclLib())->createInterp();
         $tk = $this->createTk($interp, self::TK_HEADER, $this->getDefaultTkLib());
-        $app = new TkApplication($tk);
+        
+        $app = new TkApplication($tk, [
+            '-name' => $this->appName,
+        ]);
+
         $app->init();
+        
         return $app;
     }
 

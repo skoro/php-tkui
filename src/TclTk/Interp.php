@@ -4,6 +4,7 @@ namespace Tkui\TclTk;
 
 use FFI\CData;
 use ReflectionMethod;
+use LogicException;
 use Tkui\HasLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
@@ -14,6 +15,8 @@ use Tkui\TclTk\Exceptions\TclInterpException;
 class Interp
 {
     use HasLogger;
+    
+    private ?ListVariable $argv = null;
 
     public function __construct(
         private readonly Tcl $tcl,
@@ -26,8 +29,10 @@ class Interp
      */
     public function init(): void
     {
-        $this->debug('init');
+        $this->debug('interp init');
         $this->tcl->init($this);
+        $this->argv = $this->createListVariable('argv');
+        $this->debug('end interp init');
     }
 
     public function cdata(): CData
@@ -61,6 +66,17 @@ class Interp
         }
 
         throw new TclException("Method \"$method\" not found in tcl api.");
+    }
+
+    /**
+     * @throws LogicException When interp is not initialized.
+     */
+    public function argv(): ListVariable
+    {
+        if ($this->argv === null) {
+            throw new LogicException('Interp not initialized.');
+        }
+        return $this->argv;
     }
 
     /**
@@ -125,6 +141,18 @@ class Interp
         ]);
 
         return new Variable($this, $varName, $arrIndex, $value);
+    }
+
+    /**
+     * Creates a Tcl list variable.
+     */
+    public function createListVariable(string $varName): ListVariable
+    {
+        $this->debug('createListVariable', [
+            'varName' => $varName,
+        ]);
+
+        return new ListVariable($this, $varName);
     }
 
     /**
