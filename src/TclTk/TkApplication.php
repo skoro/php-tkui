@@ -28,7 +28,6 @@ class TkApplication implements Application
 
     /**
      * @var Variable[]
-     * @todo WeakMap ?
      */
     private array $vars;
 
@@ -37,10 +36,13 @@ class TkApplication implements Application
      *
      * Index is the widget path and value - the callback function.
      *
-     * @todo must be WeakMap (php8) or polyfill ?
+     * @var array<string, array{Widget, callable}>
      */
     private array $callbacks;
 
+    /**
+     * @var array<string, string|int|bool>
+     */
     private array $argv = [];
 
     /**
