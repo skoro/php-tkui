@@ -112,7 +112,6 @@ class TkApplication implements Application
         }
     }
 
-    // TODO: should it be ThemeManager or TkThemeManager ?
     protected function createThemeManager(): TkThemeManager
     {
         return new TkThemeManager($this->interp);
@@ -286,12 +285,10 @@ class TkApplication implements Application
 
     /**
      * Returns the name of gui type.
-     *
-     * @return string One of "x11", "win32", "aqua".
      */
-    public function getGuiType(): string
+    public function getGuiType(): GuiType
     {
-        return (string) $this->tclEval('tk', 'windowingsystem');
+        return GuiType::fromString((string) $this->tclEval('tk', 'windowingsystem'));
     }
 
     /**
@@ -299,7 +296,7 @@ class TkApplication implements Application
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
      */
-    public function setScaling(float $value): self
+    public function setScaling(float $value): static
     {
         $this->tclEval('tk', 'scaling', $value);
         return $this;
@@ -310,7 +307,7 @@ class TkApplication implements Application
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
      */
-    public function getScaling()
+    public function getScaling(): float
     {
         return (float) $this->tclEval('tk', 'scaling');
     }
