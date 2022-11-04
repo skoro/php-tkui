@@ -4,6 +4,7 @@ namespace Tkui;
 
 use InvalidArgumentException;
 use Stringable;
+use Tkui\Exceptions\OptionNotFoundException;
 use Tkui\Widgets\Widget;
 use Tkui\TclTk\Tcl;
 
@@ -25,25 +26,25 @@ class Options implements Stringable
     }
 
     /**
-     * @throws InvalidArgumentException When option name is not widget option.
+     * @throws OptionNotFoundException When option name is not widget option.
      */
     public function __get($name)
     {
         if ($this->has($name)) {
             return $this->options[$name];
         }
-        throw new InvalidArgumentException("'$name' is not widget option.");
+        throw new OptionNotFoundException($name);
     }
 
     /**
-     * @throws InvalidArgumentException When option name is not widget option.
+     * @throws OptionNotFoundException When option name is not widget option.
      */
     public function __set($name, $value)
     {
         if ($this->has($name)) {
             $this->options[$name] = $value;
         } else {
-            throw new InvalidArgumentException("'$name' is not widget option.");
+            throw new OptionNotFoundException($name);
         }
     }
 
@@ -180,8 +181,10 @@ class Options implements Stringable
      * </code>
      *
      * @param bool $asOptions When enabled odd list items must be options.
+     *
+     * @throws InvalidArgumentException The list must have even number of elements.
      */
-    public static function createFromList(array $list, bool $asOptions = true): self
+    public static function createFromList(array $list, bool $asOptions = true): static
     {
         if (count($list) % 2 !== 0) {
             throw new InvalidArgumentException('The list must have even number of elements.');
