@@ -4,6 +4,7 @@ namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
 use Tkui\Widgets\Common\Clickable;
+use Tkui\Widgets\Common\HasCommand;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\TtkWidget;
@@ -17,7 +18,7 @@ use Tkui\Widgets\TtkWidget;
  */
 abstract class GenericButton extends TtkWidget implements Clickable
 {
-    use Command;
+    use HasCommand;
     use HasUnderlinedLabel;
 
     public function __construct(Container $parent, array $options = [])
