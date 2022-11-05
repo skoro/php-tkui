@@ -4,11 +4,11 @@ namespace Tkui\Widgets\Menu;
 
 use Tkui\Color;
 use Tkui\Options;
-use Tkui\Widgets\Common\DetectUnderline;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\TtkContainer;
 use Tkui\Widgets\Widget;
 use SplSubject;
+use Tkui\Widgets\Common\HasUnderlinedLabel;
 
 /**
  * Menu implementation.
@@ -21,7 +21,7 @@ use SplSubject;
  */
 class Menu extends TtkContainer
 {
-    use DetectUnderline;
+    use HasUnderlinedLabel;
 
     protected string $widget = 'menu';
     protected string $name = 'm';

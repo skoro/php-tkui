@@ -5,7 +5,7 @@ namespace Tkui\Widgets;
 use SplObserver;
 use SplSubject;
 use Tkui\Options;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Common\HasUnderlinedLabel;
 
 /**
  * @property string $state
@@ -18,7 +18,7 @@ use Tkui\Widgets\Common\DetectUnderline;
  */
 class NotebookTab implements SplSubject
 {
-    use DetectUnderline;
+    use HasUnderlinedLabel;
 
     private Widget $container;
     private Options $options;

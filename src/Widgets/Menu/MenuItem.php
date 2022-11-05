@@ -5,7 +5,7 @@ namespace Tkui\Widgets\Menu;
 use Tkui\Image;
 use Tkui\Options;
 use Tkui\Widgets\Common\Clickable;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Common\HasUnderlinedLabel;
 use Tkui\Widgets\TtkWidget;
 
 /**
@@ -20,7 +20,7 @@ use Tkui\Widgets\TtkWidget;
  */
 class MenuItem extends CommonItem implements Clickable
 {
-    use DetectUnderline;
+    use HasUnderlinedLabel;
 
     /**
      * @param callable|null $callback
