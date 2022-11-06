@@ -7,8 +7,8 @@ namespace Tkui\Widgets\Consts;
 /**
  * Values for 'mode' property of progressbar widget.
  */
-interface ProgressMode
+enum ProgressMode: string
 {
-    const MODE_DETERMINATE = 'determinate';
-    const MODE_INDETERMINATE = 'indeterminate';
+    case DETERMINATE = 'determinate';
+    case INDETERMINATE = 'indeterminate';
 }
