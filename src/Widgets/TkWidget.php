@@ -129,6 +129,8 @@ abstract class TkWidget implements Widget, SplObserver
      */
     public function __get(string $name)
     {
+        // TODO: this won't work when the widget changes the option
+        // internally by itself, like progressbar.
         $value = $this->options->$name;
         if ($value === null) {
             $value = $this->call('cget', Options::getTclOption($name));
