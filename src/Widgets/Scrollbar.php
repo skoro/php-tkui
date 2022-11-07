@@ -27,7 +27,7 @@ class Scrollbar extends TtkWidget
     {
         return new Options([
             'command' => null,
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
     }
 
@@ -47,15 +47,11 @@ class Scrollbar extends TtkWidget
      */
     public function getOrientToView(): string
     {
-        switch ($this->orient) {
-            case Orient::ORIENT_HORIZONTAL:
-                return 'xview';
-
-            case Orient::ORIENT_VERTICAL:
-                return 'yview';
-        }
-
-        throw new LogicException('Invalid orient: ' . $this->orient->value);
+        return match ($this->orient) {
+            Orient::HORIZONTAL => 'xview',
+            Orient::VERTICAL => 'yview',
+            default => throw new LogicException('Invalid orient: ' . $this->orient->value),
+        };
     }
 
     /**
