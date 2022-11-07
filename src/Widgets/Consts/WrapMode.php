@@ -7,7 +7,7 @@ namespace Tkui\Widgets\Consts;
  */
 enum WrapMode: string
 {
-    case WRAP_NONE = 'none';
-    case WRAP_CHAR = 'char';
-    case WRAP_WORD = 'word';
+    case NONE = 'none';
+    case CHAR = 'char';
+    case WORD = 'word';
 }

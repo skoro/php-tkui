@@ -23,7 +23,7 @@ class Separator extends TtkWidget
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
     }
 }

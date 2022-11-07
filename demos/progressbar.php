@@ -47,14 +47,14 @@ $demo = new class extends DemoAppWindow
 
         $pbar1 = new Progressbar($f, [
             'mode' => ProgressMode::DETERMINATE,
-            'orient' => Orient::ORIENT_HORIZONTAL,
+            'orient' => Orient::HORIZONTAL,
             'variable' => $this->progressValue,
             'maximum' => self::MAX_VALUE,
         ]);
 
         $pbar2 = new Progressbar($f, [
             'mode' => ProgressMode::INDETERMINATE,
-            'orient' => Orient::ORIENT_HORIZONTAL,
+            'orient' => Orient::HORIZONTAL,
         ]);
 
         $f->grid(new Label($f, 'Determinate'), [
@@ -101,14 +101,14 @@ $demo = new class extends DemoAppWindow
 
         $pbar1 = new Progressbar($f, [
             'mode' => ProgressMode::DETERMINATE,
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
             'variable' => $this->progressValue,
             'maximum' => self::MAX_VALUE,
         ]);
 
         $pbar2 = new Progressbar($f, [
             'mode' => ProgressMode::INDETERMINATE,
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
 
         $f->grid(new Label($f, 'Determinate'), [

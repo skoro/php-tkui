@@ -75,7 +75,7 @@ $demo = new class extends DemoAppWindow
             'side' => Pack::SIDE_TOP,
             'pady' => 4,
         ]);
-        $f->pack(new Scrollbar($f, ['orient' => Orient::ORIENT_HORIZONTAL]), [
+        $f->pack(new Scrollbar($f, ['orient' => Orient::HORIZONTAL]), [
             'side' => Pack::SIDE_TOP,
             'fill' => Pack::FILL_X,
             'expand' => true,

@@ -80,8 +80,8 @@ $demo = new class extends DemoAppWindow
     {
         $t = new Text($parent);
         $t->yScrollCommand = new Scrollbar($parent);
-        $t->xScrollCommand = new Scrollbar($parent, ['orient' => Orient::ORIENT_HORIZONTAL]);
-        $t->wrap = WrapMode::WRAP_WORD;
+        $t->xScrollCommand = new Scrollbar($parent, ['orient' => Orient::HORIZONTAL]);
+        $t->wrap = WrapMode::WORD;
         $parent->grid($t, ['sticky' => 'nsew', 'row' => 0, 'column' => 0])
                ->rowConfigure($parent, 0, ['weight' => 1])
                ->columnConfigure($parent, 0, ['weight' => 1]);
@@ -98,11 +98,11 @@ $demo = new class extends DemoAppWindow
         $this->text->createStyle('color1')->background = Color::fromHex('#a0b7ce');
         $this->text->createStyle('color2')->foreground = Color::fromName('red');
         $this->text->createStyle('raised', [
-                'relief' => Relief::RELIEF_RAISED,
+                'relief' => Relief::RAISED,
                 'borderWidth' => 1,
         ]);
         $this->text->createStyle('sunken', [
-                'relief' => Relief::RELIEF_SUNKEN,
+                'relief' => Relief::SUNKEN,
                 'borderWidth' => 1,
         ]);
         $this->text->createStyle('bgstipple', [
@@ -113,8 +113,8 @@ $demo = new class extends DemoAppWindow
         $this->text->createStyle('fgstipple')->fgstipple = 'gray50';
         $this->text->createStyle('underline')->underline = true;
         $this->text->createStyle('overstrike')->overstrike = true;
-        $this->text->createStyle('right')->justify = Justify::JUSTIFY_RIGHT;
-        $this->text->createStyle('center')->justify = Justify::JUSTIFY_CENTER;
+        $this->text->createStyle('right')->justify = Justify::RIGHT;
+        $this->text->createStyle('center')->justify = Justify::CENTER;
         $this->text->createStyle('sub', [
                 'offset' => '4p',
                 'font' => new TkFont('Courier', 10),

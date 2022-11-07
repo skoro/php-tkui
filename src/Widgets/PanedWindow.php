@@ -24,7 +24,7 @@ class PanedWindow extends TtkContainer
     protected function initWidgetOptions(): Options
     {
         return new Options([
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
             'width' => null,
             'height' => null,
         ]);

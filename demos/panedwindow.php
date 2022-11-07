@@ -24,7 +24,7 @@ $demo = new class extends DemoAppWindow
         $vert = new PanedWindow($this);
         $this->pack($vert, $packOptions);
 
-        $pw = new PanedWindow($vert, ['orient' => Orient::ORIENT_HORIZONTAL]);
+        $pw = new PanedWindow($vert, ['orient' => Orient::HORIZONTAL]);
         $this->pack($pw, $packOptions);
 
         $pw->add($this->makePanel($pw, "Frame 1", "This is the left side."))

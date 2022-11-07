@@ -7,10 +7,10 @@ namespace Tkui\Widgets\Consts;
  */
 enum Validate: string
 {
-    case VALIDATE_NONE = 'none';
-    case VALIDATE_FOCUS = 'focus';
-    case VALIDATE_FOCUS_IN = 'focusin';
-    case VALIDATE_FOCUS_OUT = 'focusout';
-    case VALIDATE_KEY = 'key';
-    case VALIDATE_ALL = 'all';
+    case NONE       = 'none';
+    case FOCUS      = 'focus';
+    case FOCUS_IN   = 'focusin';
+    case FOCUS_OUT  = 'focusout';
+    case KEY        = 'key';
+    case ALL        = 'all';
 }

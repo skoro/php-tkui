@@ -9,6 +9,6 @@ namespace Tkui\Widgets\Consts;
  */
 enum ProgressMode: string
 {
-    case DETERMINATE = 'determinate';
-    case INDETERMINATE = 'indeterminate';
+    case DETERMINATE    = 'determinate';
+    case INDETERMINATE  = 'indeterminate';
 }

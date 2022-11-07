@@ -7,10 +7,10 @@ namespace Tkui\Widgets\Consts;
  */
 enum Relief: string
 {
-    case RELIEF_FLAT = 'flat';
-    case RELIEF_GROOVE = 'groove';
-    case RELIEF_RAISED = 'raised';
-    case RELIEF_RIDGE = 'ridge';
-    case RELIEF_SOLID = 'solid';
-    case RELIEF_SUNKEN = 'sunken';
+    case FLAT   = 'flat';
+    case GROOVE = 'groove';
+    case RAISED = 'raised';
+    case RIDGE  = 'ridge';
+    case SOLID  = 'solid';
+    case SUNKEN = 'sunken';
 }

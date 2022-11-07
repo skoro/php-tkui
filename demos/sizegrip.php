@@ -27,7 +27,7 @@ $win->pack(new Label($win, 'A ttk::sizegrip widget (also known as a grow box) al
     'side' => Pack::SIDE_TOP,
 ]);
 
-$win->pack(new Separator($win, ['orient' => Orient::ORIENT_HORIZONTAL]), [
+$win->pack(new Separator($win, ['orient' => Orient::HORIZONTAL]), [
     'side' => Pack::SIDE_BOTTOM,
     'fill' => Pack::FILL_X
 ]);

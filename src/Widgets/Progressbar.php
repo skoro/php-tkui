@@ -36,7 +36,7 @@ class Progressbar extends TtkWidget implements ValueInVariable
             'length' => null,
             'maximum' => null,
             'mode' => null,
-            'orient' => Orient::ORIENT_HORIZONTAL,
+            'orient' => Orient::HORIZONTAL,
             'phase' => null,
             'value' => null,
             'variable' => null,

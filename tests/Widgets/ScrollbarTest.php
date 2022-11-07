@@ -25,7 +25,7 @@ class ScrollbarTest extends TestCase
         $this->tclEvalTest(1, [
             ['ttk::scrollbar', $this->checkWidget('.scr'), '-orient', 'horizontal'],
         ]);
-        new Scrollbar($this->createWindowStub(), ['orient' => Orient::ORIENT_HORIZONTAL]);
+        new Scrollbar($this->createWindowStub(), ['orient' => Orient::HORIZONTAL]);
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class ScrollbarTest extends TestCase
     /** @test */
     public function horiz_orient_to_view()
     {
-        $scr = new Scrollbar($this->createWindowStub(), ['orient' => Orient::ORIENT_HORIZONTAL]);
+        $scr = new Scrollbar($this->createWindowStub(), ['orient' => Orient::HORIZONTAL]);
         $this->assertEquals('xview', $scr->getOrientToView());
     }
 
@@ -62,7 +62,7 @@ class ScrollbarTest extends TestCase
         $test = $this->createStub(ScrollableWidget::class);
         $test->method('path')->willReturn('.p');
 
-        $scr = new Scrollbar($this->createWindowStub(), ['orient' => Orient::ORIENT_HORIZONTAL]);
+        $scr = new Scrollbar($this->createWindowStub(), ['orient' => Orient::HORIZONTAL]);
         $scr->command = $test;
 
         $this->assertEquals('.p xview', $scr->command);

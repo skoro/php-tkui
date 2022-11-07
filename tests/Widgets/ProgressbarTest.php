@@ -36,7 +36,7 @@ class ProgressbarTest extends TestCase
         new Progressbar($this->createWindowStub(), [
             'mode' => ProgressMode::DETERMINATE,
             'maximum' => 100,
-            'orient' => Orient::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
     }
 

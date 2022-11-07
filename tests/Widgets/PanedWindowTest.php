@@ -25,6 +25,6 @@ class PanedWindowTest extends TestCase
             ['ttk::panedwindow', $this->checkWidget('.pnw'), '-orient', 'horizontal']
         ]);
 
-        new PanedWindow($this->createWindowStub(), ['orient' => Orient::ORIENT_HORIZONTAL]);
+        new PanedWindow($this->createWindowStub(), ['orient' => Orient::HORIZONTAL]);
     }
 }

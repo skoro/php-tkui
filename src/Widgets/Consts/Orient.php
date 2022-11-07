@@ -7,6 +7,6 @@ namespace Tkui\Widgets\Consts;
  */
 enum Orient: string
 {
-    case ORIENT_VERTICAL = 'vertical';
-    case ORIENT_HORIZONTAL = 'horizontal';
+    case VERTICAL   = 'vertical';
+    case HORIZONTAL = 'horizontal';
 }

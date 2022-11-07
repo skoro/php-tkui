@@ -48,7 +48,7 @@ $demo = new class extends DemoAppWindow
     {
         $this->pack(new Label($this, $text, [
             'wrapLength' => '4i',
-            'justify' => Justify::JUSTIFY_LEFT,
+            'justify' => Justify::LEFT,
         ]));
     }
 
@@ -93,7 +93,7 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($this);
         $this->pack(new Label($f, $name));
         $this->pack(new Frame($f, [
-            'relief' => Relief::RELIEF_RIDGE,
+            'relief' => Relief::RIDGE,
             'height' => 2,
             'borderWidth' => 1,
         ]), [

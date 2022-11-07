@@ -7,13 +7,13 @@ namespace Tkui\Widgets\Consts;
  */
 enum Anchor: string
 {
-    case ANCHOR_N = 'n';
-    case ANCHOR_NE = 'ne';
-    case ANCHOR_E = 'e';
-    case ANCHOR_SE = 'se';
-    case ANCHOR_S = 's';
-    case ANCHOR_SW = 'sw';
-    case ANCHOR_W = 'w';
-    case ANCHOR_NW = 'nw';
-    case ANCHOR_CENTER = 'center';
+    case N          = 'n';
+    case NE         = 'ne';
+    case E          = 'e';
+    case SE         = 'se';
+    case S          = 's';
+    case SW         = 'sw';
+    case W          = 'w';
+    case NW         = 'nw';
+    case CENTER     = 'center';
 }

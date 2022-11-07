@@ -7,7 +7,7 @@ namespace Tkui\Widgets\Consts;
  */
 enum Justify: string
 {
-    case JUSTIFY_LEFT = 'left';
-    case JUSTIFY_CENTER = 'center';
-    case JUSTIFY_RIGHT = 'right';
+    case LEFT   = 'left';
+    case CENTER = 'center';
+    case RIGHT  = 'right';
 }
