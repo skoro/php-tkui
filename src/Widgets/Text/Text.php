@@ -6,6 +6,7 @@ use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
 use Tkui\Widgets\Common\Editable;
+use Tkui\Widgets\Consts\State;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use Tkui\Widgets\Exceptions\WidgetException;
@@ -20,15 +21,10 @@ use Tkui\Widgets\ScrollableWidget;
  * @property Scrollbar $yScrollCommand
  * @property Font $font
  * @property WrapMode $wrap
+ * @property State $state
  */
 class Text extends ScrollableWidget implements Editable
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_DISABLED = 'disabled';
-
     protected string $widget = 'text';
     protected string $name = 't';
 
