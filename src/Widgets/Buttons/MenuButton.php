@@ -4,6 +4,7 @@ namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
 use Tkui\Widgets\Container;
+use Tkui\Widgets\Consts\Direction;
 use Tkui\Widgets\Menu\Menu;
 
 /**
@@ -14,16 +15,10 @@ use Tkui\Widgets\Menu\Menu;
  * @property string $text
  * @property int $underline
  * @property Menu $menu
- * @property string $direction
+ * @property Direction $direction
  */
 class MenuButton extends GenericButton
 {
-    const DIRECTION_ABOVE = 'above';
-    const DIRECTION_BELOW = 'below';
-    const DIRECTION_LEFT = 'left';
-    const DIRECTION_RIGHT = 'right';
-    const DIRECTION_FLUSH = 'flush';
-
     protected string $widget = 'ttk::menubutton';
     protected string $name = 'mbtn';
 

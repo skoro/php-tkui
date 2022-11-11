@@ -4,9 +4,10 @@ namespace Tkui\Widgets\Text;
 
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\Widgets\Consts\Align;
 
 /**
- * @property string $align
+ * @property Align $align
  * @property Image $image
  * @property string $name
  * @property int $padx
@@ -14,11 +15,6 @@ use Tkui\Options;
  */
 class EmbeddedImage
 {
-    const ALIGN_TOP = 'top';
-    const ALIGN_BOTTOM = 'bottom';
-    const ALIGN_CENTER = 'center';
-    const ALIGN_BASELINE = 'baseline';
-    
     private TextApiMethodBridge $apiBridge;
     private TextIndex $index;
     private Options $options;
