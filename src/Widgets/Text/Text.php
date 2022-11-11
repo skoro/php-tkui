@@ -6,7 +6,6 @@ use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
 use Tkui\Widgets\Common\Editable;
-use Tkui\Widgets\Consts\WrapModes;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use Tkui\Widgets\Exceptions\WidgetException;
