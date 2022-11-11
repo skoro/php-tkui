@@ -7,6 +7,11 @@ namespace Tkui\Widgets\Common;
 use InvalidArgumentException;
 use Tkui\Widgets\Scrollbar;
 
+/**
+ * Provides 'xScrollCommand' and 'yScrollCommand' to set/get a Scrollbar instance.
+ *
+ * Used for scrollable containers in tk and ttk implementations.
+ */
 trait HasScrollBars
 {
     private Scrollbar $xScroll;
