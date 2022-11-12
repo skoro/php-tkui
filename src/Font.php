@@ -5,12 +5,13 @@ namespace Tkui;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionClassConstant;
-use SplObserver;
 use SplSubject;
 use Stringable;
 
 class Font implements SplSubject, Stringable
 {
+    use Observable;
+
     const STYLE_REGULAR     = 0x0000;
     const STYLE_BOLD        = 0x0001;
     const STYLE_ITALIC      = 0x0002;
@@ -20,9 +21,6 @@ class Font implements SplSubject, Stringable
     private string $name;
     private int $size;
 
-    /** @var SplObserver[] */
-    private array $observers;
-
     private int $styles = self::STYLE_REGULAR;
 
     /**
@@ -31,7 +29,6 @@ class Font implements SplSubject, Stringable
      */
     public function __construct(string $name, int $size, int $styles = self::STYLE_REGULAR)
     {
-        $this->observers = [];
         $this->setName($name);
         $this->setSize($size);
         $this->styles = $styles;
@@ -148,26 +145,6 @@ class Font implements SplSubject, Stringable
         };
         $this->notify();
         return $this;
-    }
-
-    public function notify(): void
-    {
-        foreach ($this->observers as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    public function attach(SplObserver $observer): void
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function detach(SplObserver $observer): void
-    {
-        $index = array_search($observer, $this->observers, true);
-        if ($index !== false) {
-            unset($this->observers[$index]);
-        }
     }
 
     public function __toString(): string

@@ -2,8 +2,8 @@
 
 namespace Tkui\Widgets;
 
-use SplObserver;
 use SplSubject;
+use Tkui\Observable;
 use Tkui\Options;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 
@@ -19,12 +19,10 @@ use Tkui\Widgets\Common\HasUnderlinedLabel;
 class NotebookTab implements SplSubject
 {
     use HasUnderlinedLabel;
+    use Observable;
 
     private Widget $container;
     private Options $options;
-
-    /** @var SplObserver[] */
-    private array $observers = [];
 
     public function __construct(Widget $container, string $title, array $options = [])
     {
@@ -66,24 +64,5 @@ class NotebookTab implements SplSubject
     public function container(): Widget
     {
         return $this->container;
-    }
-
-    public function notify(): void
-    {
-        foreach ($this->observers as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    public function attach(SplObserver $observer): void
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function detach(SplObserver $observer): void
-    {
-        if (($index = array_search($observer, $this->observers, true)) !== false) {
-            unset($this->observers[$index]);
-        }
     }
 }

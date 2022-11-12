@@ -3,8 +3,8 @@
 namespace Tkui\Widgets;
 
 use Tkui\Color;
-use SplObserver;
 use SplSubject;
+use Tkui\Observable;
 use Tkui\Options;
 
 /**
@@ -17,15 +17,13 @@ use Tkui\Options;
  */
 class ListboxItem implements SplSubject
 {
+    use Observable;
+
     private string $value;
     private Options $options;
 
-    /** @var SplObserver[] */
-    private array $observers;
-
     public function __construct(string $value, array $options = [])
     {
-        $this->observers = [];
         $this->value = $value;
         $this->options = $this->initOptions()->mergeAsArray($options);
     }
@@ -68,25 +66,5 @@ class ListboxItem implements SplSubject
     {
         $this->options->$name = $value;
         $this->notify();
-    }
-
-    public function attach(SplObserver $observer): void
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function detach(SplObserver $observer): void
-    {
-        $index = array_search($observer, $this->observers, true);
-        if ($index !== false) {
-            unset($this->observers[$index]);
-        }
-    }
-
-    public function notify(): void
-    {
-        foreach ($this->observers as $observer) {
-            $observer->update($this);
-        }
     }
 }
