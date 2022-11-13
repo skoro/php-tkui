@@ -11,14 +11,12 @@ namespace Tkui\Widgets\Consts;
  */
 enum Compound: string
 {
-    case ACTIVE     = 'active';
-    case DISABLED   = 'disabled';
-    case FOCUS      = 'focus';
-    case PRESSED    = 'pressed';
-    case SELECTED   = 'selected';
-    case BACKGROUND = 'background';
-    case READONLY   = 'readonly';
-    case ALTERNATE  = 'alternate';
-    case INVALID    = 'invalid';
-    case HOVER      = 'hover';
+    case NONE   = 'none';
+    case TEXT   = 'text';
+    case IMAGE  = 'image';
+    case CENTER = 'center';
+    case TOP    = 'top';
+    case BOTTOM = 'bottom';
+    case LEFT   = 'left';
+    case RIGHT  = 'right';
 }
