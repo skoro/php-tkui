@@ -6,7 +6,7 @@ use Tkui\Image;
 use Tkui\Options;
 use Tkui\Widgets\Common\Clickable;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
-use Tkui\Widgets\TtkWidget;
+use Tkui\Widgets\Consts\Compound;
 
 /**
  * Implements a simple menu item with a callback.
@@ -44,7 +44,7 @@ class MenuItem extends CommonItem implements Clickable
             'underline' => null,
             'accelerator' => null,
             'image' => null,
-            'compound' => TtkWidget::COMPOUND_LEFT,
+            'compound' => Compound::LEFT,
         ]);
     }
 
