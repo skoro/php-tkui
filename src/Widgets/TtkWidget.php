@@ -139,7 +139,7 @@ abstract class TtkWidget extends TkWidget
     /**
      * @inheritdoc
      */
-    public function update(SplSubject $subject): void
+    public function update(SplSubject|Font $subject): void
     {
         parent::update($subject);
 
