@@ -5,6 +5,7 @@ namespace Tkui\Widgets;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\Widgets\Consts\Compound;
 use Tkui\Widgets\Exceptions\FontNotSupportedException;
 use SplSubject;
 
@@ -16,7 +17,7 @@ use SplSubject;
  * @property bool $takeFocus
  * @property string $style
  * @property Image $image
- * @property string $compound
+ * @property Compound $compound
  * @property Font $font
  */
 abstract class TtkWidget extends TkWidget
@@ -38,20 +39,6 @@ abstract class TtkWidget extends TkWidget
     const STATE_INVALID = 'invalid';
     const STATE_HOVER = 'hover';
 
-    /**
-     * Specifies how to display the image relative to the text.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_widget.htm#M-compound
-     */
-    const COMPOUND_NONE = 'none';
-    const COMPOUND_TEXT = 'text';
-    const COMPOUND_IMAGE = 'image';
-    const COMPOUND_CENTER = 'center';
-    const COMPOUND_TOP = 'top';
-    const COMPOUND_BOTTOM = 'bottom';
-    const COMPOUND_LEFT = 'left';
-    const COMPOUND_RIGHT = 'right';
- 
     /**
      * @inheritdoc
      */
