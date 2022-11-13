@@ -5,6 +5,8 @@ use Tkui\Widgets\Buttons\Button;
 use Tkui\Widgets\Buttons\CheckButton;
 use Tkui\Widgets\Buttons\MenuButton;
 use Tkui\Widgets\Buttons\RadioButton;
+use Tkui\Widgets\Consts\Compound;
+use Tkui\Widgets\Consts\State;
 use Tkui\Widgets\Label;
 use Tkui\Widgets\LabelFrame;
 use Tkui\Widgets\Menu\Menu;
@@ -57,12 +59,12 @@ $demo = new class extends DemoAppWindow
 
         // Disabled button with state in options.
         $this->pack(
-            new Button($f, 'Disabled', ['state' => Button::STATE_DISABLED]),
+            new Button($f, 'Disabled', ['state' => State::DISABLED]),
             ['side' => 'top'],
         );
 
         $withImage = new Button($f, 'With icon');
-        $withImage->compound = Button::COMPOUND_LEFT;
+        $withImage->compound = Compound::LEFT;
         $withImage->image = $this->loadImage('document-new.png');
         $withImage->onClick(fn (Button $b) => $l->text = $b->text);
         $this->pack($withImage, ['side' => Pack::SIDE_TOP]);        
@@ -100,9 +102,9 @@ $demo = new class extends DemoAppWindow
             $cb->onClick(fn (CheckButton $cb) => $l->text = $cb->text . ': ' . $cb->getValue());
         }
 
-        // Disabled check button, setting state via method (allows chaining).
-        $disabled = (new CheckButton($f, 'Disabled'))
-            ->state(CheckButton::STATE_DISABLED);
+        // Disabled check button.
+        $disabled = new CheckButton($f, 'Disabled');
+        $disabled->state = State::DISABLED;
         $this->pack($disabled, $packOptions);
 
         return $f;
@@ -129,7 +131,7 @@ $demo = new class extends DemoAppWindow
 
         // Disabled, setting state as a property.
         $x = $rg->add('Disabled', 'disabled');
-        $x->state = RadioButton::STATE_DISABLED;
+        $x->state = State::DISABLED;
         $rg->pack($x, $packOptions);
 
         $f->pack($rg, ['fill' => Pack::FILL_BOTH, 'expand' => true]);
