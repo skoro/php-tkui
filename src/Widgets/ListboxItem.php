@@ -6,6 +6,7 @@ use Tkui\Color;
 use SplSubject;
 use Tkui\Observable;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * Listbox widget item.
@@ -14,6 +15,8 @@ use Tkui\Options;
  * @property Color|string $foreground
  * @property Color|string $selectBackground
  * @property Color|string $selectForeground
+ *
+ * @todo Just extend from TclOptions ?
  */
 class ListboxItem implements SplSubject
 {
@@ -22,10 +25,10 @@ class ListboxItem implements SplSubject
     private string $value;
     private Options $options;
 
-    public function __construct(string $value, array $options = [])
+    public function __construct(string $value, array|Options $options = [])
     {
         $this->value = $value;
-        $this->options = $this->initOptions()->mergeAsArray($options);
+        $this->options = $this->initOptions()->with($options);
     }
 
     /**
@@ -33,7 +36,7 @@ class ListboxItem implements SplSubject
      */
     protected function initOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'background' => null,
             'foreground' => null,
             'selectBackground' => null,

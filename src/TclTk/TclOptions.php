@@ -17,7 +17,7 @@ class TclOptions extends Options
      *
      * @return string A string like "-option value -another {foo foo}"
      */
-    protected function toString(): string
+    public function toString(): string
     {
         return implode(' ', $this->toStringList());
     }

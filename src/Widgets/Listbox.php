@@ -7,6 +7,7 @@ use SplObserver;
 use SplSubject;
 use Tkui\Options;
 use Tkui\TclTk\Tcl;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\SelectMode;
 use Tkui\Widgets\Consts\ActiveStyle;
 use Tkui\Widgets\Consts\State;
@@ -42,7 +43,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      *
      * @param ListboxItem[] $items Listbox items.
      */
-    public function __construct(Container $parent, array $items = [], array $options = [])
+    public function __construct(Container $parent, array $items = [], array|Options $options = [])
     {
         parent::__construct($parent, $options);
 
@@ -57,7 +58,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'activeStyle' => null,
             'height' => null,
             'listVariable' => null,
@@ -333,7 +334,7 @@ class Listbox extends ScrollableWidget implements SplObserver
             return;
         }
         $item = $this->items[$index];
-        $this->call('itemconfigure', $index, ...$item->options()->asStringArray());
+        $this->call('itemconfigure', $index, ...$item->options()->toStringList());
     }
 
     /**

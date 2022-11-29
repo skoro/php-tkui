@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tkui\Widgets\TreeView;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\ScrollableTtkWidget;
 use Tkui\Widgets\Scrollbar;
@@ -39,7 +40,7 @@ class TreeView extends ScrollableTtkWidget
     /**
      * @param array<Column> $columns
      */
-    public function __construct(Container $parent, array $columns = [], array $options = [])
+    public function __construct(Container $parent, array $columns = [], array|Options $options = [])
     {
         parent::__construct($parent, $options + [
             'columns' => array_map(fn (Column $column) => $column->id, $columns),
@@ -51,7 +52,7 @@ class TreeView extends ScrollableTtkWidget
 
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'columns' => null,
             'displayColumns' => null,
             'height' => null,
@@ -103,7 +104,7 @@ class TreeView extends ScrollableTtkWidget
 
     public function add(Item $item, string $parentId = ''): self
     {
-        $args = $item->options()->asStringArray();
+        $args = $item->options()->toStringList();
         $this->call('insert', $parentId ?: '{}', 'end', ...$args);
         return $this;
     }

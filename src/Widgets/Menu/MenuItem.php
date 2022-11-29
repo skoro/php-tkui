@@ -4,6 +4,7 @@ namespace Tkui\Widgets\Menu;
 
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Clickable;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 use Tkui\Widgets\Consts\Compound;
@@ -25,7 +26,7 @@ class MenuItem extends CommonItem implements Clickable
     /**
      * @param callable|null $callback
      */
-    public function __construct(string $label, $callback = null, array $options = [])
+    public function __construct(string $label, $callback = null, array|Options $options = [])
     {
         parent::__construct($options);
         $this->underline = $this->detectUnderlineIndex($label);
@@ -38,7 +39,7 @@ class MenuItem extends CommonItem implements Clickable
      */
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'label' => null,
             'command' => null,
             'underline' => null,

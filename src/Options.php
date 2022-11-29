@@ -11,6 +11,8 @@ use Traversable;
 
 /**
  * Implements dynamic option-value class.
+ *
+ * @todo should it be observable via SplSubject ?
  */
 class Options implements Stringable, JsonSerializable, IteratorAggregate
 {
@@ -19,7 +21,17 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate
 
     public function __construct(array $options = [])
     {
-        $this->options = $options;
+        $this->options = array_merge($this->defaults(), $options);
+    }
+
+    /**
+     * Default class options.
+     *
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
+    {
+        return [];
     }
 
     /**
@@ -45,9 +57,17 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate
         }
     }
 
-    protected function toString(): string
+    public function toString(): string
     {
         return implode(', ', $this->names());
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function toStringList(): array
+    {
+        return $this->names();
     }
 
     public function __toString(): string

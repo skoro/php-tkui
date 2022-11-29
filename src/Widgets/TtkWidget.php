@@ -9,6 +9,7 @@ use Tkui\Options;
 use Tkui\Widgets\Consts\Compound;
 use Tkui\Widgets\Exceptions\FontNotSupportedException;
 use SplSubject;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\State;
 
 /**
@@ -30,7 +31,7 @@ abstract class TtkWidget extends TkWidget
      */
     protected function initOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'class' => null,
             'cursor' => null,
             'takeFocus' => null,

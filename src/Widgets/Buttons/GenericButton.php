@@ -3,6 +3,7 @@
 namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Clickable;
 use Tkui\Widgets\Common\HasCommand;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
@@ -21,7 +22,7 @@ abstract class GenericButton extends TtkWidget implements Clickable
     use HasCommand;
     use HasUnderlinedLabel;
 
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         $command = null;
         if (isset($options['command'])) {
@@ -47,7 +48,7 @@ abstract class GenericButton extends TtkWidget implements Clickable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'text' => null,
             'compound' => null,
             'image' => null,

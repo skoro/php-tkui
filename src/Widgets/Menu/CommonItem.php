@@ -5,6 +5,7 @@ namespace Tkui\Widgets\Menu;
 use Tkui\Options;
 use SplSubject;
 use Tkui\Observable;
+use Tkui\TclTk\TclOptions;
 
 /**
  * Base for a menu item.
@@ -19,11 +20,11 @@ abstract class CommonItem implements SplSubject
     // TODO: id generator ?
     private static int $idIterator = 0;
 
-    public function __construct(array $options = [])
+    public function __construct(array|Options $options = [])
     {
         $this->id = self::generateId();
         $this->options = $this->createOptions()
-                              ->mergeAsArray($options);
+                              ->with($options);
     }
 
     private static function generateId(): int
@@ -33,7 +34,7 @@ abstract class CommonItem implements SplSubject
 
     protected function createOptions(): Options
     {
-        return new Options();
+        return new TclOptions();
     }
 
     public function __set($name, $value)

@@ -3,6 +3,7 @@
 namespace Tkui\Layouts;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * pack geometry manager.
@@ -26,7 +27,7 @@ class Pack extends BaseManager
      */
     protected function createLayoutOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'side' => null,
             'fill' => null,
             'expand' => null,

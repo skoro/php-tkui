@@ -3,6 +3,7 @@
 namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Consts\Direction;
 use Tkui\Widgets\Menu\Menu;
@@ -22,7 +23,7 @@ class MenuButton extends GenericButton
     protected string $widget = 'ttk::menubutton';
     protected string $name = 'mbtn';
 
-    public function __construct(Container $parent, string $title, Menu $menu, array $options = [])
+    public function __construct(Container $parent, string $title, Menu $menu, array|Options $options = [])
     {
         $options['text'] = $title;
         $options['menu'] = $menu;
@@ -34,7 +35,7 @@ class MenuButton extends GenericButton
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'text' => null,
             'compound' => null,
             'image' => null,

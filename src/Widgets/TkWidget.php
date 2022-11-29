@@ -6,6 +6,7 @@ use Tkui\Evaluator;
 use Tkui\Options;
 use SplObserver;
 use SplSubject;
+use Tkui\TclTk\TclOptions;
 
 /**
  * A basic Tk widget implementation.
@@ -32,17 +33,17 @@ abstract class TkWidget implements Widget, SplObserver
     /**
      * Creates a new widget.
      *
-     * @param Container $parent The parent widget.
-     * @param array $options Override widget options.
+     * @param Container     $parent     The parent widget.
+     * @param array|Options $options    Override widget options.
      */
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         $this->generateId();
         $this->parent = $parent;
         $this->eval = $parent->getEval();
         $this->options = $this->initOptions()
-                              ->merge($this->initWidgetOptions())
-                              ->mergeAsArray($options);
+                              ->with($this->initWidgetOptions())
+                              ->with($options);
         $this->make();
     }
 
@@ -70,7 +71,7 @@ abstract class TkWidget implements Widget, SplObserver
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options();
+        return new TclOptions();
     }
 
     /**
@@ -78,7 +79,7 @@ abstract class TkWidget implements Widget, SplObserver
      */
     protected function make()
     {
-        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
+        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->toStringList());
     }
 
     /**
@@ -133,7 +134,7 @@ abstract class TkWidget implements Widget, SplObserver
         // internally by itself, like progressbar.
         $value = $this->options->$name;
         if ($value === null) {
-            $value = $this->call('cget', Options::getTclOption($name));
+            $value = $this->call('cget', TclOptions::getTclOption($name));
             $this->options->$name = $value;
         }
         return $value;
@@ -146,7 +147,7 @@ abstract class TkWidget implements Widget, SplObserver
     {
         if ($this->options->$name !== $value) {
             $this->options->$name = $value;
-            $this->configure(...$this->options->only($name)->asStringArray());
+            $this->configure(...$this->options->withOnly($name)->toStringList());
         }
     }
 

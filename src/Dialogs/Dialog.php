@@ -4,6 +4,7 @@ namespace Tkui\Dialogs;
 
 use Tkui\TclTk\Exceptions\TkException;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Windows\ShowAsModal;
 use Tkui\Windows\Window;
 
@@ -22,16 +23,16 @@ abstract class Dialog implements ShowAsModal
     /** @var callable|null */
     private $callbackCancel = null;
 
-    public function __construct(Window $parent, array $options = [])
+    public function __construct(Window $parent, array|Options $options = [])
     {
         $this->parent = $parent;
         $options['parent'] = $parent;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->with($options);
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'parent' => null,
         ]);
     }
@@ -73,7 +74,7 @@ abstract class Dialog implements ShowAsModal
      */
     public function showModal()
     {
-        $result = $this->parent->getEval()->tclEval($this->command(), ...$this->options->asStringArray());
+        $result = $this->parent->getEval()->tclEval($this->command(), ...$this->options->toStringList());
         return $this->handleResult($result);
     }
 

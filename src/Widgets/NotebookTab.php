@@ -5,6 +5,7 @@ namespace Tkui\Widgets;
 use SplSubject;
 use Tkui\Observable;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 
 /**
@@ -24,17 +25,17 @@ class NotebookTab implements SplSubject
     private Widget $container;
     private Options $options;
 
-    public function __construct(Widget $container, string $title, array $options = [])
+    public function __construct(Widget $container, string $title, array|Options $options = [])
     {
         $this->container = $container;
         $options['text'] = $this->removeUnderlineChar($title);
         $options['underline'] = $this->detectUnderlineIndex($title);
-        $this->options = $this->initWidgetOptions()->mergeAsArray($options);
+        $this->options = $this->initWidgetOptions()->with($options);
     }
 
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'state' => null,
             'sticky' => null,
             'padding' => null,

@@ -4,6 +4,7 @@ namespace Tkui\Widgets\Text;
 
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Align;
 
 /**
@@ -20,18 +21,18 @@ class EmbeddedImage
     private Options $options;
     private string $id;
 
-    public function __construct(TextApiMethodBridge $apiBridge, TextIndex $index, Image $image, array $options = [])
+    public function __construct(TextApiMethodBridge $apiBridge, TextIndex $index, Image $image, array|Options $options = [])
     {
         $this->apiBridge = $apiBridge;
         $this->index = $index;
         $options['image'] = $image;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->with($options);
         $this->id = $this->create();
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'align' => null,
             'image' => null,
             'name' => null,
@@ -76,6 +77,6 @@ class EmbeddedImage
 
     protected function apiCallMethod(string $method)
     {
-        return $this->apiBridge->callMethod($method, (string) $this->index, ...$this->options->asStringArray());
+        return $this->apiBridge->callMethod($method, (string) $this->index, ...$this->options->toStringList());
     }
 }

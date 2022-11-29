@@ -4,6 +4,7 @@ namespace Tkui\Layouts;
 
 use Tkui\Evaluator;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Widget;
 
 /**
@@ -23,7 +24,7 @@ abstract class BaseManager implements LayoutManager
      */
     protected function createLayoutOptions(): Options
     {
-        return new Options();
+        return new TclOptions();
     }
 
     /**
@@ -42,9 +43,9 @@ abstract class BaseManager implements LayoutManager
     /**
      * @inheritdoc
      */
-    public function add(Widget $widget, array $options = []): self
+    public function add(Widget $widget, array|Options $options = []): self
     {
-        $this->call($widget->path(), ...$this->createLayoutOptions()->mergeAsArray($options)->asStringArray());
+        $this->call($widget->path(), ...$this->createLayoutOptions()->with($options)->toStringList());
         return $this;
     }
 

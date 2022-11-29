@@ -5,6 +5,7 @@ namespace Tkui\Widgets\Text;
 use Tkui\Color;
 use Tkui\Font;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Relief;
 use Tkui\Widgets\Consts\WrapMode;
@@ -52,15 +53,15 @@ class TextStyle
     private TextApiMethodBridge $bridge;
 
     /**
-     * @param TextApiMethodBridge $bridge The underlying text style api.
-     * @param string $name    The style name.
-     * @param array  $options The style options.
+     * @param TextApiMethodBridge $bridge  The underlying text style api.
+     * @param string              $name    The style name.
+     * @param array|Options       $options The style options.
      */
-    public function __construct(TextApiMethodBridge $bridge, string $name, array $options = [])
+    public function __construct(TextApiMethodBridge $bridge, string $name, array|Options $options = [])
     {
         $this->bridge = $bridge;
         $this->name = $name;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->with($options);
         $this->configure();
     }
 
@@ -69,7 +70,7 @@ class TextStyle
      */
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'background' => null,
             'bgstipple' => null,
             'borderWidth' => null,
@@ -105,7 +106,7 @@ class TextStyle
      */
     protected function configure()
     {
-        $this->callMethod('configure', ...$this->options->asStringArray());
+        $this->callMethod('configure', ...$this->options->toStringList());
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tkui\Widgets\TreeView;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Anchor;
 
 /**
@@ -19,16 +20,16 @@ class Column
     private Options $options;
     private Header $header;
 
-    final public function __construct(string $id, Header $header, array $options = [])
+    final public function __construct(string $id, Header $header, array|Options $options = [])
     {
         $options['id'] = $id;
         $this->header = $header;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->with($options);
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'id' => null,
             'anchor' => null,
             'minWidth' => null,

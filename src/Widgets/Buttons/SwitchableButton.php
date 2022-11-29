@@ -13,7 +13,7 @@ use Tkui\Widgets\Container;
  */
 abstract class SwitchableButton extends GenericButton implements SelectableButton
 {
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         $var = isset($options['variable']);
 
@@ -29,7 +29,7 @@ abstract class SwitchableButton extends GenericButton implements SelectableButto
      */
     protected function initWidgetOptions(): Options
     {
-        return parent::initWidgetOptions()->mergeAsArray([
+        return parent::initWidgetOptions()->with([
             'variable' => null,
         ]);
     }

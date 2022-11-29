@@ -17,7 +17,7 @@ class ColorDialog extends Dialog
      */
     protected function createOptions(): Options
     {
-        return parent::createOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'initialColor' => null,
             'title' => null,
         ]);

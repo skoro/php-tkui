@@ -23,7 +23,7 @@ class Button extends GenericButton
     /**
      * @inheritdoc
      */
-    public function __construct(Container $parent, string $title, array $options = [])
+    public function __construct(Container $parent, string $title, array|Options $options = [])
     {
         $options['text'] = $title;
         parent::__construct($parent, $options);
@@ -34,7 +34,7 @@ class Button extends GenericButton
      */
     protected function initWidgetOptions(): Options
     {
-        return parent::initWidgetOptions()->mergeAsArray([
+        return parent::initWidgetOptions()->with([
             'default' => null,
         ]);
     }

@@ -7,6 +7,7 @@ namespace Tkui\Widgets\TreeView;
 use LogicException;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * @todo make id property real readonly.
@@ -17,6 +18,8 @@ use Tkui\Options;
  * @property Image $image
  * @property bool $open
  * @property string[] $tags
+ *
+ * @todo Just extend from TclOptions ?
  */
 class Item
 {
@@ -25,16 +28,16 @@ class Item
     /**
      * @param string[] $values
      */
-    final public function __construct(array $values = [], array $options = [])
+    final public function __construct(array $values = [], array|Options $options = [])
     {
-        $this->options = $this->createOptions()->mergeAsArray($options + [
+        $this->options = $this->createOptions()->with($options + [
             'values' => $values,
         ]);
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'id' => $this->generateId(),
             'text' => null,
             'values' => null,

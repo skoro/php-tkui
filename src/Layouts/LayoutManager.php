@@ -2,6 +2,7 @@
 
 namespace Tkui\Layouts;
 
+use Tkui\Options;
 use Tkui\Widgets\Widget;
 
 /**
@@ -14,7 +15,7 @@ interface LayoutManager
     /**
      * Pack the widget.
      */
-    public function add(Widget $widget, array $options = []): self;
+    public function add(Widget $widget, array|Options $options = []): self;
 
     /**
      * Remove the widget.

@@ -8,6 +8,7 @@ use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\TkWidget;
 use SplObserver;
+use Tkui\TclTk\TclOptions;
 
 /**
  * @property string $label
@@ -22,7 +23,7 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
     /**
      * @param callable|null $callback
      */
-    public function __construct(string $label, bool $value, $callback = null, array $options = [])
+    public function __construct(string $label, bool $value, $callback = null, array|Options $options = [])
     {
         parent::__construct($label, $callback, $options);
         $this->variable = $options['variable'] ?? null;
@@ -42,7 +43,7 @@ class MenuCheckItem extends MenuItem implements ValueInVariable
      */
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'label' => null,
             'command' => null,
             'variable' => null,

@@ -6,6 +6,7 @@ namespace Tkui\Widgets\TreeView;
 
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Anchor;
 
 /**
@@ -13,21 +14,23 @@ use Tkui\Widgets\Consts\Anchor;
  * @property Image $image
  * @property Anchor $anchor
  * @property callable $command
+ *
+ * @todo Just extend from TclOptions ?
  */
 class Header
 {
     private Options $options;
 
-    public function __construct(string $text, array $options = [])
+    public function __construct(string $text, array|Options $options = [])
     {
-        $this->options = $this->createOptions()->mergeAsArray($options + [
+        $this->options = $this->createOptions()->with($options + [
             'text' => $text,
         ]);
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'text' => null,
             'image' => null,
             'anchor' => null,
