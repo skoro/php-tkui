@@ -49,7 +49,7 @@ class Label extends TtkWidget
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'compound' => null,

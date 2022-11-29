@@ -53,7 +53,7 @@ class Menu extends TtkContainer
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'postCommand' => null,

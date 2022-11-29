@@ -22,7 +22,7 @@ class PanedWindow extends TtkContainer
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'orient' => Orient::VERTICAL,

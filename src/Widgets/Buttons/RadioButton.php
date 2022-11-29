@@ -31,9 +31,9 @@ class RadioButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return parent::initWidgetOptions()->with([
+        return parent::createOptions()->with([
             'value' => null,
         ]);
     }

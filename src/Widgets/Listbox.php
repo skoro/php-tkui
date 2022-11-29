@@ -56,7 +56,7 @@ class Listbox extends ScrollableWidget implements SplObserver
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'activeStyle' => null,

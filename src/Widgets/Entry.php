@@ -54,7 +54,7 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'font' => null,

@@ -50,7 +50,7 @@ class TreeView extends ScrollableTtkWidget
         $this->setColumnHeaders();
     }
 
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'columns' => null,

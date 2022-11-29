@@ -31,7 +31,7 @@ class Notebook extends TtkContainer implements SplObserver
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'height' => null,

@@ -27,9 +27,9 @@ class ProgressbarTest extends TestCase
         $this->tclEvalTest(1, [
             [
                 'ttk::progressbar', $this->checkWidget('.prbr'),
+                '-orient', 'vertical',
                 '-maximum', '100',
                 '-mode', 'determinate',
-                '-orient', 'vertical',
             ],
         ]);
 

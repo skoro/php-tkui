@@ -21,7 +21,7 @@ class Separator extends TtkWidget
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'orient' => Orient::VERTICAL,

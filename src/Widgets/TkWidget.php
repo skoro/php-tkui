@@ -41,8 +41,8 @@ abstract class TkWidget implements Widget, SplObserver
         $this->generateId();
         $this->parent = $parent;
         $this->eval = $parent->getEval();
-        $this->options = $this->initOptions()
-                              ->with($this->initWidgetOptions())
+        $this->options = $this->createGenericOptions()
+                              ->with($this->createOptions())
                               ->with($options);
         $this->make();
     }
@@ -59,17 +59,17 @@ abstract class TkWidget implements Widget, SplObserver
     }
 
     /**
-     * Initialize the common widget options.
+     * Create the common widget options available for descendant widgets.
      */
-    protected function initOptions(): Options
+    private function createGenericOptions(): Options
     {
         return new WidgetOptions();
     }
 
     /**
-     * Initialize specific widget options.
+     * Create specific widget options.
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions();
     }

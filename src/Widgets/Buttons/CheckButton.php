@@ -36,9 +36,9 @@ class CheckButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return parent::initWidgetOptions()->with([
+        return parent::createOptions()->with([
             'offValue' => null,
             'onValue' => null,
         ]);

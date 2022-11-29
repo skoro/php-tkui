@@ -38,7 +38,7 @@ class Spinbox extends TtkWidget implements ValueInVariable
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'command' => null,

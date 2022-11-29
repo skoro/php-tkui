@@ -33,7 +33,7 @@ class MenuButton extends GenericButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'text' => null,

@@ -24,7 +24,7 @@ class Scrollbar extends TtkWidget
     /**
      * @inheritdoc
      */
-    public function initWidgetOptions(): Options
+    public function createOptions(): Options
     {
         return new TclOptions([
             'command' => null,

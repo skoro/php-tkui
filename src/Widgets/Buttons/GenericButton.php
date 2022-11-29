@@ -46,7 +46,7 @@ abstract class GenericButton extends TtkWidget implements Clickable
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'text' => null,

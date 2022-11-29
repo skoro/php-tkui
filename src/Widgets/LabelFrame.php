@@ -37,7 +37,7 @@ class LabelFrame extends Frame
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'padding' => null,

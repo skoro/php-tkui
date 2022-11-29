@@ -16,6 +16,8 @@ use Tkui\Widgets\Common\HasUnderlinedLabel;
  * @property string $image TODO
  * @property string $compound TODO
  * @property int $underline
+ *
+ * @todo Just options instance ?
  */
 class NotebookTab implements SplSubject
 {
@@ -30,10 +32,10 @@ class NotebookTab implements SplSubject
         $this->container = $container;
         $options['text'] = $this->removeUnderlineChar($title);
         $options['underline'] = $this->detectUnderlineIndex($title);
-        $this->options = $this->initWidgetOptions()->with($options);
+        $this->options = $this->createOptions()->with($options);
     }
 
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'state' => null,

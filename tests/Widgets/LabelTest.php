@@ -44,7 +44,7 @@ class LabelTest extends TestCase
     public function it_creates_label_with_font_as_option(): void
     {
         $this->tclEvalTest(1, [
-            ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}', '-font', '{{Foo Font} 14 bold}'],
+            ['ttk::label', $this->checkWidget('.lb'), '-font', '{{Foo Font} 14 bold}', '-text', '{Test}'],
         ]);
 
         new Label($this->createWindowStub(), 'Test', [

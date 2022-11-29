@@ -27,9 +27,9 @@ abstract class SwitchableButton extends GenericButton implements SelectableButto
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return parent::initWidgetOptions()->with([
+        return parent::createOptions()->with([
             'variable' => null,
         ]);
     }

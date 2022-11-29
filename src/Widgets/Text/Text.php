@@ -5,6 +5,7 @@ namespace Tkui\Widgets\Text;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Editable;
 use Tkui\Widgets\Consts\State;
 use Tkui\Widgets\Container;
@@ -44,9 +45,9 @@ class Text extends ScrollableWidget implements Editable
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'autoSeparators' => null,
             'blockCursor' => null,
             'endLine' => null,

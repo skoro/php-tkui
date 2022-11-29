@@ -25,7 +25,7 @@ class Frame extends TtkContainer
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'padding' => null,
