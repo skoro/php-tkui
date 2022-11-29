@@ -2,27 +2,24 @@
 
 namespace Tkui;
 
-use InvalidArgumentException;
+use ArrayIterator;
+use IteratorAggregate;
+use JsonSerializable;
 use Stringable;
 use Tkui\Exceptions\OptionNotFoundException;
-use Tkui\Widgets\Widget;
-use Tkui\TclTk\Tcl;
+use Traversable;
 
 /**
- * Tcl command options.
+ * Implements dynamic option-value class.
  */
-class Options implements Stringable
+class Options implements Stringable, JsonSerializable, IteratorAggregate
 {
-    private array $options = [];
+    /** @var array<string, mixed> */
+    private array $options;
 
-    final public function __construct(array $options = [])
+    public function __construct(array $options = [])
     {
-        $this->mergeAsArray($this->defaults(), $options);
-    }
-
-    protected function defaults(): array
-    {
-        return [];
+        $this->options = $options;
     }
 
     /**
@@ -48,70 +45,19 @@ class Options implements Stringable
         }
     }
 
-    /**
-     * Converts options to a string suitable for Tcl command.
-     *
-     * @return string A string like "-option value -another {foo foo}"
-     */
-    public function asTcl(): string
+    protected function toString(): string
     {
-        return implode(' ', $this->asStringArray());
+        return implode(', ', $this->names());
     }
 
-    /**
-     * Returns options as an array.
-     */
-    public function asArray(): array
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
+    public function toArray(): array
     {
         return $this->options;
-    }
-
-    /**
-     * Formats options as a string array suitable for tcl eval() command.
-     *
-     * @return string[]
-     */
-    public function asStringArray(): array
-    {
-        $str = [];
-        foreach ($this->options as $option => $value) {
-            if ($value !== null) {
-                $str[] = static::getTclOption($option);
-                if (is_bool($value)) {
-                    $str[] = $value ? '1' : '0';
-                } elseif (is_string($value)) {
-                    if ($option === 'text') {
-                        $value = Tcl::quoteString($value);
-                    }
-                    $str[] = $value === '' ? '{}' : $value;
-                } elseif ($value instanceof Widget) {
-                    $str[] = $value->path();
-                } elseif (is_array($value)) {
-                    $str[] = Tcl::arrayToList($value);
-                } elseif (is_object($value) && property_exists($value, 'value')) {
-                    $str[] = $value->value;
-                } else {
-                    $str[] = (string) $value;
-                }
-            }
-        }
-        return $str;
-    }
-
-    /**
-     * Format the option as a Tcl string.
-     */
-    public static function getTclOption(string $option): string
-    {
-        return Tcl::strToOption($option);
-    }
-
-    /**
-     * Returns options as Tcl string.
-     */
-    public function __toString()
-    {
-        return $this->asTcl();
     }
 
     /**
@@ -123,36 +69,33 @@ class Options implements Stringable
     }
 
     /**
-     * Merge options from another option instance.
+     * Constructs a new instance with merged options.
      */
-    public function merge(Options $options): self
+    public function with(Options|array $options): static
     {
-        return $this->mergeAsArray($options->asArray());
+        return new static(array_merge(
+            $this->options,
+            is_array($options) ? $options : $options->options
+        ));
     }
 
     /**
-     * Merge options from an array.
+     * Constructs a new instance with specified option names.
      */
-    public function mergeAsArray(array ...$options): self
-    {
-        $this->options = array_merge($this->options, ...$options);
-        return $this;
-    }
-
-    /**
-     * Constructs new options with specified names.
-     */
-    public function only(string ...$names): Options
+    public function withOnly(string ...$names): static
     {
         return new static(
-            array_map(fn ($name) => $this->$name, array_combine($names, $names))
+            array_map(
+                fn ($name) => $this->$name,
+                array_combine($names, $names)
+            )
         );
     }
 
     /**
      * Returns a list of option names.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function names(): array
     {
@@ -160,49 +103,23 @@ class Options implements Stringable
     }
 
     /**
-     * Array options to Tcl string converter.
+     * @return array<mixed>
      */
-    public static function tclString(array $options): string
+    public function values(): array
     {
-        return (new static($options))->asTcl();
+        return array_values($this->options);
     }
 
     /**
-     * Creates a new options instance from the plain list.
-     *
-     * Example:
-     * <code>
-     * $options = Options::createFromList(['size', 10, 'color', 'red']);
-     * $options->size; // 10
-     * $options->color; // red
-     *
-     * // The same:
-     * $options = Options::createFromList(['-size', 10, '-color', 'red'], true);
-     * </code>
-     *
-     * @param bool $asOptions When enabled odd list items must be options.
-     *
-     * @throws InvalidArgumentException The list must have even number of elements.
+     * @return array<string, mixed>
      */
-    public static function createFromList(array $list, bool $asOptions = true): static
+    public function jsonSerialize(): array
     {
-        if (count($list) % 2 !== 0) {
-            throw new InvalidArgumentException('The list must have even number of elements.');
-        }
+        return $this->options;
+    }
 
-        $options = [];
-
-        foreach (array_chunk($list, 2) as [$key, $value]) {
-            if ($asOptions) {
-                if ($key[0] === '-') {
-                    $key = substr($key, 1);
-                } else {
-                    throw new InvalidArgumentException("Item '$key' must be an option.");
-                }
-            }
-            $options[$key] = $value;
-        }
-
-        return new static($options);
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->options);
     }
 }
