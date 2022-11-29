@@ -6,6 +6,7 @@ use Tkui\Evaluator;
 use Tkui\Layouts\Grid;
 use Tkui\Layouts\Pack;
 use Tkui\Layouts\Place;
+use Tkui\Options;
 use Tkui\Windows\Window;
 
 abstract class TtkContainer extends TtkWidget implements Container
@@ -34,7 +35,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function pack($widget, array $options = []): Pack
+    public function pack($widget, array|Options $options = []): Pack
     {
         return $this->parent()->pack($widget, $options);
     }
@@ -42,7 +43,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function grid($widget, array $options = []): Grid
+    public function grid($widget, array|Options $options = []): Grid
     {
         return $this->parent()->grid($widget, $options);
     }
@@ -50,7 +51,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function place($widget, array $options = []): Place
+    public function place($widget, array|Options $options = []): Place
     {
         return $this->parent()->place($widget, $options);
     }

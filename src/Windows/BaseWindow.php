@@ -7,6 +7,7 @@ use Tkui\Layouts\LayoutManager;
 use Tkui\Layouts\Pack;
 use Tkui\Layouts\Place;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\TkWindowManager;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Menu\Menu;
@@ -50,7 +51,7 @@ abstract class BaseWindow implements Window
 
     protected function initOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'title' => '',
             'state' => '',
         ]);
@@ -145,7 +146,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function pack($widget, array $options = []): Pack
+    public function pack($widget, array|Options $options = []): Pack
     {
         return $this->doLayout(new Pack($this->getEval()), $widget, $options);
     }
@@ -153,7 +154,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function grid($widget, array $options = []): Grid
+    public function grid($widget, array|Options $options = []): Grid
     {
         return $this->doLayout(new Grid($this->getEval()), $widget, $options);
     }
@@ -161,7 +162,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function place($widget, array $options = []): Place
+    public function place($widget, array|Options $options = []): Place
     {
         return $this->doLayout(new Place($this->getEval()), $widget, $options);
     }

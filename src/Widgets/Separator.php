@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Orient;
 
 /**
@@ -22,7 +23,7 @@ class Separator extends TtkWidget
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'orient' => Orient::VERTICAL,
         ]);
     }

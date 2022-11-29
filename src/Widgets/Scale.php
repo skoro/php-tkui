@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Consts\Orient;
@@ -30,7 +31,7 @@ class Scale extends TtkWidget implements ValueInVariable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'command' => null,
             'from' => null,
             'length' => null,

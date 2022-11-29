@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Relief;
 
 /**
@@ -26,7 +27,7 @@ class Frame extends TtkContainer
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'padding' => null,
             'borderWidth' => null,
             'relief' => null,

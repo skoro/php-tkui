@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Consts\Orient;
@@ -32,7 +33,7 @@ class Progressbar extends TtkWidget implements ValueInVariable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'length' => null,
             'maximum' => null,
             'mode' => null,

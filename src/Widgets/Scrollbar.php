@@ -4,6 +4,7 @@ namespace Tkui\Widgets;
 
 use LogicException;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Scrollable;
 use Tkui\Widgets\Consts\Orient;
 
@@ -25,7 +26,7 @@ class Scrollbar extends TtkWidget
      */
     public function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'command' => null,
             'orient' => Orient::VERTICAL,
         ]);

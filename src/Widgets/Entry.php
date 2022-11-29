@@ -6,6 +6,7 @@ use Tkui\Color;
 use Tkui\Font;
 use Tkui\Options;
 use Tkui\TclTk\Tcl;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\Editable;
 use Tkui\Widgets\Common\ValueInVariable;
@@ -35,7 +36,7 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
-    public function __construct(Container $parent, string $value = '', array $options = [])
+    public function __construct(Container $parent, string $value = '', array|Options $options = [])
     {
         $var = isset($options['textVariable']);
 
@@ -55,7 +56,7 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'font' => null,
             'textColor' => null,
             'xScrollCommand' => null,

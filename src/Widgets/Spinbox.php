@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 
@@ -28,7 +29,7 @@ class Spinbox extends TtkWidget implements ValueInVariable
     /**
      * @param string|int|float $value
      */
-    public function __construct(Container $parent, $value, array $options = [])
+    public function __construct(Container $parent, $value, array|Options $options = [])
     {
         parent::__construct($parent, $options);
         $this->setValue($value);
@@ -39,7 +40,7 @@ class Spinbox extends TtkWidget implements ValueInVariable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'command' => null,
             'format' => null,
             'from' => null,

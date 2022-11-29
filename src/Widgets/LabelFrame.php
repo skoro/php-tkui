@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
 
@@ -26,7 +27,7 @@ class LabelFrame extends Frame
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
 
-    public function __construct(Container $parent, string $text, array $options = [])
+    public function __construct(Container $parent, string $text, array|Options $options = [])
     {
         $options['text'] = $this->removeUnderlineChar($text);
         $options['underline'] = $this->detectUnderlineIndex($text);
@@ -38,7 +39,7 @@ class LabelFrame extends Frame
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'padding' => null,
             'width' => null,
             'height' => null,

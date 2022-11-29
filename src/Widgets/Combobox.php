@@ -4,6 +4,7 @@ namespace Tkui\Widgets;
 
 use Tkui\Options;
 use Tkui\TclTk\Tcl;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Consts\Justify;
@@ -25,7 +26,7 @@ class Combobox extends TtkWidget implements ValueInVariable
     protected string $widget = 'ttk::combobox';
     protected string $name = 'cb';
 
-    public function __construct(Container $parent, array $values = [], array $options = [])
+    public function __construct(Container $parent, array $values = [], array|Options $options = [])
     {
         if (! empty($values)) {
             $options['values'] = Tcl::arrayToList($values);
@@ -38,7 +39,7 @@ class Combobox extends TtkWidget implements ValueInVariable
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'exportSelection' => null,
             'justify' => null,
             'height' => null,

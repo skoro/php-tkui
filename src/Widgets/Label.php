@@ -6,6 +6,7 @@ use Tkui\Color;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\HasUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
@@ -38,7 +39,7 @@ class Label extends TtkWidget
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';
 
-    public function __construct(Container $parent, string $title, array $options = [])
+    public function __construct(Container $parent, string $title, array|Options $options = [])
     {
         $options['text'] = $this->removeUnderlineChar($title);
         $options['underline'] = $this->detectUnderlineIndex($title);
@@ -50,7 +51,7 @@ class Label extends TtkWidget
      */
     protected function initWidgetOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'compound' => null,
             'image' => null,
             'padding' => null,
