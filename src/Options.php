@@ -19,7 +19,7 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate
     /** @var array<string, mixed> */
     private array $options;
 
-    public function __construct(array $options = [])
+    final public function __construct(array $options = [])
     {
         $this->options = array_merge($this->defaults(), $options);
     }
