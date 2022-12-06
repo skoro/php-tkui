@@ -142,4 +142,11 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate
     {
         return new ArrayIterator($this->options);
     }
+
+    public static function from(array|Options $options): static
+    {
+        return new static(
+            is_object($options) ? $options->toArray() : $options
+        );
+    }
 }
