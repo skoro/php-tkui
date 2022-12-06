@@ -21,6 +21,7 @@
         "php": ">=8.1",
         "ext-ffi": "*",
         "ext-spl": "*",
+        "ext-mbstring": "*",
         "psr/log": "^1.1",
         "monolog/monolog": "^2.2",
         "m1/env": "^2.2"
