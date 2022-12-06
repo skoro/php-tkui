@@ -2,7 +2,6 @@
 
 namespace Tkui;
 
-use Dotenv\Dotenv as DotenvDotenv;
 use RuntimeException;
 
 /**
