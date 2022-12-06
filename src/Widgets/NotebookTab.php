@@ -3,10 +3,10 @@
 namespace Tkui\Widgets;
 
 use SplSubject;
-use Tkui\Observable;
 use Tkui\Options;
+use Tkui\Support\WithObservable;
 use Tkui\TclTk\TclOptions;
-use Tkui\Widgets\Common\HasUnderlinedLabel;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 
 /**
  * @property string $state
@@ -21,8 +21,8 @@ use Tkui\Widgets\Common\HasUnderlinedLabel;
  */
 class NotebookTab implements SplSubject
 {
-    use HasUnderlinedLabel;
-    use Observable;
+    use WithUnderlinedLabel;
+    use WithObservable;
 
     private Widget $container;
     private Options $options;

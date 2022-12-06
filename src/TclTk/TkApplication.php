@@ -5,8 +5,8 @@ namespace Tkui\TclTk;
 use Tkui\Application;
 use Tkui\Bindings;
 use Tkui\FontManager;
-use Tkui\HasLogger;
 use Tkui\ImageFactory;
+use Tkui\Support\WithLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
 use Tkui\TclTk\Exceptions\TkException;
@@ -17,7 +17,7 @@ use Tkui\Widgets\Widget;
  */
 class TkApplication implements Application
 {
-    use HasLogger;
+    use WithLogger;
 
     private Tk $tk;
     private Interp $interp;

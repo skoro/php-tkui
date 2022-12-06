@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Tkui;
+namespace Tkui\Support;
 
 use Psr\Log\LoggerInterface;
 
 /**
  * Adds logger support.
  */
-trait HasLogger
+trait WithLogger
 {
     private ?LoggerInterface $logger = null;
 

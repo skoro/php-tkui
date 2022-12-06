@@ -2,10 +2,10 @@
 
 namespace Tkui\Widgets;
 
-use Tkui\Widgets\Common\HasScrollBars;
 use Tkui\Widgets\Common\Scrollable;
+use Tkui\Widgets\Common\WithScrollBars;
 
 abstract class ScrollableWidget extends TkWidget implements Scrollable
 {
-    use HasScrollBars;
+    use WithScrollBars;
 }

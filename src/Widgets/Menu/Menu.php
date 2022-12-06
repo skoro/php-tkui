@@ -9,7 +9,7 @@ use Tkui\Widgets\TtkContainer;
 use Tkui\Widgets\Widget;
 use SplSubject;
 use Tkui\TclTk\TclOptions;
-use Tkui\Widgets\Common\HasUnderlinedLabel;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 
 /**
  * Menu implementation.
@@ -22,7 +22,7 @@ use Tkui\Widgets\Common\HasUnderlinedLabel;
  */
 class Menu extends TtkContainer
 {
-    use HasUnderlinedLabel;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'menu';
     protected string $name = 'm';

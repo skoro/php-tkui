@@ -8,7 +8,7 @@ use Tkui\Image;
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
-use Tkui\Widgets\Common\HasUnderlinedLabel;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Relief;
@@ -34,7 +34,7 @@ use Tkui\Widgets\Consts\Relief;
  */
 class Label extends TtkWidget
 {
-    use HasUnderlinedLabel;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';

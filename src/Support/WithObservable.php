@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tkui;
+namespace Tkui\Support;
 
 use SplObserver;
 
@@ -12,7 +12,7 @@ use SplObserver;
  * This trait is just implementation of all SplSubject contract
  * and can be used in classes which are observable by using SplSubject.
  */
-trait Observable
+trait WithObservable
 {
     /** @var array<SplObserver> */
     private array $observerStorage = [];

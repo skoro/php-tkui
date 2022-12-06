@@ -5,7 +5,7 @@ namespace Tkui\TclTk;
 use FFI\CData;
 use ReflectionMethod;
 use LogicException;
-use Tkui\HasLogger;
+use Tkui\Support\WithLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
 
@@ -14,7 +14,7 @@ use Tkui\TclTk\Exceptions\TclInterpException;
  */
 class Interp
 {
-    use HasLogger;
+    use WithLogger;
     
     private ?ListVariable $argv = null;
 

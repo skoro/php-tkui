@@ -12,7 +12,7 @@ use Tkui\Widgets\Scrollbar;
  *
  * Used for scrollable containers in tk and ttk implementations.
  */
-trait HasScrollBars
+trait WithScrollBars
 {
     private Scrollbar $xScroll;
     private Scrollbar $yScroll;

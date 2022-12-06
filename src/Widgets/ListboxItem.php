@@ -4,8 +4,8 @@ namespace Tkui\Widgets;
 
 use Tkui\Color;
 use SplSubject;
-use Tkui\Observable;
 use Tkui\Options;
+use Tkui\Support\WithObservable;
 use Tkui\TclTk\TclOptions;
 
 /**
@@ -20,7 +20,7 @@ use Tkui\TclTk\TclOptions;
  */
 class ListboxItem implements SplSubject
 {
-    use Observable;
+    use WithObservable;
 
     private string $value;
     private Options $options;

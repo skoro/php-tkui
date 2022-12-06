@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Implements widget's '-command' option and onClick method.
  */
-trait HasCommand
+trait WithCommand
 {
     /** @var callable */
     private $commandValue;

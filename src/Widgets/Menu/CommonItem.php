@@ -4,7 +4,7 @@ namespace Tkui\Widgets\Menu;
 
 use Tkui\Options;
 use SplSubject;
-use Tkui\Observable;
+use Tkui\Support\WithObservable;
 use Tkui\TclTk\TclOptions;
 
 /**
@@ -12,7 +12,7 @@ use Tkui\TclTk\TclOptions;
  */
 abstract class CommonItem implements SplSubject
 {
-    use Observable;
+    use WithObservable;
 
     private Options $options;
     private int $id;

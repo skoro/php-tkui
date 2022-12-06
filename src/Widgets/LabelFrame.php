@@ -4,7 +4,7 @@ namespace Tkui\Widgets;
 
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
-use Tkui\Widgets\Common\HasUnderlinedLabel;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
 
 /**
@@ -22,7 +22,7 @@ use Tkui\Widgets\Consts\Anchor;
  */
 class LabelFrame extends Frame
 {
-    use HasUnderlinedLabel;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';

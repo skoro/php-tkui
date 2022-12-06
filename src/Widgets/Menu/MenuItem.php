@@ -6,7 +6,7 @@ use Tkui\Image;
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Clickable;
-use Tkui\Widgets\Common\HasUnderlinedLabel;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Consts\Compound;
 
 /**
@@ -21,7 +21,7 @@ use Tkui\Widgets\Consts\Compound;
  */
 class MenuItem extends CommonItem implements Clickable
 {
-    use HasUnderlinedLabel;
+    use WithUnderlinedLabel;
 
     /**
      * @param callable|null $callback

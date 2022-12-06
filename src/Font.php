@@ -7,10 +7,11 @@ use ReflectionClass;
 use ReflectionClassConstant;
 use SplSubject;
 use Stringable;
+use Tkui\Support\WithObservable;
 
 class Font implements SplSubject, Stringable
 {
-    use Observable;
+    use WithObservable;
 
     const STYLE_REGULAR     = 0x0000;
     const STYLE_BOLD        = 0x0001;
