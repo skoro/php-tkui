@@ -2,13 +2,13 @@
 
 namespace Tkui\Dialogs;
 
+use Stringable;
 use Tkui\TclTk\Tcl;
 
-// TODO: implement Stringable
 /**
  * File types filter for file dialogs.
  */
-class FileType
+class FileType implements Stringable
 {
     private string $typeName;
     /** @var string[] */
@@ -34,7 +34,7 @@ class FileType
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('{%s} %s %s',
             $this->typeName,
