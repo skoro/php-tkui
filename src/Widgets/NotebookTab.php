@@ -29,10 +29,11 @@ class NotebookTab implements SplSubject
 
     public function __construct(Widget $container, string $title, array|Options $options = [])
     {
+        $optionsObj = $this->createOptions()->with($options);
+        $optionsObj->text = $this->removeUnderlineChar($title);
+        $optionsObj->underline = $this->detectUnderlineIndex($title);
+        $this->options = $this->createOptions()->with($optionsObj);
         $this->container = $container;
-        $options['text'] = $this->removeUnderlineChar($title);
-        $options['underline'] = $this->detectUnderlineIndex($title);
-        $this->options = $this->createOptions()->with($options);
     }
 
     protected function createOptions(): Options
