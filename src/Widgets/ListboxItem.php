@@ -3,10 +3,9 @@
 namespace Tkui\Widgets;
 
 use Tkui\Color;
-use SplSubject;
 use Tkui\Options;
-use Tkui\Support\WithObservable;
 use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Common\SubjectItem;
 
 /**
  * Listbox widget item.
@@ -18,23 +17,20 @@ use Tkui\TclTk\TclOptions;
  *
  * @todo Just extend from TclOptions ?
  */
-class ListboxItem implements SplSubject
+class ListboxItem extends SubjectItem
 {
-    use WithObservable;
-
     private string $value;
-    private Options $options;
 
     public function __construct(string $value, array|Options $options = [])
     {
+        parent::__construct($options);
         $this->value = $value;
-        $this->options = $this->initOptions()->with($options);
     }
 
     /**
      * Item options.
      */
-    protected function initOptions(): Options
+    protected function createOptions(): Options
     {
         return new TclOptions([
             'background' => null,
@@ -47,27 +43,5 @@ class ListboxItem implements SplSubject
     public function value(): string
     {
         return $this->value;
-    }
-
-    public function options(): Options
-    {
-        return $this->options;
-    }
-
-    /**
-     * Get the item option.
-     */
-    public function __get($name)
-    {
-        return $this->options->$name;
-    }
-
-    /**
-     * Set the item option.
-     */
-    public function __set($name, $value)
-    {
-        $this->options->$name = $value;
-        $this->notify();
     }
 }

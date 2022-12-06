@@ -8,6 +8,7 @@ use LogicException;
 use Tkui\Image;
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Common\SubjectItem;
 
 /**
  * @todo make id property real readonly.
@@ -21,18 +22,15 @@ use Tkui\TclTk\TclOptions;
  *
  * @todo Just extend from TclOptions ?
  */
-class Item
+class Item extends SubjectItem
 {
-    private Options $options;
-
     /**
      * @param string[] $values
      */
     final public function __construct(array $values = [], array|Options $options = [])
     {
-        $this->options = $this->createOptions()->with($options + [
-            'values' => $values,
-        ]);
+        parent::__construct($options);
+        $this->values = $values;
     }
 
     protected function createOptions(): Options
@@ -54,15 +52,6 @@ class Item
 
     /**
      * @param string $name
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        return $this->options->$name;
-    }
-
-    /**
-     * @param string $name
      * @param mixed $value
      */
     public function __set($name, $value)
@@ -71,15 +60,10 @@ class Item
             throw new LogicException('"id" property is readonly.');
         }
 
-        $this->options->$name = $value;
+        parent::__set($name, $value);
     }
 
-    public function options(): Options
-    {
-        return $this->options;
-    }
-
-    public static function values(array $values): self
+    public static function values(array $values): static
     {
         return new static($values);
     }
