@@ -58,12 +58,14 @@ final class DotEnv implements Environment
      */
     public function getValue(string $param, $default = null)
     {
-        $value = $_ENV[$param] ?? $default;
-        switch (strtolower($value)) {
-            case 'true':
-                return true;
-            case 'false':
-                return false;
+        $value = $_ENV[$param] ?? $_SERVER[$param] ?? $default;
+        if (is_string($value)) {
+            switch (strtolower($value)) {
+                case 'true':
+                    return true;
+                case 'false':
+                    return false;
+            }
         }
         return $value;
     }
