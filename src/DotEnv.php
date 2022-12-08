@@ -3,14 +3,12 @@
 namespace Tkui;
 
 use RuntimeException;
-use M1\Env\Parser as EnvParser;
 
 /**
  * .env file environment loader.
  */
 final class DotEnv implements Environment
 {
-    private array $data;
 
     /**
      * @param string $path     The directory where the env file is located.
@@ -19,9 +17,7 @@ final class DotEnv implements Environment
     public function __construct(
         public readonly string $path,
         public readonly string $filename = '.env',
-    ) {
-        $this->data = [];
-    }
+    ) { }
 
     /**
      * Resets the previous environment and loads a new one.
@@ -30,8 +26,6 @@ final class DotEnv implements Environment
      */
     public function load(): void
     {
-        $this->data = [];
-
         $file = $this->path . DIRECTORY_SEPARATOR . $this->filename;
         if (! file_exists($file)) {
             return;
@@ -41,10 +35,8 @@ final class DotEnv implements Environment
             throw new RuntimeException(sprintf('File "%s" is not readable.', $file));
         }
 
-        if (($buf = @file_get_contents($file)) === false) {
-            throw new RuntimeException("Couldn't read file: " . $file);
-        }
-        $this->data = EnvParser::parse($buf);
+        $dotenv = \Dotenv\Dotenv::createImmutable($this->path, $this->filename);
+        $dotenv->safeLoad();
     }
 
     /**
@@ -53,7 +45,9 @@ final class DotEnv implements Environment
     public function loadAndMergeWith(array $override): void
     {
         $this->load();
-        $this->data = array_merge($this->data, $override);
+        foreach ($override as $k => $v) {
+            $_ENV[$k] = $v;
+        }
     }
 
     /**
@@ -61,7 +55,16 @@ final class DotEnv implements Environment
      */
     public function getValue(string $param, mixed $default = null): mixed
     {
-        return $this->data[$param] ?? $default;
+        $value = $_ENV[$param] ?? $_SERVER[$param] ?? $default;
+        if (is_string($value)) {
+            switch (strtolower($value)) {
+                case 'true':
+                    return true;
+                case 'false':
+                    return false;
+            }
+        }
+        return $value;
     }
 
     /**
