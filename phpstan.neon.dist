@@ -4,6 +4,7 @@ parameters:
     - src
     - tests
 
+  reportUnmatchedIgnoredErrors: false
   ignoreErrors:
     - '#Call to an undefined method FFI::Tcl_#'
     - '#Call to an undefined method FFI::Tk_#'
