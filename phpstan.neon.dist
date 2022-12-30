@@ -7,3 +7,5 @@ parameters:
   ignoreErrors:
     - '#Call to an undefined method FFI::Tcl_#'
     - '#Call to an undefined method FFI::Tk_#'
+    - '#Access to an undefined property FFI\\CData::\$cdata#'
+
