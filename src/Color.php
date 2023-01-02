@@ -19,7 +19,10 @@ class Color implements Stringable
         $this->extractColors($hex);
     }
 
-    protected function extractColors(string $hex)
+    /**
+     * @throws InvalidArgumentException When color hex value is invalid.
+     */
+    protected function extractColors(string $hex): void
     {
         [$red, $green, $blue] = sscanf($hex, '#%02x%02x%02x');
         if ($red !== null && $green !== null && $blue !== null) {
