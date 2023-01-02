@@ -41,6 +41,8 @@ final class DotEnv implements Environment
 
     /**
      * Loads the environment and override values.
+     *
+     * @param array<string, string|int|bool|float> $override
      */
     public function loadAndMergeWith(array $override): void
     {
