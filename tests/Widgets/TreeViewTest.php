@@ -30,7 +30,7 @@ class TreeViewTest extends TestCase
     /** @test */
     public function treeview_can_add_item(): void
     {
-        $item = new Item([1,2,3]);
+        $item = new Item(['1', '2', '3']);
 
         $this->tclEvalTest(3, [
             ['ttk::treeview', $this->checkWidget('.tv')],
@@ -47,7 +47,7 @@ class TreeViewTest extends TestCase
     /** @test */
     public function treeview_item_can_be_deleted(): void
     {
-        $item = new Item([1,2,3]);
+        $item = new Item(['1', '2', '3']);
 
         $this->tclEvalTest(4, [
             ['ttk::treeview', $this->checkWidget('.tv')],
