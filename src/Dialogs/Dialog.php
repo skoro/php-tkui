@@ -23,6 +23,9 @@ abstract class Dialog implements ShowAsModal
     /** @var callable|null */
     private $callbackCancel = null;
 
+    /**
+     * @param array<string, mixed>|Options $options
+     */
     public function __construct(Window $parent, array|Options $options = [])
     {
         $this->parent = $parent;
@@ -42,7 +45,7 @@ abstract class Dialog implements ShowAsModal
      */
     abstract public function command(): string;
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         switch ($name) {
             case 'parent':
@@ -52,7 +55,7 @@ abstract class Dialog implements ShowAsModal
         return $this->options->$name;
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         switch ($name) {
             case 'parent':
@@ -81,9 +84,9 @@ abstract class Dialog implements ShowAsModal
     /**
      * @return mixed
      */
-    protected function handleResult($result)
+    protected function handleResult(mixed $result): mixed
     {
-        if ($result === '') {
+        if ($this->shouldCancel($result)) {
             $this->doCancel();
         } else {
             $this->doSuccess($result);
@@ -91,10 +94,15 @@ abstract class Dialog implements ShowAsModal
         return $result;
     }
 
+    protected function shouldCancel(mixed $result): bool
+    {
+        return $result === '';
+    }
+
     /**
      * Fires when the user confirms the dialog action.
      */
-    public function onSuccess(callable $callback): self
+    public function onSuccess(callable $callback): static
     {
         $this->callbackSuccess = $callback;
         return $this;
@@ -103,27 +111,27 @@ abstract class Dialog implements ShowAsModal
     /**
      * Fires when the user cancels the dialog.
      */
-    public function onCancel(callable $callback): self
+    public function onCancel(callable $callback): static
     {
         $this->callbackCancel = $callback;
         return $this;
     }
 
-    protected function doSuccess($value)
+    protected function doSuccess(mixed $value): void
     {
         if ($this->callbackSuccess) {
             $this->doCallback($this->callbackSuccess, $value);
         }
     }
 
-    protected function doCancel()
+    protected function doCancel(): void
     {
         if ($this->callbackCancel) {
             $this->doCallback($this->callbackCancel);
         }
     }
 
-    protected function doCallback(callable $callback, ...$args)
+    protected function doCallback(callable $callback, mixed ...$args): void
     {
         $callback(...$args);
     }

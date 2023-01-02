@@ -17,8 +17,8 @@ class FileType implements Stringable
     private array $macTypes = [];
 
     /**
-     * @param array|string $extensions
-     * @param array|string $macTypes
+     * @param array<string>|string $extensions
+     * @param array<string>|string|null $macTypes
      */
     public function __construct(string $typeName, $extensions, $macTypes = null)
     {

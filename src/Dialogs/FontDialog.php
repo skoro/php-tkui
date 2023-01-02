@@ -40,7 +40,7 @@ class FontDialog extends Dialog implements Widget
         parent::__construct($parent, $options);
         $this->id = uniqid();
         $this->fontManager = $fontManager;
-        $this->onSelectCallback = $parent->getEval()->registerCallback($this, [$this, 'onSelect']);
+        $this->onSelectCallback = $parent->getEval()->registerCallback($this, $this->onSelect(...));
     }
 
     /**
@@ -96,13 +96,13 @@ class FontDialog extends Dialog implements Widget
         return $this->parent;
     }
 
-    public function onSelect(Widget $self, string $fontSpec)
+    public function onSelect(Widget $self, string $fontSpec): void
     {
         $font = $this->fontManager->createFontFromString('{' . $fontSpec . '}');
         $this->doSuccess($font);
     }
 
-    protected function call(...$args)
+    protected function call(mixed ...$args): mixed
     {
         return $this->parent()->getEval()->tclEval('tk', $this->command(), ...$args);
     }

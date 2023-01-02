@@ -31,7 +31,7 @@ class ColorDialog extends Dialog
         return 'tk_chooseColor';
     }
 
-    protected function doSuccess($value)
+    protected function doSuccess(mixed $value): void
     {
         $this->initialColor = $value;
         parent::doSuccess($value);
