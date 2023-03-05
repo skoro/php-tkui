@@ -60,9 +60,9 @@ build_tk() {
     make install
 }
 
-rm -rf $INSTALL_DIR
-cd $ROOT_DIR
-build_tcl
+#rm -rf $INSTALL_DIR
+#cd $ROOT_DIR
+#build_tcl
 cd $ROOT_DIR
 build_tk
-cd $INSTALL_DIR && zip -r $ROOT_DIR/tcltk.zip *
+cd $INSTALL_DIR && zip -r $ROOT_DIR/tcltk.zip * -x include/* include/ include/X11/ include/X11/* lib/tk8.6/demos/ lib/tk8.6/demos/* lib/tk8.6/demos/images/ lib/tk8.6/demos/images/*
