@@ -1,11 +1,13 @@
 Building Tcl and Tk for Windows with MSYS2
 ==========================================
 
-1. Get MSYS2: https://msys2.github.io/
-2. Open MSYS2 MINGW64
+1. Get MSYS2: https://www.msys2.org/
+2. Open `MSYS2 UCRT64`
 3. Install all the required build dependencies:
     ```sh
-    pacman -Syuu make mingw-w64-i686-gcc tar wget zip unzip
+    pacman -Syuu
+    pacman -S mingw-w64-ucrt-x86_64-gcc make git zip wget
     ```
-4. `./build.sh`
+4. cd into the project `tools` directory and run `OS=win make dist`
+5. `tcltk.zip` will be created in `.build` directory
 
