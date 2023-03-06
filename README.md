@@ -65,3 +65,5 @@ in `.env` file like this:
 WINDOWS_LIB_TCL=c:\\tcltk\\bin\\tcl86t.dll
 WINDOWS_LIB_TK=c:\\tcltk\\bin\\tk86t.dll
 ```
+
+Also, you can build your own Tcl/Tk distribution, take a look at [BUILD-WIN.md](tools/BUILD-WIN.md) doc how to do that.
