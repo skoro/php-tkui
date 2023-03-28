@@ -4,6 +4,7 @@ namespace Tkui\Dialogs;
 
 use Tkui\TclTk\Exceptions\TkException;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Windows\ShowAsModal;
 use Tkui\Windows\Window;
 
@@ -22,16 +23,19 @@ abstract class Dialog implements ShowAsModal
     /** @var callable|null */
     private $callbackCancel = null;
 
-    public function __construct(Window $parent, array $options = [])
+    /**
+     * @param array<string, mixed>|Options $options
+     */
+    public function __construct(Window $parent, array|Options $options = [])
     {
         $this->parent = $parent;
         $options['parent'] = $parent;
-        $this->options = $this->createOptions()->mergeAsArray($options);
+        $this->options = $this->createOptions()->with($options);
     }
 
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'parent' => null,
         ]);
     }
@@ -41,7 +45,7 @@ abstract class Dialog implements ShowAsModal
      */
     abstract public function command(): string;
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         switch ($name) {
             case 'parent':
@@ -51,7 +55,7 @@ abstract class Dialog implements ShowAsModal
         return $this->options->$name;
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         switch ($name) {
             case 'parent':
@@ -73,16 +77,16 @@ abstract class Dialog implements ShowAsModal
      */
     public function showModal()
     {
-        $result = $this->parent->getEval()->tclEval($this->command(), ...$this->options->asStringArray());
+        $result = $this->parent->getEval()->tclEval($this->command(), ...$this->options->toStringList());
         return $this->handleResult($result);
     }
 
     /**
      * @return mixed
      */
-    protected function handleResult($result)
+    protected function handleResult(mixed $result): mixed
     {
-        if ($result === '') {
+        if ($this->shouldCancel($result)) {
             $this->doCancel();
         } else {
             $this->doSuccess($result);
@@ -90,10 +94,15 @@ abstract class Dialog implements ShowAsModal
         return $result;
     }
 
+    protected function shouldCancel(mixed $result): bool
+    {
+        return $result === '';
+    }
+
     /**
      * Fires when the user confirms the dialog action.
      */
-    public function onSuccess(callable $callback): self
+    public function onSuccess(callable $callback): static
     {
         $this->callbackSuccess = $callback;
         return $this;
@@ -102,27 +111,27 @@ abstract class Dialog implements ShowAsModal
     /**
      * Fires when the user cancels the dialog.
      */
-    public function onCancel(callable $callback): self
+    public function onCancel(callable $callback): static
     {
         $this->callbackCancel = $callback;
         return $this;
     }
 
-    protected function doSuccess($value)
+    protected function doSuccess(mixed $value): void
     {
         if ($this->callbackSuccess) {
             $this->doCallback($this->callbackSuccess, $value);
         }
     }
 
-    protected function doCancel()
+    protected function doCancel(): void
     {
         if ($this->callbackCancel) {
             $this->doCallback($this->callbackCancel);
         }
     }
 
-    protected function doCallback(callable $callback, ...$args)
+    protected function doCallback(callable $callback, mixed ...$args): void
     {
         $callback(...$args);
     }

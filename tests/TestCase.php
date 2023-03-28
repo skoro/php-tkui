@@ -7,7 +7,6 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 use Tkui\Application;
 use Tkui\Evaluator;
-use Tkui\Widgets\Widget;
 use Tkui\Windows\Window;
 
 class TestCase extends FrameworkTestCase
@@ -36,7 +35,7 @@ class TestCase extends FrameworkTestCase
         return $this->createMock(Evaluator::class);
     }
 
-    protected function createWindowStub(): Widget
+    protected function createWindowStub(): Window
     {
         /** @var Window|Stub $win */
         $win = $this->createStub(Window::class);

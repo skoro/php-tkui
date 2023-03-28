@@ -20,13 +20,10 @@ class TkWindowManager implements WindowManager
     public const STATE_ICON = 'icon';
     public const STATE_ZOOMED = 'zoomed';
 
-    private Evaluator $eval;
-    private Window $window;
-
-    public function __construct(Evaluator $eval, Window $window)
-    {
-        $this->eval = $eval;
-        $this->window = $window;
+    public function __construct(
+        private readonly Evaluator $eval,
+        private readonly Window $window,
+    ) {
     }
 
     /**

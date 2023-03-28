@@ -3,8 +3,10 @@
 namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Clickable;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Common\WithCommand;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\TtkWidget;
 
@@ -17,10 +19,10 @@ use Tkui\Widgets\TtkWidget;
  */
 abstract class GenericButton extends TtkWidget implements Clickable
 {
-    use Command;
-    use DetectUnderline;
+    use WithCommand;
+    use WithUnderlinedLabel;
 
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         $command = null;
         if (isset($options['command'])) {
@@ -44,9 +46,9 @@ abstract class GenericButton extends TtkWidget implements Clickable
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'text' => null,
             'compound' => null,
             'image' => null,

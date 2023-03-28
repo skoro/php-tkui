@@ -6,6 +6,7 @@ use Tkui\Evaluator;
 use Tkui\Options;
 use SplObserver;
 use SplSubject;
+use Tkui\TclTk\TclOptions;
 
 /**
  * A basic Tk widget implementation.
@@ -13,6 +14,7 @@ use SplSubject;
 abstract class TkWidget implements Widget, SplObserver
 {
     private Container $parent;
+    /** @var array<string, int> */
     private static array $idCounter = [];
     private Options $options;
     private int $id;
@@ -31,17 +33,17 @@ abstract class TkWidget implements Widget, SplObserver
     /**
      * Creates a new widget.
      *
-     * @param Container $parent The parent widget.
-     * @param array $options Override widget options.
+     * @param Container     $parent     The parent widget.
+     * @param array|Options $options    Override widget options.
      */
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         $this->generateId();
         $this->parent = $parent;
         $this->eval = $parent->getEval();
-        $this->options = $this->initOptions()
-                              ->merge($this->initWidgetOptions())
-                              ->mergeAsArray($options);
+        $this->options = $this->createGenericOptions()
+                              ->with($this->createOptions())
+                              ->with($options);
         $this->make();
     }
 
@@ -52,26 +54,24 @@ abstract class TkWidget implements Widget, SplObserver
 
     private function generateId(): void
     {
-        if (!isset(self::$idCounter[static::class])) {
-            self::$idCounter[static::class] = 0;
-        }
+        self::$idCounter[static::class] ??= 0;
         $this->id = ++self::$idCounter[static::class];
     }
 
     /**
-     * Initialize the common widget options.
+     * Create the common widget options available for descendant widgets.
      */
-    protected function initOptions(): Options
+    private function createGenericOptions(): Options
     {
         return new WidgetOptions();
     }
 
     /**
-     * Initialize specific widget options.
+     * Create specific widget options.
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options();
+        return new TclOptions();
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class TkWidget implements Widget, SplObserver
      */
     protected function make()
     {
-        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->asStringArray());
+        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->toStringList());
     }
 
     /**
@@ -134,7 +134,7 @@ abstract class TkWidget implements Widget, SplObserver
         // internally by itself, like progressbar.
         $value = $this->options->$name;
         if ($value === null) {
-            $value = $this->call('cget', Options::getTclOption($name));
+            $value = $this->call('cget', TclOptions::getTclOption($name));
             $this->options->$name = $value;
         }
         return $value;
@@ -147,7 +147,7 @@ abstract class TkWidget implements Widget, SplObserver
     {
         if ($this->options->$name !== $value) {
             $this->options->$name = $value;
-            $this->configure(...$this->options->only($name)->asStringArray());
+            $this->configure(...$this->options->withOnly($name)->toStringList());
         }
     }
 

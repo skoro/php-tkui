@@ -39,7 +39,7 @@ class MenuTest extends TestCase
         $this->tclEvalTest(2, [
             ['menu', $this->checkWidget('.m')],
             // This test will be failed if it runs separately because of command and static id()
-            [$this->checkWidget('.m'), 'add', 'command', '-label', 'Test 1', '-command', ' 3', '-underline', 5],
+            [$this->checkWidget('.m'), 'add', 'command', '-label', 'Test 1', '-command', ' 4', '-underline', 5],
         ]);
 
         (new Menu($this->createWindowStub()))

@@ -10,7 +10,7 @@ interface Application extends Evaluator, Bindings
     /**
      * Process the application events.
      */
-    public function run();
+    public function run(): void;
 
     /**
      * Get the theme manager.
@@ -30,5 +30,5 @@ interface Application extends Evaluator, Bindings
     /**
      * Stop the application and free up resources.
      */
-    public function quit();
+    public function quit(): void;
 }

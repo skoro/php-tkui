@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Orient;
 
 /**
@@ -10,9 +11,9 @@ use Tkui\Widgets\Consts\Orient;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_separator.htm
  *
- * @property string $orient By default, vertical orientation.
+ * @property Orient $orient By default, vertical orientation.
  */
-class Separator extends TtkWidget implements Orient
+class Separator extends TtkWidget
 {
     protected string $widget = 'ttk::separator';
     protected string $name = 'sep';
@@ -20,10 +21,10 @@ class Separator extends TtkWidget implements Orient
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
-            'orient' => self::ORIENT_VERTICAL,
+        return new TclOptions([
+            'orient' => Orient::VERTICAL,
         ]);
     }
 }

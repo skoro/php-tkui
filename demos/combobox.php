@@ -5,6 +5,7 @@ use Tkui\Layouts\Pack;
 use Tkui\Widgets\Buttons\Button;
 use Tkui\Widgets\Buttons\CheckButton;
 use Tkui\Widgets\Combobox;
+use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\Entry;
 use Tkui\Widgets\Frame;
 use Tkui\Widgets\Label;
@@ -74,7 +75,7 @@ $demo = new class extends DemoAppWindow
             'side' => Pack::SIDE_TOP,
             'pady' => 4,
         ]);
-        $f->pack(new Scrollbar($f, ['orient' => Scrollbar::ORIENT_HORIZONTAL]), [
+        $f->pack(new Scrollbar($f, ['orient' => Orient::HORIZONTAL]), [
             'side' => Pack::SIDE_TOP,
             'fill' => Pack::FILL_X,
             'expand' => true,

@@ -1,5 +1,6 @@
 <?php
 
+use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Scrollbar;
 use Tkui\Widgets\TreeView\Column;
@@ -48,8 +49,8 @@ $demo = new class extends DemoAppWindow
         $columns = $this->createColumns();
 
         $tv = new TreeView($parent, $columns, $options);
-        $tv->xScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_HORIZONTAL]);
-        $tv->yScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_VERTICAL]);
+        $tv->xScrollCommand = new Scrollbar($parent, ['orient' => Orient::HORIZONTAL]);
+        $tv->yScrollCommand = new Scrollbar($parent, ['orient' => Orient::VERTICAL]);
 
         $parent->grid($tv, ['sticky' => 'news', 'row' => 0, 'column' => 0])
             ->rowConfigure($parent, 0, ['weight' => 1])

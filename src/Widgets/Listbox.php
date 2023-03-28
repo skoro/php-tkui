@@ -7,15 +7,19 @@ use SplObserver;
 use SplSubject;
 use Tkui\Options;
 use Tkui\TclTk\Tcl;
+use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Consts\SelectMode;
+use Tkui\Widgets\Consts\ActiveStyle;
+use Tkui\Widgets\Consts\State;
 
 /**
  * Implementation of Tk listbox widget.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/listbox.htm
  *
- * @property string $state
- * @property string $selectMode
- * @property string $activeStyle
+ * @property State $state
+ * @property SelectMode $selectMode
+ * @property ActiveStyle $activeStyle
  * @property int $height
  * @property int $width
  * @property Scrollbar $xScrollCommand
@@ -24,29 +28,6 @@ use Tkui\TclTk\Tcl;
 // TODO: array iterable
 class Listbox extends ScrollableWidget implements SplObserver
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_DISABLED = 'disabled';
-
-    /**
-     * Selection modes for 'selectMode' option.
-     */
-    const SELECTMODE_SINGLE = 'single';
-    const SELECTMODE_BROWSE = 'browse';
-    const SELECTMODE_MULTIPLE = 'multiple';
-    const SELECTMODE_EXTENDED = 'extended';
-
-    /**
-     * Active element draw styles for 'activeStyle' option.
-     *
-     * The default is "underline" on Windows, and "dotbox" elsewhere.
-     */
-    const ACTIVESTYLE_DOTBOX = 'dotbox';
-    const ACTIVESTYLE_NONE = 'none';
-    const ACTIVESTYLE_UNDERLINE = 'underline';
-
     /**
      * Listbox items.
      *
@@ -62,7 +43,7 @@ class Listbox extends ScrollableWidget implements SplObserver
      *
      * @param ListboxItem[] $items Listbox items.
      */
-    public function __construct(Container $parent, array $items = [], array $options = [])
+    public function __construct(Container $parent, array $items = [], array|Options $options = [])
     {
         parent::__construct($parent, $options);
 
@@ -75,9 +56,9 @@ class Listbox extends ScrollableWidget implements SplObserver
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'activeStyle' => null,
             'height' => null,
             'listVariable' => null,
@@ -353,7 +334,7 @@ class Listbox extends ScrollableWidget implements SplObserver
             return;
         }
         $item = $this->items[$index];
-        $this->call('itemconfigure', $index, ...$item->options()->asStringArray());
+        $this->call('itemconfigure', $index, ...$item->options()->toStringList());
     }
 
     /**

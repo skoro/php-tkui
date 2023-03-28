@@ -6,6 +6,7 @@ use Tkui\Color;
 use Tkui\Font;
 use Tkui\Options;
 use Tkui\TclTk\Tcl;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\Editable;
 use Tkui\Widgets\Common\ValueInVariable;
@@ -22,20 +23,20 @@ use Tkui\Widgets\Consts\Validate;
  * @property callable $xScrollCommand TODO
  * @property bool $exportSelection
  * @property callable $invalidCommand TODO
- * @property string $justify
+ * @property Justify $justify
  * @property bool $show
  * @property string $state
  * @property Variable $textVariable
- * @property string $validate
+ * @property Validate $validate
  * @property callable $validateCommand TODO
  * @property int $width
  */
-class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Editable
+class Entry extends TtkWidget implements ValueInVariable, Editable
 {
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
-    public function __construct(Container $parent, string $value = '', array $options = [])
+    public function __construct(Container $parent, string $value = '', array|Options $options = [])
     {
         $var = isset($options['textVariable']);
 
@@ -53,9 +54,9 @@ class Entry extends TtkWidget implements ValueInVariable, Justify, Validate, Edi
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'font' => null,
             'textColor' => null,
             'xScrollCommand' => null,

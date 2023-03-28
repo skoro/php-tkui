@@ -3,17 +3,18 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\Exceptions\WidgetException;
 
 /**
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_panedwindow.htm
  *
- * @property string $orient By default, vertical orientation.
+ * @property Orient $orient By default, vertical orientation.
  * @property int $width
  * @property int $height
  */
-class PanedWindow extends TtkContainer implements Orient
+class PanedWindow extends TtkContainer
 {
     protected string $widget = 'ttk::panedwindow';
     protected string $name = 'pnw';
@@ -21,10 +22,10 @@ class PanedWindow extends TtkContainer implements Orient
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
-            'orient' => self::ORIENT_VERTICAL,
+        return new TclOptions([
+            'orient' => Orient::VERTICAL,
             'width' => null,
             'height' => null,
         ]);

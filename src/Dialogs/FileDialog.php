@@ -22,7 +22,7 @@ abstract class FileDialog extends Dialog
      */
     protected function createOptions(): Options
     {
-        return parent::createOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'defaultExtension' => null,
             'fileTypes' => null,
             'initialDir' => null,

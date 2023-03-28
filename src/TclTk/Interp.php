@@ -3,8 +3,9 @@
 namespace Tkui\TclTk;
 
 use FFI\CData;
+use ReflectionMethod;
 use LogicException;
-use Tkui\HasLogger;
+use Tkui\Support\WithLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
 
@@ -13,16 +14,14 @@ use Tkui\TclTk\Exceptions\TclInterpException;
  */
 class Interp
 {
-    use HasLogger;
-
-    private Tcl $tcl;
-    private CData $interp;
+    use WithLogger;
+    
     private ?ListVariable $argv = null;
 
-    public function __construct(Tcl $tcl, CData $interp)
-    {
-        $this->tcl = $tcl;
-        $this->interp = $interp;
+    public function __construct(
+        private readonly Tcl $tcl,
+        private readonly CData $interp,
+    ) {
     }
 
     /**
@@ -39,6 +38,34 @@ class Interp
     public function cdata(): CData
     {
         return $this->interp;
+    }
+
+    /**
+     * Calls underlying Tcl api with replaced interp parameter.
+     *
+     * @throws TclException The method not exist in Tcl Api.
+     */
+    public function callTcl(string $method, mixed ...$arguments)
+    {
+        if (method_exists($this->tcl, $method)) {
+            // TODO: cache reflection results to improve performance.
+            $ref = new ReflectionMethod($this->tcl, $method);
+            $params = $ref->getParameters();
+            if ($params) {
+                /** @phpstan-ignore-next-line */
+                if ($params[0]->getType()->getName() === Interp::class) {
+                    array_unshift($arguments, $this);
+                }
+            }
+            $this->debug($method, array_map(
+                // CData arguments cannot be serialized to strings.
+                fn ($argument) => $argument instanceof CData ? 'FFI\CData' : $argument,
+                $arguments
+            ));
+            return $this->tcl->$method(...$arguments);
+        }
+
+        throw new TclException("Method \"$method\" not found in tcl api.");
     }
 
     /**
@@ -62,6 +89,9 @@ class Interp
 
     /**
      * Evaluates a Tcl script.
+     *
+     * An evaluation result can be found via getStringResult().
+     * @see Interp::getStringResult
      */
     public function eval(string $script)
     {
@@ -69,13 +99,11 @@ class Interp
         $this->tcl->eval($this, $script);
     }
 
-    public function tcl(): Tcl
-    {
-        return $this->tcl;
-    }
-
     /**
      * Creates a Tcl command.
+     *
+     * @param string   $command  The command name.
+     * @param callable $callback The command callback. The callback accepts arguments as strings.
      */
     public function createCommand(string $command, callable $callback)
     {
@@ -101,18 +129,17 @@ class Interp
     /**
      * Creates a Tcl variable instance.
      *
-     * @param mixed $value
-     *
      * @throws TclException
      * @throws TclInterpException
      */
-    public function createVariable(string $varName, ?string $arrIndex = NULL, $value = NULL): Variable
+    public function createVariable(string $varName, ?string $arrIndex = NULL, mixed $value = NULL): Variable
     {
         $this->debug('createVariable', [
             'varName' => $varName,
             'arrIndex' => $arrIndex,
             'value' => $value,
         ]);
+
         return new Variable($this, $varName, $arrIndex, $value);
     }
 
@@ -150,7 +177,7 @@ class Interp
         $tclList = $this->getListResult();
 
         if (count($tclList) % 2 !== 0) {
-            throw $this->createInterpException('Cannot convert the Tcl result to a dictionary');
+            throw $this->throwInterpException('Cannot convert the Tcl result to a dictionary');
         }
 
         foreach (array_chunk($tclList, 2) as $chunk) {
@@ -161,8 +188,13 @@ class Interp
         return $dict;
     }
 
-    protected function createInterpException(string $message): TclInterpException
+    /**
+     * A helper for throwing interp exception.
+     *
+     * @throws TclInterpException
+     */
+    public function throwInterpException(string $message): TclInterpException
     {
-        return new TclInterpException($this, $message);
+        throw new TclInterpException($this, $message);
     }
 }

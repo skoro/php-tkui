@@ -7,19 +7,14 @@ use RuntimeException;
 
 class FFILoader
 {
-    private string $hFile;
-    private string $sharedLib;
-
     /**
-     * @param string $hFile     The C header file.
+     * @param string $header    The C header file.
      * @param string $sharedLib System shared library.
      */
     public function __construct(
-        string $hFile,
-        string $sharedLib
+        public readonly string $header,
+        public readonly string $sharedLib,
     ) {
-        $this->hFile = $hFile;
-        $this->sharedLib = $sharedLib;
     }
 
     /**
@@ -27,24 +22,14 @@ class FFILoader
      */
     public function load(): FFI
     {
-        if (! file_exists($this->hFile)) {
-            throw new RuntimeException(sprintf('Header file "%s" doesn\'t exist.', $this->hFile));
+        if (! file_exists($this->header)) {
+            throw new RuntimeException("Header file \"{$this->header}\" doesn't exist.");
         }
 
-        if (($code = file_get_contents($this->hFile)) === false) {
-            throw new RuntimeException(sprintf('Couldn\'t read file "%s"', $this->hFile));
+        if (($code = file_get_contents($this->header)) === false) {
+            throw new RuntimeException("Couldn't read file \"{$this->header}\"");
         }
 
         return FFI::cdef($code, $this->sharedLib);
-    }
-
-    public function sharedLib(): string
-    {
-        return $this->sharedLib;
-    }
-
-    public function header(): string
-    {
-        return $this->hFile;
     }
 }

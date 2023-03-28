@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Consts\Orient;
@@ -15,12 +16,12 @@ use Tkui\Widgets\Consts\Orient;
  * @property callable $command
  * @property float $from
  * @property string $length
- * @property string $orient
+ * @property Orient $orient
  * @property float $to
  * @property float $value
  * @property Variable $variable
  */
-class Scale extends TtkWidget implements ValueInVariable, Orient
+class Scale extends TtkWidget implements ValueInVariable
 {
     protected string $widget = 'ttk::scale';
     protected string $name = 'sc';
@@ -28,9 +29,9 @@ class Scale extends TtkWidget implements ValueInVariable, Orient
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'command' => null,
             'from' => null,
             'length' => null,

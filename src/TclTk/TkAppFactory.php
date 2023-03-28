@@ -7,9 +7,9 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Tkui\AppFactory;
 use Tkui\Environment;
-use Tkui\Exceptions\UnsupportedOSException;
 use Tkui\System\FFILoader;
 use Tkui\System\OS;
+use Tkui\System\OSDetection;
 
 /**
  * Tk implementation of Application Factory.
@@ -19,26 +19,19 @@ class TkAppFactory implements AppFactory
     const TCL_HEADER = 'tcl86.h';
     const TK_HEADER = 'tk86.h';
 
-    const LINUX_LIB_TCL = 'libtcl8.6.so';
-    const LINUX_LIB_TK = 'libtk8.6.so';
-
-    const WINDOWS_LIB_TCL = 'tcl86t.dll';
-    const WINDOWS_LIB_TK = 'tk86t.dll';
-
-    const DEFAULT_WIN_THEME = 'vista';
-    const DEFAULT_THEME = 'clam';
-
-    private string $defaultTclHeader;
-    private string $defaultTkHeader;
-
-    private string $appName;
+    private readonly string $defaultTclHeader;
+    private readonly string $defaultTkHeader;
+    private readonly OS $os;
 
     /**
-     * @param string $appName The application name (or class name in some desktop environments).
+     * @param string  $appName The application name (or class name in some desktop environments).
+     * @param OS|null $os      The operation system instance or detection will be used.
      */
-    public function __construct(string $appName)
-    {
-        $this->appName = $appName;
+    public function __construct(
+        private string $appName,
+        ?OS $os = null
+    ) {
+        $this->os = $os ?? OSDetection::detect();
         $this->defaultTclHeader = $this->getHeaderPath(self::TCL_HEADER);
         $this->defaultTkHeader = $this->getHeaderPath(self::TK_HEADER);
     }
@@ -58,10 +51,12 @@ class TkAppFactory implements AppFactory
      */
     public function createFromEnvironment(Environment $env): TkApplication
     {
-        if (($libTcl = $env->getValue(sprintf('%s_LIB_TCL', OS::family()))) === null) {
+        $osFamily = strtoupper($this->os->family());
+
+        if (($libTcl = $env->getValue("{$osFamily}_LIB_TCL")) === null) {
             $libTcl = $this->getDefaultTclLib();
         }
-        if (($libTk = $env->getValue(sprintf('%s_LIB_TK', OS::family()))) === null) {
+        if (($libTk = $env->getValue("{$osFamily}_LIB_TK")) === null) {
             $libTk = $this->getDefaultTkLib();
         }
 
@@ -134,8 +129,7 @@ class TkAppFactory implements AppFactory
     protected function createLogger(string $file): Logger
     {
         $log = new Logger('php-gui');
-        // TODO: PHP8 use named arguments.
-        $formatter = new LineFormatter(null, 'Y-m-d H:i:s', false, true);
+        $formatter = new LineFormatter(dateFormat: 'Y-m-d H:i:s', ignoreEmptyContextAndExtra: true);
         $stream = new StreamHandler($file, Logger::DEBUG);
         $stream->setFormatter($formatter);
         $log->pushHandler($stream);
@@ -144,34 +138,17 @@ class TkAppFactory implements AppFactory
 
     protected function getDefaultTclLib(): string
     {
-        switch (OS::family()) {
-            case 'WINDOWS':
-                return self::WINDOWS_LIB_TCL;
-
-            case 'LINUX':
-                return self::LINUX_LIB_TCL;
-        }
-
-        throw new UnsupportedOSException();
+        return $this->os->tclSharedLib();
     }
 
     protected function getDefaultTkLib(): string
     {
-        switch (OS::family()) {
-            case 'WINDOWS':
-                return self::WINDOWS_LIB_TK;
-
-            case 'LINUX':
-                return self::LINUX_LIB_TK;
-        }
-
-        throw new UnsupportedOSException();
+        return $this->os->tkSharedLib();
     }
 
     protected function getTheme(string $theme): string
     {
         return strtolower($theme) === 'auto'
-            ? (OS::family() === 'WINDOWS' ? self::DEFAULT_WIN_THEME : self::DEFAULT_THEME)
-            : $theme;
+            ? $this->os->defaultThemeName() : $theme;
     }
 }

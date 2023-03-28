@@ -5,13 +5,16 @@ use Tkui\Image;
 use Tkui\Layouts\Pack;
 use Tkui\TclTk\TkFont;
 use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Consts\Justify;
+use Tkui\Widgets\Consts\Orient;
+use Tkui\Widgets\Consts\Relief;
+use Tkui\Widgets\Consts\WrapMode;
 use Tkui\Widgets\Entry;
 use Tkui\Widgets\Frame;
 use Tkui\Widgets\Scrollbar;
 use Tkui\Widgets\Text\SearchOptions;
 use Tkui\Widgets\Text\Text;
 use Tkui\Widgets\Text\TextIndex;
-use Tkui\Widgets\Text\TextStyle;
 
 require_once dirname(__FILE__) . '/DemoAppWindow.php';
 
@@ -77,8 +80,8 @@ $demo = new class extends DemoAppWindow
     {
         $t = new Text($parent);
         $t->yScrollCommand = new Scrollbar($parent);
-        $t->xScrollCommand = new Scrollbar($parent, ['orient' => Scrollbar::ORIENT_HORIZONTAL]);
-        $t->wrap = Text::WRAP_WORD;
+        $t->xScrollCommand = new Scrollbar($parent, ['orient' => Orient::HORIZONTAL]);
+        $t->wrap = WrapMode::WORD;
         $parent->grid($t, ['sticky' => 'nsew', 'row' => 0, 'column' => 0])
                ->rowConfigure($parent, 0, ['weight' => 1])
                ->columnConfigure($parent, 0, ['weight' => 1]);
@@ -89,17 +92,17 @@ $demo = new class extends DemoAppWindow
 
     protected function registerTextStyles()
     {
-        $this->text->createStyle('big')->font = new TkFont('Courier', 12, TkFont::BOLD);
-        $this->text->createStyle('verybig')->font = new TkFont('Helvetica', 24, TkFont::BOLD);
-        $this->text->createStyle('tiny')->font = new TkFont('Times', 8, TkFont::BOLD);
+        $this->text->createStyle('big')->font = new TkFont('Courier', 12, TkFont::STYLE_BOLD);
+        $this->text->createStyle('verybig')->font = new TkFont('Helvetica', 24, TkFont::STYLE_BOLD);
+        $this->text->createStyle('tiny')->font = new TkFont('Times', 8, TkFont::STYLE_BOLD);
         $this->text->createStyle('color1')->background = Color::fromHex('#a0b7ce');
         $this->text->createStyle('color2')->foreground = Color::fromName('red');
         $this->text->createStyle('raised', [
-                'relief' => TextStyle::RELIEF_RAISED,
+                'relief' => Relief::RAISED,
                 'borderWidth' => 1,
         ]);
         $this->text->createStyle('sunken', [
-                'relief' => TextStyle::RELIEF_SUNKEN,
+                'relief' => Relief::SUNKEN,
                 'borderWidth' => 1,
         ]);
         $this->text->createStyle('bgstipple', [
@@ -110,8 +113,8 @@ $demo = new class extends DemoAppWindow
         $this->text->createStyle('fgstipple')->fgstipple = 'gray50';
         $this->text->createStyle('underline')->underline = true;
         $this->text->createStyle('overstrike')->overstrike = true;
-        $this->text->createStyle('right')->justify = TextStyle::JUSTIFY_RIGHT;
-        $this->text->createStyle('center')->justify = TextStyle::JUSTIFY_CENTER;
+        $this->text->createStyle('right')->justify = Justify::RIGHT;
+        $this->text->createStyle('center')->justify = Justify::CENTER;
         $this->text->createStyle('sub', [
                 'offset' => '4p',
                 'font' => new TkFont('Courier', 10),

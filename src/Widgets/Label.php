@@ -6,8 +6,9 @@ use Tkui\Color;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Relief;
@@ -21,24 +22,24 @@ use Tkui\Widgets\Consts\Relief;
  * @property Variable $textVariable
  * @property int $underline
  * @property int $width
- * @property string $anchor
+ * @property Anchor $anchor
  * @property Color|string $background
  * @property Color|string $foreground
- * @property string $justify
- * @property string $relief
+ * @property Justify $justify
+ * @property Relief $relief
  * @property int $wrapLength
  * @property Font|null $font
  * @property Image $image
  * @property string $compound
  */
-class Label extends TtkWidget implements Justify, Relief, Anchor
+class Label extends TtkWidget
 {
-    use DetectUnderline;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'ttk::label';
     protected string $name = 'lb';
 
-    public function __construct(Container $parent, string $title, array $options = [])
+    public function __construct(Container $parent, string $title, array|Options $options = [])
     {
         $options['text'] = $this->removeUnderlineChar($title);
         $options['underline'] = $this->detectUnderlineIndex($title);
@@ -48,9 +49,9 @@ class Label extends TtkWidget implements Justify, Relief, Anchor
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'compound' => null,
             'image' => null,
             'padding' => null,

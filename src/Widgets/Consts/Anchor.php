@@ -5,15 +5,15 @@ namespace Tkui\Widgets\Consts;
 /**
  * Values for 'anchor' property.
  */
-interface Anchor
+enum Anchor: string
 {
-    const ANCHOR_N = 'n';
-    const ANCHOR_NE = 'ne';
-    const ANCHOR_E = 'e';
-    const ANCHOR_SE = 'se';
-    const ANCHOR_S = 's';
-    const ANCHOR_SW = 'sw';
-    const ANCHOR_W = 'w';
-    const ANCHOR_NW = 'nw';
-    const ANCHOR_CENTER = 'center';
+    case N          = 'n';
+    case NE         = 'ne';
+    case E          = 'e';
+    case SE         = 'se';
+    case S          = 's';
+    case SW         = 'sw';
+    case W          = 'w';
+    case NW         = 'nw';
+    case CENTER     = 'center';
 }

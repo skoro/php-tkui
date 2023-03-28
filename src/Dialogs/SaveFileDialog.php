@@ -32,7 +32,7 @@ class SaveFileDialog extends FileDialog
      */
     protected function createOptions(): Options
     {
-        return parent::createOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'confirmOverwrite' => null,
         ]);
     }

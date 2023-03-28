@@ -4,6 +4,8 @@ use Tkui\Dialogs\MessageBox;
 use Tkui\Layouts\Pack;
 use Tkui\Widgets\Buttons\Button;
 use Tkui\Widgets\Buttons\RadioButton;
+use Tkui\Widgets\Consts\Justify;
+use Tkui\Widgets\Consts\Relief;
 use Tkui\Widgets\Frame;
 use Tkui\Widgets\Label;
 use Tkui\Widgets\RadioGroup;
@@ -46,7 +48,7 @@ $demo = new class extends DemoAppWindow
     {
         $this->pack(new Label($this, $text, [
             'wrapLength' => '4i',
-            'justify' => Label::JUSTIFY_LEFT,
+            'justify' => Justify::LEFT,
         ]));
     }
 
@@ -91,7 +93,7 @@ $demo = new class extends DemoAppWindow
         $f = new Frame($this);
         $this->pack(new Label($f, $name));
         $this->pack(new Frame($f, [
-            'relief' => Frame::RELIEF_RIDGE,
+            'relief' => Relief::RIDGE,
             'height' => 2,
             'borderWidth' => 1,
         ]), [

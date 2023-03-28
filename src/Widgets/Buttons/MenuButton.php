@@ -3,7 +3,9 @@
 namespace Tkui\Widgets\Buttons;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Container;
+use Tkui\Widgets\Consts\Direction;
 use Tkui\Widgets\Menu\Menu;
 
 /**
@@ -14,20 +16,14 @@ use Tkui\Widgets\Menu\Menu;
  * @property string $text
  * @property int $underline
  * @property Menu $menu
- * @property string $direction
+ * @property Direction $direction
  */
 class MenuButton extends GenericButton
 {
-    const DIRECTION_ABOVE = 'above';
-    const DIRECTION_BELOW = 'below';
-    const DIRECTION_LEFT = 'left';
-    const DIRECTION_RIGHT = 'right';
-    const DIRECTION_FLUSH = 'flush';
-
     protected string $widget = 'ttk::menubutton';
     protected string $name = 'mbtn';
 
-    public function __construct(Container $parent, string $title, Menu $menu, array $options = [])
+    public function __construct(Container $parent, string $title, Menu $menu, array|Options $options = [])
     {
         $options['text'] = $title;
         $options['menu'] = $menu;
@@ -37,9 +33,9 @@ class MenuButton extends GenericButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'text' => null,
             'compound' => null,
             'image' => null,

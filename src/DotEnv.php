@@ -9,18 +9,15 @@ use RuntimeException;
  */
 final class DotEnv implements Environment
 {
-    private string $path;
-    private string $filename;
 
     /**
      * @param string $path     The directory where the env file is located.
      * @param string $filename The env file base name.
      */
-    public function __construct(string $path, string $filename = '.env')
-    {
-        $this->path = $path;
-        $this->filename = $filename;
-    }
+    public function __construct(
+        public readonly string $path,
+        public readonly string $filename = '.env',
+    ) { }
 
     /**
      * Resets the previous environment and loads a new one.
@@ -44,6 +41,8 @@ final class DotEnv implements Environment
 
     /**
      * Loads the environment and override values.
+     *
+     * @param array<string, string|int|bool|float> $override
      */
     public function loadAndMergeWith(array $override): void
     {
@@ -56,7 +55,7 @@ final class DotEnv implements Environment
     /**
      * @inheritdoc
      */
-    public function getValue(string $param, $default = null)
+    public function getValue(string $param, mixed $default = null): mixed
     {
         $value = $_ENV[$param] ?? $_SERVER[$param] ?? $default;
         if (is_string($value)) {
@@ -75,7 +74,7 @@ final class DotEnv implements Environment
      *
      * @param string $dst Could be an env filename or directory where .env is located.
      */
-    public static function create(string $dst): self
+    public static function create(string $dst): static
     {
         if (is_dir($dst)) {
             $env = new static($dst);

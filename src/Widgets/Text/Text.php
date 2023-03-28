@@ -5,8 +5,9 @@ namespace Tkui\Widgets\Text;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Editable;
-use Tkui\Widgets\Consts\WrapModes;
+use Tkui\Widgets\Consts\State;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use Tkui\Widgets\Exceptions\WidgetException;
@@ -20,16 +21,11 @@ use Tkui\Widgets\ScrollableWidget;
  * @property Scrollbar $xScrollCommand
  * @property Scrollbar $yScrollCommand
  * @property Font $font
- * @property string $wrap
+ * @property WrapMode $wrap
+ * @property State $state
  */
-class Text extends ScrollableWidget implements Editable, WrapModes
+class Text extends ScrollableWidget implements Editable
 {
-    /**
-     * States for the 'state' option.
-     */
-    const STATE_NORMAL = 'normal';
-    const STATE_DISABLED = 'disabled';
-
     protected string $widget = 'text';
     protected string $name = 't';
 
@@ -49,9 +45,9 @@ class Text extends ScrollableWidget implements Editable, WrapModes
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'autoSeparators' => null,
             'blockCursor' => null,
             'endLine' => null,

@@ -3,7 +3,8 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Consts\Anchor;
 
 /**
@@ -13,20 +14,20 @@ use Tkui\Widgets\Consts\Anchor;
  * @property int $width
  * @property int $height
  * @property string $text
- * @property string $labelAnchor One of ANCHOR_* consts.
+ * @property Anchor $labelAnchor
  * @property int $underline
  * @property string $labelWidget
  * 
  * @todo Implement padding property.
  */
-class LabelFrame extends Frame implements Anchor
+class LabelFrame extends Frame
 {
-    use DetectUnderline;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'ttk::labelframe';
     protected string $name = 'lbf';
 
-    public function __construct(Container $parent, string $text, array $options = [])
+    public function __construct(Container $parent, string $text, array|Options $options = [])
     {
         $options['text'] = $this->removeUnderlineChar($text);
         $options['underline'] = $this->detectUnderlineIndex($text);
@@ -36,9 +37,9 @@ class LabelFrame extends Frame implements Anchor
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'padding' => null,
             'width' => null,
             'height' => null,

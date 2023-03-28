@@ -2,8 +2,6 @@
 
 namespace Tkui\TclTk;
 
-use Tkui\Options;
-
 /**
  * @property string $family
  * @property int $size
@@ -12,7 +10,7 @@ use Tkui\Options;
  * @property bool $underline
  * @property bool $overstrike
  */
-class TkFontOptions extends Options
+class TkFontOptions extends TclOptions
 {
     /**
      * @inheritdoc

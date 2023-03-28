@@ -10,11 +10,9 @@ use Tkui\ImageFactory;
  */
 class TkImageFactory implements ImageFactory
 {
-    private Interp $interp;
-
-    public function __construct(Interp $interp)
-    {
-        $this->interp = $interp;
+    public function __construct(
+        private readonly Interp $interp,
+    ) {
     }
 
     public function createFromFile(string $filename): Image

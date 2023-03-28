@@ -24,7 +24,7 @@ class CheckButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    public function __construct(Container $parent, string $title, bool $initialState = false, array $options = [])
+    public function __construct(Container $parent, string $title, bool $initialState = false, array|Options $options = [])
     {
         $options['text'] = $title;
 
@@ -36,9 +36,9 @@ class CheckButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return parent::initWidgetOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'offValue' => null,
             'onValue' => null,
         ]);

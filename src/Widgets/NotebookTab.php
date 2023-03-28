@@ -2,10 +2,10 @@
 
 namespace Tkui\Widgets;
 
-use SplObserver;
-use SplSubject;
 use Tkui\Options;
-use Tkui\Widgets\Common\DetectUnderline;
+use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Common\SubjectItem;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 
 /**
  * @property string $state
@@ -16,27 +16,23 @@ use Tkui\Widgets\Common\DetectUnderline;
  * @property string $compound TODO
  * @property int $underline
  */
-class NotebookTab implements SplSubject
+class NotebookTab extends SubjectItem
 {
-    use DetectUnderline;
+    use WithUnderlinedLabel;
 
     private Widget $container;
-    private Options $options;
 
-    /** @var SplObserver[] */
-    private array $observers = [];
-
-    public function __construct(Widget $container, string $title, array $options = [])
+    public function __construct(Widget $container, string $title, array|Options $options = [])
     {
+        parent::__construct($options);
         $this->container = $container;
-        $options['text'] = $this->removeUnderlineChar($title);
-        $options['underline'] = $this->detectUnderlineIndex($title);
-        $this->options = $this->initWidgetOptions()->mergeAsArray($options);
+        $this->text = $this->removeUnderlineChar($title);
+        $this->underline = $this->detectUnderlineIndex($title);
     }
 
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'state' => null,
             'sticky' => null,
             'padding' => null,
@@ -47,43 +43,8 @@ class NotebookTab implements SplSubject
         ]);
     }
 
-    public function __get($name)
-    {
-        return $this->options->$name;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->options->$name = $value;
-        $this->notify();
-    }
-
-    public function options(): Options
-    {
-        return $this->options;
-    }
-
     public function container(): Widget
     {
         return $this->container;
-    }
-
-    public function notify(): void
-    {
-        foreach ($this->observers as $observer) {
-            $observer->update($this);
-        }
-    }
-
-    public function attach(SplObserver $observer): void
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function detach(SplObserver $observer): void
-    {
-        if (($index = array_search($observer, $this->observers, true)) !== false) {
-            unset($this->observers[$index]);
-        }
     }
 }

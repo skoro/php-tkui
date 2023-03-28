@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use SplObserver;
 use SplSubject;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * Implementation of Ttk notebook widget.
@@ -30,9 +31,9 @@ class Notebook extends TtkContainer implements SplObserver
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'height' => null,
             'padding' => null,
             'width' => null,
@@ -45,7 +46,7 @@ class Notebook extends TtkContainer implements SplObserver
     public function add(NotebookTab $tab): self
     {
         $this->tabs[] = $tab;
-        $this->call('add', $tab->container()->path(), ...$tab->options()->asStringArray());
+        $this->call('add', $tab->container()->path(), ...$tab->options()->toStringList());
         $tab->attach($this);
         if ($tab->underline !== null) {
             $this->enableTraversal();
@@ -100,7 +101,7 @@ class Notebook extends TtkContainer implements SplObserver
             return;
         }
         $tab = $this->tabs[$index];
-        $this->call('tab', $index, ...$tab->options()->asStringArray());
+        $this->call('tab', $index, ...$tab->options()->toStringList());
     }
 
     /**

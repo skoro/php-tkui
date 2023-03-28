@@ -5,12 +5,12 @@ namespace Tkui\Widgets\Consts;
 /**
  * Values for 'relief' property.
  */
-interface Relief
+enum Relief: string
 {
-    const RELIEF_FLAT = 'flat';
-    const RELIEF_GROOVE = 'groove';
-    const RELIEF_RAISED = 'raised';
-    const RELIEF_RIDGE = 'ridge';
-    const RELIEF_SOLID = 'solid';
-    const RELIEF_SUNKEN = 'sunken';
+    case FLAT   = 'flat';
+    case GROOVE = 'groove';
+    case RAISED = 'raised';
+    case RIDGE  = 'ridge';
+    case SOLID  = 'solid';
+    case SUNKEN = 'sunken';
 }

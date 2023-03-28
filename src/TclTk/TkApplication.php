@@ -5,10 +5,11 @@ namespace Tkui\TclTk;
 use Tkui\Application;
 use Tkui\Bindings;
 use Tkui\FontManager;
-use Tkui\HasLogger;
 use Tkui\ImageFactory;
+use Tkui\Support\WithLogger;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
+use Tkui\TclTk\Exceptions\TkException;
 use Tkui\Widgets\Widget;
 
 /**
@@ -16,7 +17,7 @@ use Tkui\Widgets\Widget;
  */
 class TkApplication implements Application
 {
-    use HasLogger;
+    use WithLogger;
 
     private Tk $tk;
     private Interp $interp;
@@ -27,7 +28,6 @@ class TkApplication implements Application
 
     /**
      * @var Variable[]
-     * @todo WeakMap ?
      */
     private array $vars;
 
@@ -36,10 +36,13 @@ class TkApplication implements Application
      *
      * Index is the widget path and value - the callback function.
      *
-     * @todo must be WeakMap (php8) or polyfill ?
+     * @var array<string, array{Widget, callable}>
      */
     private array $callbacks;
 
+    /**
+     * @var array<string, string|int|bool>
+     */
     private array $argv = [];
 
     /**
@@ -109,7 +112,6 @@ class TkApplication implements Application
         }
     }
 
-    // TODO: should it be ThemeManager or TkThemeManager ?
     protected function createThemeManager(): TkThemeManager
     {
         return new TkThemeManager($this->interp);
@@ -216,14 +218,14 @@ class TkApplication implements Application
     }
 
     /**
-     * @throws TclException When ttk is not supported.
+     * @throws TkException When ttk is not supported.
      */
     public function getThemeManager(): TkThemeManager
     {
         if ($this->hasTtk()) {
             return $this->themeManager;
         }
-        throw new TclException('ttk is not supported.');
+        throw new TkException('ttk is not supported.');
     }
 
     protected function createCallbackHandler()
@@ -236,7 +238,7 @@ class TkApplication implements Application
         });
     }
 
-    public function registerVar($varName): Variable
+    public function registerVar(Widget|string $varName): Variable
     {
         if ($varName instanceof Widget) {
             $varName = $varName->path();
@@ -249,7 +251,7 @@ class TkApplication implements Application
         return $this->vars[$varName];
     }
 
-    public function unregisterVar($varName): void
+    public function unregisterVar(Widget|string $varName): void
     {
         if ($varName instanceof Widget) {
             $varName = $varName->path();
@@ -283,12 +285,10 @@ class TkApplication implements Application
 
     /**
      * Returns the name of gui type.
-     *
-     * @return string One of "x11", "win32", "aqua".
      */
-    public function getGuiType(): string
+    public function getGuiType(): GuiType
     {
-        return (string) $this->tclEval('tk', 'windowingsystem');
+        return GuiType::fromString((string) $this->tclEval('tk', 'windowingsystem'));
     }
 
     /**
@@ -296,7 +296,7 @@ class TkApplication implements Application
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
      */
-    public function setScaling(float $value): self
+    public function setScaling(float $value): static
     {
         $this->tclEval('tk', 'scaling', $value);
         return $this;
@@ -307,7 +307,7 @@ class TkApplication implements Application
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/tk.htm#M10
      */
-    public function getScaling()
+    public function getScaling(): float
     {
         return (float) $this->tclEval('tk', 'scaling');
     }

@@ -5,9 +5,9 @@ namespace Tkui\Widgets\Consts;
 /**
  * Values for 'justify' property.
  */
-interface Justify
+enum Justify: string
 {
-    const JUSTIFY_LEFT = 'left';
-    const JUSTIFY_CENTER = 'center';
-    const JUSTIFY_RIGHT = 'right';
+    case LEFT   = 'left';
+    case CENTER = 'center';
+    case RIGHT  = 'right';
 }

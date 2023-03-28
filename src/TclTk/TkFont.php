@@ -4,21 +4,19 @@ namespace Tkui\TclTk;
 
 use Tkui\Font;
 
+/**
+ * Implementation of Tk Font.
+ */
 final class TkFont extends Font
 {
-    public function __toString(): string
-    {
-        return $this->asString();
-    }
-
-    public function asString(): string
+    protected function asString(): string
     {
         $size = $this->getSize();
 
         return sprintf('{%s %s %s}',
             $this->asTclName(),
             $size > 0 ? $size : '',
-            implode(' ', $this->getStyleNames())
+            implode(' ', $this->getEnabledStyleNames())
         );
     }
 
@@ -27,14 +25,16 @@ final class TkFont extends Font
         return '{' . $this->getName() . '}';
     }
 
-    protected function getStyleNames(): array
+    public function getStyleNames(): array
     {
-        return array_keys(array_filter($this->getStyles()));
+        return [
+            self::STYLE_REGULAR => 'normal',
+        ] + parent::getStyleNames();
     }
 
-    public static function createFromFontOptions(TkFontOptions $fontOptions): self
+    public static function createFromFontOptions(TkFontOptions $fontOptions): static
     {
-        $font = new static($fontOptions->family, (int) $fontOptions->size);
+        $font = new static($fontOptions->family, (int) $fontOptions->size, self::STYLE_REGULAR);
         $font->setBold($fontOptions->weight === 'bold')
              ->setItalic($fontOptions->slant === 'italic')
              ->setUnderline((bool) $fontOptions->underline)

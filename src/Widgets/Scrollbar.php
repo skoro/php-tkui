@@ -4,6 +4,7 @@ namespace Tkui\Widgets;
 
 use LogicException;
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Scrollable;
 use Tkui\Widgets\Consts\Orient;
 
@@ -12,10 +13,10 @@ use Tkui\Widgets\Consts\Orient;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm
  *
- * @property string $orient By default, vertical orientation.
+ * @property Orient $orient By default, vertical orientation.
  * @property callable $command
  */
-class Scrollbar extends TtkWidget implements Orient
+class Scrollbar extends TtkWidget
 {
     protected string $widget = 'ttk::scrollbar';
     protected string $name = 'scr';
@@ -23,11 +24,11 @@ class Scrollbar extends TtkWidget implements Orient
     /**
      * @inheritdoc
      */
-    public function initWidgetOptions(): Options
+    public function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'command' => null,
-            'orient' => self::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
     }
 
@@ -47,15 +48,11 @@ class Scrollbar extends TtkWidget implements Orient
      */
     public function getOrientToView(): string
     {
-        switch ($this->orient) {
-            case self::ORIENT_HORIZONTAL:
-                return 'xview';
-
-            case self::ORIENT_VERTICAL:
-                return 'yview';
-        }
-
-        throw new LogicException('Invalid orient: ' . $this->orient);
+        return match ($this->orient) {
+            Orient::HORIZONTAL => 'xview',
+            Orient::VERTICAL => 'yview',
+            default => throw new LogicException('Invalid orient: ' . $this->orient->value),
+        };
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Tkui\Layouts;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * Geometry manager allows fixed placement.
@@ -32,7 +33,7 @@ class Place extends BaseManager
      */
     protected function createLayoutOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'anchor' => null,
             'borderMode' => null,
             'height' => null,

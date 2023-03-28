@@ -29,26 +29,26 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function set_font_as_property()
+    public function it_can_set_font_as_property(): void
     {
         $this->tclEvalTest(2, [
             ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}'],
-            [$this->checkWidget('.lb'), 'configure', '-font', '{{Foo Font} 14 normal bold}'],
+            [$this->checkWidget('.lb'), 'configure', '-font', '{{Foo Font} 14 bold}'],
         ]);
 
         $l = new Label($this->createWindowStub(), 'Test');
-        $l->font = new TkFont('Foo Font', 14, TkFont::BOLD);
+        $l->font = new TkFont('Foo Font', 14, TkFont::STYLE_BOLD);
     }
 
     /** @test */
-    public function create_label_with_font_as_option()
+    public function it_creates_label_with_font_as_option(): void
     {
         $this->tclEvalTest(1, [
-            ['ttk::label', $this->checkWidget('.lb'), '-text', '{Test}', '-font', '{{Foo Font} 14 normal bold}'],
+            ['ttk::label', $this->checkWidget('.lb'), '-font', '{{Foo Font} 14 bold}', '-text', '{Test}'],
         ]);
 
         new Label($this->createWindowStub(), 'Test', [
-            'font' => new TkFont('Foo Font', 14, TkFont::BOLD),
+            'font' => new TkFont('Foo Font', 14, TkFont::STYLE_BOLD),
         ]);
     }
 }

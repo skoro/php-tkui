@@ -2,12 +2,12 @@
 
 namespace Tkui;
 
+use Stringable;
+
 /**
  * Contract for graphic images.
- *
- * TODO: extends Stringable
  */
-interface Image
+interface Image extends Stringable
 {
     public function width(): int;
 

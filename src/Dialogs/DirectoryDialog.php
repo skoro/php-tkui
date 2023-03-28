@@ -19,7 +19,7 @@ class DirectoryDialog extends Dialog
      */
     protected function createOptions(): Options
     {
-        return parent::createOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'initialDir' => null,
             'message' => null,
             'mustExist' => null,

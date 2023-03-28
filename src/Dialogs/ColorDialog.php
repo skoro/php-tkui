@@ -17,7 +17,7 @@ class ColorDialog extends Dialog
      */
     protected function createOptions(): Options
     {
-        return parent::createOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'initialColor' => null,
             'title' => null,
         ]);
@@ -31,7 +31,7 @@ class ColorDialog extends Dialog
         return 'tk_chooseColor';
     }
 
-    protected function doSuccess($value)
+    protected function doSuccess(mixed $value): void
     {
         $this->initialColor = $value;
         parent::doSuccess($value);

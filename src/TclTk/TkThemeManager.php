@@ -11,11 +11,9 @@ use Tkui\ThemeManager;
  */
 class TkThemeManager implements ThemeManager
 {
-    private Interp $interp;
-
-    public function __construct(Interp $interp)
-    {
-        $this->interp = $interp;
+    public function __construct(
+        private readonly Interp $interp,
+    ) {
     }
 
     /**

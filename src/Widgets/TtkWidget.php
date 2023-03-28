@@ -2,11 +2,15 @@
 
 namespace Tkui\Widgets;
 
+use InvalidArgumentException;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
+use Tkui\Widgets\Consts\Compound;
 use Tkui\Widgets\Exceptions\FontNotSupportedException;
 use SplSubject;
+use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Consts\State;
 
 /**
  * A basic Ttk widget implementation.
@@ -16,48 +20,18 @@ use SplSubject;
  * @property bool $takeFocus
  * @property string $style
  * @property Image $image
- * @property string $compound
+ * @property Compound $compound
  * @property Font $font
+ * @property State $state
  */
 abstract class TtkWidget extends TkWidget
 {
-    /**
-     * Widget states.
-     *
-     * Not all widgets support states.
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_widget.htm#M-state
-     */
-    const STATE_ACTIVE = 'active';
-    const STATE_DISABLED = 'disabled';
-    const STATE_FOCUS = 'focus';
-    const STATE_PRESSED = 'pressed';
-    const STATE_SELECTED = 'selected';
-    const STATE_BACKGROUND = 'background';
-    const STATE_READONLY = 'readonly';
-    const STATE_ALTERNATE = 'alternate';
-    const STATE_INVALID = 'invalid';
-    const STATE_HOVER = 'hover';
-
-    /**
-     * Specifies how to display the image relative to the text.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_widget.htm#M-compound
-     */
-    const COMPOUND_NONE = 'none';
-    const COMPOUND_TEXT = 'text';
-    const COMPOUND_IMAGE = 'image';
-    const COMPOUND_CENTER = 'center';
-    const COMPOUND_TOP = 'top';
-    const COMPOUND_BOTTOM = 'bottom';
-    const COMPOUND_LEFT = 'left';
-    const COMPOUND_RIGHT = 'right';
- 
     /**
      * @inheritdoc
      */
     protected function initOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'class' => null,
             'cursor' => null,
             'takeFocus' => null,
@@ -70,44 +44,64 @@ abstract class TtkWidget extends TkWidget
     public function __get($name)
     {
         /**
-         * 'state' property is write-only and for getting a real widget
-         * state the 'state' command without parameters will be used.
+         * 'state' property has not a real option in ttk widget.
          */
         if ($name === 'state') {
-            return $this->call('state');
+            return $this->getState();
         }
         return parent::__get($name);
     }
 
     public function __set(string $name, $value)
     {
-        parent::__set($name, $value);
+        switch ($name) {
+            case 'font':
+                // TODO: font also can be a string like TkFixedFont.
+                if ($value instanceof Font) {
+                    $this->setInternalFont($value);
+                } else {
+                    throw new InvalidArgumentException('"font" option must be instance of Font.');
+                }
+                break;
 
-        // TODO: font also can be a string like TkFixedFont.
-        if ($name === 'font' && $value instanceof Font) {
-            $this->setFont($value);
+            case 'state':
+                if ($value instanceof State) {
+                    $this->setInternalState($value);
+                } else {
+                    throw new InvalidArgumentException('"state" option must be instance of State.');
+                }
+                break;
         }
+
+        parent::__set($name, $value);
     }
 
-    public function state(string $state): self
+    protected function setInternalState(State $state): void
     {
-        $this->call('state', $state);
-        return $this;
+        $this->call('state', $state->value);
     }
 
-    public function inState(string $state): bool
+    protected function getState(): State
     {
-        return (bool) $this->call('instate', $state);
+        return State::from($this->call('state'));
+    }
+
+    public function inState(State $state): bool
+    {
+        return (bool) $this->call('instate', $state->value);
     }
 
     /**
      * @throws FontNotSupportedException When the widget doesn't have "-font" option.
      */
-    protected function setFont(Font $font): void
+    protected function setInternalFont(Font $font): void
     {
         if ($this->hasFont()) {
-            // TODO: PHP8 $this->font?->detach($this)
-            if ($this->font !== null) {
+            // Previous font is not observable anymore.
+            // Checking the font value via "font" property of the instance
+            // will emit "cget" command, to avoid it use options directly.
+            /** @phpstan-ignore-next-line */
+            if ($this->options()->font !== null) {
                 $this->font->detach($this);
             }
             $font->attach($this);
@@ -139,7 +133,7 @@ abstract class TtkWidget extends TkWidget
     /**
      * @inheritdoc
      */
-    public function update(SplSubject $subject): void
+    public function update(SplSubject|Font $subject): void
     {
         parent::update($subject);
 

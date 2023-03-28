@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Tkui\Layouts\Pack;
+use Tkui\Widgets\Consts\Orient;
 use Tkui\Widgets\Frame;
 use Tkui\Widgets\Label;
 use Tkui\Widgets\Separator;
@@ -26,7 +27,7 @@ $win->pack(new Label($win, 'A ttk::sizegrip widget (also known as a grow box) al
     'side' => Pack::SIDE_TOP,
 ]);
 
-$win->pack(new Separator($win, ['orient' => Separator::ORIENT_HORIZONTAL]), [
+$win->pack(new Separator($win, ['orient' => Orient::HORIZONTAL]), [
     'side' => Pack::SIDE_BOTTOM,
     'fill' => Pack::FILL_X
 ]);

@@ -4,13 +4,14 @@ namespace Tkui\Tests\Widgets;
 
 use Tkui\Tests\TestCase;
 use Tkui\Widgets\Buttons\MenuButton;
+use Tkui\Widgets\Consts\Direction;
 use Tkui\Widgets\Menu\Menu;
 use Tkui\Widgets\Menu\MenuItem;
 
 class MenuButtonTest extends TestCase
 {
     /** @test */
-    public function menubutton_is_created()
+    public function it_creates_menubutton_widget(): void
     {
         $this->tclEvalTest(3, [
             ['menu', $this->checkWidget('.m')],
@@ -24,5 +25,30 @@ class MenuButtonTest extends TestCase
         $m->addItem(new MenuItem('test', null));
 
         new MenuButton($w, 'MenuButton', $m);
+    }
+
+    /** @test */
+    public function it_creates_menubutton_with_direction(): void
+    {
+        $this->tclEvalTest(3, [
+            ['menu', $this->checkWidget('.m')],
+            [$this->checkWidget('.m'), 'add', 'command', '-label', 'test'],
+            [
+                'ttk::menubutton',
+                $this->checkWidget('.mbtn'),
+                '-text', '{MenuButton}',
+                '-menu', $this->checkWidget('.m'),
+                '-direction', 'right'
+            ],
+        ]);
+
+        $w = $this->createWindowStub();
+
+        $m = new Menu($w);
+        $m->addItem(new MenuItem('test', null));
+
+        new MenuButton($w, 'MenuButton', $m, [
+            'direction' => Direction::RIGHT,
+        ]);
     }
 }

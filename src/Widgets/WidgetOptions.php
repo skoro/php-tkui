@@ -2,14 +2,14 @@
 
 namespace Tkui\Widgets;
 
-use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 
 /**
  * Common Tk widget options.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/options.htm
  */
-class WidgetOptions extends Options
+class WidgetOptions extends TclOptions
 {
     /**
      * @inheritdoc

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tkui\Tests\Widgets;
 
 use Tkui\Tests\TestCase;
+use Tkui\Widgets\Consts\Orient;
+use Tkui\Widgets\Consts\ProgressMode;
 use Tkui\Widgets\Progressbar;
 
 class ProgressbarTest extends TestCase
@@ -25,16 +27,16 @@ class ProgressbarTest extends TestCase
         $this->tclEvalTest(1, [
             [
                 'ttk::progressbar', $this->checkWidget('.prbr'),
+                '-orient', 'vertical',
                 '-maximum', '100',
                 '-mode', 'determinate',
-                '-orient', 'vertical',
             ],
         ]);
 
         new Progressbar($this->createWindowStub(), [
-            'mode' => Progressbar::MODE_DETERMINATE,
+            'mode' => ProgressMode::DETERMINATE,
             'maximum' => 100,
-            'orient' => Progressbar::ORIENT_VERTICAL,
+            'orient' => Orient::VERTICAL,
         ]);
     }
 

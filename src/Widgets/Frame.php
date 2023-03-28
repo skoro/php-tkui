@@ -3,6 +3,7 @@
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Consts\Relief;
 
 /**
@@ -10,13 +11,13 @@ use Tkui\Widgets\Consts\Relief;
  *
  * @property string $padding
  * @property int $borderWidth
- * @property string $relief
+ * @property Relief $relief
  * @property int $width
  * @property int $height
  * 
  * @todo Implement padding property.
  */
-class Frame extends TtkContainer implements Relief
+class Frame extends TtkContainer
 {
     protected string $widget = 'ttk::frame';
     protected string $name = 'fr';
@@ -24,9 +25,9 @@ class Frame extends TtkContainer implements Relief
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'padding' => null,
             'borderWidth' => null,
             'relief' => null,

@@ -3,6 +3,7 @@
 namespace Tkui\Dialogs;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Windows\Window;
 
 /**
@@ -50,7 +51,7 @@ class MessageBox extends Dialog
     const MR_RETRY = 'retry';
     const MR_IGNORE = 'ignore';
 
-    public function __construct(Window $parent, string $title, string $message, array $options = [])
+    public function __construct(Window $parent, string $title, string $message, array|Options $options = [])
     {
         parent::__construct($parent, $options);
         $this->title = $title;
@@ -62,7 +63,7 @@ class MessageBox extends Dialog
      */
     protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'default' => null,
             'detail' => null,
             'icon' => null,

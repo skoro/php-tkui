@@ -9,13 +9,10 @@ use Tkui\Image;
  */
 class TkImage implements Image
 {
-    private Interp $interp;
-    private string $id;
-
-    public function __construct(Interp $interp, string $id)
-    {
-        $this->interp = $interp;
-        $this->id = $id;
+    public function __construct(
+        private readonly Interp $interp,
+        public readonly string $id,
+    ) {
     }
 
     public function width(): int

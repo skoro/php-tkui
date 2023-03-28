@@ -3,6 +3,7 @@
 namespace Tkui\Layouts;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Widget;
 
 /**
@@ -22,7 +23,7 @@ class Grid extends BaseManager
      */
     protected function createLayoutOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'column' => null,
             'columnSpan' => null,
             'ipadx' => null,
@@ -46,7 +47,7 @@ class Grid extends BaseManager
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/grid.htm#M24
      */
-    public function rowConfigure(Widget $widget, int $index, array $options): self
+    public function rowConfigure(Widget $widget, int $index, array|Options $options): self
     {
         return $this->configure('row', $widget, $index, $options);
     }
@@ -54,20 +55,20 @@ class Grid extends BaseManager
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/grid.htm#M8
      */
-    public function columnConfigure(Widget $widget, int $index, array $options): self
+    public function columnConfigure(Widget $widget, int $index, array|Options $options): self
     {
         return $this->configure('column', $widget, $index, $options);
     }
 
-    protected function configure(string $type, Widget $widget, int $index, array $options): self
+    protected function configure(string $type, Widget $widget, int $index, array|Options $options): self
     {
-        $cmdOptions = new Options([
+        $cmdOptions = new TclOptions([
             'minsize' => null,
             'weight' => null,
             'uniform' => null,
             'pad' => null,
         ]);
-        $this->call("{$type}configure", $widget->path(), $index, ...$cmdOptions->mergeAsArray($options)->asStringArray());
+        $this->call("{$type}configure", $widget->path(), $index, ...$cmdOptions->with($options)->toStringList());
         return $this;
     }
 }

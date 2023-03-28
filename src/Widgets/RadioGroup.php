@@ -2,6 +2,7 @@
 
 namespace Tkui\Widgets;
 
+use Tkui\Options;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Buttons\RadioButton;
 use Tkui\Widgets\Common\Clickable;
@@ -14,7 +15,7 @@ class RadioGroup extends Frame implements ValueInVariable, Clickable
     /** @var RadioButton[] */
     private array $buttons;
 
-    public function __construct(Container $parent, array $options = [])
+    public function __construct(Container $parent, array|Options $options = [])
     {
         parent::__construct($parent, $options);
         $this->variable = $this->getEval()->registerVar($this);

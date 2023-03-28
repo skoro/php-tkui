@@ -5,7 +5,7 @@ namespace Tkui\Widgets\Common;
 /**
  * Helper for detecting index for the "underline" property.
  */
-trait DetectUnderline
+trait WithUnderlinedLabel
 {
     /**
      * Disable if detection is not needed.

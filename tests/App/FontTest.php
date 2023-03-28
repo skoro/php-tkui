@@ -3,6 +3,7 @@
 namespace Tkui\Tests\App;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Tkui\Font;
 use Tkui\Tests\TestCase;
 use SplObserver;
@@ -10,7 +11,7 @@ use SplObserver;
 class FontTest extends TestCase
 {
     /** @test */
-    public function name_cannot_be_empty()
+    public function font_name_cannot_be_empty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Font name cannot be empty.');
@@ -19,7 +20,7 @@ class FontTest extends TestCase
     }
 
     /** @test */
-    public function font_size_cannot_be_negative()
+    public function font_size_cannot_be_negative(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Font size cannot be zero or negative.');
@@ -28,7 +29,7 @@ class FontTest extends TestCase
     }
 
     /** @test */
-    public function font_size_cannot_be_zero()
+    public function font_size_cannot_be_zero(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Font size cannot be zero or negative.');
@@ -37,26 +38,87 @@ class FontTest extends TestCase
     }
 
     /** @test */
-    public function notify_when_size_is_changed()
+    public function it_notifies_observers_when_font_size_is_changed(): void
     {
+        $f = new Font('Test', 10);
+
+        /** @var MockObject|SplObserver */
         $observer = $this->createMock(SplObserver::class);
         $observer->expects($this->once())
-                 ->method('update');
+                 ->method('update')
+                 ->with($f);
 
-        $f = new Font('Test', 10);
         $f->attach($observer);
-
         $f->setSize(15);
     }
 
     /** @test */
-    public function notify_when_style_is_changed()
+    public function it_notifies_observers_when_font_name_is_changed(): void
     {
+        $f = new Font('Old Font', 5);
+
+        /** @var MockObject|SplObserver */
+        $observer = $this->createMock(SplObserver::class);
+        $observer->expects($this->once())
+            ->method('update')
+            ->with($f);
+
+        $f->attach($observer);
+        $f->setName('New Font');
+    }
+
+    /** @test */
+    public function it_creates_font_with_regular_default_style(): void
+    {
+        $f = new Font('a', 1);
+
+        $this->assertEquals([
+            Font::STYLE_REGULAR => true,
+            Font::STYLE_BOLD => false,
+            Font::STYLE_ITALIC => false,
+            Font::STYLE_OVERSTRIKE => false,
+            Font::STYLE_UNDERLINE => false,
+        ], $f->getStyles());
+    }
+
+    /** @test */
+    public function it_can_set_font_style(): void
+    {
+        $f = new Font('f', 1, Font::STYLE_REGULAR);
+
+        $this->assertFalse($f->isBold());
+        $f->setBold(true);
+        $this->assertEquals([
+            Font::STYLE_REGULAR => false,
+            Font::STYLE_BOLD => true,
+            Font::STYLE_ITALIC => false,
+            Font::STYLE_OVERSTRIKE => false,
+            Font::STYLE_UNDERLINE => false,
+        ], $f->getStyles());
+        $this->assertTrue($f->isBold());
+    }
+
+    /** @test */
+    public function it_can_unset_font_style(): void
+    {
+        $f = new Font('f', 1, Font::STYLE_UNDERLINE);
+
+        $this->assertTrue($f->isUnderline());
+        $f->setUnderline(false);
+        $this->assertFalse($f->isUnderline());
+    }
+
+    /** @test */
+    public function it_notifies_observers_when_font_style_is_changed(): void
+    {
+        $f = new Font('Test', 10);
+
+        /** @var MockObject|SplObserver */
         $observer = $this->createMock(SplObserver::class);
         $observer->expects($this->exactly(4))
-                 ->method('update');
+                 ->method('update')
+                 ->with($f);
 
-        $f = new Font('Test', 10);
         $f->attach($observer);
 
         $f->setBold(true);
@@ -66,22 +128,25 @@ class FontTest extends TestCase
     }
 
     /** @test */
-    public function styles_initialization()
+    public function it_accepts_font_styles_in_constructor(): void
     {
-        $f = new Font('test', 10, Font::BOLD, Font::UNDERLINE);
-
-        $this->assertTrue($f->isBold());
-        $this->assertTrue($f->isUnderline());
-        $this->assertFalse($f->isItalic());
-        $this->assertFalse($f->isOverstrike());
+        $f = new Font('a', 1, Font::STYLE_BOLD | Font::STYLE_ITALIC);
+        $this->assertEquals([
+            Font::STYLE_REGULAR => false,
+            Font::STYLE_BOLD => true,
+            Font::STYLE_ITALIC => true,
+            Font::STYLE_OVERSTRIKE => false,
+            Font::STYLE_UNDERLINE => false,
+        ], $f->getStyles());
     }
 
     /** @test */
-    public function regular_is_always_included_but_must_be_deleted_in_next_versions()
+    public function font_object_can_be_converted_to_string(): void
     {
-        $f = new Font('test', 10, Font::ITALIC);
+        $f1 = new Font('sans', 14, Font::STYLE_BOLD | Font::STYLE_ITALIC);
+        $f2 = new Font('times', 12);
 
-        $this->assertTrue($f->isItalic());
-        $this->assertTrue($f->isRegular());
+        $this->assertEquals('sans 14 bold,italic', (string) $f1);
+        $this->assertEquals('times 12 regular', (string) $f2);
     }
 }

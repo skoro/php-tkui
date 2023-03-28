@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Tkui\Layouts\Pack;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Buttons\Button;
+use Tkui\Widgets\Consts\Orient;
+use Tkui\Widgets\Consts\ProgressMode;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\Frame;
 use Tkui\Widgets\Label;
@@ -44,15 +46,15 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($parent, 'Horizontal');
 
         $pbar1 = new Progressbar($f, [
-            'mode' => Progressbar::MODE_DETERMINATE,
-            'orient' => Progressbar::ORIENT_HORIZONTAL,
+            'mode' => ProgressMode::DETERMINATE,
+            'orient' => Orient::HORIZONTAL,
             'variable' => $this->progressValue,
             'maximum' => self::MAX_VALUE,
         ]);
 
         $pbar2 = new Progressbar($f, [
-            'mode' => Progressbar::MODE_INDETERMINATE,
-            'orient' => Progressbar::ORIENT_HORIZONTAL,
+            'mode' => ProgressMode::INDETERMINATE,
+            'orient' => Orient::HORIZONTAL,
         ]);
 
         $f->grid(new Label($f, 'Determinate'), [
@@ -98,15 +100,15 @@ $demo = new class extends DemoAppWindow
         $f = new LabelFrame($parent, 'Vertical');
 
         $pbar1 = new Progressbar($f, [
-            'mode' => Progressbar::MODE_DETERMINATE,
-            'orient' => Progressbar::ORIENT_VERTICAL,
+            'mode' => ProgressMode::DETERMINATE,
+            'orient' => Orient::VERTICAL,
             'variable' => $this->progressValue,
             'maximum' => self::MAX_VALUE,
         ]);
 
         $pbar2 = new Progressbar($f, [
-            'mode' => Progressbar::MODE_INDETERMINATE,
-            'orient' => Progressbar::ORIENT_VERTICAL,
+            'mode' => ProgressMode::INDETERMINATE,
+            'orient' => Orient::VERTICAL,
         ]);
 
         $f->grid(new Label($f, 'Determinate'), [

@@ -21,7 +21,7 @@ class RadioButton extends SwitchableButton
     /**
      * @param int|string|float|bool $value
      */
-    public function __construct(Container $parent, string $title, $value, array $options = [])
+    public function __construct(Container $parent, string $title, $value, array|Options $options = [])
     {
         $options['text'] = $title;
         $options['value'] = $value;
@@ -31,9 +31,9 @@ class RadioButton extends SwitchableButton
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return parent::initWidgetOptions()->mergeAsArray([
+        return parent::createOptions()->with([
             'value' => null,
         ]);
     }

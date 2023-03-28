@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Tkui\Widgets\Buttons;
+namespace Tkui\Widgets\Common;
 
 use InvalidArgumentException;
 
 /**
  * Implements widget's '-command' option and onClick method.
  */
-trait Command
+trait WithCommand
 {
     /** @var callable */
     private $commandValue;

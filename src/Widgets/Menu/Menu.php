@@ -4,11 +4,12 @@ namespace Tkui\Widgets\Menu;
 
 use Tkui\Color;
 use Tkui\Options;
-use Tkui\Widgets\Common\DetectUnderline;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\TtkContainer;
 use Tkui\Widgets\Widget;
 use SplSubject;
+use Tkui\TclTk\TclOptions;
+use Tkui\Widgets\Common\WithUnderlinedLabel;
 
 /**
  * Menu implementation.
@@ -21,7 +22,7 @@ use SplSubject;
  */
 class Menu extends TtkContainer
 {
-    use DetectUnderline;
+    use WithUnderlinedLabel;
 
     protected string $widget = 'menu';
     protected string $name = 'm';
@@ -39,7 +40,7 @@ class Menu extends TtkContainer
      */
     private string $callbackCommand;
 
-    final public function __construct(Container $parent, array $options = [])
+    final public function __construct(Container $parent, array|Options $options = [])
     {
         // TearOff menus isn't supported.
         $options['tearoff'] = 0;
@@ -52,9 +53,9 @@ class Menu extends TtkContainer
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'postCommand' => null,
             'selectColor' => null,
             'title' => null,
@@ -82,13 +83,13 @@ class Menu extends TtkContainer
             'title' => $menuTitle,
         ]);
 
-        $options = new Options([
+        $options = new TclOptions([
             'label' => $menuTitle,
             'menu' => $submenu->path(),
             'underline' => $this->detectUnderlineIndex($title),
         ]);
 
-        $this->call('add', 'cascade', ...$options->asStringArray());
+        $this->call('add', 'cascade', ...$options->toStringList());
 
         return $submenu;
     }
@@ -151,7 +152,7 @@ class Menu extends TtkContainer
 
     protected function callAddMenuItem(string $type, Options $options): void
     {
-        $this->call('add', $type, ...$options->asStringArray());
+        $this->call('add', $type, ...$options->toStringList());
     }
 
     protected function callConfigMenuItem(int $id, Options $options): void
@@ -166,7 +167,7 @@ class Menu extends TtkContainer
             $index++;
         }
         if ($found) {
-            $this->call('entryconfigure', $index, ...$options->asStringArray());
+            $this->call('entryconfigure', $index, ...$options->toStringList());
         }
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tkui\Widgets;
 
 use Tkui\Options;
+use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Consts\Orient;
@@ -17,12 +18,12 @@ use Tkui\Widgets\Consts\ProgressMode;
  *
  * @property int $length
  * @property float $maximum
- * @property string $mode
- * @property string $orient
+ * @property ProgressMode $mode
+ * @property Orient $orient
  * @property float $value
  * @property Variable $variable
  */
-class Progressbar extends TtkWidget implements ValueInVariable, Orient, ProgressMode
+class Progressbar extends TtkWidget implements ValueInVariable
 {
     protected string $widget = 'ttk::progressbar';
     protected string $name = 'prbr';
@@ -30,13 +31,13 @@ class Progressbar extends TtkWidget implements ValueInVariable, Orient, Progress
     /**
      * @inheritdoc
      */
-    protected function initWidgetOptions(): Options
+    protected function createOptions(): Options
     {
-        return new Options([
+        return new TclOptions([
             'length' => null,
             'maximum' => null,
             'mode' => null,
-            'orient' => Orient::ORIENT_HORIZONTAL,
+            'orient' => Orient::HORIZONTAL,
             'phase' => null,
             'value' => null,
             'variable' => null,
@@ -59,7 +60,7 @@ class Progressbar extends TtkWidget implements ValueInVariable, Orient, Progress
      *
      * @param int $interval Interval milliseconds.
      */
-    public function start(int $interval = 50): self
+    public function start(int $interval = 50): static
     {
         $this->call('start', $interval);
         return $this;
@@ -68,7 +69,7 @@ class Progressbar extends TtkWidget implements ValueInVariable, Orient, Progress
     /**
      * Stops autoincrement mode.
      */
-    public function stop(): self
+    public function stop(): static
     {
         $this->call('stop');
         return $this;
@@ -77,7 +78,7 @@ class Progressbar extends TtkWidget implements ValueInVariable, Orient, Progress
     /**
      * Increments a progressbar value by amount.
      */
-    public function step(float $amount = 1.0): self
+    public function step(float $amount = 1.0): static
     {
         $this->call('step', $amount);
         return $this;
