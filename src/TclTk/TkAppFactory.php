@@ -80,9 +80,7 @@ class TkAppFactory implements AppFactory
             $libTk
         );
         
-        $app = new TkApplication($tk, [
-            '-name' => $env->getValue('APP_NAME', $this->appName),
-        ]);
+        $app = $this->createTkApplication($tk, $env->getValue('APP_NAME', $this->appName));
 
         if ($debug) {
             $app->setLogger($logger->withName('app'));
@@ -117,13 +115,17 @@ class TkAppFactory implements AppFactory
         $interp = $this->createTcl(self::TCL_HEADER, $this->getDefaultTclLib())->createInterp();
         $tk = $this->createTk($interp, self::TK_HEADER, $this->getDefaultTkLib());
         
-        $app = new TkApplication($tk, [
-            '-name' => $this->appName,
-        ]);
-
+        $app = $this->createTkApplication($tk, $this->appName);
         $app->init();
         
         return $app;
+    }
+
+    protected function createTkApplication(Tk $tk, string $appName): TkApplication
+    {
+        return new TkApplication($tk, [
+            '-name' => $appName,
+        ]);
     }
 
     protected function createLogger(string $file): Logger
