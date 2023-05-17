@@ -6,6 +6,7 @@ use Tkui\Evaluator;
 use Tkui\Image;
 use Tkui\WindowManager;
 use Tkui\Windows\Window;
+use Tkui\WMState;
 
 /**
  * Tk implementation of Window Manager.
@@ -14,12 +15,6 @@ use Tkui\Windows\Window;
  */
 class TkWindowManager implements WindowManager
 {
-    public const STATE_NORMAL = 'normal';
-    public const STATE_ICONIC = 'iconic';
-    public const STATE_WITHDRAWN = 'withdrawn';
-    public const STATE_ICON = 'icon';
-    public const STATE_ZOOMED = 'zoomed';
-
     public function __construct(
         private readonly Evaluator $eval,
         private readonly Window $window,
@@ -41,9 +36,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
-    public function setState(string $state): self
+    public function setState(WMState $state): self
     {
-        return $this->setWm('state', $state);
+        return $this->setWm('state', $state->value);
     }
 
     /**
@@ -51,9 +46,9 @@ class TkWindowManager implements WindowManager
      *
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/wm.htm#M62
      */
-    public function getState(): string
+    public function getState(): WMState
     {
-        return (string) $this->getWm('state');
+        return WMState::from((string) $this->getWm('state'));
     }
 
     /**

@@ -18,14 +18,14 @@ interface WindowManager
      * Sets the window state: normal, iconic, withdrawn, icon, zoomed.
      * But depends on underlying window manager.
      */
-    public function setState(string $state): self;
+    public function setState(WMState $state): self;
 
     /**
      * Gets the window state.
      *
      * @see WindowManager::setState()
      */
-    public function getState(): string;
+    public function getState(): WMState;
 
     /**
      * Arrange for window to be iconified.

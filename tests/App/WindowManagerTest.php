@@ -7,6 +7,7 @@ use Tkui\TclTk\Interp;
 use Tkui\TclTk\TkImage;
 use Tkui\Tests\TestCase;
 use Tkui\Windows\MainWindow;
+use Tkui\WMState;
 
 class WindowManagerTest extends TestCase
 {
@@ -38,12 +39,21 @@ class WindowManagerTest extends TestCase
 
         (new MainWindow($this->app, 'State Test'))
             ->getWindowManager()
-            ->setState('zoomed');
+            ->setState(WMState::ZOOMED);
     }
 
     /** @test */
     public function window_get_state()
     {
+        $this->app
+            ->expects($this->exactly(2))
+            ->method('tclEval')
+            ->withConsecutive(
+                ['wm', 'title', '.', '{State Test}'],
+                ['wm', 'state', '.']
+            )
+            ->willReturn('', 'zoomed');
+
         $this->tclEvalTest(2, [
             ['wm', 'title', '.', '{State Test}'],
             ['wm', 'state', '.'],
