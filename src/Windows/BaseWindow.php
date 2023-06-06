@@ -146,7 +146,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function pack($widget, array|Options $options = []): Pack
+    public function pack($widget, array|Options $options = []): LayoutManager|Pack
     {
         return $this->doLayout(new Pack($this->getEval()), $widget, $options);
     }
@@ -154,7 +154,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function grid($widget, array|Options $options = []): Grid
+    public function grid($widget, array|Options $options = []): LayoutManager|Grid
     {
         return $this->doLayout(new Grid($this->getEval()), $widget, $options);
     }
@@ -162,7 +162,7 @@ abstract class BaseWindow implements Window
     /**
      * @inheritdoc
      */
-    public function place($widget, array|Options $options = []): Place
+    public function place($widget, array|Options $options = []): LayoutManager|Place
     {
         return $this->doLayout(new Place($this->getEval()), $widget, $options);
     }
@@ -170,7 +170,7 @@ abstract class BaseWindow implements Window
     /**
      * @param Widget|Widget[] $widgets
      */
-    protected function doLayout(LayoutManager $manager, $widgets, array $options)
+    protected function doLayout(LayoutManager $manager, $widgets, array|Options $options): LayoutManager
     {
         if (! is_array($widgets)) {
             $widgets = array($widgets);
