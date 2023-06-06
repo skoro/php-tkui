@@ -24,7 +24,7 @@ use Tkui\Widgets\Consts\Validate;
  * @property bool $exportSelection
  * @property callable $invalidCommand TODO
  * @property Justify $justify
- * @property bool $show
+ * @property string $show
  * @property string $state
  * @property Variable $textVariable
  * @property Validate $validate
