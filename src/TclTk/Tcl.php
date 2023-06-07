@@ -117,6 +117,20 @@ class Tcl
     }
 
     /**
+     * Sets the result in Tcl interpreter.
+     */
+    public function setResult(Interp $interp, string|int|bool $result): void
+    {
+        $obj = match (true) {
+            is_string($result) => $this->createStringObj($result),
+            is_int($result)    => $this->createIntObj($result),
+            is_bool($result)   => $this->createBoolObj($result),
+        };
+
+        $this->ffi->Tcl_SetObjResult($interp->cdata(), $obj);
+    }
+
+    /**
      * Creates a new Tcl command for the specified interpreter.
      *
      * @param Interp $interp     The TCL interpreter.

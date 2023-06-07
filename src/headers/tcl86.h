@@ -55,6 +55,7 @@ int Tcl_Eval(Tcl_Interp *interp, const char *script);
 int Tcl_EvalObj(Tcl_Interp *interp, Tcl_Obj *objPtr);
 
 Tcl_Obj *Tcl_GetObjResult(Tcl_Interp *interp);
+void Tcl_SetObjResult(Tcl_Interp *interp, Tcl_Obj *resultObjPtr);
 const char *Tcl_GetString(Tcl_Obj *objPtr);
 Tcl_Obj *Tcl_DuplicateObj(Tcl_Obj *objPtr);
 void TclFreeObj(Tcl_Obj *objPtr);
