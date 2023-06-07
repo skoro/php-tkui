@@ -45,6 +45,7 @@ abstract class TkWidget implements Widget, SplObserver
                               ->with($this->createOptions())
                               ->with($options);
         $this->make();
+        $this->bindings();
     }
 
     public function __destruct()
@@ -218,6 +219,16 @@ abstract class TkWidget implements Widget, SplObserver
      * should be tracked by the underlying widget.
      */
     public function update(SplSubject $subject): void
+    {
+    }
+
+    /**
+     * Widget specific bindings.
+     *
+     * Override this method when widget expects some keyboard or mouse bindings.
+     * @see TkWidget::bind()
+     */
+    protected function bindings(): void
     {
     }
 }
