@@ -9,7 +9,7 @@ use InvalidArgumentException;
  */
 trait WithCommand
 {
-    /** @var callable */
+    /** @var callable|null */
     private $commandValue;
 
     /**
