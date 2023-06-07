@@ -53,6 +53,7 @@ class Tcl
      * @param string $script Tcl script.
      *
      * @return int Command status code.
+     * @throws EvalException
      */
     public function eval(Interp $interp, string $script): int
     {
@@ -117,17 +118,13 @@ class Tcl
     }
 
     /**
-     * Sets the result in Tcl interpreter.
+     * Sets the Tcl result.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetResult.html
      */
-    public function setResult(Interp $interp, string|int|bool $result): void
+    public function setResult(Interp $interp, string|int|bool|float|CData|null $result): void
     {
-        $obj = match (true) {
-            is_string($result) => $this->createStringObj($result),
-            is_int($result)    => $this->createIntObj($result),
-            is_bool($result)   => $this->createBoolObj($result),
-        };
-
-        $this->ffi->Tcl_SetObjResult($interp->cdata(), $obj);
+        $this->ffi->Tcl_SetObjResult($interp->cdata(), $this->phpValueToObj($result));
     }
 
     /**
@@ -199,6 +196,9 @@ class Tcl
         return $this->ffi->Tcl_GetStringFromObj($obj, FFI::new('int*'));
     }
 
+    /**
+     * @throws TclInterpException
+     */
     public function getIntFromObj(Interp $interp, CData $obj): int
     {
         $val = FFI::new('long');
@@ -208,6 +208,9 @@ class Tcl
         return $val->cdata;
     }
 
+    /**
+     * @throws TclInterpException
+     */
     public function getBooleanFromObj(Interp $interp, CData $obj): bool
     {
         $val = FFI::new('int');
@@ -217,6 +220,9 @@ class Tcl
         return (bool) $val->cdata;
     }
 
+    /**
+     * @throws TclInterpException
+     */
     public function getFloatFromObj(Interp $interp, CData $obj): float
     {
         $val = FFI::new('double');
@@ -227,61 +233,55 @@ class Tcl
     }
 
     /**
-     * @param mixed $value
+     * @param string|int|float|bool|CData|null $value
+     *
+     * @throws TclInterpException
      */
     public function addListElement(Interp $interp, CData $listObj, $value): void
     {
         $obj = $this->phpValueToObj($value);
-    
         if ($this->ffi->Tcl_ListObjAppendElement(null, $listObj, $obj) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'Tcl_ListObjAppendElement');
+            $interp->throwInterpException('Tcl_ListObjAppendElement');
         }
     }
 
+    /**
+     * @throws TclInterpException
+     */
     public function getListLength(Interp $interp, CData $listObj): int
     {
         $len = FFI::new('int');
         if ($this->ffi->Tcl_ListObjLength($interp->cdata(), $listObj, FFI::addr($len)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'ListObjLength');
+            $interp->throwInterpException('ListObjLength');
         }
         return $len->cdata;
     }
 
+    /**
+     * @throws TclInterpException
+     */
     public function getListIndex(Interp $interp, CData $listObj, int $index): CData
     {
         $result = $this->ffi->new('Tcl_Obj*');
         if ($this->ffi->Tcl_ListObjIndex($interp->cdata(), $listObj, $index, FFI::addr($result)) != self::TCL_OK) {
-            throw new TclInterpException($interp, 'ListObjIndex');
+            $interp->throwInterpException('ListObjIndex');
         }
         return $result;
     }
 
     /**
      * Converts a PHP value to Tcl Obj structure.
-     *
-     * @param string|int|float|bool|CData|null $value
-     *
-     * @throws TclException When a value cannot be converted to Tcl Obj.
      */
-    public function phpValueToObj($value): CData
+    public function phpValueToObj(string|int|float|bool|CData|null $value): CData
     {
-        if ($value instanceof CData) {
-            $obj = $value;
-        } elseif (is_string($value)) {
-            $obj = $this->createStringObj($value);
-        } elseif (is_int($value)) {
-            $obj = $this->createIntObj($value);
-        } elseif (is_float($value)) {
-            $obj = $this->createFloatObj($value);
-        } elseif (is_bool($value)) {
-            $obj = $this->createBoolObj($value);
-        } elseif ($value === NULL) {
-            $obj = $this->createStringObj('');
-        } else {
-            throw new TclException(sprintf('Failed to convert PHP value type "%s" to Tcl object value.', gettype($value)));
-        }
-
-        return $obj;
+        return match (true) {
+            $value instanceof CData => $value,
+            is_string($value)       => $this->createStringObj($value),
+            is_int($value)          => $this->createIntObj($value),
+            is_float($value)        => $this->createFloatObj($value),
+            is_bool($value)         => $this->createBoolObj($value),
+            $value === null         => $this->createStringObj(''),
+        };
     }
 
     /**
@@ -289,7 +289,6 @@ class Tcl
      * @param string|NULL $arrIndex When the variable is an array that will be the array index.
      * @param string|int|float|bool|NULL|CData $value The variable value.
      *
-     * @throws TclException      When value cannot be converted to the Tcl object.
      * @throws TclInterpException When FFI api call is failed.
      *
      * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetVar.htm
@@ -303,7 +302,6 @@ class Tcl
         if ($result === NULL) {
             $interp->throwInterpException('ObjSetVar2');
         }
-        
         return $result;
     }
 
