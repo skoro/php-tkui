@@ -113,7 +113,10 @@ class Interp
             for ($i = 1; $i < $objc; $i ++) {
                 $params[] = $this->tcl->getString($objv[$i]);
             }
-            $callback(...$params);
+            $result = $callback(...$params);
+            if ($result !== null) {
+                $this->tcl->setResult($this, $result);
+            }
         });
     }
 
