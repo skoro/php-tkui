@@ -31,4 +31,14 @@ trait WithLogger
     {
         $this->logger?->info($message, $context);
     }
+
+    protected function error(string $message, array $context = []): void
+    {
+        $this->logger?->error($message, $context);
+    }
+
+    protected function warning(string $message, array $context = []): void
+    {
+        $this->logger?->warning($message, $context);
+    }
 }
