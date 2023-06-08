@@ -5,7 +5,6 @@ namespace Tkui\TclTk;
 use InvalidArgumentException;
 use Tkui\Options;
 use Tkui\Widgets\Widget;
-use Tkui\TclTk\Tcl;
 
 /**
  * Tcl command options.
