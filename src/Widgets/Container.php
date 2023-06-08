@@ -30,7 +30,7 @@ interface Container extends Widget
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
      * @param array|Options   $options The packing options applied to widget(s).
      */
-    public function pack($widget, array|Options $options = []): LayoutManager|Pack;
+    public function pack(Widget|array $widget, array|Options $options = []): LayoutManager|Pack;
 
     /**
      * Do the widget layout using grid manager.
@@ -38,7 +38,7 @@ interface Container extends Widget
      * @param Widget|Widget[] $widget  The widget or widgets to be packed.
      * @param array|Options   $options The grid manager options.
      */
-    public function grid($widget, array|Options $options = []): LayoutManager|Grid;
+    public function grid(Widget|array $widget, array|Options $options = []): LayoutManager|Grid;
 
     /**
      * Do the widget layout using place manager.
@@ -46,5 +46,5 @@ interface Container extends Widget
      * @param Widget|Widget[] $widget  The widget or widgets to be placed.
      * @param array|Options   $options The place manager options.
      */
-    public function place($widget, array|Options $options = []): LayoutManager|Place;
+    public function place(Widget|array $widget, array|Options $options = []): LayoutManager|Place;
 }

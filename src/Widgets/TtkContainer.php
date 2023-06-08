@@ -4,6 +4,7 @@ namespace Tkui\Widgets;
 
 use Tkui\Evaluator;
 use Tkui\Layouts\Grid;
+use Tkui\Layouts\LayoutManager;
 use Tkui\Layouts\Pack;
 use Tkui\Layouts\Place;
 use Tkui\Options;
@@ -21,7 +22,7 @@ abstract class TtkContainer extends TtkWidget implements Container
         return $p;
     }
 
-    public function bindWidget(Widget $widget, string $event, ?callable $callback): self
+    public function bindWidget(Widget $widget, string $event, ?callable $callback): static
     {
         $this->parent()->bindWidget($widget, $event, $callback);
         return $this;
@@ -35,7 +36,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function pack($widget, array|Options $options = []): Pack
+    public function pack(Widget|array $widget, array|Options $options = []): LayoutManager|Pack
     {
         return $this->parent()->pack($widget, $options);
     }
@@ -43,7 +44,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function grid($widget, array|Options $options = []): Grid
+    public function grid(Widget|array $widget, array|Options $options = []): LayoutManager|Grid
     {
         return $this->parent()->grid($widget, $options);
     }
@@ -51,7 +52,7 @@ abstract class TtkContainer extends TtkWidget implements Container
     /**
      * @inheritdoc
      */
-    public function place($widget, array|Options $options = []): Place
+    public function place(Widget|array $widget, array|Options $options = []): LayoutManager|Place
     {
         return $this->parent()->place($widget, $options);
     }
