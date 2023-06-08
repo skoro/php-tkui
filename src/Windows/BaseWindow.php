@@ -21,13 +21,13 @@ use Tkui\WindowManager;
  */
 abstract class BaseWindow implements Window
 {
-    private Options $options;
-    private WindowManager $wm;
+    private readonly Options $options;
+    private readonly WindowManager $wm;
 
     /**
      * Window instance id.
      */
-    private int $id;
+    private readonly int $id;
 
     private static int $idCounter = 0;
 
@@ -36,7 +36,7 @@ abstract class BaseWindow implements Window
      */
     public function __construct(string $title)
     {
-        $this->generateId();
+        $this->id = self::$idCounter++;
         $this->options = $this->initOptions();
         $this->wm = $this->createWindowManager();
         $this->createWindow();
@@ -77,11 +77,6 @@ abstract class BaseWindow implements Window
      * Actual window creation.
      */
     abstract protected function createWindow(): void;
-
-    private function generateId(): void
-    {
-        $this->id = self::$idCounter++;
-    }
 
     /**
      * @inheritdoc
@@ -214,5 +209,10 @@ abstract class BaseWindow implements Window
     public function showModal()
     {
         $this->getEval()->tclEval('grab', $this->path());
+    }
+
+    public function __toString(): string
+    {
+        return $this->path();
     }
 }

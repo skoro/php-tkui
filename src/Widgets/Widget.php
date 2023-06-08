@@ -2,12 +2,13 @@
 
 namespace Tkui\Widgets;
 
+use Stringable;
 use Tkui\Options;
 
 /**
  * Basic widget.
  */
-interface Widget
+interface Widget extends Stringable
 {
     /**
      * Widget's path hierarchy including its id.

@@ -111,4 +111,9 @@ class FontDialog extends Dialog implements Widget
     {
         return $this->fontManager;
     }
+
+    public function __toString(): string
+    {
+        return $this->path();
+    }
 }

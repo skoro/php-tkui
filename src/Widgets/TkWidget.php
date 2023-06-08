@@ -231,4 +231,9 @@ abstract class TkWidget implements Widget, SplObserver
     protected function bindings(): void
     {
     }
+
+    public function __toString(): string
+    {
+        return $this->path();
+    }
 }
