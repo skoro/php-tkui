@@ -108,7 +108,7 @@ class TkApplication implements Application
         } catch (TclInterpException $e) {
             // TODO: ttk must be required ?
             $this->themeManager = null;
-            $this->info('package ttk is not found');
+            $this->error('initTtk: ' . $e->getMessage());
         }
     }
 

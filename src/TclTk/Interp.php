@@ -6,6 +6,7 @@ use FFI\CData;
 use ReflectionMethod;
 use LogicException;
 use Tkui\Support\WithLogger;
+use Tkui\TclTk\Exceptions\EvalException;
 use Tkui\TclTk\Exceptions\TclException;
 use Tkui\TclTk\Exceptions\TclInterpException;
 
@@ -91,9 +92,10 @@ class Interp
      * Evaluates a Tcl script.
      *
      * An evaluation result can be found via getStringResult().
+     * @throws EvalException
      * @see Interp::getStringResult
      */
-    public function eval(string $script)
+    public function eval(string $script): void
     {
         $this->debug('eval', ['script' => $script]);
         $this->tcl->eval($this, $script);
