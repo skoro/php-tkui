@@ -2,6 +2,7 @@
 
 namespace Tkui;
 
+use Stringable;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Widget;
 
@@ -28,30 +29,30 @@ interface Evaluator
      * 
      * @return mixed The return value depends on script result.
      */
-    public function tclEval(...$args);
+    public function tclEval(mixed ...$args);
 
     /**
      * Registers the variable in the current Tcl interpreter.
      *
-     * @param Widget|string $varName In case of widget the variable name will be
-     *                               constructed of a widget path.
+     * @param Stringable|string $varName The variable name.
      */
-    public function registerVar(Widget|string $varName): Variable;
+    public function registerVar(Stringable|string $varName): Variable;
 
     /**
      * Unregisters the variable.
      *
-     * @param Widget|string $varName In case of widget the variable name will be
-     *                               constructed of a widget path.
+     * @param Stringable|string $varName The variable name.
      */
-    public function unregisterVar(Widget|string $varName): void;
+    public function unregisterVar(Stringable|string $varName): void;
 
     /**
-     * Registers a widget callback.
+     * Registers a widget callback as a Tcl procedure.
      *
+     * @param Widget|string $procName A procedure name or widget. In case of the widget, it will be added
+     *                              as a first parameter in the callback.
      * @param string[] $args Any additional arguments to the widget's callback.
      *
      * @return string Returns a Tcl procedure name.
      */
-    public function registerCallback(Widget $widget, callable $callback, array $args = []): string;
+    public function registerCallback(Widget|string $procName, callable $callback, array $args = []): string;
 }

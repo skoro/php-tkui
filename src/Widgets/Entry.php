@@ -36,6 +36,9 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
+    /** @var callable|null */
+    private $validateCommandCallback;
+
     public function __construct(Container $parent, string $value = '', array|Options $options = [])
     {
         $var = isset($options['textVariable']);
@@ -70,6 +73,21 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
             'validateCommand' => null,
             'width' => null,
         ]);
+    }
+
+    public function __set(string $name, $value)
+    {
+        switch ($name) {
+            case 'validateCommand':
+                if (is_callable($value)) {
+                    $this->validateCommandCallback = $value;
+                    $value = $this->parent()->getEval()->registerCallback($this, $value);
+                } else {
+                    throw new \Exception();
+                }
+                break;
+        }
+        parent::__set($name, $value);
     }
 
     /**
