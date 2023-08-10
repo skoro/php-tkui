@@ -13,9 +13,9 @@ use Tkui\TclTk\TclOptions;
  */
 abstract class TkWidget implements Widget, SplObserver
 {
-    private Container $parent;
-    /** @var array<string, int> */
+    /** @var array<class-string<Widget>, int> */
     private static array $idCounter = [];
+    private Container $parent;
     private Options $options;
     private int $id;
     private Evaluator $eval;
