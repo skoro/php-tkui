@@ -48,11 +48,12 @@ interface Evaluator
     /**
      * Registers a widget callback as a Tcl procedure.
      *
-     * @param Widget|string $procName A procedure name or widget. In case of the widget, it will be added
-     *                              as a first parameter in the callback.
+     * @param Widget   $widget The widget to which a callback is attached.
+     * @param callable $callback The callback, the first parameter will be an instance of the widget.
      * @param string[] $args Any additional arguments to the widget's callback.
+     * @param string   $commandName When the widget has several commands, there should be a command name.
      *
      * @return string Returns a Tcl procedure name.
      */
-    public function registerCallback(Widget|string $procName, callable $callback, array $args = []): string;
+    public function registerCallback(Widget $widget, callable $callback, array $args = [], string $commandName = ''): string;
 }

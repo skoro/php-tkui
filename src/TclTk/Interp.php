@@ -107,7 +107,7 @@ class Interp
      * @param string   $command  The command name.
      * @param callable $callback The command callback. The callback accepts arguments as strings.
      */
-    public function createCommand(string $command, callable $callback)
+    public function createCommand(string $command, callable $callback): void
     {
         $this->debug('createCommand', ['command' => $command]);
         $this->tcl->createCommand($this, $command, function ($data, $interp, $objc, $objv) use ($callback) {
@@ -117,6 +117,11 @@ class Interp
             }
             $result = $callback(...$params);
             if ($result !== null) {
+                if (is_object($result)) {
+                    $this->warning('Expected only primitive types but got object !', [
+                        'class' => get_class($result),
+                    ]);
+                }
                 $this->tcl->setResult($this, $result);
             }
         });

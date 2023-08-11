@@ -234,11 +234,9 @@ class TkApplication implements Application
         $this->interp->createCommand(self::CALLBACK_HANDLER, function (...$args) {
             $path = array_shift($args);
             // TODO: check if arguments are empty ?
-            [$callback, $procName] = $this->callbacks[$path];
-            if ($procName instanceof Widget) {
-                array_unshift($args, $procName);
-            }
-            $callback(...$args);
+            [$callback, $widget] = $this->callbacks[$path];
+            array_unshift($args, $widget);
+            return $callback(...$args);
         });
     }
 
@@ -266,13 +264,13 @@ class TkApplication implements Application
     /**
      * @inheritdoc
      */
-    public function registerCallback(Widget|string $procName, callable $callback, array $args = []): string
+    public function registerCallback(Widget $widget, callable $callback, array $args = [], string $commandName = ''): string
     {
         // TODO: it would be better to use WeakMap.
         //       in that case it will be like this:
         //       $this->callbacks[$widget] = $callback;
-        $index = (string)$procName;
-        $this->callbacks[$index] = [$callback, $procName];
+        $index = $widget . ($commandName ? '-' . $commandName : '');
+        $this->callbacks[$index] = [$callback, $widget];
         return trim(self::CALLBACK_HANDLER . ' ' . $index . ' ' . implode(' ', $args));
     }
 

@@ -122,7 +122,7 @@ class Tcl
      *
      * @link https://www.tcl.tk/man/tcl8.6/TclLib/SetResult.html
      */
-    public function setResult(Interp $interp, string|int|bool|float|CData|null $result): void
+    public function setResult(Interp $interp, mixed $result): void
     {
         $this->ffi->Tcl_SetObjResult($interp->cdata(), $this->phpValueToObj($result));
     }
@@ -271,17 +271,36 @@ class Tcl
 
     /**
      * Converts a PHP value to Tcl Obj structure.
+     *
+     * @throws TclException When PHP value cannot be converted.
      */
-    public function phpValueToObj(string|int|float|bool|CData|null $value): CData
+    public function phpValueToObj(mixed $value): CData
     {
         return match (true) {
-            $value instanceof CData => $value,
-            is_string($value)       => $this->createStringObj($value),
-            is_int($value)          => $this->createIntObj($value),
-            is_float($value)        => $this->createFloatObj($value),
-            is_bool($value)         => $this->createBoolObj($value),
-            $value === null         => $this->createStringObj(''),
+            is_object($value) => $this->phpObjectToTclObj($value),
+            is_string($value) => $this->createStringObj($value),
+            is_int($value)    => $this->createIntObj($value),
+            is_float($value)  => $this->createFloatObj($value),
+            is_bool($value)   => $this->createBoolObj($value),
+            is_array($value)  => throw new TclException('Array cannot be converted to Tcl Obj'),
+            $value === null   => $this->createStringObj(''),
         };
+    }
+
+    /**
+     * Converts PHP object value to Tcl object.
+     *
+     * Warning:
+     * Currently only CData object can be used otherwise it returns a Tcl empty Obj instance.
+     */
+    private function phpObjectToTclObj(object $object): CData
+    {
+        if ($object instanceof CData) {
+            return $object;
+        }
+
+        // FIXME: Any other object cannot be converted to Tcl one.
+        return $this->createStringObj('');
     }
 
     /**
