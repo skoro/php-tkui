@@ -2,7 +2,6 @@
 
 namespace Tkui\Widgets;
 
-use LogicException;
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Scrollable;
@@ -51,14 +50,13 @@ class Scrollbar extends TtkWidget
         return match ($this->orient) {
             Orient::HORIZONTAL => 'xview',
             Orient::VERTICAL => 'yview',
-            default => throw new LogicException('Invalid orient: ' . $this->orient->value),
         };
     }
 
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M21
      */
-    public function moveTo(float $fraction): self
+    public function moveTo(float $fraction): static
     {
         $this->call('moveto', $fraction);
         return $this;
@@ -67,7 +65,7 @@ class Scrollbar extends TtkWidget
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M22
      */
-    public function scrollUnits(int $number): self
+    public function scrollUnits(int $number): static
     {
         $this->call('scroll', $number, 'units');
         return $this;
@@ -76,7 +74,7 @@ class Scrollbar extends TtkWidget
     /**
      * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scrollbar.htm#M23
      */
-    public function scrollPages(int $number): self
+    public function scrollPages(int $number): static
     {
         $this->call('scroll', $number, 'pages');
         return $this;
