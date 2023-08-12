@@ -9,8 +9,10 @@ use Tkui\TclTk\Tcl;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\Editable;
+use Tkui\Widgets\Common\Scrollable;
 use Tkui\Widgets\Common\ValueInVariable;
 use Tkui\Widgets\Common\WithCallbacks;
+use Tkui\Widgets\Common\WithScrollBars;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Validate;
 
@@ -21,7 +23,7 @@ use Tkui\Widgets\Consts\Validate;
  *
  * @property Font $font
  * @property Color|string $textColor
- * @property callable $xScrollCommand TODO
+ * @property callable $xScrollCommand
  * @property bool $exportSelection
  * @property callable|null $invalidCommand
  * @property Justify $justify
@@ -32,9 +34,14 @@ use Tkui\Widgets\Consts\Validate;
  * @property callable|null $validateCommand
  * @property int $width
  */
-class Entry extends TtkWidget implements ValueInVariable, Editable
+class Entry extends TtkWidget implements ValueInVariable, Editable, Scrollable
 {
-    use WithCallbacks;
+    use WithCallbacks, WithScrollBars {
+        WithScrollBars::__get as private scrollbarsGet;
+        WithScrollBars::__set as private scrollbarsSet;
+        WithCallbacks::__get as private callbacksGet;
+        WithCallbacks::__set as private callbacksSet;
+    }
 
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
@@ -87,6 +94,32 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
             'validateCommand' => null,
             'width' => null,
         ]);
+    }
+
+    public function __set(string $name, mixed $value): void
+    {
+        switch ($name) {
+            case 'invalidCommand':
+            case 'validateCommand':
+                $this->callbacksSet($name, $value);
+                break;
+
+            case 'xScrollCommand':
+                $this->scrollbarsSet($name, $value);
+                break;
+
+            default:
+                parent::__set($name, $value);
+        }
+    }
+
+    public function __get($name): mixed
+    {
+        return match ($name) {
+            'invalidCommand', 'validateCommand' => $this->callbacksGet($name),
+            'xScrollCommand'                    => $this->scrollbarsGet($name),
+            default                             => parent::__get($name),
+        };
     }
 
     /**
