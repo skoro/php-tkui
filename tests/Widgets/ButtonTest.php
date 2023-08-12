@@ -75,7 +75,7 @@ class ButtonTest extends TestCase
     public function button_command_accepts_only_callback()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('"MyCommand" is not a valid button command.');
+        $this->expectExceptionMessage('Expected callback or null but got "string"');
 
         $btn = new Button($this->createWindowStub(), 'Test');
         $btn->command = 'MyCommand'; /** @phpstan-ignore-line */
