@@ -13,9 +13,11 @@ class ListVariableTest extends TestCase
     public function it_can_create_list_variable_in_tcl_interp(): void
     {
         $this->interp->createListVariable('test');
-        $result = $this->interp->eval('set test');
+        $this->interp->eval('set test');
+
+        $result = $this->interp->getStringResult();
         
-        $this->assertNull($result);
+        $this->assertEquals('', $result);
     }
 
     /** @test */
