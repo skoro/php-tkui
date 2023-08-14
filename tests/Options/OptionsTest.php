@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tkui\Tests\Unit;
+namespace Tkui\Tests\Options;
 
 use Tkui\Exceptions\OptionNotFoundException;
 use Tkui\Options;
@@ -102,5 +102,13 @@ class OptionsTest extends TestCase
     {
         $options = new Options(['color' => 'red', 'size' => 'bold', 'width' => 100]);
         $this->assertEquals('color, size, width', (string) $options);
+    }
+
+    /** @test  */
+    public function it_can_create_new_options_except_named_ones(): void
+    {
+        $options = new Options(['color' => 'red', 'size' => 'bold', 'width' => 100]);
+        $options = $options->except('color', 'size');
+        $this->assertEquals(['width' => '100'], $options->toArray());
     }
 }

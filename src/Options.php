@@ -115,6 +115,22 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate, ArrayA
     }
 
     /**
+     * Constructs a new instance without specified option names.
+     *
+     * @param string ...$names The option names to skip in new instance.
+     */
+    public function except(string ...$names): static
+    {
+        return new static(
+            array_filter(
+                $this->options,
+                fn (string $name): bool => ! in_array($name, $names),
+                mode: \ARRAY_FILTER_USE_KEY
+            )
+        );
+    }
+
+    /**
      * Returns a list of option names.
      *
      * @return array<string>
