@@ -269,9 +269,25 @@ class TkApplication implements Application
         // TODO: it would be better to use WeakMap.
         //       in that case it will be like this:
         //       $this->callbacks[$widget] = $callback;
-        $index = $widget . ($commandName ? '-' . $commandName : '');
+        $index = $this->getWidgetCallbackIndex($widget, $commandName);
         $this->callbacks[$index] = [$callback, $widget];
         return trim(self::CALLBACK_HANDLER . ' ' . $index . ' ' . implode(' ', $args));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unregisterCallback(Widget $widget, string $commandName = ''): void
+    {
+        $index = $this->getWidgetCallbackIndex($widget, $commandName);
+        if (isset($this->callbacks[$index])) {
+            unset($this->callbacks[$index]);
+        }
+    }
+
+    private function getWidgetCallbackIndex(Widget $widget, string $commandName): string
+    {
+        return $widget . ($commandName ? '-' . $commandName : '');
     }
 
     /**

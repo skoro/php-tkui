@@ -56,4 +56,11 @@ interface Evaluator
      * @return string Returns a Tcl procedure name.
      */
     public function registerCallback(Widget $widget, callable $callback, array $args = [], string $commandName = ''): string;
+
+    /**
+     * Unregisters previously registered widget callback.
+     *
+     * @see Evaluator::registerCallback()
+     */
+    public function unregisterCallback(Widget $widget, string $commandName = ''): void;
 }
