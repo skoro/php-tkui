@@ -27,12 +27,6 @@ abstract class GenericButton extends TtkWidget implements Clickable
 
     public function __construct(Container $parent, array|Options $options = [])
     {
-        $command = null;
-        if (isset($options['command'])) {
-            $command = $options['command'];
-            unset($options['command']);
-        }
-
         if (isset($options['text'])) {
             $title = $options['text'];
             $options['text'] = $this->removeUnderlineChar($title);
@@ -40,10 +34,6 @@ abstract class GenericButton extends TtkWidget implements Clickable
         }
 
         parent::__construct($parent, $options);
-
-        if ($command !== null) {
-            $this->command = $command;
-        }
     }
 
     /**
