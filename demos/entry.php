@@ -59,12 +59,12 @@ $demo = new class extends DemoAppWindow {
     {
         $frame = new LabelFrame($this, 'Integer Entry');
 
-        $entry = new Entry($frame);
-
-        $entry->validate = \Tkui\Widgets\Consts\Validate::KEY;
-        $entry->validateCommand = function (Entry $entry, string $newValue, string $currentValue): bool {
-            return preg_match('/^[0-9]+$/', $newValue);
-        };
+        $entry = new Entry($frame, options: [
+            'validate' => \Tkui\Widgets\Consts\Validate::KEY,
+            'validateCommand' => function (Entry $entry, string $newValue, string $currentValue): bool {
+                return preg_match('/^[0-9]+$/', $newValue);
+            },
+        ]);
 
         $frame->pack($entry, $this->packOptions);
 
