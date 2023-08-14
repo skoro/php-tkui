@@ -3,8 +3,10 @@
 namespace Tkui;
 
 use ArrayIterator;
+use ArrayAccess;
 use IteratorAggregate;
 use JsonSerializable;
+use LogicException;
 use Stringable;
 use Tkui\Exceptions\OptionNotFoundException;
 use Traversable;
@@ -14,7 +16,7 @@ use Traversable;
  *
  * @todo should it be observable via SplSubject ?
  */
-class Options implements Stringable, JsonSerializable, IteratorAggregate
+class Options implements Stringable, JsonSerializable, IteratorAggregate, ArrayAccess
 {
     /** @var array<string, mixed> */
     private array $options;
@@ -148,5 +150,25 @@ class Options implements Stringable, JsonSerializable, IteratorAggregate
         return new static(
             is_object($options) ? $options->toArray() : $options
         );
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->has((string)$offset);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->{$offset};
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->{$offset} = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        throw new LogicException('Option unset is not supported.');
     }
 }
