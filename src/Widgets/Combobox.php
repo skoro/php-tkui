@@ -7,6 +7,7 @@ use Tkui\TclTk\Tcl;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Common\WithCallbacks;
 use Tkui\Widgets\Consts\Justify;
 
 /**
@@ -15,7 +16,7 @@ use Tkui\Widgets\Consts\Justify;
  * @property bool $exportSelection
  * @property Justify $justify
  * @property int $height
- * @property callable $postCommand TODO
+ * @property callable|null $postCommand
  * @property string $state
  * @property Variable $textVariable
  * @property array $values TODO
@@ -23,8 +24,13 @@ use Tkui\Widgets\Consts\Justify;
  */
 class Combobox extends TtkWidget implements ValueInVariable
 {
+    use WithCallbacks;
+
     protected string $widget = 'ttk::combobox';
     protected string $name = 'cb';
+
+    /** @var callable|null */
+    private $postCommandCallback = null;
 
     public function __construct(Container $parent, array $values = [], array|Options $options = [])
     {

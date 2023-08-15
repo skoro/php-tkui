@@ -6,13 +6,14 @@ use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Common\WithCallbacks;
 
 /**
  * Implementation of Ttk spinbox widget.
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_spinbox.html
  *
- * @property callable $command
+ * @property callable|null $command
  * @property string $format
  * @property float $from
  * @property float $increment
@@ -23,8 +24,13 @@ use Tkui\Widgets\Common\ValueInVariable;
  */
 class Spinbox extends TtkWidget implements ValueInVariable
 {
+    use WithCallbacks;
+
     protected string $widget = 'ttk::spinbox';
     protected string $name = 'spnb';
+
+    /** @var callable|null */
+    private $commandCallback = null;
 
     /**
      * @param string|int|float $value
