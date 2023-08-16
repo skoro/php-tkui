@@ -80,16 +80,10 @@ abstract class TkWidget implements Widget, SplObserver
      */
     protected function make(): void
     {
-        /** @var array<string, callable> $callables */
-        $callables = [];
-
         // callable options cannot be serialized to a Tcl string
         // initialize them after the widget will be created.
-        foreach ($this->options as $option => $value) {
-            if (is_callable($value)) {
-                $callables[$option] = $value;
-            }
-        }
+        /** @var array<string, callable> $callables */
+        $callables = array_filter($this->options->toArray(), 'is_callable');
 
         $plainOptions = $this->options->except(...array_keys($callables));
 
