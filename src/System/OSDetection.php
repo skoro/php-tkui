@@ -14,6 +14,7 @@ class OSDetection
         return match (strtolower(PHP_OS_FAMILY)) {
             'windows'   => new Windows(),
             'linux'     => new Linux(),
+            'darwin'    => new Darwin(),
             default     => throw new UnsupportedOSException(),
         };
     }
