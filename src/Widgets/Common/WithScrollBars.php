@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tkui\Widgets\Common;
 
-use InvalidArgumentException;
+use Tkui\Exceptions\InvalidValueTypeException;
+use Tkui\Widgets\Exceptions\FontNotSupportedException;
 use Tkui\Widgets\Scrollbar;
 
 /**
@@ -28,13 +29,17 @@ trait WithScrollBars
         return parent::__get($name);
     }
 
+    /**
+     * @throws InvalidValueTypeException When the value is not a Scrollbar instance.
+     * @throws FontNotSupportedException
+     */
     public function __set($name, $value)
     {
         switch ($name) {
             case 'xScrollCommand':
             case 'yScrollCommand':
                 if (!($value instanceof Scrollbar)) {
-                    throw new InvalidArgumentException("$name must be an instance of " . Scrollbar::class);
+                    throw new InvalidValueTypeException(Scrollbar::class, $value);
                 }
                 switch ($name) {
                     case 'xScrollCommand':

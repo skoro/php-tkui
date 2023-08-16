@@ -2,7 +2,7 @@
 
 namespace Tkui\Widgets\Common;
 
-use InvalidArgumentException;
+use Tkui\Exceptions\InvalidValueTypeException;
 
 /**
  * WithCallbacks trait.
@@ -36,17 +36,22 @@ use InvalidArgumentException;
  *     };
  * </code>
  *
- * When the command requires additional arguments declare a variable with suffix "Args" like this:
+ * When the command requires additional arguments, declare a variable with the suffix "Args" like this:
  * <code>
  *     private readonly array $checkCommandArgs = ['%W'];
  * </code>
  * Those arguments will be passed to a Tcl procedure and be available as variables in PHP callback:
  * <code>
- *     $myWidget->checkCommand = function (MyWidget $widget, $var1) {};
+ *     $myWidget->checkCommand = function (MyWidget $widget, $var1) {
+ *         // $var1 is %W
+ *     };
  * </code>
  */
 trait WithCallbacks
 {
+    /**
+     * @throws InvalidValueTypeException When the value is not a callback or null.
+     */
     public function __set(string $name, mixed $value): void
     {
         $callback = $name . 'Callback';
@@ -59,9 +64,7 @@ trait WithCallbacks
             } elseif ($value === null) {
                 $this->parent()->getEval()->unregisterCallback($this, $name);
             } else {
-                throw new InvalidArgumentException(
-                    sprintf('Expected callback or null but got "%s"', gettype($value))
-                );
+                throw new InvalidValueTypeException('callback', $value);
             }
         }
 

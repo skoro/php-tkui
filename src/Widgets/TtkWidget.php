@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tkui\Widgets;
 
-use InvalidArgumentException;
+use Tkui\Exceptions\InvalidValueTypeException;
 use Tkui\Font;
 use Tkui\Image;
 use Tkui\Options;
@@ -52,6 +54,10 @@ abstract class TtkWidget extends TkWidget
         return parent::__get($name);
     }
 
+    /**
+     * @throws FontNotSupportedException
+     * @throws InvalidValueTypeException When the value is not a Font or State instance.
+     */
     public function __set(string $name, $value)
     {
         switch ($name) {
@@ -60,7 +66,7 @@ abstract class TtkWidget extends TkWidget
                 if ($value instanceof Font) {
                     $this->setInternalFont($value);
                 } else {
-                    throw new InvalidArgumentException('"font" option must be instance of Font.');
+                    throw new InvalidValueTypeException(Font::class, $value);
                 }
                 break;
 
@@ -68,7 +74,7 @@ abstract class TtkWidget extends TkWidget
                 if ($value instanceof State) {
                     $this->setInternalState($value);
                 } else {
-                    throw new InvalidArgumentException('"state" option must be instance of State.');
+                    throw new InvalidValueTypeException(State::class, $value);
                 }
                 break;
         }
@@ -132,6 +138,7 @@ abstract class TtkWidget extends TkWidget
 
     /**
      * @inheritdoc
+     * @throws FontNotSupportedException
      */
     public function update(SplSubject|Font $subject): void
     {

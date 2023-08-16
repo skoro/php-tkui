@@ -2,8 +2,8 @@
 
 namespace Tkui\Tests\Widgets;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
+use Tkui\Exceptions\InvalidValueTypeException;
 use Tkui\Tests\TestCase;
 use Tkui\Widgets\Buttons\Button;
 use Tkui\Windows\Window;
@@ -74,8 +74,8 @@ class ButtonTest extends TestCase
     /** @test */
     public function button_command_accepts_only_callback()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected callback or null but got "string"');
+        $this->expectException(InvalidValueTypeException::class);
+        $this->expectExceptionMessage('Expected value of type "callback" but got "string"');
 
         $btn = new Button($this->createWindowStub(), 'Test');
         $btn->command = 'MyCommand'; /** @phpstan-ignore-line */
