@@ -67,3 +67,19 @@ WINDOWS_LIB_TK=c:\\tcltk\\bin\\tk86t.dll
 ```
 
 Also, you can build your own Tcl/Tk distribution, take a look at [BUILD-WIN.md](tools/BUILD-WIN.md) doc how to do that.
+
+### macOS
+
+You need to install one of Tcl/Tk binary distributions same as for Windows.
+The easiest way is to install it using brew:
+
+```sh
+brew install tcl-tk
+```
+
+Then you need to set paths to dylibs in `.env` file:
+
+```
+DARWIN_LIB_TCL=/usr/local/Cellar/tcl-tk/[installed_version]/lib/libtcl8.6.dylib
+DARWIN_LIB_TK=/usr/local/Cellar/tcl-tk/[installed_version]/lib/libtk8.6.dylib
+```
