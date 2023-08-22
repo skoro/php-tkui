@@ -10,7 +10,7 @@
 
 ### Requirements
 
-* PHP >= 8.1
+* PHP >= 8.2
 * `ffi` extension must be enabled
 * Tcl/Tk >= 8.6
 
