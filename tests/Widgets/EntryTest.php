@@ -135,4 +135,16 @@ class EntryTest extends TestCase
             'font' => new TkFont('Foo Font', 14, TkFont::STYLE_BOLD),
         ]);
     }
+
+    /** @test */
+    public function call_validate(): void
+    {
+        $this->tclEvalTest(3, [
+            ['ttk::entry', $this->checkWidget('.e')],
+            [$this->checkWidget('.e'), 'configure', '-textvariable', 'var'],
+            [$this->checkWidget('.e'), 'validate']
+        ]);
+
+        (new Entry($this->createWindowStub()))->validate();
+    }
 }

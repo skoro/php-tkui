@@ -2,6 +2,7 @@
 
 namespace Tkui;
 
+use Stringable;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Widget;
 
@@ -28,30 +29,38 @@ interface Evaluator
      * 
      * @return mixed The return value depends on script result.
      */
-    public function tclEval(...$args);
+    public function tclEval(mixed ...$args);
 
     /**
      * Registers the variable in the current Tcl interpreter.
      *
-     * @param Widget|string $varName In case of widget the variable name will be
-     *                               constructed of a widget path.
+     * @param Stringable|string $varName The variable name.
      */
-    public function registerVar(Widget|string $varName): Variable;
+    public function registerVar(Stringable|string $varName): Variable;
 
     /**
      * Unregisters the variable.
      *
-     * @param Widget|string $varName In case of widget the variable name will be
-     *                               constructed of a widget path.
+     * @param Stringable|string $varName The variable name.
      */
-    public function unregisterVar(Widget|string $varName): void;
+    public function unregisterVar(Stringable|string $varName): void;
 
     /**
-     * Registers a widget callback.
+     * Registers a widget callback as a Tcl procedure.
      *
+     * @param Widget   $widget The widget to which a callback is attached.
+     * @param callable $callback The callback, the first parameter will be an instance of the widget.
      * @param string[] $args Any additional arguments to the widget's callback.
+     * @param string   $commandName When the widget has several commands, there should be a command name.
      *
      * @return string Returns a Tcl procedure name.
      */
-    public function registerCallback(Widget $widget, callable $callback, array $args = []): string;
+    public function registerCallback(Widget $widget, callable $callback, array $args = [], string $commandName = ''): string;
+
+    /**
+     * Unregisters previously registered widget callback.
+     *
+     * @see Evaluator::registerCallback()
+     */
+    public function unregisterCallback(Widget $widget, string $commandName = ''): void;
 }

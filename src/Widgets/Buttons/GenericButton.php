@@ -5,7 +5,7 @@ namespace Tkui\Widgets\Buttons;
 use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\Widgets\Common\Clickable;
-use Tkui\Widgets\Common\WithCommand;
+use Tkui\Widgets\Common\WithCallbacks;
 use Tkui\Widgets\Common\WithUnderlinedLabel;
 use Tkui\Widgets\Container;
 use Tkui\Widgets\TtkWidget;
@@ -19,17 +19,14 @@ use Tkui\Widgets\TtkWidget;
  */
 abstract class GenericButton extends TtkWidget implements Clickable
 {
-    use WithCommand;
+    use WithCallbacks;
     use WithUnderlinedLabel;
+
+    /** @var callable|null */
+    private $commandCallback = null;
 
     public function __construct(Container $parent, array|Options $options = [])
     {
-        $command = null;
-        if (isset($options['command'])) {
-            $command = $options['command'];
-            unset($options['command']);
-        }
-
         if (isset($options['text'])) {
             $title = $options['text'];
             $options['text'] = $this->removeUnderlineChar($title);
@@ -37,10 +34,6 @@ abstract class GenericButton extends TtkWidget implements Clickable
         }
 
         parent::__construct($parent, $options);
-
-        if ($command !== null) {
-            $this->command = $command;
-        }
     }
 
     /**
@@ -63,9 +56,15 @@ abstract class GenericButton extends TtkWidget implements Clickable
     /**
      * @inheritdoc
      */
-    public function invoke(): self
+    public function invoke(): static
     {
         $this->call('invoke');
+        return $this;
+    }
+
+    public function onClick(callable $callback): static
+    {
+        $this->command = $callback;
         return $this;
     }
 }

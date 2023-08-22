@@ -6,6 +6,7 @@ use Tkui\Options;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Common\WithCallbacks;
 use Tkui\Widgets\Consts\Orient;
 
 /**
@@ -13,7 +14,7 @@ use Tkui\Widgets\Consts\Orient;
  *
  * @link https://www.tcl.tk/man/tcl8.6/TkCmd/ttk_scale.htm
  *
- * @property callable $command
+ * @property callable|null $command
  * @property float $from
  * @property string $length
  * @property Orient $orient
@@ -23,8 +24,13 @@ use Tkui\Widgets\Consts\Orient;
  */
 class Scale extends TtkWidget implements ValueInVariable
 {
+    use WithCallbacks;
+
     protected string $widget = 'ttk::scale';
     protected string $name = 'sc';
+
+    /** @var callable|null */
+    private $commandCallback = null;
 
     /**
      * @inheritdoc

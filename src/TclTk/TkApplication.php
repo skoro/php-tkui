@@ -2,6 +2,7 @@
 
 namespace Tkui\TclTk;
 
+use Stringable;
 use Tkui\Application;
 use Tkui\Bindings;
 use Tkui\FontManager;
@@ -233,46 +234,60 @@ class TkApplication implements Application
         $this->interp->createCommand(self::CALLBACK_HANDLER, function (...$args) {
             $path = array_shift($args);
             // TODO: check if arguments are empty ?
-            [$widget, $callback] = $this->callbacks[$path];
-            $callback($widget, ...$args);
+            [$callback, $widget] = $this->callbacks[$path];
+            array_unshift($args, $widget);
+            return $callback(...$args);
         });
     }
 
-    public function registerVar(Widget|string $varName): Variable
+    public function registerVar(Stringable|string $varName): Variable
     {
-        if ($varName instanceof Widget) {
-            $varName = $varName->path();
-        }
-        if (! isset($this->vars[$varName])) {
+        $index = (string)$varName;
+        if (! isset($this->vars[$index])) {
             // TODO: variable in namespace ?
             // TODO: generate an array index for access performance.
-            $this->vars[$varName] = $this->interp->createVariable($varName);
+            $this->vars[$index] = $this->interp->createVariable($index);
         }
-        return $this->vars[$varName];
+        return $this->vars[$index];
     }
 
-    public function unregisterVar(Widget|string $varName): void
+    public function unregisterVar(Stringable|string $varName): void
     {
-        if ($varName instanceof Widget) {
-            $varName = $varName->path();
-        }
-        if (! isset($this->vars[$varName])) {
-            throw new TclException(sprintf('Variable "%s" is not registered.', $varName));
+        $index = (string)$varName;
+        if (! isset($this->vars[$index])) {
+            throw new TclException(sprintf('Variable "%s" is not registered.', $index));
         }
         // Implicitly call of Variable's __destruct().
-        unset($this->vars[$varName]);
+        unset($this->vars[$index]);
     }
 
     /**
      * @inheritdoc
      */
-    public function registerCallback(Widget $widget, callable $callback, array $args = []): string
+    public function registerCallback(Widget $widget, callable $callback, array $args = [], string $commandName = ''): string
     {
         // TODO: it would be better to use WeakMap.
         //       in that case it will be like this:
         //       $this->callbacks[$widget] = $callback;
-        $this->callbacks[$widget->path()] = [$widget, $callback];
-        return trim(self::CALLBACK_HANDLER . ' ' . $widget->path() . ' ' . implode(' ', $args));
+        $index = $this->getWidgetCallbackIndex($widget, $commandName);
+        $this->callbacks[$index] = [$callback, $widget];
+        return trim(self::CALLBACK_HANDLER . ' ' . $index . ' ' . implode(' ', $args));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unregisterCallback(Widget $widget, string $commandName = ''): void
+    {
+        $index = $this->getWidgetCallbackIndex($widget, $commandName);
+        if (isset($this->callbacks[$index])) {
+            unset($this->callbacks[$index]);
+        }
+    }
+
+    private function getWidgetCallbackIndex(Widget $widget, string $commandName): string
+    {
+        return $widget . ($commandName ? '-' . $commandName : '');
     }
 
     /**

@@ -9,7 +9,10 @@ use Tkui\TclTk\Tcl;
 use Tkui\TclTk\TclOptions;
 use Tkui\TclTk\Variable;
 use Tkui\Widgets\Common\Editable;
+use Tkui\Widgets\Common\Scrollable;
 use Tkui\Widgets\Common\ValueInVariable;
+use Tkui\Widgets\Common\WithCallbacks;
+use Tkui\Widgets\Common\WithScrollBars;
 use Tkui\Widgets\Consts\Justify;
 use Tkui\Widgets\Consts\Validate;
 
@@ -20,29 +23,50 @@ use Tkui\Widgets\Consts\Validate;
  *
  * @property Font $font
  * @property Color|string $textColor
- * @property callable $xScrollCommand TODO
+ * @property callable $xScrollCommand
  * @property bool $exportSelection
- * @property callable $invalidCommand TODO
+ * @property callable|null $invalidCommand
  * @property Justify $justify
  * @property string $show
  * @property string $state
  * @property Variable $textVariable
  * @property Validate $validate
- * @property callable $validateCommand TODO
+ * @property callable|null $validateCommand
  * @property int $width
  */
-class Entry extends TtkWidget implements ValueInVariable, Editable
+class Entry extends TtkWidget implements ValueInVariable, Editable, Scrollable
 {
+    use WithCallbacks, WithScrollBars {
+        WithScrollBars::__get as private scrollbarsGet;
+        WithScrollBars::__set as private scrollbarsSet;
+        WithCallbacks::__get as private callbacksGet;
+        WithCallbacks::__set as private callbacksSet;
+    }
+
     protected string $widget = 'ttk::entry';
     protected string $name = 'e';
 
-    public function __construct(Container $parent, string $value = '', array|Options $options = [])
-    {
+    /** @var callable|null */
+    private $validateCommandCallback = null;
+
+    /** @var callable|null */
+    private $invalidCommandCallback = null;
+
+    /**
+     * @param array<string> $validateCommandArgs The additional arguments passed to validateCommand.
+     * @link https://www.tcl.tk/man/tcl8.6.13/TkCmd/ttk_entry.htm#M42
+     */
+    public function __construct(
+        Container             $parent,
+        string                $value = '',
+        array|Options         $options = [],
+        public readonly array $validateCommandArgs = ['%P', '%s'],
+    ) {
         $var = isset($options['textVariable']);
 
         parent::__construct($parent, $options);
 
-        if (! $var) {
+        if (!$var) {
             $this->textVariable = $this->getEval()->registerVar($this);
         }
 
@@ -54,7 +78,7 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     /**
      * @inheritdoc
      */
-    protected function createOptions(): Options
+    protected function createOptions(): TclOptions
     {
         return new TclOptions([
             'font' => null,
@@ -72,14 +96,41 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
         ]);
     }
 
-    /**
-     * Returns the entry's string.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M45
-     */
-    public function getValue(): string
+    public function __set(string $name, mixed $value): void
     {
-        return $this->textVariable->asString();
+        switch ($name) {
+            case 'invalidCommand':
+            case 'validateCommand':
+                $this->callbacksSet($name, $value);
+                break;
+
+            case 'xScrollCommand':
+                $this->scrollbarsSet($name, $value);
+                break;
+
+            default:
+                parent::__set($name, $value);
+        }
+    }
+
+    public function __get($name): mixed
+    {
+        return match ($name) {
+            'invalidCommand', 'validateCommand' => $this->callbacksGet($name),
+            'xScrollCommand'                    => $this->scrollbarsGet($name),
+            default                             => parent::__get($name),
+        };
+    }
+
+    /**
+     * Sets the new entry's string.
+     *
+     * @param string $value
+     */
+    public function setValue($value): static
+    {
+        $this->textVariable->set($value);
+        return $this;
     }
 
     /**
@@ -90,7 +141,7 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
      * @param string|int $first
      * @param string|int $last
      */
-    public function delete($first, $last = null): self
+    public function delete($first, $last = null): static
     {
         if ($last) {
             $this->call('delete', $first, $last);
@@ -106,30 +157,6 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     public function clear(): self
     {
         $this->textVariable->set('');
-        return $this;
-    }
-
-    /**
-     * Insert a string just before the specified index.
-     *
-     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M48
-     *
-     * @param string|int $index
-     */
-    public function insert($index, string $str): self
-    {
-        $this->call('insert', $index, Tcl::quoteString($str));
-        return $this;
-    }
-
-    /**
-     * Sets the new entry's string.
-     *
-     * @param string $value
-     */
-    public function setValue($value): self
-    {
-        $this->textVariable->set($value);
         return $this;
     }
 
@@ -156,11 +183,34 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     }
 
     /**
+     * Insert a string just before the specified index.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M48
+     *
+     * @param string|int $index
+     */
+    public function insert($index, string $str): self
+    {
+        $this->call('insert', $index, Tcl::quoteString($str));
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getContent(): string
     {
         return $this->getValue();
+    }
+
+    /**
+     * Returns the entry's string.
+     *
+     * @link https://www.tcl.tk/man/tcl8.6/TkCmd/entry.htm#M45
+     */
+    public function getValue(): string
+    {
+        return $this->textVariable->asString();
     }
 
     /**
@@ -173,11 +223,22 @@ class Entry extends TtkWidget implements ValueInVariable, Editable
     }
 
     /**
+     * Force revalidation.
+     *
+     * @return bool Returns false if validation fails.
+     * @link https://www.tcl.tk/man/tcl8.6.13/TkCmd/ttk_entry.htm#M33
+     */
+    public function validate(): bool
+    {
+        return (bool)$this->call('validate');
+    }
+
+    /**
      * Invokes the specified callback when Return\Enter key is pressed.
      */
     public function onSubmit(callable $callback): self
     {
-        $this->bind('Return', fn () => $callback($this));
+        $this->bind('Return', fn() => $callback($this));
         return $this;
     }
 }

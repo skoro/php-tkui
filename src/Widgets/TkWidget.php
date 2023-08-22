@@ -13,9 +13,9 @@ use Tkui\TclTk\TclOptions;
  */
 abstract class TkWidget implements Widget, SplObserver
 {
-    private Container $parent;
-    /** @var array<string, int> */
+    /** @var array<class-string<Widget>, int> */
     private static array $idCounter = [];
+    private Container $parent;
     private Options $options;
     private int $id;
     private Evaluator $eval;
@@ -78,9 +78,22 @@ abstract class TkWidget implements Widget, SplObserver
     /**
      * Create Tk widget.
      */
-    protected function make()
+    protected function make(): void
     {
-        $this->eval->tclEval($this->widget, $this->path(), ...$this->options->toStringList());
+        // callable options cannot be serialized to a Tcl string
+        // initialize them after the widget will be created.
+        /** @var array<string, callable> $callables */
+        $callables = array_filter($this->options->toArray(), 'is_callable');
+
+        $plainOptions = $this->options->except(...array_keys($callables));
+
+        // create the widget with only simple (int, string, etc) options.
+        $this->eval->tclEval($this->widget, $this->path(), ...$plainOptions->toStringList());
+
+        // now callables can be initialized.
+        foreach ($callables as $option => $callable) {
+            $this->{$option} = $callable;
+        }
     }
 
     /**
