@@ -6,11 +6,17 @@ namespace Tkui\System;
 
 abstract class OS
 {
+    /**
+     * @return string One of 'WINDOWS', 'BSD', 'DARWIN', 'SOLARIS', 'LINUX'.
+     */
     final public function family(): string
     {
         return strtoupper(PHP_OS_FAMILY);
     }
 
+    /**
+     * @return string The operating system name.
+     */
     final public function name(): string
     {
         return strtoupper(PHP_OS);

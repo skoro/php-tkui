@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tkui\System;
 
-class Darwin extends OS
+final class Darwin extends OS
 {
     public function defaultThemeName(): string
     {
