@@ -40,7 +40,7 @@ namespace Tkui;
  */
 class ColorNames
 {
-    /** array<string, array{int, int, int}> */
+    /** @var array<string, array{int, int, int}> */
     public static array $color = [
 <?php foreach (makeColors($filename) as $name => $rgb): ?>
         '<?= strtolower($name) ?>' => [<?php $rgb() ?>],
