@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tkui;
 
@@ -9,8 +11,8 @@ namespace Tkui;
  */
 class ColorNames
 {
-    /** @var array<string, array<int>> */
-    public static $color = [
+    /** array<string, array{int, int, int}> */
+    public static array $color = [
         'snow' => [255, 250, 250],
         'ghost white' => [248, 248, 255],
         'ghostwhite' => [248, 248, 255],

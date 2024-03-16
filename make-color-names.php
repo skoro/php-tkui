@@ -11,7 +11,7 @@ function makeColors(string $file)
     }
 
     foreach (explode("\n", $lines) as $line) {
-        if (!preg_match('/^[ \t]*([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+(.+)$/', $line, $match)) {
+        if (!preg_match('/^[ \t]*(\d+)[ \t]+(\d+)[ \t]+(\d+)[ \t]+([\w ]+)\R?$/', $line, $match)) {
             continue;
         }
         [$_, $r, $g, $b, $name] = $match;
@@ -25,11 +25,13 @@ if (! file_exists($filename)) {
     throw new RuntimeException("File not exist: " . $filename);
 }
 
-echo "<?php declare(strict_types=1);\n";
+echo "<?php
+
+declare(strict_types=1);\n";
 
 ?>
 
-namespace PhpGui;
+namespace Tkui;
 
 /**
  * DON'T EDIT THIS CLASS !
@@ -38,7 +40,8 @@ namespace PhpGui;
  */
 class ColorNames
 {
-    public static $color = [
+    /** array<string, array{int, int, int}> */
+    public static array $color = [
 <?php foreach (makeColors($filename) as $name => $rgb): ?>
         '<?= strtolower($name) ?>' => [<?php $rgb() ?>],
 <?php endforeach ?>
