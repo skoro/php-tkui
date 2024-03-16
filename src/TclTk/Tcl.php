@@ -193,7 +193,7 @@ class Tcl
 
     public function getStringFromObj(CData $obj): string
     {
-        return $this->ffi->Tcl_GetStringFromObj($obj, FFI::new('int*'));
+        return $this->ffi->Tcl_GetStringFromObj($obj, $this->ffi->new('int*'));
     }
 
     /**
@@ -201,7 +201,7 @@ class Tcl
      */
     public function getIntFromObj(Interp $interp, CData $obj): int
     {
-        $val = FFI::new('long');
+        $val = $this->ffi->new('long');
         if ($this->ffi->Tcl_GetLongFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             $interp->throwInterpException('GetLongFromObj');
         }
@@ -213,7 +213,7 @@ class Tcl
      */
     public function getBooleanFromObj(Interp $interp, CData $obj): bool
     {
-        $val = FFI::new('int');
+        $val = $this->ffi->new('int');
         if ($this->ffi->Tcl_GetBooleanFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             $interp->throwInterpException('GetBooleanFromObj');
         }
@@ -225,7 +225,7 @@ class Tcl
      */
     public function getFloatFromObj(Interp $interp, CData $obj): float
     {
-        $val = FFI::new('double');
+        $val = $this->ffi->new('double');
         if ($this->ffi->Tcl_GetDoubleFromObj($interp->cdata(), $obj, FFI::addr($val)) != self::TCL_OK) {
             $interp->throwInterpException('GetDoubleFromObj');
         }
@@ -250,7 +250,7 @@ class Tcl
      */
     public function getListLength(Interp $interp, CData $listObj): int
     {
-        $len = FFI::new('int');
+        $len = $this->ffi->new('int');
         if ($this->ffi->Tcl_ListObjLength($interp->cdata(), $listObj, FFI::addr($len)) != self::TCL_OK) {
             $interp->throwInterpException('ListObjLength');
         }
