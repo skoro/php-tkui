@@ -32,9 +32,9 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^1.3",
-        "phpspec/prophecy": "^1.16"
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^2.2",
+        "phpspec/prophecy": "^1.26"
     },
     "autoload-dev": {
         "psr-4": {
