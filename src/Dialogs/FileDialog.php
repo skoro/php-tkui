@@ -3,7 +3,6 @@
 namespace Tkui\Dialogs;
 
 use Tkui\Options;
-use Tkui\Widgets\Window;
 
 /**
  * @property string $defaultExtension
@@ -13,7 +12,7 @@ use Tkui\Widgets\Window;
  * @property string $message
  * @property bool $multiple
  * @property string $title
- * @property Window $parent
+ * @property \Tkui\Windows\Window $parent
  */
 abstract class FileDialog extends Dialog
 {

@@ -12,6 +12,8 @@ use Tkui\Widgets\Container;
 use Tkui\Widgets\Exceptions\TextStyleNotRegisteredException;
 use Tkui\Widgets\Exceptions\WidgetException;
 use Tkui\Widgets\ScrollableWidget;
+use Tkui\Widgets\Scrollbar;
+use Tkui\Widgets\Consts\WrapMode;
 
 /**
  * Implementation of Tk text widget.

@@ -35,7 +35,7 @@ class Range
         return (string) $this->from . ' ' . (string) $this->to;
     }
 
-    public static function create(int $startLine, int $startChar, int $endLine = null, int $endChar = null): self
+    public static function create(int $startLine, int $startChar, ?int $endLine = null, ?int $endChar = null): self
     {
         return new static(new TextIndex($startLine, $startChar), new TextIndex($endLine, $endChar));
     }

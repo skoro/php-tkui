@@ -14,7 +14,7 @@ use Tkui\Options;
  * @property string $message
  * @property bool $multiple
  * @property string $title
- * @property Window $parent
+ * @property \Tkui\Windows\Window $parent
  * @property bool $confirmOverwrite
  */
 class SaveFileDialog extends FileDialog

@@ -12,7 +12,7 @@ namespace Tkui\Dialogs;
  * @property string $message
  * @property bool $multiple
  * @property string $title
- * @property Window $parent
+ * @property \Tkui\Windows\Window $parent
  */
 class OpenFileDialog extends FileDialog
 {
