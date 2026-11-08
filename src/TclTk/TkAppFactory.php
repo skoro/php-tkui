@@ -116,8 +116,8 @@ class TkAppFactory implements AppFactory
      */
     public function create(): TkApplication
     {
-        $interp = $this->createTcl(self::TCL_HEADER, $this->getDefaultTclLib())->createInterp();
-        $tk = $this->createTk($interp, self::TK_HEADER, $this->getDefaultTkLib());
+        $interp = $this->createTcl($this->defaultTclHeader, $this->getDefaultTclLib())->createInterp();
+        $tk = $this->createTk($interp, $this->defaultTkHeader, $this->getDefaultTkLib());
         
         $app = $this->createTkApplication($tk, $this->appName);
         $app->init();
